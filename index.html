@@ -11,10 +11,37 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      /* Fresh, editorial palette inspired by HOG memo */
-      --paper:#F6F3EE;        /* sand */
+      /* Jeton-style fluid type scale using clamp(min, vw-based, max) */
+      --step--1: clamp(0.85rem, 0.74rem + 0.35vw, 1.00rem);
+      --step-0 : clamp(1.00rem, 0.90rem + 0.50vw, 1.20rem);
+      --step-1 : clamp(1.20rem, 1.05rem + 0.80vw, 1.60rem);
+      --step-2 : clamp(1.50rem, 1.25rem + 1.10vw, 2.20rem);
+      --step-3 : clamp(2.00rem, 1.60rem + 1.80vw, 3.00rem);
+
+      /* layout tokens */
+      --container-max: 1180px;
+      --gutter: clamp(16px, 4vw, 40px);
+      --radius-xl: 24px;
+      --radius-lg: 16px;
+      --shadow-card: 0 10px 30px rgba(0,0,0,.08);
+
+      /* hero sizing - use small viewport units to ignore browser UI bars on mobile */
+      --hero-min: 520px;
+      --hero-max: 760px;
+      --hero-h: clamp(var(--hero-min), 75svh, var(--hero-max));
+
+      /* brand colors – adjust to your palette */
+      --paper: #F6F3EE;        /* sand */
+      --ink: #1B2629;          /* charcoal */
+      --ink-muted: #6A7A81;    /* cool slate */
+      --cta-bg: #0E5B62;       /* deep agave */
+      --cta-bg-hover:#0D4F55;
+      --cta-ghost: #0E5B62;
+      --card-bg: #ffffffE6;
+      
+      /* Legacy variables for compatibility */
+      --bg-page: var(--paper);
       --card:#FFFFFF;         /* white */
-      --ink:#1B2629;          /* charcoal */
       --muted:#6A7A81;        /* cool slate */
       --line:#E9E3DA;         /* hairline */
       --agave:#0E5B62;        /* deep agave */
@@ -34,16 +61,37 @@
       --agave-400:#3D825E;     /* lighter agave */
       --slate-500:#7B8E99;     /* neutral for APAC/China */
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *,*::before,*::after{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
-      margin:0;
-      background:var(--paper);
-      color:var(--ink);
-      font-family:Manrope,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      line-height:1.6;
+      margin:0; color:var(--ink); background:var(--paper);
+      font: 400 var(--step-0)/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+      text-rendering:optimizeLegibility;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
+    }
+    
+    /* Jeton-style container and button system */
+    .container{
+      width:min(100% - 2*var(--gutter), var(--container-max));
+      margin-inline:auto;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      height: clamp(40px, 3.8vw, 52px);
+      padding-inline: clamp(16px, 2.2vw, 22px);
+      border-radius: 999px;
+      gap: 10px; font-size: var(--step-0); font-weight:600;
+      border:1px solid transparent; text-decoration:none;
+    }
+    .btn.primary{ background:var(--cta-bg); color:#fff; }
+    .btn.primary:hover{ background:var(--cta-bg-hover); }
+    .btn.ghost{ background:transparent; border-color:var(--cta-ghost); color:var(--cta-ghost); }
+    .btn.ghost:hover{ background:color-mix(in oklab, var(--cta-ghost) 10%, #fff); }
+    
+    @media (max-width: 520px){
+      /* tighten gutters on tiny screens */
+      :root{ --gutter: clamp(12px, 5vw, 24px); }
     }
     
     /* Add padding to account for fixed header */
@@ -52,123 +100,303 @@
     }
     a{color:var(--agave);text-decoration:none}
     a:hover{text-decoration:underline}
-    /* Header */
-    header{
-      position: fixed; /* Fixed positioning to float over hero */
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100vw; /* Full viewport width */
-      z-index: 1000; /* High z-index to float over hero */
-      background: rgba(255,255,255,.95); /* More opaque for better readability */
-      backdrop-filter: saturate(180%) blur(10px); /* Enhanced glass effect */
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
+    /* Jeton-style header - locked at all sizes */
+    .site-header{
+      position: sticky; top:0; z-index:1000;
+      background: color-mix(in oklab, #fff 88%, var(--paper) 12%);
+      backdrop-filter: blur(6px);
+      border-bottom:1px solid rgba(0,0,0,.06);
+      width: 100%;
     }
+    .site-header .container{
+      display:flex; align-items:center; gap: clamp(8px, 1.5vw, 20px);
+      min-height: clamp(56px, 8vh, 80px); 
+      padding: clamp(8px, 1.5vh, 16px) 0;
+    }
+    .nav{ 
+      margin-left:auto; 
+      display:flex; 
+      gap: clamp(8px, 1.5vw, 16px);
+    }
+    
+    /* Legacy wrap class for compatibility */
     .wrap{
       max-width: 100vw; /* Full viewport width */
       width: 100%; /* Full width */
       margin: 0; /* No margins */
       padding: 0 5vw; /* Responsive padding that scales with viewport */
     }
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:clamp(12px, 2.5vh, 20px) 0}
-    .brand{display:flex;align-items:center;gap:clamp(8px, 1.5vw, 12px);font-weight:800;letter-spacing:.2px}
-    .brand{font-size:clamp(1rem, 1.8vw, 1.3rem)} /* Responsive brand text */
-    .logo{
-      width:clamp(36px, 6vh, 44px);height:clamp(36px, 6vh, 44px);border-radius:12px;display:grid;place-items:center;
-      background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
-    }
-    .logo svg{stroke:var(--agave);opacity:.95}
-    nav a{margin:0 clamp(6px, 1vw, 12px);font-weight:600;color:#2b3a3f;font-size:clamp(0.85rem, 1.2vw, 1rem)}
-    .cta{
-      display:inline-block;padding:clamp(8px, 1.8vh, 12px) clamp(12px, 2.5vw, 18px);border-radius:999px;font-weight:800;
-      border:1px solid var(--agave);color:#fff;background:linear-gradient(180deg,#147480,#0E5B62);
-      box-shadow:var(--shadow);font-size:clamp(0.85rem, 1.2vw, 1rem);min-height:clamp(36px, 5vh, 44px);
-    }
-    .cta:hover{text-decoration:none;opacity:.95}
-
-    /* Hero - Jeton-style implementation */
-    .hero{
-      position: relative;
-      height: 100vh; /* Full viewport height */
-      width: 100vw; /* Full viewport width */
-      margin: 0; /* No margins */
-      padding: 0; /* No padding */
-      background: url('public/images/Agave_Mountain.png');
-      background-size: cover; /* Cover entire area maintaining aspect ratio */
-      background-position: center center; /* Center the image */
-      background-repeat: no-repeat;
-      background-attachment: fixed; /* Fixed attachment like Jeton */
-      overflow: hidden;
-      z-index: 1; /* Behind floating elements */
-      display: flex; /* Flexbox for proper content positioning */
-      align-items: center; /* Center content vertically */
-      justify-content: center; /* Center content horizontally */
-    }
-    
-    /* Hero container for content positioning */
-    .hero-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    
-    /* Hero content card - Properly sized */
-    .hero-content-card {
-      background: rgba(255, 255, 255, 0.95);
-      padding: clamp(16px, 2.5vh, 24px) clamp(20px, 3vw, 32px); /* Smaller, more reasonable padding */
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255,255,255,0.4);
-      max-width: clamp(320px, 35vw, 480px); /* Much smaller max width */
-      width: auto; /* Let content determine width */
-      z-index: 200; /* High z-index */
-      position: relative; /* Relative positioning within flex container */
-      text-align: center; /* Center text like Jeton */
-      margin: 0 auto; /* Center the card */
-    }
-
-    .hero-content-card h1 {
-      font-size: clamp(1.3rem, 2.8vw, 2.2rem); /* Smaller, more reasonable headline */
-      margin-bottom: clamp(10px, 1.5vh, 16px); /* Tighter spacing */
-      line-height: 1.2;
-      font-weight: 700;
+    .brand{
+      display:flex;align-items:center;gap:clamp(8px, 1.5vw, 12px);
+      font-weight:700;letter-spacing:.1px;
+      font-size:clamp(1.0rem, 2.2vw, 1.4rem); /* More responsive brand text */
       color: var(--ink);
     }
-
-    .hero-content-card p.lead {
-      font-size: clamp(0.9rem, 1.5vw, 1.1rem); /* Smaller body text */
-      margin-bottom: clamp(12px, 2vh, 18px); /* Tighter spacing */
-      line-height: 1.4;
-      color: var(--muted);
+    .logo{
+      width:clamp(36px, 6vh, 48px);height:clamp(36px, 6vh, 48px);border-radius:14px;display:grid;place-items:center;
+      background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+      flex-shrink: 0; /* Prevent logo from shrinking */
+    }
+    .logo svg{stroke:var(--agave);opacity:.95}
+    .logo img{width:100%;height:100%;object-fit:contain;}
+    nav a{
+      margin:0 clamp(6px, 1.2vw, 12px);
+      font-weight:500;
+      color:var(--ink-muted);
+      font-size:clamp(0.85rem, 1.3vw, 1.0rem);
+      transition: color 0.2s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    nav a:hover{
+      color: var(--ink);
+    }
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height: clamp(40px, 4.5vh, 48px);
+      padding-inline: clamp(16px, 2.5vw, 24px);
+      border-radius: 999px;
+      font-weight:600;
+      border:none;
+      color:#fff;
+      background:var(--cta-bg);
+      font-size:clamp(0.85rem, 1.3vw, 0.95rem);
+      transition:all 0.3s ease;
+      text-decoration:none;
+      white-space:nowrap;
+      flex-shrink: 0; /* Prevent button from shrinking */
+    }
+    .cta:hover{
+      text-decoration:none;
+      background:var(--cta-bg-hover);
+      transform:translateY(-1px);
     }
 
-    .hero-content-card .kicker {
-      font-size: clamp(0.7rem, 1vw, 0.85rem); /* Smaller kicker */
-      margin-bottom: clamp(6px, 1vh, 10px); /* Tighter spacing */
-      color: var(--agave);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    /* Mobile header adjustments */
+    @media (max-width: 768px){
+      .site-header .container{
+        gap: clamp(8px, 2vw, 12px);
+        min-height: clamp(48px, 7vh, 64px);
+      }
+      .brand{
+        font-size: clamp(0.9rem, 2.8vw, 1.1rem);
+        gap: clamp(6px, 1.2vw, 8px);
+      }
+      .logo{
+        width:clamp(32px, 5vh, 40px);
+        height:clamp(32px, 5vh, 40px);
+      }
+      .nav{
+        gap: clamp(4px, 1vw, 8px);
+      }
+      nav a{
+        font-size: clamp(0.75rem, 1.1vw, 0.85rem);
+        margin: 0 clamp(2px, 0.5vw, 6px);
+      }
+      .cta{
+        height: clamp(36px, 4vh, 44px);
+        font-size: clamp(0.75rem, 1.2vw, 0.85rem);
+        padding-inline: clamp(12px, 2vw, 20px);
+      }
     }
 
-    .hero-content-card .btn-row {
-      margin-top: clamp(12px, 2vh, 18px); /* Tighter spacing */
+    /* Very small screens */
+    @media (max-width: 480px){
+      .site-header .container{
+        flex-wrap: wrap;
+        gap: clamp(4px, 1vw, 8px);
+        padding: clamp(4px, 1vh, 8px) 0;
+      }
+      .nav{
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        margin-top: clamp(4px, 1vh, 8px);
+      }
+      .cta{
+        order: 2;
+        margin-left: auto;
+      }
     }
 
-    .hero-content-card .btn {
-      padding: clamp(8px, 1.5vh, 12px) clamp(16px, 3vw, 24px); /* Smaller buttons */
-      font-size: clamp(0.8rem, 1.1vw, 0.95rem); /* Smaller button text */
-      margin: 0 clamp(4px, 0.8vw, 8px); /* Tighter margins */
-      border-radius: 10px; /* Slightly less rounded */
-      min-height: clamp(36px, 5vh, 42px); /* Smaller button height */
+    /* Jeton-style hero section */
+    .site-hero{
+      position:relative;
+      min-height: var(--hero-h);   /* fixed visual band like Jeton */
+      isolation:isolate;           /* keep overlays contained */
+      overflow:hidden;
+      width: 100vw;                /* Full viewport width */
+      margin-left: calc(-50vw + 50%); /* Extend beyond container */
+      margin-right: calc(-50vw + 50%); /* Extend beyond container */
     }
+    .hero-media{
+      position:absolute; inset:0; z-index:0;
+      width: 100%;
+      overflow: hidden;
+    }
+    .hero-media img{
+      width:100vw; height:100%; object-fit:cover; object-position:center 75%;
+      filter: none; /* keep your clean grade */
+      transform: translateZ(0);    /* helps GPU on Safari */
+      margin-left: 0;              /* No margins */
+      margin-right: 0;             /* No margins */
+    }
+    .hero-card{
+      position:absolute; z-index:1;
+      width: min(600px, 45%);                    /* Better max width for large screens */
+      top: clamp(15%, 10vh, 20%);               /* Better upper positioning */
+      right: clamp(5%, 3vw, 8%);                /* Better right positioning */
+      padding: clamp(8px, 1vw, 12px) clamp(20px, 3vw, 32px); /* Shorter vertical, wider horizontal */
+      border-radius: 20px;                       /* Previous design radius */
+      background: rgba(255, 255, 255, 0.95);    /* Previous design background */
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25); /* Previous design shadow */
+      backdrop-filter: blur(10px);               /* Previous design blur */
+      border: 1px solid rgba(255,255,255,0.3);  /* Previous design border */
+    }
+    .hero-card .eyebrow{
+      font-size: clamp(0.6rem, 0.8vw, 0.75rem);  /* Even smaller */
+      letter-spacing:.08em; text-transform:uppercase;
+      color: #0B6C6C; margin:0 0 2px;             /* Even tighter spacing */
+      font-weight: 600;                           /* Previous design weight */
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
+    }
+    .hero-card h1{
+      margin:0 0 3px;                             /* Even tighter spacing */
+      font-size: clamp(1.4rem, 3vw, 2.4rem);     /* Modern responsive size like h2 */
+      line-height:1.2; font-weight:700;           /* Bold weight like h2 */
+      color: #102b2f;                             /* Same color as h2 */
+      letter-spacing: 0;                          /* Normal letter spacing like h2 */
+      font-family: Fraunces, serif;               /* Same Fraunces font as h2 */
+    }
+    .hero-card .lead{
+      font-size: clamp(0.8rem, 1.2vw, 0.95rem);  /* Even smaller body */
+      color: var(--muted); margin: 0 0 16px;      /* More space before buttons */
+      max-width: 60ch;                            /* Wider for wider card */
+      line-height: 1.35;                          /* Tighter line height */
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
+    }
+    .hero-card .actions{ 
+      display:flex; gap:12px; flex-wrap:wrap;     /* Better spacing between buttons */
+      margin-top: clamp(8px, 1.5vh, 12px);        /* More space from text */
+    }
+    .hero-card .btn{
+      padding: clamp(8px, 1.4vh, 12px) clamp(16px, 2.5vw, 24px); /* Better button size */
+      font-size: clamp(0.7rem, 1vw, 0.85rem);     /* Better font size */
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
+      font-weight: 500;                            /* Medium weight for freshness */
+      border-radius: 50px;                         /* Much more circular */
+      height: auto;                                /* Remove fixed height */
+      min-height: 36px;                            /* Better minimum height */
+      transition: all 0.3s ease;                   /* Smoother transitions */
+      white-space: nowrap;                         /* Prevent text wrapping */
+    }
+    .hero-card .btn.primary{
+      background: #0B6C6C;                         /* Your teal color */
+      color: white;
+      border: none;
+    }
+    .hero-card .btn.primary:hover{
+      background: #095b5b;                         /* Darker teal on hover */
+      transform: translateY(-1px);                 /* Subtle lift effect */
+    }
+    .hero-card .btn.ghost{
+      background: transparent;                     /* Clean transparent */
+      color: #0B6C6C;                              /* Teal text to match palette */
+      border: 1px solid #0B6C6C;                   /* Teal border */
+    }
+    .hero-card .btn.ghost:hover{
+      background: rgba(11, 108, 108, 0.05);       /* Light teal background on hover */
+      border-color: #095b5b;                       /* Darker teal border on hover */
+      transform: translateY(-1px);                 /* Subtle lift effect */
+    }
+
+    /* Large screens - better positioning */
+    @media (min-width: 1400px){
+      .hero-card{ 
+        width: min(650px, 40%);                   /* Slightly larger on big screens */
+        top: clamp(12%, 8vh, 18%);               /* Better positioning */
+        right: clamp(6%, 4vw, 10%);              /* More space from edge */
+      }
+    }
+    
+    /* Very large screens - optimal positioning */
+    @media (min-width: 1800px){
+      .hero-card{ 
+        width: min(700px, 35%);                   /* Even better proportions */
+        top: clamp(10%, 6vh, 16%);               /* Optimal positioning */
+        right: clamp(8%, 5vw, 12%);              /* Perfect spacing */
+      }
+    }
+
+    @media (max-width: 840px){
+      .hero-card{ 
+        position: absolute;
+        top: clamp(10%, 8vh, 20%);               /* Higher on mobile */
+        right: clamp(2%, 1vw, 4%);               /* Closer to edge on mobile */
+        width: min(500px, 85%);                  /* Wider on mobile */
+        padding: clamp(6px, 0.8vw, 10px) clamp(16px, 2vw, 24px); /* Tighter on mobile */
+      }
+      .hero-card h1{ font-size: clamp(1.3rem, 2.8vw, 2.2rem); } /* Modern responsive size like h2 */
+      .hero-card .btn{ 
+        padding: clamp(6px, 1.2vh, 10px) clamp(12px, 2vw, 18px); /* Better size on mobile */
+        font-size: clamp(0.65rem, 0.9vw, 0.8rem); /* Better font size on mobile */
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
+        border-radius: 50px;                       /* Keep circular on mobile */
+        min-height: 32px;                          /* Slightly smaller on mobile */
+        gap: 8px;                                   /* Smaller gap on mobile */
+      }
+      .hero-card .actions{ 
+        gap: 8px;                                   /* Smaller gap between buttons on mobile */
+      }
+    }
+
+    /* Modern Section Headers - Serif Style */
+    h2{
+      font-size: clamp(1.8rem, 4vw, 3.2rem);     /* Modern responsive size */
+      font-weight: 700;                           /* Bold weight */
+      line-height: 1.2;                           /* Slightly more spacing */
+      letter-spacing: 0;                          /* Normal letter spacing */
+      color: #0E1B1B;                             /* Dark teal color like image */
+      margin: 0 0 clamp(16px, 3vh, 28px) 0;      /* Responsive margins */
+      font-family: 'Times New Roman', Times, serif; /* Classic serif font */
+      text-align: left;                           /* Left aligned */
+    }
+
+    /* Section spacing system - ensures every section "snaps" with predictable spacing */
+    section.section{
+      padding-block: clamp(48px, 8svh, 96px);
+    }
+    .section .section-head{
+      margin-bottom: clamp(20px, 3svh, 36px);
+    }
+
+    /* Jeton-style grid system - stable across zoom */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: clamp(12px, 1.6vw, 20px);
+    }
+    .card{
+      background:#fff; border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card); padding: clamp(16px, 1.8vw, 24px);
+    }
+    @media (min-width: 960px){
+      .col-4{ grid-column: span 4; }
+      .col-6{ grid-column: span 6; }
+      .col-8{ grid-column: span 8; }
+    }
+    @media (max-width: 959.98px){
+      .col-4, .col-6, .col-8{ grid-column: 1 / -1; }
+    }
+
+    /* Accessibility & motion preferences */
+    @media (prefers-reduced-motion: reduce){
+      * { animation: none !important; transition: none !important; }
+    }
+    
     .kicker{color:var(--sage);font-weight:800;letter-spacing:.18em;text-transform:uppercase;font-size:.78rem}
     h1{
       font-family:Fraunces,serif;font-weight:700;line-height:1.08;margin:.15em 0 .35em;
@@ -1327,16 +1555,15 @@
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap">
-      <div class="nav">
+  <header class="site-header">
+    <div class="container">
         <div class="brand">
           <div class="logo" aria-hidden="true">
-            <img src="public/images/Logo_for_Website.png" alt="Hogshead Agave Spirits Logo" style="width: 100%; height: 100%; object-fit: contain;">
+          <img src="public/images/Logo_for_Website.png" alt="Hogshead Agave Spirits Logo" style="width: 100%; height: 100%; object-fit: contain;">
           </div>
           <span>Hogshead Agave Spirits</span>
         </div>
-        <nav>
+      <nav class="nav">
           <a href="#opportunity">Opportunity</a>
           <a href="#market">Market</a>
           <a href="#whyus">Why Us</a>
@@ -1344,28 +1571,28 @@
           <a href="#guardrails">Guardrails</a>
           <a href="#faq">FAQ</a>
         </nav>
-        <a class="cta" href="#contact">Request Memo</a>
-      </div>
+      <a class="cta" href="#contact">Request Memo</a>
     </div>
   </header>
 
   <main>
     <div class="wrap">
       <!-- HERO -->
-      <section class="hero" style="border-top:none">
-        <div class="hero-container">
-          <!-- Hero content card -->
-          <div class="hero-content-card">
-          <div class="kicker">Alternative Asset • Mexico → U.S.</div>
-          <h1>Invest in aging tequila—curated, compliant, and time-powered.</h1>
+      <header class="site-hero" id="hero">
+        <picture class="hero-media">
+          <img src="public/images/Agave_Mountain.png" alt="Agave field with mountain" />
+        </picture>
+
+        <div class="hero-card">
+          <p class="eyebrow">ALTERNATIVE ASSET • MEXICO → U.S.</p>
+          <h1>Invest in aging tequila—<br>curated, compliant, and time-powered.</h1>
           <p class="lead">We provide investors with institutional-grade exposure to aging tequila inventory held under professional custody. The thesis is simple: regulated origin, constrained supply, and value that compounds with time-in-barrel.</p>
-          <div class="btn-row">
-            <a class="btn alt" href="#opportunity">See the Opportunity</a>
-            <a class="btn" href="#contact">Request Investor Memo</a>
+          <div class="actions">
+            <a class="btn primary" href="#opportunity">See the Opportunity</a>
+            <a class="btn ghost" href="#contact">Request Investor Memo</a>
           </div>
         </div>
-        </div>
-      </section>
+      </header>
 
       <!-- OPPORTUNITY -->
       <section id="opportunity">
