@@ -458,6 +458,17 @@
           border-color: var(--agave);
         }
 
+        .initial-cost-card:hover {
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+          border-color: var(--agave);
+        }
+
+        .initial-cost-card:hover #initialBarrelCost {
+          color: var(--agave);
+          transform: scale(1.05);
+        }
+
         /* Mobile responsiveness for simulator */
         @media (max-width: 768px) {
           .simulator-container {
@@ -471,6 +482,12 @@
           
           .aging-simulator-section .card {
             padding: 20px !important;
+          }
+          
+          .initial-cost-card {
+            position: static !important;
+            width: 100% !important;
+            margin-top: 16px !important;
           }
         }
     
@@ -2133,21 +2150,29 @@
 
         <!-- Interactive Aging Simulator -->
         <div class="aging-simulator-section" style="margin-top: 48px;">
-          <div class="card" style="padding: 32px;">
-            <div style="margin-bottom: 24px;">
+          <div class="card" style="padding: 32px; position: relative;">
+            <!-- Initial Cost Card - Top Right of entire simulator -->
+            <div class="initial-cost-card" style="position: absolute; top: 32px; right: 32px; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px; width: 180px; z-index: 10; transition: all 0.3s ease; cursor: pointer;">
+              <div style="font-size: 13px; color: var(--muted); margin-bottom: 4px;">Initial Investment</div>
+              <div style="font-size: 12px; color: var(--muted); margin-bottom: 2px;">Barrel Cost (Month 0)</div>
+              <div id="initialBarrelCost" style="font-weight: 600; color: var(--ink); font-size: 18px; transition: all 0.3s ease;">$0</div>
+            </div>
+
+            <div style="margin-bottom: 24px; margin-top: 2px;">
               <span class="pill">Interactive Tool</span>
-              <h3>Aging Value Simulator</h3>
+              <h3 style="margin-top: 16px;">Aging Value Simulator</h3>
               <p style="color: var(--muted); margin: 8px 0 0;">Slide through time to see how aging increases barrel value while angel's share reduces volume.</p>
             </div>
 
             <div class="simulator-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+
               <!-- Left: Controls & KPIs -->
               <div class="simulator-controls">
                 <!-- Slider -->
-                <div class="slider-container" style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; margin-bottom: 24px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <span style="font-size: 14px; color: var(--muted);">Months aged</span>
-                    <span id="currentMonth" style="font-weight: 600; color: var(--ink); font-size: 16px;">24 mo</span>
+                <div class="slider-container" style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 20px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span style="font-size: 15px; color: var(--muted);">Months aged</span>
+                    <span id="currentMonth" style="font-weight: 600; color: var(--ink); font-size: 18px;">24 mo</span>
                   </div>
                   <input 
                     type="range" 
@@ -2158,7 +2183,7 @@
                     step="1"
                     style="width: 100%; height: 8px; border-radius: 4px; background: var(--line); outline: none; -webkit-appearance: none;"
                   />
-                  <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--muted);">
+                  <div style="display: flex; justify-content: space-between; margin-top: 6px; font-size: 13px; color: var(--muted);">
                     <span>0m</span>
                     <span>120m</span>
                   </div>
@@ -2166,44 +2191,29 @@
 
                 <!-- KPI Grid -->
                 <div class="kpi-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
-                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Remaining Volume</div>
-                    <div id="remainingVolume" style="font-weight: 600; color: var(--ink);">180.0 L</div>
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
+                    <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Remaining Volume</div>
+                    <div id="remainingVolume" style="font-weight: 600; color: var(--ink); font-size: 28px;">180.0 L</div>
                   </div>
-                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
-                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Angel's Share</div>
-                    <div id="angelShare" style="font-weight: 600; color: var(--ink);">10.0%</div>
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
+                    <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Angel's Share</div>
+                    <div id="angelShare" style="font-weight: 600; color: var(--ink); font-size: 28px;">10.0%</div>
                   </div>
-                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
-                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Barrel Value</div>
-                    <div id="barrelValue" style="font-weight: 600; color: var(--agave);">$9,000</div>
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
+                    <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Barrel Value</div>
+                    <div id="barrelValue" style="font-weight: 600; color: var(--agave); font-size: 28px;">$9,000</div>
                   </div>
-                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
-                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Value per Liter</div>
-                    <div id="valuePerLiter" style="font-weight: 600; color: var(--ink);">$50.00</div>
-                  </div>
-                </div>
-
-                <!-- Initial Cost Card -->
-                <div class="initial-cost-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 16px;">
-                  <div style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">Initial Investment</div>
-                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                    <div>
-                      <div style="font-size: 11px; color: var(--muted); margin-bottom: 2px;">Barrel Cost (Month 0)</div>
-                      <div id="initialBarrelCost" style="font-weight: 600; color: var(--ink); font-size: 14px;">$665</div>
-                    </div>
-                    <div>
-                      <div style="font-size: 11px; color: var(--muted); margin-bottom: 2px;">Cost per Liter</div>
-                      <div id="initialCostPerLiter" style="font-weight: 600; color: var(--ink); font-size: 14px;">$3.33</div>
-                    </div>
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
+                    <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Value per Liter</div>
+                    <div id="valuePerLiter" style="font-weight: 600; color: var(--ink); font-size: 28px;">$50.00</div>
                   </div>
                 </div>
 
                 <!-- Value Band -->
-                <div class="value-band" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 16px;">
-                  <div style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">Value Range</div>
-                  <div id="valueRange" style="font-size: 14px; color: var(--ink);">$8,100 – $9,900</div>
-                  <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Low/Base/High resale scenarios</div>
+                <div class="value-band" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-top: 16px; min-height: 80px;">
+                  <div style="font-size: 15px; color: var(--muted); margin-bottom: 6px;">Value Range</div>
+                  <div id="valueRange" style="font-size: 22px; color: var(--ink); font-weight: 600; margin-bottom: 4px;">$8,100 – $9,900</div>
+                  <div style="font-size: 13px; color: var(--muted);">Low/Base/High resale scenarios</div>
                 </div>
               </div>
 
@@ -2211,14 +2221,26 @@
               <div class="simulator-chart">
                 <div style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <h4 style="margin: 0; color: var(--ink); font-size: 16px;">Value vs. Volume over Time</h4>
+                    <h4 style="margin: 0; color: var(--ink); font-size: 16px;">Yield Growth Over Time</h4>
                     <span style="font-size: 11px; color: var(--muted);">Interactive • Real-time</span>
                   </div>
-                  <div id="agingChart" style="width: 100%; height: 300px;"></div>
+                  <div id="agingChart" style="width: 100%; height: 420px;"></div>
                   <div style="font-size: 11px; color: var(--muted); margin-top: 8px;">
                     Vertical line tracks current month. Value increases while volume decreases due to angel's share.
                   </div>
                 </div>
+              </div>
+            </div>
+            
+            <!-- Disclosures - Aligned with Grid -->
+            <div style="margin-top: 24px; padding: 12px; background: #f8f9fa; border-radius: 6px; border-left: 2px solid var(--agave);">
+              <div style="font-size: 9px; color: var(--muted); line-height: 1.3;">
+                <strong style="color: var(--ink);">Important Disclosures:</strong><br>
+                • Values shown are industry averages and estimates, not actual market prices<br>
+                • Resale prices are based on suggested retail bottle price growth trends<br>
+                • This is a representation for illustrative purposes only, not real investment data<br>
+                • Actual results may vary significantly based on market conditions, brand, and other factors<br>
+                • This tool is not investment advice and should not be used as the sole basis for investment decisions
               </div>
             </div>
           </div>
@@ -2705,23 +2727,51 @@
         };
       }
 
+      // Animate number counting
+      function animateNumber(element, start, end, duration = 1500) {
+        const startTime = performance.now();
+        const isCurrency = element.textContent.includes('$');
+        
+        function updateNumber(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Easing function for smooth animation
+          const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+          const current = start + (end - start) * easeOutCubic;
+          
+          if (isCurrency) {
+            element.textContent = `$${Math.round(current).toLocaleString()}`;
+          } else {
+            element.textContent = Math.round(current).toLocaleString();
+          }
+          
+          if (progress < 1) {
+            requestAnimationFrame(updateNumber);
+          }
+        }
+        
+        requestAnimationFrame(updateNumber);
+      }
+
       function updateSimulator(months) {
         const metrics = getAgingMetrics(months);
         if (!metrics) return;
         
-        // Update KPI displays
+        // Update KPI displays with animation
         document.getElementById('currentMonth').textContent = `${months} mo`;
-        document.getElementById('remainingVolume').textContent = `${metrics.remainingVolume.toFixed(1)} L`;
-        document.getElementById('angelShare').textContent = `${metrics.angelShare.toFixed(1)}%`;
-        document.getElementById('barrelValue').textContent = `$${Math.round(metrics.barrelValue).toLocaleString()}`;
-        document.getElementById('valuePerLiter').textContent = `$${metrics.pricePerLiter.toFixed(2)}`;
+        animateNumber(document.getElementById('remainingVolume'), 0, metrics.remainingVolume, 1000);
+        animateNumber(document.getElementById('angelShare'), 0, metrics.angelShare, 1000);
+        animateNumber(document.getElementById('barrelValue'), 0, metrics.barrelValue, 1200);
+        animateNumber(document.getElementById('valuePerLiter'), 0, metrics.pricePerLiter, 1000);
+        
+        // Update value range
         document.getElementById('valueRange').textContent = `$${Math.round(metrics.valueLow).toLocaleString()} – $${Math.round(metrics.valueHigh).toLocaleString()}`;
         
-        // Update initial cost displays (only set once)
+        // Update initial cost displays with animation (only set once)
         if (agingData && !document.getElementById('initialBarrelCost').dataset.initialized) {
           const initialData = agingData.series[0];
-          document.getElementById('initialBarrelCost').textContent = `$${Math.round(initialData.cum_cost_per_bbl)}`;
-          document.getElementById('initialCostPerLiter').textContent = `$${initialData.cost_per_l.toFixed(2)}`;
+          animateNumber(document.getElementById('initialBarrelCost'), 0, initialData.cum_cost_per_bbl, 1500);
           document.getElementById('initialBarrelCost').dataset.initialized = 'true';
         }
         
@@ -2735,7 +2785,7 @@
         const chart = echarts.init(document.getElementById('agingChart'));
         
         chart.setOption({
-          grid: { left: 60, right: 40, top: 20, bottom: 50 },
+          grid: { left: 60, right: 40, top: 50, bottom: 50 },
           backgroundColor: 'transparent',
           tooltip: {
             trigger: 'axis',
@@ -2848,16 +2898,19 @@
                   xAxis: currentMonth,
                   lineStyle: { 
                     color: '#DB9251', 
-                    type: 'dashed',
+                    type: 'dotted',
                     width: 2
                   },
-                  label: {
-                    show: true,
-                    position: 'end',
-                    formatter: `${currentMonth}m`,
-                    color: '#DB9251',
-                    fontSize: 11,
-                    fontWeight: 600
+            label: {
+              show: true,
+              position: 'top',
+                    formatter: `${currentMonth} mo`,
+              color: '#1B2629',
+                    fontSize: 12,
+              fontWeight: 600,
+                    backgroundColor: 'rgba(255,255,255,0.8)',
+                    padding: [4, 8],
+                    borderRadius: 4
                   }
                 }]
               }
@@ -2866,22 +2919,12 @@
               name: 'Cumulative Cost',
               type: 'line',
               data: chartData.map(d => d.cumCost),
-              smooth: true,
+              smooth: false,
               symbol: 'none',
               lineStyle: { 
                 width: 2, 
-                color: '#6A7A81',
-                type: 'dashed'
-              },
-              markLine: {
-                data: [{
-                  xAxis: currentMonth,
-                  lineStyle: { 
-                    color: '#DB9251', 
-                    type: 'dashed',
-                    width: 2
-                  }
-                }]
+                color: '#3D825E',
+                type: 'solid'
               }
             }
           ]
