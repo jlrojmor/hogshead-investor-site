@@ -11,37 +11,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      /* Jeton-style fluid type scale using clamp(min, vw-based, max) */
-      --step--1: clamp(0.85rem, 0.74rem + 0.35vw, 1.00rem);
-      --step-0 : clamp(1.00rem, 0.90rem + 0.50vw, 1.20rem);
-      --step-1 : clamp(1.20rem, 1.05rem + 0.80vw, 1.60rem);
-      --step-2 : clamp(1.50rem, 1.25rem + 1.10vw, 2.20rem);
-      --step-3 : clamp(2.00rem, 1.60rem + 1.80vw, 3.00rem);
-
-      /* layout tokens */
-      --container-max: 1180px;
-      --gutter: clamp(16px, 4vw, 40px);
-      --radius-xl: 24px;
-      --radius-lg: 16px;
-      --shadow-card: 0 10px 30px rgba(0,0,0,.08);
-
-      /* hero sizing - use small viewport units to ignore browser UI bars on mobile */
-      --hero-min: 520px;
-      --hero-max: 760px;
-      --hero-h: clamp(var(--hero-min), 75svh, var(--hero-max));
-
-      /* brand colors – adjust to your palette */
-      --paper: #F6F3EE;        /* sand */
-      --ink: #1B2629;          /* charcoal */
-      --ink-muted: #6A7A81;    /* cool slate */
-      --cta-bg: #0E5B62;       /* deep agave */
-      --cta-bg-hover:#0D4F55;
-      --cta-ghost: #0E5B62;
-      --card-bg: #ffffffE6;
-      
-      /* Legacy variables for compatibility */
-      --bg-page: var(--paper);
+      /* Fresh, editorial palette inspired by HOG memo */
+      --paper:#F6F3EE;        /* sand */
       --card:#FFFFFF;         /* white */
+      --ink:#1B2629;          /* charcoal */
       --muted:#6A7A81;        /* cool slate */
       --line:#E9E3DA;         /* hairline */
       --agave:#0E5B62;        /* deep agave */
@@ -61,37 +34,16 @@
       --agave-400:#3D825E;     /* lighter agave */
       --slate-500:#7B8E99;     /* neutral for APAC/China */
     }
-    *,*::before,*::after{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      margin:0; color:var(--ink); background:var(--paper);
-      font: 400 var(--step-0)/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
-      text-rendering:optimizeLegibility;
+      margin:0;
+      background:var(--paper);
+      color:var(--ink);
+      font-family:Manrope,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      line-height:1.6;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-    }
-    
-    /* Jeton-style container and button system */
-    .container{
-      width:min(100% - 2*var(--gutter), var(--container-max));
-      margin-inline:auto;
-    }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      height: clamp(40px, 3.8vw, 52px);
-      padding-inline: clamp(16px, 2.2vw, 22px);
-      border-radius: 999px;
-      gap: 10px; font-size: var(--step-0); font-weight:600;
-      border:1px solid transparent; text-decoration:none;
-    }
-    .btn.primary{ background:var(--cta-bg); color:#fff; }
-    .btn.primary:hover{ background:var(--cta-bg-hover); }
-    .btn.ghost{ background:transparent; border-color:var(--cta-ghost); color:var(--cta-ghost); }
-    .btn.ghost:hover{ background:color-mix(in oklab, var(--cta-ghost) 10%, #fff); }
-    
-    @media (max-width: 520px){
-      /* tighten gutters on tiny screens */
-      :root{ --gutter: clamp(12px, 5vw, 24px); }
     }
     
     /* Add padding to account for fixed header */
@@ -100,380 +52,123 @@
     }
     a{color:var(--agave);text-decoration:none}
     a:hover{text-decoration:underline}
-    /* Jeton-style header - locked at all sizes */
-    .site-header{
-      position: sticky; top:0; z-index:1000;
-      background: color-mix(in oklab, #fff 88%, var(--paper) 12%);
-      backdrop-filter: blur(6px);
-      border-bottom:1px solid rgba(0,0,0,.06);
-      width: 100%;
+    /* Header */
+    header{
+      position: fixed; /* Fixed positioning to float over hero */
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100vw; /* Full viewport width */
+      z-index: 1000; /* High z-index to float over hero */
+      background: rgba(255,255,255,.95); /* More opaque for better readability */
+      backdrop-filter: saturate(180%) blur(10px); /* Enhanced glass effect */
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
     }
-    .site-header .container{
-      display:flex; align-items:center; gap: clamp(8px, 1.5vw, 20px);
-      min-height: clamp(56px, 8vh, 80px); 
-      padding: clamp(8px, 1.5vh, 16px) 0;
-    }
-    .nav{ 
-      margin-left:auto; 
-      display:flex; 
-      gap: clamp(8px, 1.5vw, 16px);
-    }
-    
-    /* Legacy wrap class for compatibility */
     .wrap{
       max-width: 100vw; /* Full viewport width */
       width: 100%; /* Full width */
       margin: 0; /* No margins */
       padding: 0 5vw; /* Responsive padding that scales with viewport */
     }
-    .brand{
-      display:flex;align-items:center;gap:clamp(8px, 1.5vw, 12px);
-      font-weight:400;letter-spacing:.05em;
-      font-size:clamp(0.9rem, 2.0vw, 1.3rem); /* More responsive brand text */
-      color: var(--ink);
-      text-transform: uppercase;
-      font-family: "SF Pro Display", "Helvetica Neue", "Arial Narrow", "Arial Condensed", "Roboto Condensed", sans-serif;
-      font-stretch: condensed;
-    }
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:clamp(12px, 2.5vh, 20px) 0}
+    .brand{display:flex;align-items:center;gap:clamp(8px, 1.5vw, 12px);font-weight:800;letter-spacing:.2px}
+    .brand{font-size:clamp(1rem, 1.8vw, 1.3rem)} /* Responsive brand text */
     .logo{
-      width:clamp(36px, 6vh, 48px);height:clamp(36px, 6vh, 48px);border-radius:14px;display:grid;place-items:center;
+      width:clamp(36px, 6vh, 44px);height:clamp(36px, 6vh, 44px);border-radius:12px;display:grid;place-items:center;
       background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
-      flex-shrink: 0; /* Prevent logo from shrinking */
     }
     .logo svg{stroke:var(--agave);opacity:.95}
-    .logo img{width:100%;height:100%;object-fit:contain;}
-    nav a{
-      margin:0 clamp(6px, 1.2vw, 12px);
-      font-weight:500;
-      color:var(--ink-muted);
-      font-size:clamp(0.85rem, 1.3vw, 1.0rem);
-      transition: color 0.2s ease;
-      text-decoration: none;
-      white-space: nowrap;
+    nav a{margin:0 clamp(6px, 1vw, 12px);font-weight:600;color:#2b3a3f;font-size:clamp(0.85rem, 1.2vw, 1rem)}
+    .cta{
+      display:inline-block;padding:clamp(8px, 1.8vh, 12px) clamp(12px, 2.5vw, 18px);border-radius:999px;font-weight:800;
+      border:1px solid var(--agave);color:#fff;background:linear-gradient(180deg,#147480,#0E5B62);
+      box-shadow:var(--shadow);font-size:clamp(0.85rem, 1.2vw, 1rem);min-height:clamp(36px, 5vh, 44px);
     }
-    nav a:hover{
+    .cta:hover{text-decoration:none;opacity:.95}
+
+    /* Hero - Jeton-style implementation */
+    .hero{
+      position: relative;
+      height: 100vh; /* Full viewport height */
+      width: 100vw; /* Full viewport width */
+      margin: 0; /* No margins */
+      padding: 0; /* No padding */
+      background: url('public/images/Agave_Mountain.png');
+      background-size: cover; /* Cover entire area maintaining aspect ratio */
+      background-position: center center; /* Center the image */
+      background-repeat: no-repeat;
+      background-attachment: fixed; /* Fixed attachment like Jeton */
+      overflow: hidden;
+      z-index: 1; /* Behind floating elements */
+      display: flex; /* Flexbox for proper content positioning */
+      align-items: center; /* Center content vertically */
+      justify-content: center; /* Center content horizontally */
+    }
+    
+    /* Hero container for content positioning */
+    .hero-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    
+    /* Hero content card - Properly sized */
+    .hero-content-card {
+      background: rgba(255, 255, 255, 0.95);
+      padding: clamp(16px, 2.5vh, 24px) clamp(20px, 3vw, 32px); /* Smaller, more reasonable padding */
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.4);
+      max-width: clamp(320px, 35vw, 480px); /* Much smaller max width */
+      width: auto; /* Let content determine width */
+      z-index: 200; /* High z-index */
+      position: relative; /* Relative positioning within flex container */
+      text-align: center; /* Center text like Jeton */
+      margin: 0 auto; /* Center the card */
+    }
+
+    .hero-content-card h1 {
+      font-size: clamp(1.3rem, 2.8vw, 2.2rem); /* Smaller, more reasonable headline */
+      margin-bottom: clamp(10px, 1.5vh, 16px); /* Tighter spacing */
+      line-height: 1.2;
+      font-weight: 700;
       color: var(--ink);
     }
-    .cta{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      height: clamp(40px, 4.5vh, 48px);
-      padding-inline: clamp(16px, 2.5vw, 24px);
-      border-radius: 999px;
-      font-weight:600;
-      border:none;
-      color:#fff;
-      background:var(--cta-bg);
-      font-size:clamp(0.85rem, 1.3vw, 0.95rem);
-      transition:all 0.3s ease;
-      text-decoration:none;
-      white-space:nowrap;
-      flex-shrink: 0; /* Prevent button from shrinking */
-    }
-    .cta:hover{
-      text-decoration:none;
-      background:var(--cta-bg-hover);
-      transform:translateY(-1px);
+
+    .hero-content-card p.lead {
+      font-size: clamp(0.9rem, 1.5vw, 1.1rem); /* Smaller body text */
+      margin-bottom: clamp(12px, 2vh, 18px); /* Tighter spacing */
+      line-height: 1.4;
+      color: var(--muted);
     }
 
-    /* Mobile header adjustments */
-    @media (max-width: 768px){
-      .site-header .container{
-        gap: clamp(8px, 2vw, 12px);
-        min-height: clamp(48px, 7vh, 64px);
-      }
-      .brand{
-        font-size: clamp(0.8rem, 2.5vw, 1.0rem);
-        gap: clamp(6px, 1.2vw, 8px);
-        letter-spacing: .03em;
-      }
-      .logo{
-        width:clamp(32px, 5vh, 40px);
-        height:clamp(32px, 5vh, 40px);
-      }
-      .nav{
-        gap: clamp(4px, 1vw, 8px);
-      }
-      nav a{
-        font-size: clamp(0.75rem, 1.1vw, 0.85rem);
-        margin: 0 clamp(2px, 0.5vw, 6px);
-      }
-      .cta{
-        height: clamp(36px, 4vh, 44px);
-        font-size: clamp(0.75rem, 1.2vw, 0.85rem);
-        padding-inline: clamp(12px, 2vw, 20px);
-      }
-    }
-
-    /* Very small screens */
-    @media (max-width: 480px){
-      .site-header .container{
-        flex-wrap: wrap;
-        gap: clamp(4px, 1vw, 8px);
-        padding: clamp(4px, 1vh, 8px) 0;
-      }
-      .nav{
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        margin-left: 0;
-        margin-top: clamp(4px, 1vh, 8px);
-      }
-      .cta{
-        order: 2;
-        margin-left: auto;
-      }
-    }
-
-    /* Jeton-style hero section */
-    .site-hero{
-      position:relative;
-      min-height: var(--hero-h);   /* fixed visual band like Jeton */
-      isolation:isolate;           /* keep overlays contained */
-      overflow:hidden;
-      width: 100vw;                /* Full viewport width */
-      margin-left: calc(-50vw + 50%); /* Extend beyond container */
-      margin-right: calc(-50vw + 50%); /* Extend beyond container */
-    }
-    .hero-media{
-      position:absolute; inset:0; z-index:0;
-      width: 100%;
-      overflow: hidden;
-    }
-    .hero-media img{
-      width:100vw; height:100%; object-fit:cover; object-position:center 75%;
-      filter: none; /* keep your clean grade */
-      transform: translateZ(0);    /* helps GPU on Safari */
-      margin-left: 0;              /* No margins */
-      margin-right: 0;             /* No margins */
-    }
-    .hero-card{
-      position:absolute; z-index:1;
-      width: min(600px, 45%);                    /* Better max width for large screens */
-      top: clamp(15%, 10vh, 20%);               /* Better upper positioning */
-      right: clamp(5%, 3vw, 8%);                /* Better right positioning */
-      padding: clamp(8px, 1vw, 12px) clamp(20px, 3vw, 32px); /* Shorter vertical, wider horizontal */
-      border-radius: 20px;                       /* Previous design radius */
-      background: rgba(255, 255, 255, 0.95);    /* Previous design background */
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25); /* Previous design shadow */
-      backdrop-filter: blur(10px);               /* Previous design blur */
-      border: 1px solid rgba(255,255,255,0.3);  /* Previous design border */
-    }
-    .hero-card .eyebrow{
-      font-size: clamp(0.6rem, 0.8vw, 0.75rem);  /* Even smaller */
-      letter-spacing:.08em; text-transform:uppercase;
-      color: #0B6C6C; margin:0 0 2px;             /* Even tighter spacing */
-      font-weight: 600;                           /* Previous design weight */
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
-    }
-    .hero-card h1{
-      margin:0 0 3px;                             /* Even tighter spacing */
-      font-size: clamp(1.4rem, 3vw, 2.4rem);     /* Modern responsive size like h2 */
-      line-height:1.2; font-weight:700;           /* Bold weight like h2 */
-      color: #102b2f;                             /* Same color as h2 */
-      letter-spacing: 0;                          /* Normal letter spacing like h2 */
-      font-family: Fraunces, serif;               /* Same Fraunces font as h2 */
-    }
-    .hero-card .lead{
-      font-size: clamp(0.8rem, 1.2vw, 0.95rem);  /* Even smaller body */
-      color: var(--muted); margin: 0 0 16px;      /* More space before buttons */
-      max-width: 60ch;                            /* Wider for wider card */
-      line-height: 1.35;                          /* Tighter line height */
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
-    }
-    .hero-card .actions{ 
-      display:flex; gap:12px; flex-wrap:wrap;     /* Better spacing between buttons */
-      margin-top: clamp(8px, 1.5vh, 12px);        /* More space from text */
-    }
-    .hero-card .btn{
-      padding: clamp(8px, 1.4vh, 12px) clamp(16px, 2.5vw, 24px); /* Better button size */
-      font-size: clamp(0.7rem, 1vw, 0.85rem);     /* Better font size */
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
-      font-weight: 500;                            /* Medium weight for freshness */
-      border-radius: 50px;                         /* Much more circular */
-      height: auto;                                /* Remove fixed height */
-      min-height: 36px;                            /* Better minimum height */
-      transition: all 0.3s ease;                   /* Smoother transitions */
-      white-space: nowrap;                         /* Prevent text wrapping */
-    }
-    .hero-card .btn.primary{
-      background: #0B6C6C;                         /* Your teal color */
-      color: white;
-      border: none;
-    }
-    .hero-card .btn.primary:hover{
-      background: #095b5b;                         /* Darker teal on hover */
-      transform: translateY(-1px);                 /* Subtle lift effect */
-    }
-    .hero-card .btn.ghost{
-      background: transparent;                     /* Clean transparent */
-      color: #0B6C6C;                              /* Teal text to match palette */
-      border: 1px solid #0B6C6C;                   /* Teal border */
-    }
-    .hero-card .btn.ghost:hover{
-      background: rgba(11, 108, 108, 0.05);       /* Light teal background on hover */
-      border-color: #095b5b;                       /* Darker teal border on hover */
-      transform: translateY(-1px);                 /* Subtle lift effect */
-    }
-
-    /* Large screens - better positioning */
-    @media (min-width: 1400px){
-      .hero-card{ 
-        width: min(650px, 40%);                   /* Slightly larger on big screens */
-        top: clamp(12%, 8vh, 18%);               /* Better positioning */
-        right: clamp(6%, 4vw, 10%);              /* More space from edge */
-      }
-    }
-    
-    /* Very large screens - optimal positioning */
-    @media (min-width: 1800px){
-      .hero-card{ 
-        width: min(700px, 35%);                   /* Even better proportions */
-        top: clamp(10%, 6vh, 16%);               /* Optimal positioning */
-        right: clamp(8%, 5vw, 12%);              /* Perfect spacing */
-      }
-    }
-
-    @media (max-width: 840px){
-      .hero-card{ 
-        position: absolute;
-        top: clamp(10%, 8vh, 20%);               /* Higher on mobile */
-        right: clamp(2%, 1vw, 4%);               /* Closer to edge on mobile */
-        width: min(500px, 85%);                  /* Wider on mobile */
-        padding: clamp(6px, 0.8vw, 10px) clamp(16px, 2vw, 24px); /* Tighter on mobile */
-      }
-      .hero-card h1{ font-size: clamp(1.3rem, 2.8vw, 2.2rem); } /* Modern responsive size like h2 */
-      .hero-card .btn{ 
-        padding: clamp(6px, 1.2vh, 10px) clamp(12px, 2vw, 18px); /* Better size on mobile */
-        font-size: clamp(0.65rem, 0.9vw, 0.8rem); /* Better font size on mobile */
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
-        border-radius: 50px;                       /* Keep circular on mobile */
-        min-height: 32px;                          /* Slightly smaller on mobile */
-        gap: 8px;                                   /* Smaller gap on mobile */
-      }
-      .hero-card .actions{ 
-        gap: 8px;                                   /* Smaller gap between buttons on mobile */
-      }
-    }
-
-    /* Modern Section Headers - Serif Style */
-    h2{
-      font-size: clamp(26px, 3.2vw, 40px);
-      margin: 0 0 10px;
-      color: #102b2f;
-      font-family: Fraunces, serif;
-    }
-    h3{
-      font-size: clamp(18px, 2.5vw, 24px);
-      margin: 0 0 8px;
-      color: #102b2f;
+    .hero-content-card .kicker {
+      font-size: clamp(0.7rem, 1vw, 0.85rem); /* Smaller kicker */
+      margin-bottom: clamp(6px, 1vh, 10px); /* Tighter spacing */
+      color: var(--agave);
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    /* Section spacing system - ensures every section "snaps" with predictable spacing */
-    section.section{
-      padding-block: clamp(48px, 8svh, 96px);
-    }
-    .section .section-head{
-      margin-bottom: clamp(20px, 3svh, 36px);
+    .hero-content-card .btn-row {
+      margin-top: clamp(12px, 2vh, 18px); /* Tighter spacing */
     }
 
-    /* Jeton-style grid system - stable across zoom */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: clamp(12px, 1.6vw, 20px);
+    .hero-content-card .btn {
+      padding: clamp(8px, 1.5vh, 12px) clamp(16px, 3vw, 24px); /* Smaller buttons */
+      font-size: clamp(0.8rem, 1.1vw, 0.95rem); /* Smaller button text */
+      margin: 0 clamp(4px, 0.8vw, 8px); /* Tighter margins */
+      border-radius: 10px; /* Slightly less rounded */
+      min-height: clamp(36px, 5vh, 42px); /* Smaller button height */
     }
-    .card{
-      background:#fff; border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-card); padding: clamp(16px, 1.8vw, 24px);
-    }
-    @media (min-width: 960px){
-      .col-4{ grid-column: span 4; }
-      .col-6{ grid-column: span 6; }
-      .col-8{ grid-column: span 8; }
-    }
-    @media (max-width: 959.98px){
-      .col-4, .col-6, .col-8{ grid-column: 1 / -1; }
-    }
-
-    /* Accessibility & motion preferences */
-        @media (prefers-reduced-motion: reduce){
-          * { animation: none !important; transition: none !important; }
-        }
-
-        /* === AGING SIMULATOR STYLES === */
-        #agingSlider {
-          -webkit-appearance: none;
-          appearance: none;
-          background: var(--line);
-          height: 8px;
-          border-radius: 4px;
-          outline: none;
-          transition: all 0.3s ease;
-        }
-
-        #agingSlider::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: var(--agave);
-          cursor: pointer;
-          border: 3px solid #fff;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-          transition: all 0.3s ease;
-        }
-
-        #agingSlider::-webkit-slider-thumb:hover {
-          transform: scale(1.1);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        #agingSlider::-moz-range-thumb {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: var(--agave);
-          cursor: pointer;
-          border: 3px solid #fff;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-          transition: all 0.3s ease;
-        }
-
-        #agingSlider::-moz-range-thumb:hover {
-          transform: scale(1.1);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .kpi-card {
-          transition: all 0.3s ease;
-        }
-
-        .kpi-card:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-          border-color: var(--agave);
-        }
-
-        /* Mobile responsiveness for simulator */
-        @media (max-width: 768px) {
-          .simulator-container {
-            grid-template-columns: 1fr !important;
-            gap: 24px !important;
-          }
-          
-          .kpi-grid {
-            grid-template-columns: 1fr !important;
-          }
-          
-          .aging-simulator-section .card {
-            padding: 20px !important;
-          }
-        }
-    
     .kicker{color:var(--sage);font-weight:800;letter-spacing:.18em;text-transform:uppercase;font-size:.78rem}
     h1{
       font-family:Fraunces,serif;font-weight:700;line-height:1.08;margin:.15em 0 .35em;
@@ -503,78 +198,19 @@
 
     /* Sections */
     section{padding:56px 0;border-top:1px solid var(--line)}
-    /* h2 styling consolidated above */
+    h2{font-family:Fraunces,serif;font-size: clamp(26px, 3.2vw, 40px);margin:0 0 10px;color:#102b2f}
     .sub{color:var(--muted);margin:0 0 18px}
     .grid{display:grid;gap:18px}
-    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2vw,24px)}
-    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,24px)}
-    .grid-4{grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.5vw,20px)}
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:clamp(16px, 2vw, 24px);
-      box-shadow:var(--shadow);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      opacity: 1;
-      transform: translateY(0);
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before{
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-      transition: left 0.5s;
-    }
-    .card:hover::before{
-      left: 100%;
-    }
-    .card:hover{
-      transform: translateY(-8px) rotateY(8deg) scale(1.02) !important;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.15) !important;
-      background: #ffffff !important;
-    }
-    
-    /* More specific selector for opportunity cards */
-    #opportunity .card:hover{
-      transform: translateY(-8px) rotateY(8deg) scale(1.02) !important;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.15) !important;
-      background: #ffffff !important;
-    }
-    .card.animate-in{
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .card h3{
-      font-size: clamp(16px, 2vw, 20px);
-      font-weight: 600;
-      color: #102b2f;
-      margin: 0 0 clamp(8px, 1vh, 12px) 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
-    }
-    .card p{
-      font-size: clamp(14px, 1.5vw, 16px);
-      color: #6A7A81;
-      line-height: 1.5;
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
-    }
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
     .mini{font-size:.9rem;color:var(--muted)}
     .list{padding-left:18px;margin:0}
     .list li{margin:6px 0}
     .icon{
       width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:10px;
       background:#f1faf9;border:1px solid #d7ecef;
-      transition: all 0.3s ease;
-    }
-    .card:hover .icon{
-      transform: scale(1.1) rotate(5deg);
-      background:color-mix(in oklab, var(--agave) 12%, #fff 88%);
     }
     .pill{display:inline-block;font-size:.72rem;letter-spacing:.12em;padding:6px 10px;border-radius:999px;background:#eef7f8;color:var(--agave);border:1px solid #d7ecef}
 
@@ -798,9 +434,9 @@
     @media (max-width:940px){
       .hero{height: 100vh; /* Keep full viewport */}
       .hero-content-card{padding: clamp(14px, 2vh, 20px) clamp(18px, 2.5vw, 28px); max-width: clamp(300px, 50vw, 400px); width: auto;}
-      .grid-2{grid-template-columns:1fr;gap:clamp(12px,3vw,18px)}
-      .grid-3{grid-template-columns:1fr;gap:clamp(12px,3vw,18px)}
-      .grid-4{grid-template-columns:repeat(2,1fr);gap:clamp(10px,2.5vw,16px)}
+      .grid-2{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .grid-4{grid-template-columns:repeat(2,1fr)}
     }
     
     @media (max-width:768px){
@@ -1691,15 +1327,16 @@
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
+  <header>
+    <div class="wrap">
+      <div class="nav">
         <div class="brand">
           <div class="logo" aria-hidden="true">
-          <img src="public/images/Logo_for_Website.png" alt="Hogshead Agave Spirits Logo" style="width: 100%; height: 100%; object-fit: contain;">
+            <img src="public/images/Logo_for_Website.png" alt="Hogshead Agave Spirits Logo" style="width: 100%; height: 100%; object-fit: contain;">
           </div>
           <span>Hogshead Agave Spirits</span>
         </div>
-      <nav class="nav">
+        <nav>
           <a href="#opportunity">Opportunity</a>
           <a href="#market">Market</a>
           <a href="#whyus">Why Us</a>
@@ -1708,82 +1345,60 @@
           <a href="#faq">FAQ</a>
         </nav>
         <a class="cta" href="#contact">Request Memo</a>
+      </div>
     </div>
   </header>
 
   <main>
     <div class="wrap">
       <!-- HERO -->
-      <header class="site-hero" id="hero">
-        <picture class="hero-media">
-          <img src="public/images/Agave_Mountain.png" alt="Agave field with mountain" />
-        </picture>
-
-        <div class="hero-card">
-          <p class="eyebrow">ALTERNATIVE ASSET • MEXICO → U.S.</p>
-          <h1>Invest in aging tequila—<br>curated, compliant, and time-powered.</h1>
+      <section class="hero" style="border-top:none">
+        <div class="hero-container">
+          <!-- Hero content card -->
+          <div class="hero-content-card">
+          <div class="kicker">Alternative Asset • Mexico → U.S.</div>
+          <h1>Invest in aging tequila—curated, compliant, and time-powered.</h1>
           <p class="lead">We provide investors with institutional-grade exposure to aging tequila inventory held under professional custody. The thesis is simple: regulated origin, constrained supply, and value that compounds with time-in-barrel.</p>
-          <div class="actions">
-            <a class="btn primary" href="#opportunity">See the Opportunity</a>
-            <a class="btn ghost" href="#contact">Request Investor Memo</a>
+          <div class="btn-row">
+            <a class="btn alt" href="#opportunity">See the Opportunity</a>
+            <a class="btn" href="#contact">Request Investor Memo</a>
           </div>
         </div>
-      </header>
+        </div>
+      </section>
 
       <!-- OPPORTUNITY -->
       <section id="opportunity">
         <h2>The Opportunity</h2>
-        <p class="sub">US investors can now access a regulated, denomination-protected asset class with historically low entry costs and proven appreciation through aging. Inspired by successful bourbon barrel funds, adapted for tequila's booming market.</p>
+        <p class="sub">Premiumization, scarcity, and regulated origin create a durable backdrop. We focus on aging inventory where time is the primary value driver.</p>
         <div class="grid grid-3">
           <div class="card">
             <div class="icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#0E5B62" stroke-width="1.5"/>
+                <path d="M4 18c2-7 6-11 8-11s6 4 8 11H4Z" stroke="#0E5B62" stroke-width="1.5"/>
               </svg>
             </div>
             <h3>Regulated Origin</h3>
-            <p>Protected by Mexican law, tequila's denomination provides regulatory clarity for US investors.</p>
+            <p>Protected denomination and category standards provide clarity and defensibility.</p>
           </div>
           <div class="card">
             <div class="icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#0E5B62" stroke-width="1.5"/>
+                <path d="M4 14l6 4 10-6" stroke="#0E5B62" stroke-width="1.6" />
               </svg>
             </div>
-            <h3>Historic Low Entry</h3>
-            <p>Agave costs at near-historic lows create exceptional buying opportunities before market recovery.</p>
+            <h3>Time-Powered Value</h3>
+            <p>Aging elevates category and scarcity. We target windows where risk-adjusted exits are most attractive.</p>
           </div>
           <div class="card">
             <div class="icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="#0E5B62" stroke-width="1.5"/>
+                <circle cx="12" cy="12" r="8" stroke="#0E5B62" stroke-width="1.5"/>
+                <path d="M12 7v5l3 3" stroke="#0E5B62" stroke-width="1.5"/>
               </svg>
             </div>
-            <h3>Proven Model</h3>
-            <p>Bourbon barrel funds succeeded. We adapt this model for tequila's booming US market.</p>
-          </div>
-        </div>
-        
-        <!-- Additional Value Props -->
-        <div class="grid grid-2" style="margin-top: 32px;">
-          <div class="card">
-            <div class="icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#0E5B62" stroke-width="1.5"/>
-              </svg>
-            </div>
-            <h3>Natural & Additive-Free</h3>
-            <p>100% natural tequila aligns with premium, health-conscious consumer trends.</p>
-          </div>
-          <div class="card">
-            <div class="icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="#0E5B62" stroke-width="1.5"/>
-                <path d="M12 7v10" stroke="#0E5B62" stroke-width="1.5"/>
-              </svg>
-            </div>
-            <h3>Aging = Appreciation</h3>
-            <p>Time in barrel directly correlates with value appreciation and premium pricing.</p>
+            <h3>Multiple Exit Paths</h3>
+            <p>Resale channels and private-label bottling provide optionality across holding periods.</p>
           </div>
         </div>
       </section>
@@ -2130,84 +1745,6 @@
             <p class="note" style="font-size: 0.8rem; margin-top: 4px;">Data: Joe's benchmark (0–120 months). Values are medians/representative prices per cohort; not investment advice.</p>
           </div>
         </div>
-
-        <!-- Interactive Aging Simulator -->
-        <div class="aging-simulator-section" style="margin-top: 48px;">
-          <div class="card" style="padding: 32px;">
-            <div style="margin-bottom: 24px;">
-              <span class="pill">Interactive Tool</span>
-              <h3>Aging Value Simulator</h3>
-              <p style="color: var(--muted); margin: 8px 0 0;">Slide through time to see how aging increases barrel value while angel's share reduces volume.</p>
-            </div>
-
-            <div class="simulator-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
-              <!-- Left: Controls & KPIs -->
-              <div class="simulator-controls">
-                <!-- Slider -->
-                <div class="slider-container" style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; margin-bottom: 24px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <span style="font-size: 14px; color: var(--muted);">Months aged</span>
-                    <span id="currentMonth" style="font-weight: 600; color: var(--ink); font-size: 16px;">24 mo</span>
-                  </div>
-                  <input 
-                    type="range" 
-                    id="agingSlider" 
-                    min="0" 
-                    max="120" 
-                    value="24" 
-                    step="1"
-                    style="width: 100%; height: 8px; border-radius: 4px; background: var(--line); outline: none; -webkit-appearance: none;"
-                  />
-                  <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--muted);">
-                    <span>0m</span>
-                    <span>120m</span>
-                  </div>
-                </div>
-
-                <!-- KPI Grid -->
-                <div class="kpi-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
-                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Remaining Volume</div>
-                    <div id="remainingVolume" style="font-weight: 600; color: var(--ink);">180.0 L</div>
-                  </div>
-                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
-                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Angel's Share</div>
-                    <div id="angelShare" style="font-weight: 600; color: var(--ink);">10.0%</div>
-                  </div>
-                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
-                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Barrel Value</div>
-                    <div id="barrelValue" style="font-weight: 600; color: var(--agave);">$9,000</div>
-                  </div>
-                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
-                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Value per Liter</div>
-                    <div id="valuePerLiter" style="font-weight: 600; color: var(--ink);">$50.00</div>
-                  </div>
-                </div>
-
-                <!-- Value Band -->
-                <div class="value-band" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 16px;">
-                  <div style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">Value Range</div>
-                  <div id="valueRange" style="font-size: 14px; color: var(--ink);">$8,100 – $9,900</div>
-                  <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Low/Base/High resale scenarios</div>
-                </div>
-              </div>
-
-              <!-- Right: Chart -->
-              <div class="simulator-chart">
-                <div style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                    <h4 style="margin: 0; color: var(--ink); font-size: 16px;">Value vs. Volume over Time</h4>
-                    <span style="font-size: 11px; color: var(--muted);">Interactive • Real-time</span>
-                  </div>
-                  <div id="agingChart" style="width: 100%; height: 300px;"></div>
-                  <div style="font-size: 11px; color: var(--muted); margin-top: 8px;">
-                    Vertical line tracks current month. Value increases while volume decreases due to angel's share.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
       <!-- WHY US -->
@@ -2483,33 +2020,21 @@
         chart.setOption({
           grid: { left: 80, right: 40, top: 40, bottom: 60 },
           backgroundColor: 'transparent',
-          animation: true,
-          animationDuration: 3000,
-          animationEasing: 'cubicOut',
-          animationDelay: function (idx) {
-            return idx * 20; // Stagger the animation
-          },
           tooltip: {
             trigger: 'axis',
             backgroundColor: 'rgba(255,255,255,0.95)',
-            borderColor: '#0E5B62',
+            borderColor: '#E9E3DA',
             borderWidth: 1,
-            borderRadius: 8,
-            shadowBlur: 15,
-            shadowColor: 'rgba(0,0,0,0.1)',
             textStyle: { 
               color: '#1B2629', 
-              fontFamily: 'system-ui, sans-serif',
+              fontFamily: 'Manrope, system-ui, sans-serif',
               fontSize: 13
             },
             formatter: (params)=>{
               const p = params[0];
-              const years = Math.floor(p.axisValue / 12);
-              const months = p.axisValue % 12;
-              const ageText = years > 0 ? `${years}y ${months}m` : `${months}m`;
-              return `<div style="font-family: system-ui, sans-serif;">
-                <div style="font-weight: 600; color: #0E5B62;">Age: ${ageText}</div>
-                <div style="font-weight: 600; color: #1B2629;">${fmtUSD(p.data)}</div>
+              return `<div style="font-family: 'Manrope', system-ui, sans-serif;">
+                <div style="font-weight: 600; color: #0E5B62;">Age: ${p.axisValue} months</div>
+                <div style="font-weight: 600; color: #1B2629;">Retail: ${fmtUSD(p.data)}</div>
               </div>`;
             }
           },
@@ -2563,307 +2088,25 @@
             data: prices,
             step: 'middle',
             symbol: 'none',
-            lineStyle: { 
-              width: 4, 
-              color: '#0E5B62'
-            },
-            emphasis: {
-              lineStyle: {
-                width: 5,
-                color: '#D78A3B'
-              }
-            },
+            lineStyle: { width: 3, color: '#0E5B62', type: 'solid' },
+            itemStyle: { color: '#0E5B62', borderColor:'#fff', borderWidth:1 },
             label: {
-              show: false
+              show: true,
+              position: 'top',
+              color: '#1B2629',
+              fontFamily: 'Manrope, system-ui, sans-serif',
+              fontSize: 11,
+              fontWeight: 600,
+              formatter: function(params) {
+                // Only show labels at yearly intervals (12, 24, 36, 48, 60, 72, 84, 96, 108, 120)
+                return params.dataIndex % 12 === 0 && params.dataIndex > 0 ? fmtUSD(params.data) : '';
+              }
             }
           }]
         });
-
-        // Add color transition effect after animation completes
-        setTimeout(() => {
-          const colors = [
-            '#0E5B62', // Deep agave
-            '#3D825E', // Lighter agave  
-            '#5FA8A5', // Sea-sage
-            '#4A9B8E', // Teal blend
-            '#2D6B5D', // Forest agave
-            '#0E5B62'  // Back to start
-          ];
-          
-          let colorIndex = 0;
-          
-          const colorTransition = setInterval(() => {
-            colorIndex = (colorIndex + 1) % colors.length;
-            
-            chart.setOption({
-              series: [{
-                lineStyle: {
-                  color: colors[colorIndex]
-            }
-          }]
-        });
-          }, 2000); // Change color every 2 seconds
-          
-          // Stop the color transition on hover
-          chart.on('mouseover', () => {
-            clearInterval(colorTransition);
-            chart.setOption({
-              series: [{
-                lineStyle: {
-                  color: '#D78A3B' // Amber on hover
-                }
-              }]
-            });
-          });
-          
-          // Resume color transition when mouse leaves
-          chart.on('mouseout', () => {
-            colorIndex = 0;
-            const resumeTransition = setInterval(() => {
-              colorIndex = (colorIndex + 1) % colors.length;
-              
-              chart.setOption({
-                series: [{
-                  lineStyle: {
-                    color: colors[colorIndex]
-                  }
-                }]
-              });
-            }, 2000);
-          });
-        }, 3500); // Start color transition 3.5 seconds after page load
 
         window.addEventListener('resize', () => chart.resize());
       }
-    })();
-
-    // === AGING SIMULATOR ===
-    (function() {
-      let agingData = null;
-      let chartData = null;
-
-      // Load real aging data
-      async function loadAgingData() {
-        try {
-          const response = await fetch('/public/data/aging.json');
-          agingData = await response.json();
-          
-          // Generate chart data from real data
-          chartData = agingData.series.map(point => ({
-            month: point.month,
-            remainingVolume: point.liters_remaining,
-            barrelValue: point.liters_remaining * point.resale_price_per_l.base,
-            valueLow: point.liters_remaining * point.resale_price_per_l.low,
-            valueHigh: point.liters_remaining * point.resale_price_per_l.high,
-            costPerLiter: point.cost_per_l,
-            cumCost: point.cum_cost_per_bbl
-          }));
-          
-          return true;
-        } catch (error) {
-          console.error('Failed to load aging data:', error);
-          return false;
-        }
-      }
-
-      function getAgingMetrics(months) {
-        if (!agingData || !chartData) return null;
-        
-        // Find the closest month in the data
-        const dataPoint = chartData.find(point => point.month === months) || 
-                         chartData[Math.min(months, chartData.length - 1)];
-        
-        if (!dataPoint) return null;
-        
-        const originalVolume = agingData.meta.barrel_size_l;
-        const angelShare = ((originalVolume - dataPoint.remainingVolume) / originalVolume) * 100;
-        
-        return {
-          remainingVolume: dataPoint.remainingVolume,
-          angelShare: angelShare,
-          pricePerLiter: dataPoint.barrelValue / dataPoint.remainingVolume,
-          barrelValue: dataPoint.barrelValue,
-          valueLow: dataPoint.valueLow,
-          valueHigh: dataPoint.valueHigh,
-          costPerLiter: dataPoint.costPerLiter,
-          cumCost: dataPoint.cumCost
-        };
-      }
-
-      function updateSimulator(months) {
-        const metrics = getAgingMetrics(months);
-        if (!metrics) return;
-        
-        // Update KPI displays
-        document.getElementById('currentMonth').textContent = `${months} mo`;
-        document.getElementById('remainingVolume').textContent = `${metrics.remainingVolume.toFixed(1)} L`;
-        document.getElementById('angelShare').textContent = `${metrics.angelShare.toFixed(1)}%`;
-        document.getElementById('barrelValue').textContent = `$${Math.round(metrics.barrelValue).toLocaleString()}`;
-        document.getElementById('valuePerLiter').textContent = `$${metrics.pricePerLiter.toFixed(2)}`;
-        document.getElementById('valueRange').textContent = `$${Math.round(metrics.valueLow).toLocaleString()} – $${Math.round(metrics.valueHigh).toLocaleString()}`;
-        
-        // Update chart
-        updateAgingChart(months);
-      }
-
-      function updateAgingChart(currentMonth) {
-        if (!chartData) return;
-        
-        const chart = echarts.init(document.getElementById('agingChart'));
-        
-        chart.setOption({
-          grid: { left: 60, right: 40, top: 20, bottom: 50 },
-          backgroundColor: 'transparent',
-          tooltip: {
-            trigger: 'axis',
-            backgroundColor: 'rgba(255,255,255,0.95)',
-            borderColor: '#0E5B62',
-            borderWidth: 1,
-            borderRadius: 8,
-            textStyle: { 
-              color: '#1B2629', 
-              fontFamily: 'system-ui, sans-serif',
-              fontSize: 12
-            },
-            formatter: (params) => {
-              const p = params[0];
-              const years = Math.floor(p.axisValue / 12);
-              const months = p.axisValue % 12;
-              const ageText = years > 0 ? `${years}y ${months}m` : `${months}m`;
-              return `<div style="font-family: system-ui, sans-serif;">
-                <div style="font-weight: 600; color: #0E5B62;">Age: ${ageText}</div>
-                <div style="font-weight: 600; color: #1B2629;">Value: $${Math.round(p.data).toLocaleString()}</div>
-              </div>`;
-            }
-          },
-          xAxis: {
-            type: 'category',
-            data: chartData.map(d => d.month),
-            axisLine: { lineStyle: { color: '#E9E3DA' } },
-            axisTick: { show: false },
-            axisLabel: { 
-              color: '#6A7A81', 
-              fontFamily: 'system-ui, sans-serif',
-              fontSize: 11,
-              interval: 9,
-              formatter: v => v % 12 === 0 ? v + 'm' : ''
-            },
-            splitLine: { show: false },
-            name: 'Age (months)',
-            nameLocation: 'middle',
-            nameGap: 30,
-            nameTextStyle: { 
-              color: '#1B2629',
-              fontFamily: 'system-ui, sans-serif',
-              fontSize: 11,
-              fontWeight: 600
-            }
-          },
-          yAxis: {
-            type: 'value',
-            axisLabel: { 
-              color: '#6A7A81', 
-              fontFamily: 'system-ui, sans-serif',
-              fontSize: 11,
-              formatter: v => '$' + (v/1000).toFixed(0) + 'k'
-            },
-            splitLine: { lineStyle: { color: '#E9E3DA', type: 'solid', opacity: 0.3 } },
-            name: 'Barrel Value (USD)',
-            nameGap: 15,
-            nameTextStyle: { 
-              color: '#1B2629',
-              fontFamily: 'system-ui, sans-serif',
-              fontSize: 11,
-              fontWeight: 600
-            }
-          },
-          series: [
-            {
-              name: 'Barrel Value',
-              type: 'line',
-              data: chartData.map(d => d.barrelValue),
-              smooth: true,
-              symbol: 'none',
-              lineStyle: { 
-                width: 3, 
-                color: '#0E5B62'
-              },
-              areaStyle: {
-                color: {
-                  type: 'linear',
-                  x: 0, y: 0, x2: 0, y2: 1,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(14, 94, 98, 0.2)' },
-                    { offset: 1, color: 'rgba(14, 94, 98, 0.02)' }
-                  ]
-                }
-              },
-              markLine: {
-                data: [{
-                  xAxis: currentMonth,
-                  lineStyle: { 
-                    color: '#DB9251', 
-                    type: 'dashed',
-                    width: 2
-                  },
-                  label: {
-                    show: true,
-                    position: 'end',
-                    formatter: `${currentMonth}m`,
-                    color: '#DB9251',
-                    fontSize: 11,
-                    fontWeight: 600
-                  }
-                }]
-              }
-            }
-          ]
-        });
-      }
-
-      // Initialize simulator
-      document.addEventListener('DOMContentLoaded', async function() {
-        const slider = document.getElementById('agingSlider');
-        if (slider) {
-          // Load real data first
-          const dataLoaded = await loadAgingData();
-          
-          if (dataLoaded && agingData) {
-            // Update slider range to match real data
-            const maxMonth = agingData.series[agingData.series.length - 1].month;
-            slider.max = maxMonth;
-            
-            // Update slider labels
-            const labels = slider.parentElement.querySelectorAll('span');
-            if (labels.length >= 2) {
-              labels[labels.length - 1].textContent = `${maxMonth}m`;
-            }
-            
-            // Initial update with real data
-            updateSimulator(24);
-            
-            // Slider event listener
-            slider.addEventListener('input', function() {
-              updateSimulator(parseInt(this.value));
-            });
-            
-            // Initialize chart
-            setTimeout(() => {
-              updateAgingChart(24);
-            }, 100);
-          } else {
-            console.error('Failed to load aging data');
-          }
-        }
-      });
-
-      // Handle window resize
-      window.addEventListener('resize', function() {
-        const chartEl = document.getElementById('agingChart');
-        if (chartEl && echarts.getInstanceByDom(chartEl)) {
-          echarts.getInstanceByDom(chartEl).resize();
-        }
-      });
     })();
 
     // === MARKET INTELLIGENCE ANIMATIONS ===
@@ -3050,27 +2293,6 @@
           console.log('TIMELINE INITIALIZING...');
           updateTimeline();
           console.log('TIMELINE READY!');
-          
-          // Staggered fade-in animation for Opportunity section cards
-          const opportunitySection = document.getElementById('opportunity');
-          if (opportunitySection) {
-            const cards = opportunitySection.querySelectorAll('.card');
-            
-            const observer = new IntersectionObserver((entries) => {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  cards.forEach((card, index) => {
-                    setTimeout(() => {
-                      card.classList.add('animate-in');
-                    }, index * 150); // 150ms stagger
-                  });
-                  observer.unobserve(entry.target);
-                }
-              });
-            }, { threshold: 0.2 });
-            
-            observer.observe(opportunitySection);
-          }
           
           // Initialize hero background scroll effect
           initHeroScrollEffect();
