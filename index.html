@@ -2184,6 +2184,21 @@
                   </div>
                 </div>
 
+                <!-- Initial Cost Card -->
+                <div class="initial-cost-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 16px;">
+                  <div style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">Initial Investment</div>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div>
+                      <div style="font-size: 11px; color: var(--muted); margin-bottom: 2px;">Barrel Cost (Month 0)</div>
+                      <div id="initialBarrelCost" style="font-weight: 600; color: var(--ink); font-size: 14px;">$665</div>
+                    </div>
+                    <div>
+                      <div style="font-size: 11px; color: var(--muted); margin-bottom: 2px;">Cost per Liter</div>
+                      <div id="initialCostPerLiter" style="font-weight: 600; color: var(--ink); font-size: 14px;">$3.33</div>
+                    </div>
+                  </div>
+                </div>
+
                 <!-- Value Band -->
                 <div class="value-band" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 16px;">
                   <div style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">Value Range</div>
@@ -2702,6 +2717,14 @@
         document.getElementById('valuePerLiter').textContent = `$${metrics.pricePerLiter.toFixed(2)}`;
         document.getElementById('valueRange').textContent = `$${Math.round(metrics.valueLow).toLocaleString()} – $${Math.round(metrics.valueHigh).toLocaleString()}`;
         
+        // Update initial cost displays (only set once)
+        if (agingData && !document.getElementById('initialBarrelCost').dataset.initialized) {
+          const initialData = agingData.series[0];
+          document.getElementById('initialBarrelCost').textContent = `$${Math.round(initialData.cum_cost_per_bbl)}`;
+          document.getElementById('initialCostPerLiter').textContent = `$${initialData.cost_per_l.toFixed(2)}`;
+          document.getElementById('initialBarrelCost').dataset.initialized = 'true';
+        }
+        
         // Update chart
         updateAgingChart(months);
       }
@@ -2721,18 +2744,30 @@
             borderWidth: 1,
             borderRadius: 8,
             textStyle: { 
-              color: '#1B2629', 
+              color: '#1B2629',
               fontFamily: 'system-ui, sans-serif',
               fontSize: 12
             },
             formatter: (params) => {
-              const p = params[0];
-              const years = Math.floor(p.axisValue / 12);
-              const months = p.axisValue % 12;
+              const years = Math.floor(params[0].axisValue / 12);
+              const months = params[0].axisValue % 12;
               const ageText = years > 0 ? `${years}y ${months}m` : `${months}m`;
+              
+              const valueData = params.find(p => p.seriesName === 'Barrel Value');
+              const costData = params.find(p => p.seriesName === 'Cumulative Cost');
+              
+              const value = valueData ? Math.round(valueData.data) : 0;
+              const cost = costData ? Math.round(costData.data) : 0;
+              const profit = value - cost;
+              const yieldPct = cost > 0 ? ((profit / cost) * 100).toFixed(1) : 0;
+              
               return `<div style="font-family: system-ui, sans-serif;">
-                <div style="font-weight: 600; color: #0E5B62;">Age: ${ageText}</div>
-                <div style="font-weight: 600; color: #1B2629;">Value: $${Math.round(p.data).toLocaleString()}</div>
+                <div style="font-weight: 600; color: #0E5B62; margin-bottom: 4px;">Age: ${ageText}</div>
+                <div style="font-weight: 600; color: #1B2629;">Value: $${value.toLocaleString()}</div>
+                <div style="font-weight: 500; color: #6A7A81;">Cost: $${cost.toLocaleString()}</div>
+                <div style="font-weight: 600; color: ${profit >= 0 ? '#0E5B62' : '#A85D5D'}; margin-top: 2px;">
+                  Profit: $${profit.toLocaleString()} (${yieldPct}%)
+                </div>
               </div>`;
             }
           },
@@ -2768,13 +2803,23 @@
               formatter: v => '$' + (v/1000).toFixed(0) + 'k'
             },
             splitLine: { lineStyle: { color: '#E9E3DA', type: 'solid', opacity: 0.3 } },
-            name: 'Barrel Value (USD)',
+            name: 'Value & Cost (USD)',
             nameGap: 15,
             nameTextStyle: { 
               color: '#1B2629',
               fontFamily: 'system-ui, sans-serif',
               fontSize: 11,
               fontWeight: 600
+            }
+          },
+          legend: {
+            data: ['Barrel Value', 'Cumulative Cost'],
+            top: 0,
+            right: 0,
+            textStyle: {
+              color: '#6A7A81',
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 11
             }
           },
           series: [
@@ -2813,6 +2858,28 @@
                     color: '#DB9251',
                     fontSize: 11,
                     fontWeight: 600
+                  }
+                }]
+              }
+            },
+            {
+              name: 'Cumulative Cost',
+              type: 'line',
+              data: chartData.map(d => d.cumCost),
+              smooth: true,
+              symbol: 'none',
+              lineStyle: { 
+                width: 2, 
+                color: '#6A7A81',
+                type: 'dashed'
+              },
+              markLine: {
+                data: [{
+                  xAxis: currentMonth,
+                  lineStyle: { 
+                    color: '#DB9251', 
+                    type: 'dashed',
+                    width: 2
                   }
                 }]
               }
