@@ -359,22 +359,16 @@
 
     /* Modern Section Headers - Serif Style */
     h2{
-      font-size: clamp(1.8rem, 4vw, 3.2rem);     /* Modern responsive size */
-      font-weight: 700;                           /* Bold weight */
-      line-height: 1.2;                           /* Slightly more spacing */
-      letter-spacing: 0;                          /* Normal letter spacing */
-      color: #0E1B1B;                             /* Dark teal color like image */
-      margin: 0 0 clamp(16px, 3vh, 28px) 0;      /* Responsive margins */
-      font-family: Fraunces, serif;               /* Consistent serif font */
-      text-align: left;                           /* Left aligned */
+      font-size: clamp(26px, 3.2vw, 40px);
+      margin: 0 0 10px;
+      color: #102b2f;
+      font-family: Fraunces, serif;
     }
     h3{
-      font-size: clamp(1.2rem, 2.5vw, 1.6rem);   /* Responsive h3 size */
-      font-weight: 600;                           /* Medium weight */
-      line-height: 1.3;                           /* Good line height */
-      color: #102b2f;                             /* Dark color */
-      margin: 0 0 clamp(8px, 1.5vh, 12px) 0;     /* Responsive margins */
-      font-family: Fraunces, serif;               /* Consistent serif font */
+      font-size: clamp(18px, 2.5vw, 24px);
+      margin: 0 0 8px;
+      color: #102b2f;
+      font-weight: 600;
     }
 
     /* Section spacing system - ensures every section "snaps" with predictable spacing */
@@ -405,9 +399,80 @@
     }
 
     /* Accessibility & motion preferences */
-    @media (prefers-reduced-motion: reduce){
-      * { animation: none !important; transition: none !important; }
-    }
+        @media (prefers-reduced-motion: reduce){
+          * { animation: none !important; transition: none !important; }
+        }
+
+        /* === AGING SIMULATOR STYLES === */
+        #agingSlider {
+          -webkit-appearance: none;
+          appearance: none;
+          background: var(--line);
+          height: 8px;
+          border-radius: 4px;
+          outline: none;
+          transition: all 0.3s ease;
+        }
+
+        #agingSlider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: var(--agave);
+          cursor: pointer;
+          border: 3px solid #fff;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+          transition: all 0.3s ease;
+        }
+
+        #agingSlider::-webkit-slider-thumb:hover {
+          transform: scale(1.1);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        #agingSlider::-moz-range-thumb {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: var(--agave);
+          cursor: pointer;
+          border: 3px solid #fff;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+          transition: all 0.3s ease;
+        }
+
+        #agingSlider::-moz-range-thumb:hover {
+          transform: scale(1.1);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .kpi-card {
+          transition: all 0.3s ease;
+        }
+
+        .kpi-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+          border-color: var(--agave);
+        }
+
+        /* Mobile responsiveness for simulator */
+        @media (max-width: 768px) {
+          .simulator-container {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+          }
+          
+          .kpi-grid {
+            grid-template-columns: 1fr !important;
+          }
+          
+          .aging-simulator-section .card {
+            padding: 20px !important;
+          }
+        }
     
     .kicker{color:var(--sage);font-weight:800;letter-spacing:.18em;text-transform:uppercase;font-size:.78rem}
     h1{
@@ -444,13 +509,72 @@
     .grid-2{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2vw,24px)}
     .grid-3{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,24px)}
     .grid-4{grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.5vw,20px)}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:clamp(16px, 2vw, 24px);
+      box-shadow:var(--shadow);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 1;
+      transform: translateY(0);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s;
+    }
+    .card:hover::before{
+      left: 100%;
+    }
+    .card:hover{
+      transform: translateY(-8px) rotateY(8deg) scale(1.02) !important;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15) !important;
+      background: #ffffff !important;
+    }
+    
+    /* More specific selector for opportunity cards */
+    #opportunity .card:hover{
+      transform: translateY(-8px) rotateY(8deg) scale(1.02) !important;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15) !important;
+      background: #ffffff !important;
+    }
+    .card.animate-in{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .card h3{
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: 600;
+      color: #102b2f;
+      margin: 0 0 clamp(8px, 1vh, 12px) 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+    }
+    .card p{
+      font-size: clamp(14px, 1.5vw, 16px);
+      color: #6A7A81;
+      line-height: 1.5;
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+    }
     .mini{font-size:.9rem;color:var(--muted)}
     .list{padding-left:18px;margin:0}
     .list li{margin:6px 0}
     .icon{
       width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:10px;
       background:#f1faf9;border:1px solid #d7ecef;
+      transition: all 0.3s ease;
+    }
+    .card:hover .icon{
+      transform: scale(1.1) rotate(5deg);
+      background:color-mix(in oklab, var(--agave) 12%, #fff 88%);
     }
     .pill{display:inline-block;font-size:.72rem;letter-spacing:.12em;padding:6px 10px;border-radius:999px;background:#eef7f8;color:var(--agave);border:1px solid #d7ecef}
 
@@ -1609,35 +1733,57 @@
       <!-- OPPORTUNITY -->
       <section id="opportunity">
         <h2>The Opportunity</h2>
-        <p class="sub">Premiumization, scarcity, and regulated origin create a durable backdrop. We focus on aging inventory where time is the primary value driver.</p>
+        <p class="sub">US investors can now access a regulated, denomination-protected asset class with historically low entry costs and proven appreciation through aging. Inspired by successful bourbon barrel funds, adapted for tequila's booming market.</p>
         <div class="grid grid-3">
           <div class="card">
             <div class="icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M4 18c2-7 6-11 8-11s6 4 8 11H4Z" stroke="#0E5B62" stroke-width="1.5"/>
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#0E5B62" stroke-width="1.5"/>
               </svg>
             </div>
             <h3>Regulated Origin</h3>
-            <p>Protected denomination and category standards provide clarity and defensibility.</p>
+            <p>Protected by Mexican law, tequila's denomination provides regulatory clarity for US investors.</p>
           </div>
           <div class="card">
             <div class="icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M4 14l6 4 10-6" stroke="#0E5B62" stroke-width="1.6" />
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#0E5B62" stroke-width="1.5"/>
               </svg>
             </div>
-            <h3>Time-Powered Value</h3>
-            <p>Aging elevates category and scarcity. We target windows where risk-adjusted exits are most attractive.</p>
+            <h3>Historic Low Entry</h3>
+            <p>Agave costs at near-historic lows create exceptional buying opportunities before market recovery.</p>
           </div>
           <div class="card">
             <div class="icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="8" stroke="#0E5B62" stroke-width="1.5"/>
-                <path d="M12 7v5l3 3" stroke="#0E5B62" stroke-width="1.5"/>
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="#0E5B62" stroke-width="1.5"/>
               </svg>
             </div>
-            <h3>Multiple Exit Paths</h3>
-            <p>Resale channels and private-label bottling provide optionality across holding periods.</p>
+            <h3>Proven Model</h3>
+            <p>Bourbon barrel funds succeeded. We adapt this model for tequila's booming US market.</p>
+          </div>
+        </div>
+        
+        <!-- Additional Value Props -->
+        <div class="grid grid-2" style="margin-top: 32px;">
+          <div class="card">
+            <div class="icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#0E5B62" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <h3>Natural & Additive-Free</h3>
+            <p>100% natural tequila aligns with premium, health-conscious consumer trends.</p>
+          </div>
+          <div class="card">
+            <div class="icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="#0E5B62" stroke-width="1.5"/>
+                <path d="M12 7v10" stroke="#0E5B62" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <h3>Aging = Appreciation</h3>
+            <p>Time in barrel directly correlates with value appreciation and premium pricing.</p>
           </div>
         </div>
       </section>
@@ -1984,6 +2130,84 @@
             <p class="note" style="font-size: 0.8rem; margin-top: 4px;">Data: Joe's benchmark (0–120 months). Values are medians/representative prices per cohort; not investment advice.</p>
           </div>
         </div>
+
+        <!-- Interactive Aging Simulator -->
+        <div class="aging-simulator-section" style="margin-top: 48px;">
+          <div class="card" style="padding: 32px;">
+            <div style="margin-bottom: 24px;">
+              <span class="pill">Interactive Tool</span>
+              <h3>Aging Value Simulator</h3>
+              <p style="color: var(--muted); margin: 8px 0 0;">Slide through time to see how aging increases barrel value while angel's share reduces volume.</p>
+            </div>
+
+            <div class="simulator-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+              <!-- Left: Controls & KPIs -->
+              <div class="simulator-controls">
+                <!-- Slider -->
+                <div class="slider-container" style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; margin-bottom: 24px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <span style="font-size: 14px; color: var(--muted);">Months aged</span>
+                    <span id="currentMonth" style="font-weight: 600; color: var(--ink); font-size: 16px;">24 mo</span>
+                  </div>
+                  <input 
+                    type="range" 
+                    id="agingSlider" 
+                    min="0" 
+                    max="60" 
+                    value="24" 
+                    step="1"
+                    style="width: 100%; height: 8px; border-radius: 4px; background: var(--line); outline: none; -webkit-appearance: none;"
+                  />
+                  <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--muted);">
+                    <span>0m</span>
+                    <span>60m</span>
+                  </div>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="kpi-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
+                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Remaining Volume</div>
+                    <div id="remainingVolume" style="font-weight: 600; color: var(--ink);">180.0 L</div>
+                  </div>
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
+                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Angel's Share</div>
+                    <div id="angelShare" style="font-weight: 600; color: var(--ink);">10.0%</div>
+                  </div>
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
+                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Barrel Value</div>
+                    <div id="barrelValue" style="font-weight: 600; color: var(--agave);">$9,000</div>
+                  </div>
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
+                    <div style="font-size: 12px; color: var(--muted); margin-bottom: 4px;">Value per Liter</div>
+                    <div id="valuePerLiter" style="font-weight: 600; color: var(--ink);">$50.00</div>
+                  </div>
+                </div>
+
+                <!-- Value Band -->
+                <div class="value-band" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 16px;">
+                  <div style="font-size: 12px; color: var(--muted); margin-bottom: 8px;">Value Range</div>
+                  <div id="valueRange" style="font-size: 14px; color: var(--ink);">$8,100 – $9,900</div>
+                  <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Low/Base/High resale scenarios</div>
+                </div>
+              </div>
+
+              <!-- Right: Chart -->
+              <div class="simulator-chart">
+                <div style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h4 style="margin: 0; color: var(--ink); font-size: 16px;">Value vs. Volume over Time</h4>
+                    <span style="font-size: 11px; color: var(--muted);">Interactive • Real-time</span>
+                  </div>
+                  <div id="agingChart" style="width: 100%; height: 300px;"></div>
+                  <div style="font-size: 11px; color: var(--muted); margin-top: 8px;">
+                    Vertical line tracks current month. Value increases while volume decreases due to angel's share.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- WHY US -->
@@ -2259,21 +2483,33 @@
         chart.setOption({
           grid: { left: 80, right: 40, top: 40, bottom: 60 },
           backgroundColor: 'transparent',
+          animation: true,
+          animationDuration: 3000,
+          animationEasing: 'cubicOut',
+          animationDelay: function (idx) {
+            return idx * 20; // Stagger the animation
+          },
           tooltip: {
             trigger: 'axis',
             backgroundColor: 'rgba(255,255,255,0.95)',
-            borderColor: '#E9E3DA',
+            borderColor: '#0E5B62',
             borderWidth: 1,
+            borderRadius: 8,
+            shadowBlur: 15,
+            shadowColor: 'rgba(0,0,0,0.1)',
             textStyle: { 
               color: '#1B2629', 
-              fontFamily: 'Manrope, system-ui, sans-serif',
+              fontFamily: 'system-ui, sans-serif',
               fontSize: 13
             },
             formatter: (params)=>{
               const p = params[0];
-              return `<div style="font-family: 'Manrope', system-ui, sans-serif;">
-                <div style="font-weight: 600; color: #0E5B62;">Age: ${p.axisValue} months</div>
-                <div style="font-weight: 600; color: #1B2629;">Retail: ${fmtUSD(p.data)}</div>
+              const years = Math.floor(p.axisValue / 12);
+              const months = p.axisValue % 12;
+              const ageText = years > 0 ? `${years}y ${months}m` : `${months}m`;
+              return `<div style="font-family: system-ui, sans-serif;">
+                <div style="font-weight: 600; color: #0E5B62;">Age: ${ageText}</div>
+                <div style="font-weight: 600; color: #1B2629;">${fmtUSD(p.data)}</div>
               </div>`;
             }
           },
@@ -2327,25 +2563,287 @@
             data: prices,
             step: 'middle',
             symbol: 'none',
-            lineStyle: { width: 3, color: '#0E5B62', type: 'solid' },
-            itemStyle: { color: '#0E5B62', borderColor:'#fff', borderWidth:1 },
-            label: {
-              show: true,
-              position: 'top',
-              color: '#1B2629',
-              fontFamily: 'Manrope, system-ui, sans-serif',
-              fontSize: 11,
-              fontWeight: 600,
-              formatter: function(params) {
-                // Only show labels at yearly intervals (12, 24, 36, 48, 60, 72, 84, 96, 108, 120)
-                return params.dataIndex % 12 === 0 && params.dataIndex > 0 ? fmtUSD(params.data) : '';
+            lineStyle: { 
+              width: 4, 
+              color: '#0E5B62'
+            },
+            emphasis: {
+              lineStyle: {
+                width: 5,
+                color: '#D78A3B'
               }
+            },
+            label: {
+              show: false
             }
           }]
         });
 
+        // Add color transition effect after animation completes
+        setTimeout(() => {
+          const colors = [
+            '#0E5B62', // Deep agave
+            '#3D825E', // Lighter agave  
+            '#5FA8A5', // Sea-sage
+            '#4A9B8E', // Teal blend
+            '#2D6B5D', // Forest agave
+            '#0E5B62'  // Back to start
+          ];
+          
+          let colorIndex = 0;
+          
+          const colorTransition = setInterval(() => {
+            colorIndex = (colorIndex + 1) % colors.length;
+            
+            chart.setOption({
+              series: [{
+                lineStyle: {
+                  color: colors[colorIndex]
+            }
+          }]
+        });
+          }, 2000); // Change color every 2 seconds
+          
+          // Stop the color transition on hover
+          chart.on('mouseover', () => {
+            clearInterval(colorTransition);
+            chart.setOption({
+              series: [{
+                lineStyle: {
+                  color: '#D78A3B' // Amber on hover
+                }
+              }]
+            });
+          });
+          
+          // Resume color transition when mouse leaves
+          chart.on('mouseout', () => {
+            colorIndex = 0;
+            const resumeTransition = setInterval(() => {
+              colorIndex = (colorIndex + 1) % colors.length;
+              
+              chart.setOption({
+                series: [{
+                  lineStyle: {
+                    color: colors[colorIndex]
+                  }
+                }]
+              });
+            }, 2000);
+          });
+        }, 3500); // Start color transition 3.5 seconds after page load
+
         window.addEventListener('resize', () => chart.resize());
       }
+    })();
+
+    // === AGING SIMULATOR ===
+    (function() {
+      // Aging data - realistic tequila aging model
+      const agingData = {
+        barrelSize: 200, // liters
+        angelShareRate: 0.02, // 2% per year
+        basePricePerLiter: 40, // USD per liter at month 0
+        priceAppreciationRate: 0.15, // 15% per year
+        lowMultiplier: 0.9, // 90% of base price
+        highMultiplier: 1.1  // 110% of base price
+      };
+
+      function calculateAgingMetrics(months) {
+        const years = months / 12;
+        
+        // Angel's share calculation (exponential decay)
+        const remainingVolume = agingData.barrelSize * Math.exp(-agingData.angelShareRate * years);
+        const angelShare = ((agingData.barrelSize - remainingVolume) / agingData.barrelSize) * 100;
+        
+        // Price appreciation (exponential growth)
+        const pricePerLiter = agingData.basePricePerLiter * Math.pow(1 + agingData.priceAppreciationRate, years);
+        
+        // Value calculations
+        const barrelValue = remainingVolume * pricePerLiter;
+        const valueLow = remainingVolume * pricePerLiter * agingData.lowMultiplier;
+        const valueHigh = remainingVolume * pricePerLiter * agingData.highMultiplier;
+        
+        return {
+          remainingVolume: remainingVolume,
+          angelShare: angelShare,
+          pricePerLiter: pricePerLiter,
+          barrelValue: barrelValue,
+          valueLow: valueLow,
+          valueHigh: valueHigh
+        };
+      }
+
+      function generateChartData() {
+        const data = [];
+        for (let month = 0; month <= 60; month++) {
+          const metrics = calculateAgingMetrics(month);
+          data.push({
+            month: month,
+            remainingVolume: metrics.remainingVolume,
+            barrelValue: metrics.barrelValue,
+            valueLow: metrics.valueLow,
+            valueHigh: metrics.valueHigh
+          });
+        }
+        return data;
+      }
+
+      function updateSimulator(months) {
+        const metrics = calculateAgingMetrics(months);
+        
+        // Update KPI displays
+        document.getElementById('currentMonth').textContent = `${months} mo`;
+        document.getElementById('remainingVolume').textContent = `${metrics.remainingVolume.toFixed(1)} L`;
+        document.getElementById('angelShare').textContent = `${metrics.angelShare.toFixed(1)}%`;
+        document.getElementById('barrelValue').textContent = `$${Math.round(metrics.barrelValue).toLocaleString()}`;
+        document.getElementById('valuePerLiter').textContent = `$${metrics.pricePerLiter.toFixed(2)}`;
+        document.getElementById('valueRange').textContent = `$${Math.round(metrics.valueLow).toLocaleString()} – $${Math.round(metrics.valueHigh).toLocaleString()}`;
+        
+        // Update chart
+        updateAgingChart(months);
+      }
+
+      function updateAgingChart(currentMonth) {
+        const chartData = generateChartData();
+        const chart = echarts.init(document.getElementById('agingChart'));
+        
+        chart.setOption({
+          grid: { left: 60, right: 40, top: 20, bottom: 50 },
+          backgroundColor: 'transparent',
+          tooltip: {
+            trigger: 'axis',
+            backgroundColor: 'rgba(255,255,255,0.95)',
+            borderColor: '#0E5B62',
+            borderWidth: 1,
+            borderRadius: 8,
+            textStyle: { 
+              color: '#1B2629', 
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 12
+            },
+            formatter: (params) => {
+              const p = params[0];
+              const years = Math.floor(p.axisValue / 12);
+              const months = p.axisValue % 12;
+              const ageText = years > 0 ? `${years}y ${months}m` : `${months}m`;
+              return `<div style="font-family: system-ui, sans-serif;">
+                <div style="font-weight: 600; color: #0E5B62;">Age: ${ageText}</div>
+                <div style="font-weight: 600; color: #1B2629;">Value: $${Math.round(p.data).toLocaleString()}</div>
+              </div>`;
+            }
+          },
+          xAxis: {
+            type: 'category',
+            data: chartData.map(d => d.month),
+            axisLine: { lineStyle: { color: '#E9E3DA' } },
+            axisTick: { show: false },
+            axisLabel: { 
+              color: '#6A7A81', 
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 11,
+              interval: 4,
+              formatter: v => v % 12 === 0 ? v + 'm' : ''
+            },
+            splitLine: { show: false },
+            name: 'Age (months)',
+            nameLocation: 'middle',
+            nameGap: 30,
+            nameTextStyle: { 
+              color: '#1B2629',
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 11,
+              fontWeight: 600
+            }
+          },
+          yAxis: {
+            type: 'value',
+            axisLabel: { 
+              color: '#6A7A81', 
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 11,
+              formatter: v => '$' + (v/1000).toFixed(0) + 'k'
+            },
+            splitLine: { lineStyle: { color: '#E9E3DA', type: 'solid', opacity: 0.3 } },
+            name: 'Barrel Value (USD)',
+            nameGap: 15,
+            nameTextStyle: { 
+              color: '#1B2629',
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 11,
+              fontWeight: 600
+            }
+          },
+          series: [
+            {
+              name: 'Barrel Value',
+              type: 'line',
+              data: chartData.map(d => d.barrelValue),
+              smooth: true,
+              symbol: 'none',
+              lineStyle: { 
+                width: 3, 
+                color: '#0E5B62'
+              },
+              areaStyle: {
+                color: {
+                  type: 'linear',
+                  x: 0, y: 0, x2: 0, y2: 1,
+                  colorStops: [
+                    { offset: 0, color: 'rgba(14, 94, 98, 0.2)' },
+                    { offset: 1, color: 'rgba(14, 94, 98, 0.02)' }
+                  ]
+                }
+              },
+              markLine: {
+                data: [{
+                  xAxis: currentMonth,
+                  lineStyle: { 
+                    color: '#DB9251', 
+                    type: 'dashed',
+                    width: 2
+                  },
+                  label: {
+                    show: true,
+                    position: 'end',
+                    formatter: `${currentMonth}m`,
+                    color: '#DB9251',
+                    fontSize: 11,
+                    fontWeight: 600
+                  }
+                }]
+              }
+            }
+          ]
+        });
+      }
+
+      // Initialize simulator
+      document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.getElementById('agingSlider');
+        if (slider) {
+          // Initial update
+          updateSimulator(24);
+          
+          // Slider event listener
+          slider.addEventListener('input', function() {
+            updateSimulator(parseInt(this.value));
+          });
+          
+          // Initialize chart
+          setTimeout(() => {
+            updateAgingChart(24);
+          }, 100);
+        }
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        const chartEl = document.getElementById('agingChart');
+        if (chartEl && echarts.getInstanceByDom(chartEl)) {
+          echarts.getInstanceByDom(chartEl).resize();
+        }
+      });
     })();
 
     // === MARKET INTELLIGENCE ANIMATIONS ===
@@ -2532,6 +3030,27 @@
           console.log('TIMELINE INITIALIZING...');
           updateTimeline();
           console.log('TIMELINE READY!');
+          
+          // Staggered fade-in animation for Opportunity section cards
+          const opportunitySection = document.getElementById('opportunity');
+          if (opportunitySection) {
+            const cards = opportunitySection.querySelectorAll('.card');
+            
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  cards.forEach((card, index) => {
+                    setTimeout(() => {
+                      card.classList.add('animate-in');
+                    }, index * 150); // 150ms stagger
+                  });
+                  observer.unobserve(entry.target);
+                }
+              });
+            }, { threshold: 0.2 });
+            
+            observer.observe(opportunitySection);
+          }
           
           // Initialize hero background scroll effect
           initHeroScrollEffect();
