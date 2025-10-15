@@ -463,14 +463,14 @@
         }
 
         .opp-card h3 {
-          font-size: 18px;
+          font-size: 22px;
           font-weight: 600;
           color: var(--ink);
-          margin: 0 0 8px;
+          margin: 0 0 12px;
         }
 
         .opp-card p {
-          font-size: 14px;
+          font-size: 16px;
           color: var(--muted);
           margin: 0;
           line-height: 1.4;
@@ -3228,11 +3228,12 @@
           // Log progress and active scene
           let scene = '';
           if (p < 0.15) scene = '1: Giant Question';
-          else if (p < 0.40) scene = '2: Cards Converge (all at once)';
-          else if (p < 0.55) scene = '3: Cards Stack';
-          else if (p < 0.67) scene = '4: KPI A (13.4%)';
-          else if (p < 0.80) scene = '4: KPI A+B (13.4% + 13-15%)';
-          else if (p < 0.94) scene = '4: KPI A+B+C (all 3 visible)';
+          else if (p < 0.30) scene = '2: Cards Converge (top 3 first)';
+          else if (p < 0.35) scene = '2: Cards Converge (bottom 2 appear)';
+          else if (p < 0.70) scene = '3: Cards Stay Visible + Stack';
+          else if (p < 0.82) scene = '4: KPI A (13.4%)';
+          else if (p < 0.90) scene = '4: KPI A+B (13.4% + 13-15%)';
+          else if (p < 0.98) scene = '4: KPI A+B+C (all 3 visible)';
           else scene = '5: Guardrails';
           
           if (!this.lastScene || this.lastScene !== scene) {
@@ -3281,16 +3282,36 @@
             const stackX = parseFloat(card.dataset.stackX);
             const stackY = parseFloat(card.dataset.stackY);
             
-            if (p < 0.15) {
+            // Different timing for different cards
+            let appearStart, appearEnd, stayVisible;
+            
+            if (index === 0) {
+              // Regulated Origin (top) - appears first
+              appearStart = 0.15;
+              appearEnd = 0.30;
+              stayVisible = 0.55; // Stay visible longer
+            } else if (index === 1 || index === 2) {
+              // Historic Low Entry & Aging → Appreciation (left/right)
+              appearStart = 0.15;
+              appearEnd = 0.30;
+              stayVisible = 0.55;
+            } else {
+              // Natural & Additive-Free & Proven Model (bottom left/right)
+              appearStart = 0.20; // Start a bit later
+              appearEnd = 0.35;
+              stayVisible = 0.60; // Stay visible even longer
+            }
+            
+            if (p < appearStart) {
               // Off-screen
               x = startX;
               y = startY;
               opacity = 0;
               scale = 1.0; // Bigger cards
               blur = 0;
-            } else if (p <= 0.40) {
-              // Flying in to ring (0.15 → 0.40) - ALL AT SAME TIME
-              const t = (p - 0.15) / 0.25;
+            } else if (p <= appearEnd) {
+              // Flying in to ring
+              const t = (p - appearStart) / (appearEnd - appearStart);
               const eased = this.easeOut(t);
               
               x = startX + (ringX - startX) * eased;
@@ -3298,9 +3319,16 @@
               opacity = eased;
               scale = 1.0; // Keep bigger
               blur = 0; // No blur - keep clear
-            } else if (p <= 0.55) {
-              // Stacking (0.40 → 0.55)
-              const t = (p - 0.40) / 0.15;
+            } else if (p <= stayVisible) {
+              // Stay at ring position - fully visible for reading
+              x = ringX;
+              y = ringY;
+              opacity = 1.0; // Fully visible
+              scale = 1.0; // Keep bigger
+              blur = 0; // No blur
+            } else if (p <= 0.70) {
+              // Stacking (extend the stacking phase)
+              const t = (p - stayVisible) / (0.70 - stayVisible);
               const eased = this.easeOut(t);
               
               x = ringX + (stackX - ringX) * eased;
@@ -3320,25 +3348,25 @@
             card.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
             card.style.opacity = opacity;
             card.style.filter = `blur(${blur}px)`;
-            card.style.zIndex = p >= 0.55 ? 5 : 12;
+            card.style.zIndex = p >= 0.70 ? 5 : 12;
           });
         }
         
         updateKPIs(p) {
-          // KPIs stack vertically:
-          // 0.55-0.67: KPI A appears
-          // 0.67-0.80: KPI B appears BELOW A (A stays)
-          // 0.80-0.94: KPI C appears BELOW B (A & B stay)
+          // KPIs stack vertically - adjusted timing for new card timing:
+          // 0.70-0.82: KPI A appears (after cards finish stacking)
+          // 0.82-0.90: KPI B appears BELOW A (A stays)
+          // 0.90-0.98: KPI C appears BELOW B (A & B stay)
           // All 3 visible together before guardrails
           
           // KPI A
           let kpiA_y, kpiA_opacity;
-          if (p < 0.55) {
+          if (p < 0.70) {
             kpiA_y = 110; // Below viewport
             kpiA_opacity = 0;
-          } else if (p <= 0.67) {
-            // Rising (0.55 → 0.67)
-            const t = (p - 0.55) / 0.12;
+          } else if (p <= 0.82) {
+            // Rising (0.70 → 0.82)
+            const t = (p - 0.70) / 0.12;
             const eased = this.easeOut(t);
             kpiA_y = 110 * (1 - eased) - 20; // End at -20% (top position for 3 stack)
             kpiA_opacity = eased;
@@ -3357,12 +3385,12 @@
           
           // KPI B
           let kpiB_y, kpiB_opacity;
-          if (p < 0.67) {
+          if (p < 0.82) {
             kpiB_y = 110;
             kpiB_opacity = 0;
-          } else if (p <= 0.80) {
-            // Rising (0.67 → 0.80)
-            const t = (p - 0.67) / 0.13;
+          } else if (p <= 0.90) {
+            // Rising (0.82 → 0.90)
+            const t = (p - 0.82) / 0.08;
             const eased = this.easeOut(t);
             kpiB_y = 110 * (1 - eased) - 50; // End at -50% (middle position)
             kpiB_opacity = eased;
@@ -3374,12 +3402,12 @@
           
           // KPI C
           let kpiC_y, kpiC_opacity;
-          if (p < 0.80) {
+          if (p < 0.90) {
             kpiC_y = 110;
             kpiC_opacity = 0;
-          } else if (p <= 0.94) {
-            // Rising (0.80 → 0.94)
-            const t = (p - 0.80) / 0.14;
+          } else if (p <= 0.98) {
+            // Rising (0.90 → 0.98)
+            const t = (p - 0.90) / 0.08;
             const eased = this.easeOut(t);
             kpiC_y = 110 * (1 - eased) - 80; // End at -80% (bottom position)
             kpiC_opacity = eased;
@@ -3416,12 +3444,12 @@
           
           let yPercent, opacity;
           
-          if (p < 0.94) {
+          if (p < 0.98) {
             // Hidden below
             yPercent = 110;
             opacity = 0;
           } else {
-            const t = (p - 0.94) / 0.06; // 0 to 1 over 0.94-1.0
+            const t = (p - 0.98) / 0.02; // 0 to 1 over 0.98-1.0
             
             if (t <= 0.5) {
               // Rising to center
