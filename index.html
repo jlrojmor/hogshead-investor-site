@@ -403,6 +403,277 @@
           * { animation: none !important; transition: none !important; }
         }
 
+        /* === OPPORTUNITY SEQUENCE STYLES === */
+        #opportunity {
+          height: 180vh;
+          background: var(--paper);
+          position: relative;
+          overflow: hidden;
+        }
+
+        /* PHASE 1: Giant Question (pinned) */
+        .opp-pin {
+          position: sticky;
+          top: 50vh;
+          transform: translateY(-50%);
+          text-align: center;
+          z-index: 10;
+          padding: 0 20px;
+        }
+
+        .opp-pin h2 {
+          font-size: clamp(42px, 8vw, 120px);
+          font-weight: 700;
+          color: var(--ink);
+          margin: 0;
+          line-height: 1.1;
+          opacity: 0;
+          transition: opacity 0.25s ease;
+        }
+
+        /* PHASE 2: 5 Cards Radial Converge */
+        .opp-cards {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+        }
+
+        .opp-card {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          background: #fff;
+          border: 1px solid var(--line);
+          border-radius: 16px;
+          padding: 24px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+          max-width: 280px;
+          text-align: center;
+          opacity: 0;
+          scale: 0.94;
+          filter: blur(2px);
+          transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+          pointer-events: auto;
+          transform: translate(-50%, -50%);
+          --end-x: 0px;
+          --end-y: 0px;
+        }
+
+        .opp-card h3 {
+          font-size: 18px;
+          font-weight: 600;
+          color: var(--ink);
+          margin: 0 0 8px;
+        }
+
+        .opp-card p {
+          font-size: 14px;
+          color: var(--muted);
+          margin: 0;
+          line-height: 1.4;
+        }
+
+        /* Card positions - 5-point radial */
+        .opp-card[data-card="1"] { --angle: -90deg; }
+        .opp-card[data-card="2"] { --angle: 18deg; }
+        .opp-card[data-card="3"] { --angle: 90deg; }
+        .opp-card[data-card="4"] { --angle: 162deg; }
+        .opp-card[data-card="5"] { --angle: -162deg; }
+
+        /* PHASE 3: Metric lines */
+        .opp-metrics {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 0 20px;
+        }
+
+        .opp-metric {
+          text-align: center;
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.35s ease;
+          min-height: 22vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .opp-metric.in {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .metric-number {
+          display: block;
+          font-size: clamp(48px, 12vw, 120px);
+          font-weight: 700;
+          color: var(--agave);
+          line-height: 1;
+          margin-bottom: 8px;
+        }
+
+        .metric-label {
+          display: block;
+          font-size: clamp(16px, 3vw, 24px);
+          color: var(--muted);
+          font-weight: 400;
+        }
+
+        /* PHASE 4: CTA + Guardrails */
+        .opp-cta {
+          position: absolute;
+          bottom: 120px;
+          left: 50%;
+          transform: translateX(-50%);
+          text-align: center;
+          opacity: 0;
+          transform: translateX(-50%) translateY(20px);
+          transition: all 0.3s ease;
+        }
+
+        .opp-cta .btn {
+          font-size: 18px;
+          padding: 16px 32px;
+          transition: all 0.15s ease;
+        }
+
+        .opp-cta .btn:hover {
+          transform: translateY(-2px) scale(1.01);
+        }
+
+        .opp-guardrails {
+          position: absolute;
+          bottom: 40px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+          justify-content: center;
+          max-width: 600px;
+          padding: 0 20px;
+          opacity: 0;
+          transform: translateX(-50%) translateY(20px);
+          transition: all 0.3s ease;
+        }
+
+        .opp-chip {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: #fff;
+          border: 1px solid var(--line);
+          border-radius: 20px;
+          padding: 8px 16px;
+          font-size: 14px;
+          color: var(--ink);
+        }
+
+        .chip-icon {
+          color: var(--agave);
+          font-weight: 600;
+        }
+
+        /* State-based visibility */
+        #opportunity[data-state="enter"] .opp-pin h2 {
+          opacity: 1;
+        }
+
+        #opportunity[data-state="cardsIn"] .opp-pin h2 {
+          opacity: 0.7;
+        }
+
+        #opportunity[data-state="cardsIn"] .opp-card,
+        #opportunity[data-state="metrics"] .opp-card,
+        #opportunity[data-state="cta"] .opp-card {
+          opacity: 1;
+          scale: 1;
+          filter: blur(0);
+        }
+
+        #opportunity[data-state="cardsIn"] .opp-card {
+          transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y)));
+        }
+
+        /* Cards stacked behind headline */
+        #opportunity[data-state="metrics"] .opp-card,
+        #opportunity[data-state="cta"] .opp-card {
+          opacity: 0.3;
+          transform: translate(calc(-50% + var(--end-x) * 0.5), calc(-50% + var(--end-y) * 0.5)) scale(0.8);
+        }
+
+        .opp-card:hover {
+          transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y))) translateY(-2px);
+          box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        /* State-based visibility for metrics and CTA */
+        #opportunity[data-state="metrics"] .opp-metric:nth-child(1).in,
+        #opportunity[data-state="cta"] .opp-metric.in {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        #opportunity[data-state="cta"] .opp-cta,
+        #opportunity[data-state="cta"] .opp-guardrails {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 960px) {
+          .opp-metric {
+            min-height: 16vh;
+          }
+          
+          .opp-guardrails {
+            gap: 12px;
+          }
+          
+          .opp-chip {
+            font-size: 13px;
+            padding: 6px 12px;
+          }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+          #opportunity[data-state="cta"] {
+            /* Force final state */
+          }
+          
+          .opp-card {
+            opacity: 1;
+            scale: 1;
+            filter: blur(0);
+          }
+          
+          .opp-metric {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          
+          .opp-pin h2 {
+            opacity: 1;
+          }
+          
+          .opp-cta,
+          .opp-guardrails {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+          }
+        }
+
         /* === AGING SIMULATOR STYLES === */
         #agingSlider {
           -webkit-appearance: none;
@@ -1749,58 +2020,71 @@
 
       <!-- OPPORTUNITY -->
       <section id="opportunity">
-        <h2>The Opportunity</h2>
-        <p class="sub">US investors can now access a regulated, denomination-protected asset class with historically low entry costs and proven appreciation through aging. Inspired by successful bourbon barrel funds, adapted for tequila's booming market.</p>
-        <div class="grid grid-3">
-          <div class="card">
-            <div class="icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#0E5B62" stroke-width="1.5"/>
-              </svg>
-            </div>
+        <!-- PHASE 1: Giant Question (pinned) -->
+        <div class="opp-pin">
+          <h2>Why now? What's the Opportunity?</h2>
+        </div>
+
+        <!-- PHASE 2: 5 Cards Radial Converge -->
+        <div class="opp-cards">
+          <div class="opp-card" data-card="1">
             <h3>Regulated Origin</h3>
-            <p>Protected by Mexican law, tequila's denomination provides regulatory clarity for US investors.</p>
+            <p>Protected by denomination.</p>
           </div>
-          <div class="card">
-            <div class="icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#0E5B62" stroke-width="1.5"/>
-              </svg>
-            </div>
+          <div class="opp-card" data-card="2">
             <h3>Historic Low Entry</h3>
-            <p>Agave costs at near-historic lows create exceptional buying opportunities before market recovery.</p>
+            <p>Attractive basis this cycle as agave is in an historic low price</p>
           </div>
-          <div class="card">
-            <div class="icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="#0E5B62" stroke-width="1.5"/>
-              </svg>
-            </div>
+          <div class="opp-card" data-card="3">
             <h3>Proven Model</h3>
-            <p>Bourbon barrel funds succeeded. We adapt this model for tequila's booming US market.</p>
+            <p>Time-in-wood already won in bourbon.</p>
+          </div>
+          <div class="opp-card" data-card="4">
+            <h3>Natural & Additive-Free</h3>
+            <p>Premium aligns with consumer demand.</p>
+          </div>
+          <div class="opp-card" data-card="5">
+            <h3>Aging → Appreciation</h3>
+            <p>Time compounds value.</p>
           </div>
         </div>
-        
-        <!-- Additional Value Props -->
-        <div class="grid grid-2" style="margin-top: 32px;">
-          <div class="card">
-            <div class="icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#0E5B62" stroke-width="1.5"/>
-              </svg>
-            </div>
-            <h3>Natural & Additive-Free</h3>
-            <p>100% natural tequila aligns with premium, health-conscious consumer trends.</p>
+
+        <!-- PHASE 3: Metric "word" lines -->
+        <div class="opp-metrics">
+          <div class="opp-metric" data-metric="1">
+            <span class="metric-number" data-value="13.4" data-unit="%" data-decimals="1" data-animate="true"></span>
+            <span class="metric-label">US Tequila CAGR</span>
           </div>
-          <div class="card">
-            <div class="icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="#0E5B62" stroke-width="1.5"/>
-                <path d="M12 7v10" stroke="#0E5B62" stroke-width="1.5"/>
-              </svg>
-            </div>
-            <h3>Aging = Appreciation</h3>
-            <p>Time in barrel directly correlates with value appreciation and premium pricing.</p>
+          <div class="opp-metric" data-metric="2">
+            <span class="metric-number" data-animate="false">13–15%</span>
+            <span class="metric-label">Bourbon Barrel IRR (precedent)</span>
+          </div>
+          <div class="opp-metric" data-metric="3">
+            <span class="metric-number" data-value="-50" data-unit="%" data-decimals="1" data-animate="true"></span>
+            <span class="metric-label">Agave margin when turned tequila</span>
+          </div>
+        </div>
+
+        <!-- PHASE 4: CTA + Guardrails -->
+        <div class="opp-cta">
+          <a href="#model" class="btn primary">See the model →</a>
+        </div>
+        <div class="opp-guardrails">
+          <div class="opp-chip">
+            <span class="chip-icon">✓</span>
+            <span>Custody</span>
+          </div>
+          <div class="opp-chip">
+            <span class="chip-icon">✓</span>
+            <span>Insurance</span>
+          </div>
+          <div class="opp-chip">
+            <span class="chip-icon">✓</span>
+            <span>Denomination</span>
+          </div>
+          <div class="opp-chip">
+            <span class="chip-icon">✓</span>
+            <span>QC & Monitoring</span>
           </div>
         </div>
       </section>
@@ -2930,6 +3214,202 @@
           ]
         });
       }
+
+      // Opportunity Sequence JavaScript
+      class OpportunitySequence {
+        constructor() {
+          this.section = document.getElementById('opportunity');
+          if (!this.section) return;
+          
+          this.currentState = null;
+          this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          
+          this.headline = this.section.querySelector('.opp-pin h2');
+          this.cards = this.section.querySelectorAll('.opp-card');
+          this.metrics = this.section.querySelectorAll('.opp-metric');
+          this.cta = this.section.querySelector('.opp-cta');
+          this.guardrails = this.section.querySelector('.opp-guardrails');
+          
+          if (this.reducedMotion) {
+            this.setState('cta');
+            return;
+          }
+          
+          this.initScrollSequence();
+        }
+        
+        initScrollSequence() {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                this.handleScroll();
+              }
+            });
+          }, { 
+            threshold: [0, 0.3, 0.6, 0.85],
+            rootMargin: '0px 0px -30% 0px'
+          });
+          
+          observer.observe(this.section);
+          
+          // Also listen to scroll for more precise control
+          window.addEventListener('scroll', this.throttle(() => this.handleScroll(), 16));
+        }
+        
+        handleScroll() {
+          const rect = this.section.getBoundingClientRect();
+          const viewportHeight = window.innerHeight;
+          
+          // Calculate how much of the section is visible
+          const visibleHeight = Math.min(viewportHeight, rect.bottom) - Math.max(0, rect.top);
+          const visibilityRatio = visibleHeight / viewportHeight;
+          
+          // Determine state based on scroll position
+          if (visibilityRatio >= 0.7 && this.currentState !== 'enter') {
+            this.setState('enter');
+            // After 250ms, trigger cardsIn
+            setTimeout(() => {
+              if (this.currentState === 'enter') {
+                this.setState('cardsIn');
+              }
+            }, 250);
+          } else if (visibilityRatio >= 0.6 && this.currentState === 'cardsIn') {
+            this.setState('metrics');
+          } else if (visibilityRatio >= 0.15 && this.currentState === 'metrics') {
+            this.setState('cta');
+          }
+        }
+        
+        setState(newState) {
+          if (this.currentState === newState) return;
+          
+          this.currentState = newState;
+          this.section.setAttribute('data-state', newState);
+          
+          console.log(`Opportunity sequence state: ${newState}`);
+          
+          // Handle state-specific logic
+          switch (newState) {
+            case 'enter':
+              // Headline is visible via CSS
+              break;
+              
+            case 'cardsIn':
+              // Cards fly in with stagger
+              this.animateCards();
+              break;
+              
+            case 'metrics':
+              // Show metrics one by one
+              this.animateMetrics();
+              break;
+              
+            case 'cta':
+              // Show CTA and guardrails
+              break;
+          }
+        }
+        
+        animateCards() {
+          const angles = [-90, 18, 90, 162, -162]; // degrees
+          const radius = window.innerWidth > 960 ? 28 : 40; // vw
+          
+          this.cards.forEach((card, index) => {
+            setTimeout(() => {
+              const angle = angles[index];
+              const rad = (angle * Math.PI) / 180;
+              const radiusPx = (radius * window.innerWidth) / 100;
+              
+              const x = Math.cos(rad) * radiusPx;
+              const y = Math.sin(rad) * radiusPx;
+              
+              card.style.setProperty('--end-x', x + 'px');
+              card.style.setProperty('--end-y', y + 'px');
+              card.style.transform = `translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y)))`;
+            }, index * 90);
+          });
+        }
+        
+        animateMetrics() {
+          this.metrics.forEach((metric, index) => {
+            setTimeout(() => {
+              metric.classList.add('in');
+              
+              // Animate numbers
+              const numberEl = metric.querySelector('.metric-number');
+              if (numberEl && !numberEl.dataset.ran) {
+                this.animateNumber(numberEl);
+                numberEl.dataset.ran = 'true';
+              }
+            }, index * 160);
+          });
+        }
+        
+        animateNumber(element) {
+          const value = element.dataset.value;
+          const unit = element.dataset.unit || '';
+          const decimals = parseInt(element.dataset.decimals) || 1;
+          const shouldAnimate = element.dataset.animate === 'true';
+          
+          if (!shouldAnimate || !value) {
+            // Static text (like ranges)
+            return;
+          }
+          
+          const targetNumber = parseFloat(value);
+          const isNegative = targetNumber < 0;
+          
+          element.textContent = '0' + unit;
+          
+          const duration = 800;
+          const startTime = performance.now();
+          
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const current = Math.abs(targetNumber) * easeOut;
+            
+            let formattedNumber;
+            if (decimals === 0) {
+              formattedNumber = Math.round(current).toString();
+            } else {
+              formattedNumber = current.toFixed(decimals);
+            }
+            
+            if (isNegative) {
+              formattedNumber = '−' + formattedNumber; // Unicode minus
+            }
+            
+            element.textContent = formattedNumber + unit;
+            
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+          
+          requestAnimationFrame(animate);
+        }
+        
+        throttle(func, limit) {
+          let inThrottle;
+          return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+              func.apply(context, args);
+              inThrottle = true;
+              setTimeout(() => inThrottle = false, limit);
+            }
+          };
+        }
+      }
+      
+      // Initialize opportunity sequence
+      document.addEventListener('DOMContentLoaded', function() {
+        new OpportunitySequence();
+      });
 
       // Initialize simulator
       document.addEventListener('DOMContentLoaded', async function() {
