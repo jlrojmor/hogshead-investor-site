@@ -405,20 +405,21 @@
 
         /* === OPPORTUNITY CINEMATIC SEQUENCE === */
         #opportunity {
-          height: 500vh; /* 5 scenes × 100vh each */
+          height: 400vh; /* Scroll distance for smooth scrubbing */
           background: var(--paper);
           position: relative;
           overflow: hidden;
         }
 
-        /* Scene 1: Giant Question (entry) */
+        /* Scene 1: Giant Question (always visible, pinned) */
         .opp-question {
           position: sticky;
           top: 50vh;
           transform: translateY(-50%);
           text-align: center;
-          z-index: 20;
+          z-index: 10;
           padding: 0 20px;
+          pointer-events: none;
         }
 
         .opp-question h2 {
@@ -427,9 +428,7 @@
           color: var(--ink);
           margin: 0;
           line-height: 1.1;
-          opacity: 0;
-          transform: scale(0.9);
-          transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: transform, opacity;
         }
 
         /* Scene 2: Five Cards Converge */
@@ -453,16 +452,14 @@
           box-shadow: 0 10px 30px rgba(0,0,0,0.08);
           max-width: 280px;
           text-align: center;
-          opacity: 0;
-          scale: 0.8;
-          filter: blur(4px);
-          transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
           pointer-events: auto;
-          transform: translate(-50%, -50%);
-          --end-x: 0px;
-          --end-y: 0px;
-          --stack-x: 0px;
-          --stack-y: -20vh;
+          will-change: transform, opacity, filter;
+          transition: box-shadow 0.3s ease;
+        }
+
+        .opp-card:hover {
+          box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+          transform: translateY(-2px) !important;
         }
 
         .opp-card h3 {
@@ -479,7 +476,7 @@
           line-height: 1.4;
         }
 
-        /* Scene 4: Big Proof Banners */
+        /* Scene 4: Big Proof Banners (single unit: number + label) */
         .opp-banners {
           position: absolute;
           top: 0;
@@ -491,6 +488,8 @@
           justify-content: center;
           align-items: center;
           padding: 0 20px;
+          pointer-events: none;
+          z-index: 15;
         }
 
         .opp-banner {
@@ -499,19 +498,7 @@
           left: 50%;
           transform: translate(-50%, -50%);
           text-align: center;
-          opacity: 0;
-          transform: translate(-50%, -50%) translateY(100px);
-          transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .opp-banner.active {
-          opacity: 1;
-          transform: translate(-50%, -50%) translateY(0);
-        }
-
-        .opp-banner.exiting {
-          opacity: 0;
-          transform: translate(-50%, -50%) translateY(-100px);
+          will-change: transform, opacity;
         }
 
         .banner-number {
@@ -520,7 +507,7 @@
           font-weight: 700;
           color: var(--agave);
           line-height: 1;
-          margin-bottom: 12px;
+          margin-bottom: 16px;
         }
 
         .banner-label {
@@ -528,23 +515,23 @@
           font-size: clamp(18px, 4vw, 28px);
           color: var(--muted);
           font-weight: 400;
+          line-height: 1.3;
         }
 
         /* Scene 5: Guardrails Ribbon */
         .opp-guardrails {
           position: absolute;
-          bottom: 50vh;
+          top: 50%;
           left: 50%;
-          transform: translateX(-50%);
+          transform: translate(-50%, -50%);
           display: flex;
           gap: 16px;
           flex-wrap: wrap;
           justify-content: center;
           max-width: 600px;
           padding: 0 20px;
-          opacity: 0;
-          transform: translateX(-50%) translateY(60px);
-          transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: transform, opacity;
+          z-index: 15;
         }
 
         .opp-chip {
@@ -562,50 +549,6 @@
         .chip-icon {
           color: var(--agave);
           font-weight: 600;
-        }
-
-        /* Scene-based visibility */
-        #opportunity[data-scene="1"] .opp-question h2 {
-          opacity: 1;
-          transform: scale(1);
-        }
-
-        #opportunity[data-scene="2"] .opp-question h2 {
-          opacity: 0.7;
-          transform: scale(0.95);
-        }
-
-        #opportunity[data-scene="2"] .opp-card {
-          opacity: 1;
-          scale: 1;
-          filter: blur(0);
-          transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y)));
-        }
-
-        /* Scene 3: Cards Stack & Drift Up */
-        #opportunity[data-scene="3"] .opp-card {
-          opacity: 0.3;
-          scale: 0.9;
-          transform: translate(calc(-50% + var(--stack-x)), calc(-50% + var(--stack-y)));
-        }
-
-        #opportunity[data-scene="3"] .opp-question h2 {
-          opacity: 0.8;
-          transform: scale(0.9);
-        }
-
-        /* Scene 4: Big Proof Banners */
-        #opportunity[data-scene="4"] .opp-banner[data-banner="1"].active,
-        #opportunity[data-scene="4"] .opp-banner[data-banner="2"].active,
-        #opportunity[data-scene="4"] .opp-banner[data-banner="3"].active {
-          opacity: 1;
-          transform: translate(-50%, -50%) translateY(0);
-        }
-
-        /* Scene 5: Guardrails Ribbon */
-        #opportunity[data-scene="5"] .opp-guardrails {
-          opacity: 1;
-          transform: translateX(-50%) translateY(0);
         }
 
         /* Mobile adjustments */
@@ -627,25 +570,35 @@
           }
           
           .opp-question h2 {
-            opacity: 1;
-            transform: scale(1);
+            opacity: 0.7;
+            transform: scale(0.9);
           }
           
           .opp-card {
             opacity: 0.3;
-            scale: 0.9;
-            filter: blur(0);
-            transform: translate(calc(-50% + var(--stack-x)), calc(-50% + var(--stack-y)));
+            scale: 0.92;
+            filter: blur(2px);
           }
           
           .opp-banner {
+            position: relative;
             opacity: 1;
-            transform: translate(-50%, -50%) translateY(0);
+            transform: none;
+            margin: 20px 0;
+          }
+          
+          .opp-banners {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
           }
           
           .opp-guardrails {
+            position: relative;
             opacity: 1;
-            transform: translateX(-50%) translateY(0);
+            transform: none;
+            margin-top: 40px;
           }
         }
 
@@ -2027,7 +1980,7 @@
         <!-- Scene 4: Big Proof Banners -->
         <div class="opp-banners">
           <div class="opp-banner" data-banner="1">
-            <span class="banner-number" data-value="13.4" data-unit="%" data-decimals="1" data-animate="true"></span>
+            <span class="banner-number" data-value="13.4" data-unit="%" data-decimals="1" data-animate="true">13.4%</span>
             <span class="banner-label">US Tequila CAGR</span>
           </div>
           <div class="opp-banner" data-banner="2">
@@ -2035,7 +1988,7 @@
             <span class="banner-label">Bourbon Barrel IRR (precedent)</span>
           </div>
           <div class="opp-banner" data-banner="3">
-            <span class="banner-number" data-value="-50" data-unit="%" data-decimals="1" data-animate="true"></span>
+            <span class="banner-number" data-value="-50" data-unit="%" data-decimals="0" data-animate="true">−50%</span>
             <span class="banner-label">Agave margin when turned tequila</span>
           </div>
         </div>
@@ -3187,13 +3140,12 @@
         });
       }
 
-      // Opportunity Cinematic Sequence JavaScript
+      // Opportunity Cinematic Sequence - Scroll-driven with precise progress mapping
       class OpportunityCinematic {
         constructor() {
           this.section = document.getElementById('opportunity');
           if (!this.section) return;
           
-          this.currentScene = 0;
           this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           
           this.question = this.section.querySelector('.opp-question h2');
@@ -3201,12 +3153,11 @@
           this.banners = this.section.querySelectorAll('.opp-banner');
           this.guardrails = this.section.querySelector('.opp-guardrails');
           
-          // Banner animation state
-          this.currentBannerIndex = 0;
-          this.bannerTimers = [];
+          // Track which numbers have been animated
+          this.animatedNumbers = new Set();
           
           if (this.reducedMotion) {
-            this.setScene(5);
+            this.applyReducedMotion();
             return;
           }
           
@@ -3215,31 +3166,45 @@
         }
         
         setupCardPositions() {
-          const angles = [-90, 18, 90, 162, -162]; // degrees
-          const radius = window.innerWidth > 960 ? 28 : 40; // vw
+          this.angles = [-90, 18, 90, 162, -162]; // degrees
+          this.radius = window.innerWidth > 960 ? 28 : 40; // vw
           
           this.cards.forEach((card, index) => {
-            const angle = angles[index];
+            const angle = this.angles[index];
             const rad = (angle * Math.PI) / 180;
-            const radiusPx = (radius * window.innerWidth) / 100;
+            const radiusPx = (this.radius * window.innerWidth) / 100;
             
-            // Ring position
-            const x = Math.cos(rad) * radiusPx;
-            const y = Math.sin(rad) * radiusPx;
+            // Ring position (end point)
+            const ringX = Math.cos(rad) * radiusPx;
+            const ringY = Math.sin(rad) * radiusPx;
             
-            // Stack position (upper third, slightly offset per card)
-            const stackX = (index - 2) * 60; // slight horizontal offset
-            const stackY = -window.innerHeight * 0.25; // upper third
+            // Start position (far off-screen along same vector)
+            const startDist = Math.max(window.innerWidth, window.innerHeight) * 1.5;
+            const startX = Math.cos(rad) * startDist;
+            const startY = Math.sin(rad) * startDist;
             
-            card.style.setProperty('--end-x', x + 'px');
-            card.style.setProperty('--end-y', y + 'px');
-            card.style.setProperty('--stack-x', stackX + 'px');
-            card.style.setProperty('--stack-y', stackY + 'px');
+            // Stack position (upper third, tighter)
+            const stackX = (index - 2) * 40;
+            const stackY = -window.innerHeight * 0.3;
+            
+            card.dataset.startX = startX;
+            card.dataset.startY = startY;
+            card.dataset.ringX = ringX;
+            card.dataset.ringY = ringY;
+            card.dataset.stackX = stackX;
+            card.dataset.stackY = stackY;
           });
         }
         
         initScrollSequence() {
-          window.addEventListener('scroll', this.throttle(() => this.handleScroll(), 16));
+          window.addEventListener('scroll', () => this.handleScroll(), { passive: true });
+          window.addEventListener('resize', () => {
+            this.setupCardPositions();
+            this.handleScroll();
+          });
+          
+          // Initial update
+          this.handleScroll();
         }
         
         handleScroll() {
@@ -3247,121 +3212,178 @@
           const viewportHeight = window.innerHeight;
           const sectionHeight = this.section.offsetHeight;
           
-          // Calculate scroll progress through the section
+          // Calculate scroll progress through the section (0 to 1)
           const scrollTop = window.pageYOffset;
           const sectionTop = this.section.offsetTop;
-          const sectionBottom = sectionTop + sectionHeight;
+          const progress = Math.max(0, Math.min(1, 
+            (scrollTop - sectionTop) / (sectionHeight - viewportHeight)
+          ));
           
-          const scrollProgress = Math.max(0, Math.min(1, (scrollTop - sectionTop) / (sectionHeight - viewportHeight)));
-          
-          // Map scroll progress to scenes (0-1 maps to 5 scenes)
-          let targetScene = Math.floor(scrollProgress * 5) + 1;
-          targetScene = Math.min(5, Math.max(1, targetScene));
-          
-          if (targetScene !== this.currentScene) {
-            this.setScene(targetScene);
-          }
-          
-          // Handle banner timing within scene 4
-          if (targetScene === 4) {
-            const scene4Progress = (scrollProgress - 0.6) / 0.2; // Scene 4 is 60-80% of scroll
-            const bannerIndex = Math.floor(scene4Progress * 3);
-            this.updateBannerSequence(bannerIndex);
-          }
+          // Update all elements based on progress
+          this.updateQuestion(progress);
+          this.updateCards(progress);
+          this.updateBanners(progress);
+          this.updateGuardrails(progress);
         }
         
-        setScene(sceneNumber) {
-          if (this.currentScene === sceneNumber) return;
+        updateQuestion(p) {
+          // 0.00–0.15: scale 1.00 → 0.90, opacity 1.0 → 0.7
+          // 0.15–0.40: maintain at scale 0.90, opacity 0.7
+          // 0.40+: gradually fade further
           
-          this.currentScene = sceneNumber;
-          this.section.setAttribute('data-scene', sceneNumber);
+          let scale, opacity;
           
-          console.log(`Opportunity cinematic scene: ${sceneNumber}`);
-          
-          // Clear any existing banner timers
-          this.bannerTimers.forEach(timer => clearTimeout(timer));
-          this.bannerTimers = [];
-          
-          // Handle scene-specific logic
-          switch (sceneNumber) {
-            case 1:
-              // Scene 1: Giant Question (entry)
-              break;
-              
-            case 2:
-              // Scene 2: Five Cards Converge
-              this.animateCardsIn();
-              break;
-              
-            case 3:
-              // Scene 3: Cards Stack & Drift Up
-              break;
-              
-            case 4:
-              // Scene 4: Big Proof Banners
-              this.startBannerSequence();
-              break;
-              
-            case 5:
-              // Scene 5: Guardrails Ribbon
-              this.stopBannerSequence();
-              break;
+          if (p <= 0.15) {
+            scale = 1.0 - (p / 0.15) * 0.1; // 1.0 → 0.9
+            opacity = 1.0 - (p / 0.15) * 0.3; // 1.0 → 0.7
+          } else if (p <= 0.55) {
+            scale = 0.9;
+            opacity = 0.7;
+          } else {
+            scale = 0.9;
+            opacity = Math.max(0, 0.7 - (p - 0.55) * 1.5); // fade out during metrics
           }
+          
+          this.question.style.transform = `scale(${scale})`;
+          this.question.style.opacity = opacity;
         }
         
-        animateCardsIn() {
+        updateCards(p) {
+          // 0.00–0.15: hidden
+          // 0.15–0.40: fly in from off-screen to ring
+          // 0.40–0.55: glide to stack, fade to 30%, add blur
+          // 0.55+: stay stacked and faint
+          
           this.cards.forEach((card, index) => {
-            setTimeout(() => {
-              card.style.transform = `translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y)))`;
-            }, index * 100); // Staggered arrival
+            let x, y, opacity, scale, blur;
+            
+            const startX = parseFloat(card.dataset.startX);
+            const startY = parseFloat(card.dataset.startY);
+            const ringX = parseFloat(card.dataset.ringX);
+            const ringY = parseFloat(card.dataset.ringY);
+            const stackX = parseFloat(card.dataset.stackX);
+            const stackY = parseFloat(card.dataset.stackY);
+            
+            if (p < 0.15) {
+              // Before cards appear
+              x = startX;
+              y = startY;
+              opacity = 0;
+              scale = 0.94;
+              blur = 4;
+            } else if (p <= 0.40) {
+              // Flying in to ring (0.15 → 0.40)
+              const cardProgress = (p - 0.15) / 0.25;
+              const stagger = index * 0.05; // slight delay per card
+              const adjustedProgress = Math.max(0, Math.min(1, (cardProgress - stagger) / (1 - stagger)));
+              
+              x = startX + (ringX - startX) * this.easeOut(adjustedProgress);
+              y = startY + (ringY - startY) * this.easeOut(adjustedProgress);
+              opacity = this.easeOut(adjustedProgress);
+              scale = 0.94 + 0.06 * this.easeOut(adjustedProgress); // 0.94 → 1.0
+              blur = 4 * (1 - this.easeOut(adjustedProgress)); // 4 → 0
+            } else if (p <= 0.55) {
+              // Stacking (0.40 → 0.55)
+              const stackProgress = (p - 0.40) / 0.15;
+              
+              x = ringX + (stackX - ringX) * this.easeOut(stackProgress);
+              y = ringY + (stackY - ringY) * this.easeOut(stackProgress);
+              opacity = 1.0 - 0.7 * this.easeOut(stackProgress); // 1.0 → 0.3
+              scale = 1.0 - 0.08 * this.easeOut(stackProgress); // 1.0 → 0.92
+              blur = 2 * this.easeOut(stackProgress); // 0 → 2
+            } else {
+              // Stacked and faint
+              x = stackX;
+              y = stackY;
+              opacity = 0.3;
+              scale = 0.92;
+              blur = 2;
+            }
+            
+            card.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
+            card.style.opacity = opacity;
+            card.style.filter = `blur(${blur}px)`;
+            card.style.zIndex = p >= 0.55 ? 5 : 12; // Behind banners during metrics
           });
         }
         
-        startBannerSequence() {
-          // Start the banner sequence: show each banner for 2 seconds
-          this.showBanner(0);
+        updateBanners(p) {
+          // Banner 1: 0.55–0.67 (rise 0.55–0.61, center 0.61–0.63, exit 0.63–0.67)
+          // Banner 2: 0.67–0.86 (rise 0.67–0.73, center 0.73–0.77, exit 0.77–0.86)
+          // Banner 3: 0.86–0.94 (rise 0.86–0.89, center 0.89–0.91, exit 0.91–0.94)
           
-          this.bannerTimers.push(setTimeout(() => {
-            this.showBanner(1);
-          }, 2000));
-          
-          this.bannerTimers.push(setTimeout(() => {
-            this.showBanner(2);
-          }, 4000));
+          this.updateBanner(this.banners[0], p, 0.55, 0.61, 0.67);
+          this.updateBanner(this.banners[1], p, 0.67, 0.73, 0.86);
+          this.updateBanner(this.banners[2], p, 0.86, 0.89, 0.94);
         }
         
-        stopBannerSequence() {
-          // Hide all banners when moving to scene 5
-          this.banners.forEach(banner => {
-            banner.classList.remove('active');
-            banner.classList.remove('exiting');
-          });
-        }
-        
-        updateBannerSequence(bannerIndex) {
-          if (bannerIndex !== this.currentBannerIndex && bannerIndex >= 0 && bannerIndex < 3) {
-            this.showBanner(bannerIndex);
-          }
-        }
-        
-        showBanner(index) {
-          // Hide previous banner
-          if (this.currentBannerIndex >= 0) {
-            this.banners[this.currentBannerIndex].classList.remove('active');
-            this.banners[this.currentBannerIndex].classList.add('exiting');
+        updateBanner(banner, p, enterStart, centerStart, exitEnd) {
+          let yOffset, opacity;
+          const enterDuration = centerStart - enterStart;
+          const exitStart = (centerStart + exitEnd) / 2;
+          const exitDuration = exitEnd - exitStart;
+          
+          if (p < enterStart) {
+            // Hidden below
+            yOffset = 100;
+            opacity = 0;
+          } else if (p <= centerStart) {
+            // Rising to center
+            const progress = (p - enterStart) / enterDuration;
+            yOffset = 100 * (1 - this.easeOut(progress));
+            opacity = this.easeOut(progress);
+          } else if (p <= exitStart) {
+            // At center
+            yOffset = 0;
+            opacity = 1;
+            
+            // Trigger count-up animation once
+            const numberEl = banner.querySelector('.banner-number');
+            if (numberEl && !this.animatedNumbers.has(numberEl)) {
+              this.animatedNumbers.add(numberEl);
+              this.animateNumber(numberEl);
+            }
+          } else if (p <= exitEnd) {
+            // Exiting upward
+            const progress = (p - exitStart) / exitDuration;
+            yOffset = -100 * this.easeOut(progress);
+            opacity = 1 - this.easeOut(progress);
+          } else {
+            // Hidden above
+            yOffset = -100;
+            opacity = 0;
           }
           
-          // Show new banner
-          this.currentBannerIndex = index;
-          this.banners[index].classList.remove('exiting');
-          this.banners[index].classList.add('active');
+          banner.style.transform = `translate(-50%, calc(-50% + ${yOffset}px))`;
+          banner.style.opacity = opacity;
+        }
+        
+        updateGuardrails(p) {
+          // 0.94–1.00: rise to center then ease up
+          let yOffset, opacity;
           
-          // Animate number if needed
-          const numberEl = this.banners[index].querySelector('.banner-number');
-          if (numberEl && !numberEl.dataset.ran) {
-            this.animateNumber(numberEl);
-            numberEl.dataset.ran = 'true';
+          if (p < 0.94) {
+            // Hidden below
+            yOffset = 80;
+            opacity = 0;
+          } else {
+            const progress = (p - 0.94) / 0.06;
+            
+            if (progress <= 0.5) {
+              // Rising to center (0.94–0.97)
+              const riseProgress = progress / 0.5;
+              yOffset = 80 * (1 - this.easeOut(riseProgress));
+              opacity = this.easeOut(riseProgress);
+            } else {
+              // At center then easing up (0.97–1.00)
+              const exitProgress = (progress - 0.5) / 0.5;
+              yOffset = -30 * this.easeOut(exitProgress);
+              opacity = 1 - this.easeOut(exitProgress) * 0.5;
+            }
           }
+          
+          this.guardrails.style.transform = `translate(-50%, calc(-50% + ${yOffset}px))`;
+          this.guardrails.style.opacity = opacity;
         }
         
         animateNumber(element) {
@@ -3371,34 +3393,29 @@
           const shouldAnimate = element.dataset.animate === 'true';
           
           if (!shouldAnimate || !value) {
-            // Static text (like ranges)
             return;
           }
           
           const targetNumber = parseFloat(value);
           const isNegative = targetNumber < 0;
+          const absTarget = Math.abs(targetNumber);
           
-          element.textContent = '0' + unit;
-          
-          const duration = 1200;
+          const duration = 1000;
           const startTime = performance.now();
           
           const animate = (currentTime) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
-            const easeOut = 1 - Math.pow(1 - progress, 3);
-            const current = Math.abs(targetNumber) * easeOut;
+            const easeProgress = this.easeOut(progress);
+            const current = absTarget * easeProgress;
             
-            let formattedNumber;
-            if (decimals === 0) {
-              formattedNumber = Math.round(current).toString();
-            } else {
-              formattedNumber = current.toFixed(decimals);
-            }
+            let formattedNumber = decimals === 0 ? 
+              Math.round(current).toString() : 
+              current.toFixed(decimals);
             
             if (isNegative) {
-              formattedNumber = '−' + formattedNumber; // Unicode minus
+              formattedNumber = '−' + formattedNumber; // Unicode minus U+2212
             }
             
             element.textContent = formattedNumber + unit;
@@ -3411,17 +3428,30 @@
           requestAnimationFrame(animate);
         }
         
-        throttle(func, limit) {
-          let inThrottle;
-          return function() {
-            const args = arguments;
-            const context = this;
-            if (!inThrottle) {
-              func.apply(context, args);
-              inThrottle = true;
-              setTimeout(() => inThrottle = false, limit);
-            }
-          };
+        easeOut(t) {
+          return 1 - Math.pow(1 - t, 3); // cubic ease-out
+        }
+        
+        applyReducedMotion() {
+          // Static final state
+          this.question.style.opacity = 0.7;
+          this.question.style.transform = 'scale(0.9)';
+          
+          this.cards.forEach((card, index) => {
+            const stackX = (index - 2) * 40;
+            const stackY = -window.innerHeight * 0.3;
+            card.style.transform = `translate(calc(-50% + ${stackX}px), calc(-50% + ${stackY}px)) scale(0.92)`;
+            card.style.opacity = 0.3;
+            card.style.filter = 'blur(2px)';
+          });
+          
+          this.banners.forEach(banner => {
+            banner.style.opacity = 1;
+            banner.style.transform = 'translate(-50%, -50%)';
+          });
+          
+          this.guardrails.style.opacity = 1;
+          this.guardrails.style.transform = 'translate(-50%, -50%)';
         }
       }
       
