@@ -3255,8 +3255,8 @@
           const scrollProgress = Math.max(0, Math.min(1, (scrollTop - sectionTop) / (sectionHeight - viewportHeight)));
           
           // Map scroll progress to scenes (0-1 maps to 5 scenes)
-          const targetScene = Math.floor(scrollProgress * 5) + 1;
-          const targetScene = Math.min(5, Math.max(1, targetScene));
+          let targetScene = Math.floor(scrollProgress * 5) + 1;
+          targetScene = Math.min(5, Math.max(1, targetScene));
           
           if (targetScene !== this.currentScene) {
             this.setScene(targetScene);
