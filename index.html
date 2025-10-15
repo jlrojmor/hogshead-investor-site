@@ -3140,7 +3140,7 @@
         });
       }
 
-      // Opportunity Cinematic Sequence - Scroll-driven with precise progress mapping
+      // Opportunity Cinematic Sequence v3 - Scroll-driven with exact 72° spacing
       class OpportunityCinematic {
         constructor() {
           this.section = document.getElementById('opportunity');
@@ -3166,25 +3166,32 @@
         }
         
         setupCardPositions() {
-          this.angles = [-90, -18, 54, 126, 198]; // Exactly 72° apart: -90, -18, 54, 126, 198 (==-162)
-          this.radius = window.innerWidth > 960 ? 28 : 40; // vw
+          // Compute angles programmatically: exactly 72° apart
+          const baseAngle = -90; // top
+          this.angles = Array.from({length: 5}, (_, i) => baseAngle + i * 72);
+          // Result: [-90, -18, 54, 126, 198] where 198° ≡ -162°
+          
+          this.radiusVw = window.innerWidth > 960 ? 28 : 40; // vw units
+          const radiusPx = (this.radiusVw * window.innerWidth) / 100;
+          
+          // Y-scale to create oval (so cards don't clip at top/bottom)
+          const yScale = 0.85;
           
           this.cards.forEach((card, index) => {
-            const angle = this.angles[index];
-            const rad = (angle * Math.PI) / 180;
-            const radiusPx = (this.radius * window.innerWidth) / 100;
+            const angleDeg = this.angles[index];
+            const angleRad = (angleDeg * Math.PI) / 180;
             
-            // Ring position (end point)
-            const ringX = Math.cos(rad) * radiusPx;
-            const ringY = Math.sin(rad) * radiusPx;
+            // Ring position (oval)
+            const ringX = Math.cos(angleRad) * radiusPx;
+            const ringY = Math.sin(angleRad) * radiusPx * yScale;
             
-            // Start position (far off-screen along same vector)
-            const startDist = Math.max(window.innerWidth, window.innerHeight) * 1.5;
-            const startX = Math.cos(rad) * startDist;
-            const startY = Math.sin(rad) * startDist;
+            // Start position (well off-screen along same vector)
+            const startDist = Math.max(window.innerWidth * 1.2, window.innerHeight * 1.2);
+            const startX = Math.cos(angleRad) * startDist;
+            const startY = Math.sin(angleRad) * startDist * yScale;
             
-            // Stack position (upper third, tighter)
-            const stackX = (index - 2) * 40;
+            // Stack position (upper third, tight)
+            const stackX = (index - 2) * 35;
             const stackY = -window.innerHeight * 0.3;
             
             card.dataset.startX = startX;
@@ -3208,55 +3215,55 @@
         }
         
         handleScroll() {
-          const rect = this.section.getBoundingClientRect();
           const viewportHeight = window.innerHeight;
           const sectionHeight = this.section.offsetHeight;
           
           // Calculate scroll progress through the section (0 to 1)
           const scrollTop = window.pageYOffset;
           const sectionTop = this.section.offsetTop;
-          const progress = Math.max(0, Math.min(1, 
+          const p = Math.max(0, Math.min(1, 
             (scrollTop - sectionTop) / (sectionHeight - viewportHeight)
           ));
           
           // Log progress and active scene
           let scene = '';
-          if (progress < 0.15) scene = '1: Giant Question';
-          else if (progress < 0.40) scene = '2: Cards Converge';
-          else if (progress < 0.55) scene = '3: Stack & Drift';
-          else if (progress < 0.67) scene = '4A: Banner 1 (13.4%)';
-          else if (progress < 0.80) scene = '4B: Banner 2 (13-15%)';
-          else if (progress < 0.94) scene = '4C: Banner 3 (-50%)';
+          if (p < 0.15) scene = '1: Giant Question';
+          else if (p < 0.40) scene = '2: Cards Converge';
+          else if (p < 0.55) scene = '3: Stack & Drift';
+          else if (p < 0.67) scene = '4A: KPI 13.4%';
+          else if (p < 0.80) scene = '4B: KPI 13-15%';
+          else if (p < 0.94) scene = '4C: KPI -50%';
           else scene = '5: Guardrails';
           
           if (!this.lastScene || this.lastScene !== scene) {
-            console.log(`Opportunity p=${progress.toFixed(3)} | Scene ${scene}`);
+            console.log(`Opportunity p=${p.toFixed(3)} | ${scene}`);
             this.lastScene = scene;
           }
           
           // Update all elements based on progress
-          this.updateQuestion(progress);
-          this.updateCards(progress);
-          this.updateBanners(progress);
-          this.updateGuardrails(progress);
+          this.updateQuestion(p);
+          this.updateCards(p);
+          this.updateKPIs(p);
+          this.updateGuardrails(p);
         }
         
         updateQuestion(p) {
           // 0.00–0.15: scale 1.00 → 0.90, opacity 1.0 → 0.7
-          // 0.15–0.40: maintain at scale 0.90, opacity 0.7
-          // 0.40+: gradually fade further
-          
+          // 0.15+: maintain at scale 0.90, opacity 0.7 until metrics
           let scale, opacity;
           
           if (p <= 0.15) {
-            scale = 1.0 - (p / 0.15) * 0.1; // 1.0 → 0.9
-            opacity = 1.0 - (p / 0.15) * 0.3; // 1.0 → 0.7
+            const t = p / 0.15;
+            scale = 1.0 - 0.1 * t; // 1.0 → 0.9
+            opacity = 1.0 - 0.3 * t; // 1.0 → 0.7
           } else if (p <= 0.55) {
             scale = 0.9;
             opacity = 0.7;
           } else {
+            // Fade during metrics
             scale = 0.9;
-            opacity = Math.max(0, 0.7 - (p - 0.55) * 1.5); // fade out during metrics
+            const fadeProgress = (p - 0.55) / 0.4;
+            opacity = Math.max(0, 0.7 - fadeProgress * 0.7);
           }
           
           this.question.style.transform = `scale(${scale})`;
@@ -3264,11 +3271,6 @@
         }
         
         updateCards(p) {
-          // 0.00–0.15: hidden
-          // 0.15–0.40: fly in from off-screen to ring
-          // 0.40–0.55: glide to stack, fade to 30%, add blur
-          // 0.55+: stay stacked and faint
-          
           this.cards.forEach((card, index) => {
             let x, y, opacity, scale, blur;
             
@@ -3280,34 +3282,36 @@
             const stackY = parseFloat(card.dataset.stackY);
             
             if (p < 0.15) {
-              // Before cards appear
+              // Off-screen
               x = startX;
               y = startY;
               opacity = 0;
               scale = 0.94;
-              blur = 4;
+              blur = 2;
             } else if (p <= 0.40) {
               // Flying in to ring (0.15 → 0.40)
-              const cardProgress = (p - 0.15) / 0.25;
-              const stagger = index * 0.05; // slight delay per card
-              const adjustedProgress = Math.max(0, Math.min(1, (cardProgress - stagger) / (1 - stagger)));
+              const t = (p - 0.15) / 0.25;
+              const stagger = index * 0.06;
+              const tAdj = Math.max(0, Math.min(1, (t - stagger) / (1 - stagger * 2)));
+              const eased = this.easeOut(tAdj);
               
-              x = startX + (ringX - startX) * this.easeOut(adjustedProgress);
-              y = startY + (ringY - startY) * this.easeOut(adjustedProgress);
-              opacity = this.easeOut(adjustedProgress);
-              scale = 0.94 + 0.06 * this.easeOut(adjustedProgress); // 0.94 → 1.0
-              blur = 4 * (1 - this.easeOut(adjustedProgress)); // 4 → 0
+              x = startX + (ringX - startX) * eased;
+              y = startY + (ringY - startY) * eased;
+              opacity = eased;
+              scale = 0.94 + 0.06 * eased; // 0.94 → 1.0
+              blur = 2 * (1 - eased); // 2 → 0
             } else if (p <= 0.55) {
               // Stacking (0.40 → 0.55)
-              const stackProgress = (p - 0.40) / 0.15;
+              const t = (p - 0.40) / 0.15;
+              const eased = this.easeOut(t);
               
-              x = ringX + (stackX - ringX) * this.easeOut(stackProgress);
-              y = ringY + (stackY - ringY) * this.easeOut(stackProgress);
-              opacity = 1.0 - 0.7 * this.easeOut(stackProgress); // 1.0 → 0.3
-              scale = 1.0 - 0.08 * this.easeOut(stackProgress); // 1.0 → 0.92
-              blur = 2 * this.easeOut(stackProgress); // 0 → 2
+              x = ringX + (stackX - ringX) * eased;
+              y = ringY + (stackY - ringY) * eased;
+              opacity = 1.0 - 0.7 * eased; // 1.0 → 0.3
+              scale = 1.0 - 0.08 * eased; // 1.0 → 0.92
+              blur = 2 * eased; // 0 → 2
             } else {
-              // Stacked and faint
+              // Stacked
               x = stackX;
               y = stackY;
               opacity = 0.3;
@@ -3318,93 +3322,94 @@
             card.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
             card.style.opacity = opacity;
             card.style.filter = `blur(${blur}px)`;
-            card.style.zIndex = p >= 0.55 ? 5 : 12; // Behind banners during metrics
+            card.style.zIndex = p >= 0.55 ? 5 : 12;
           });
         }
         
-        updateBanners(p) {
-          // Banner A: 0.55–0.67 (rise, center at ~0.61, exit)
-          // Banner B: 0.67–0.80 (rise, center at ~0.735, exit)
-          // Banner C: 0.80–0.94 (rise, center at ~0.87, exit)
+        updateKPIs(p) {
+          // KPI A: 0.55 → 0.67
+          // KPI B: 0.67 → 0.80
+          // KPI C: 0.80 → 0.94
           
-          this.updateBanner(this.banners[0], p, 0.55, 0.61, 0.67);
-          this.updateBanner(this.banners[1], p, 0.67, 0.735, 0.80);
-          this.updateBanner(this.banners[2], p, 0.80, 0.87, 0.94);
+          this.updateSingleKPI(this.banners[0], p, 0.55, 0.67);
+          this.updateSingleKPI(this.banners[1], p, 0.67, 0.80);
+          this.updateSingleKPI(this.banners[2], p, 0.80, 0.94);
         }
         
-        updateBanner(banner, p, enterStart, centerStart, exitEnd) {
-          let yOffset, opacity;
-          const enterDuration = centerStart - enterStart;
-          const exitStart = (centerStart + exitEnd) / 2;
-          const exitDuration = exitEnd - exitStart;
+        updateSingleKPI(kpi, p, start, end) {
+          if (!kpi) return;
           
-          if (p < enterStart) {
-            // Hidden below
-            yOffset = 100;
+          // Compute local progress
+          const t = Math.max(0, Math.min(1, (p - start) / (end - start)));
+          
+          let yPercent, opacity;
+          
+          if (t === 0) {
+            // Before this KPI
+            yPercent = 110;
             opacity = 0;
-          } else if (p <= centerStart) {
-            // Rising to center
-            const progress = (p - enterStart) / enterDuration;
-            yOffset = 100 * (1 - this.easeOut(progress));
-            opacity = this.easeOut(progress);
-          } else if (p <= exitStart) {
-            // At center
-            yOffset = 0;
+          } else if (t <= 0.45) {
+            // Rising to center (0 → 0.45)
+            const riseT = t / 0.45;
+            const eased = this.easeOut(riseT);
+            yPercent = 110 * (1 - eased);
+            opacity = eased;
+          } else if (t <= 0.55) {
+            // At center (0.45 → 0.55)
+            yPercent = 0;
             opacity = 1;
             
-            // Trigger count-up animation once
-            const numberEl = banner.querySelector('.banner-number');
+            // Trigger count-up once
+            const numberEl = kpi.querySelector('.banner-number');
             if (numberEl && !this.animatedNumbers.has(numberEl)) {
               this.animatedNumbers.add(numberEl);
               this.animateNumber(numberEl);
             }
-          } else if (p <= exitEnd) {
-            // Exiting upward
-            const progress = (p - exitStart) / exitDuration;
-            yOffset = -100 * this.easeOut(progress);
-            opacity = 1 - this.easeOut(progress);
+          } else if (t < 1) {
+            // Exiting upward (0.55 → 1.0)
+            const exitT = (t - 0.55) / 0.45;
+            const eased = this.easeOut(exitT);
+            yPercent = -110 * eased;
+            opacity = 1 - eased;
           } else {
-            // Hidden above
-            yOffset = -100;
+            // After this KPI
+            yPercent = -110;
             opacity = 0;
           }
           
-          banner.style.transform = `translate(-50%, calc(-50% + ${yOffset}px))`;
-          banner.style.opacity = opacity;
+          kpi.style.transform = `translate(-50%, calc(-50% + ${yPercent}%))`;
+          kpi.style.opacity = opacity;
         }
         
         updateGuardrails(p) {
-          // 0.94–1.00: rise to center, stop, then ease up as section exits
-          let yOffset, opacity;
+          if (!this.guardrails) return;
+          
+          let yPercent, opacity;
           
           if (p < 0.94) {
             // Hidden below
-            yOffset = 100;
+            yPercent = 110;
             opacity = 0;
-          } else if (p <= 1.0) {
-            const progress = (p - 0.94) / 0.06; // 0 to 1 over the 0.94-1.0 range
-            
-            if (progress <= 0.5) {
-              // Rising to center (0.94–0.97)
-              const riseProgress = progress / 0.5;
-              yOffset = 100 * (1 - this.easeOut(riseProgress));
-              opacity = this.easeOut(riseProgress);
-            } else {
-              // At center then easing up (0.97–1.00)
-              const exitProgress = (progress - 0.5) / 0.5;
-              yOffset = -40 * this.easeOut(exitProgress);
-              opacity = 1 - this.easeOut(exitProgress) * 0.6;
-            }
           } else {
-            // Fully exited
-            yOffset = -40;
-            opacity = 0.4;
+            const t = (p - 0.94) / 0.06; // 0 to 1 over 0.94-1.0
+            
+            if (t <= 0.5) {
+              // Rising to center
+              const riseT = t / 0.5;
+              const eased = this.easeOut(riseT);
+              yPercent = 110 * (1 - eased);
+              opacity = eased;
+            } else {
+              // At center, then ease up slightly
+              const exitT = (t - 0.5) / 0.5;
+              const eased = this.easeOut(exitT);
+              yPercent = -30 * eased;
+              opacity = 1 - eased * 0.5;
+            }
           }
           
-          if (this.guardrails) {
-            this.guardrails.style.transform = `translate(-50%, calc(-50% + ${yOffset}px))`;
-            this.guardrails.style.opacity = opacity;
-          }
+          this.guardrails.style.transform = `translate(-50%, calc(-50% + ${yPercent}%))`;
+          this.guardrails.style.opacity = opacity;
         }
         
         animateNumber(element) {
@@ -3450,16 +3455,23 @@
         }
         
         easeOut(t) {
-          return 1 - Math.pow(1 - t, 3); // cubic ease-out
+          return 1 - Math.pow(1 - t, 3);
+        }
+        
+        lerp(a, b, t) {
+          return a + (b - a) * t;
+        }
+        
+        remap(value, inMin, inMax) {
+          return Math.max(0, Math.min(1, (value - inMin) / (inMax - inMin)));
         }
         
         applyReducedMotion() {
-          // Static final state
           this.question.style.opacity = 0.7;
           this.question.style.transform = 'scale(0.9)';
           
           this.cards.forEach((card, index) => {
-            const stackX = (index - 2) * 40;
+            const stackX = (index - 2) * 35;
             const stackY = -window.innerHeight * 0.3;
             card.style.transform = `translate(calc(-50% + ${stackX}px), calc(-50% + ${stackY}px)) scale(0.92)`;
             card.style.opacity = 0.3;
@@ -3471,8 +3483,10 @@
             banner.style.transform = 'translate(-50%, -50%)';
           });
           
-          this.guardrails.style.opacity = 1;
-          this.guardrails.style.transform = 'translate(-50%, -50%)';
+          if (this.guardrails) {
+            this.guardrails.style.opacity = 1;
+            this.guardrails.style.transform = 'translate(-50%, -50%)';
+          }
         }
       }
       
