@@ -3166,7 +3166,7 @@
         }
         
         setupCardPositions() {
-          this.angles = [-90, 18, 90, 162, -162]; // degrees
+          this.angles = [-90, -18, 54, 126, 198]; // Exactly 72° apart: -90, -18, 54, 126, 198 (==-162)
           this.radius = window.innerWidth > 960 ? 28 : 40; // vw
           
           this.cards.forEach((card, index) => {
@@ -3218,6 +3218,21 @@
           const progress = Math.max(0, Math.min(1, 
             (scrollTop - sectionTop) / (sectionHeight - viewportHeight)
           ));
+          
+          // Log progress and active scene
+          let scene = '';
+          if (progress < 0.15) scene = '1: Giant Question';
+          else if (progress < 0.40) scene = '2: Cards Converge';
+          else if (progress < 0.55) scene = '3: Stack & Drift';
+          else if (progress < 0.67) scene = '4A: Banner 1 (13.4%)';
+          else if (progress < 0.80) scene = '4B: Banner 2 (13-15%)';
+          else if (progress < 0.94) scene = '4C: Banner 3 (-50%)';
+          else scene = '5: Guardrails';
+          
+          if (!this.lastScene || this.lastScene !== scene) {
+            console.log(`Opportunity p=${progress.toFixed(3)} | Scene ${scene}`);
+            this.lastScene = scene;
+          }
           
           // Update all elements based on progress
           this.updateQuestion(progress);
@@ -3308,13 +3323,13 @@
         }
         
         updateBanners(p) {
-          // Banner 1: 0.55–0.67 (rise 0.55–0.61, center 0.61–0.63, exit 0.63–0.67)
-          // Banner 2: 0.67–0.86 (rise 0.67–0.73, center 0.73–0.77, exit 0.77–0.86)
-          // Banner 3: 0.86–0.94 (rise 0.86–0.89, center 0.89–0.91, exit 0.91–0.94)
+          // Banner A: 0.55–0.67 (rise, center at ~0.61, exit)
+          // Banner B: 0.67–0.80 (rise, center at ~0.735, exit)
+          // Banner C: 0.80–0.94 (rise, center at ~0.87, exit)
           
           this.updateBanner(this.banners[0], p, 0.55, 0.61, 0.67);
-          this.updateBanner(this.banners[1], p, 0.67, 0.73, 0.86);
-          this.updateBanner(this.banners[2], p, 0.86, 0.89, 0.94);
+          this.updateBanner(this.banners[1], p, 0.67, 0.735, 0.80);
+          this.updateBanner(this.banners[2], p, 0.80, 0.87, 0.94);
         }
         
         updateBanner(banner, p, enterStart, centerStart, exitEnd) {
@@ -3359,31 +3374,37 @@
         }
         
         updateGuardrails(p) {
-          // 0.94–1.00: rise to center then ease up
+          // 0.94–1.00: rise to center, stop, then ease up as section exits
           let yOffset, opacity;
           
           if (p < 0.94) {
             // Hidden below
-            yOffset = 80;
+            yOffset = 100;
             opacity = 0;
-          } else {
-            const progress = (p - 0.94) / 0.06;
+          } else if (p <= 1.0) {
+            const progress = (p - 0.94) / 0.06; // 0 to 1 over the 0.94-1.0 range
             
             if (progress <= 0.5) {
               // Rising to center (0.94–0.97)
               const riseProgress = progress / 0.5;
-              yOffset = 80 * (1 - this.easeOut(riseProgress));
+              yOffset = 100 * (1 - this.easeOut(riseProgress));
               opacity = this.easeOut(riseProgress);
             } else {
               // At center then easing up (0.97–1.00)
               const exitProgress = (progress - 0.5) / 0.5;
-              yOffset = -30 * this.easeOut(exitProgress);
-              opacity = 1 - this.easeOut(exitProgress) * 0.5;
+              yOffset = -40 * this.easeOut(exitProgress);
+              opacity = 1 - this.easeOut(exitProgress) * 0.6;
             }
+          } else {
+            // Fully exited
+            yOffset = -40;
+            opacity = 0.4;
           }
           
-          this.guardrails.style.transform = `translate(-50%, calc(-50% + ${yOffset}px))`;
-          this.guardrails.style.opacity = opacity;
+          if (this.guardrails) {
+            this.guardrails.style.transform = `translate(-50%, calc(-50% + ${yOffset}px))`;
+            this.guardrails.style.opacity = opacity;
+          }
         }
         
         animateNumber(element) {
