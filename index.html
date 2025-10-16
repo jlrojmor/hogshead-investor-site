@@ -1980,6 +1980,40 @@
           color: var(--ink);
           font-weight: 500;
         }
+
+        /* How It Works Card Styling */
+        .how-it-works-card {
+          max-width: 100%;
+          padding: 24px;
+          min-height: auto;
+        }
+
+        .how-it-works-card h3 {
+          font-size: 1.4rem;
+          margin-bottom: 12px;
+          line-height: 1.3;
+        }
+
+        .how-it-works-card p {
+          font-size: 0.95rem;
+          line-height: 1.5;
+          margin-bottom: 16px;
+        }
+
+        .investment-range,
+        .service-note {
+          font-size: 0.85rem;
+          color: var(--muted);
+          margin-top: 16px;
+          padding: 12px;
+          background: rgba(45, 106, 79, 0.05);
+          border-radius: 8px;
+          border-left: 3px solid var(--agave);
+        }
+
+        .custody-checklist {
+          margin-top: 16px;
+        }
   </style>
 </head>
 <body>
@@ -2027,20 +2061,24 @@
         <h2>How It Works</h2>
         <p class="sub">A proven model with four key steps that create value through time and scarcity.</p>
 
-        <div class="grid grid-2" style="gap: 32px; margin: 32px 0;">
-          <div class="card">
+        <div class="grid grid-2" style="gap: 24px; margin: 32px 0;">
+          <div class="card how-it-works-card">
             <span class="pill">Step 1</span>
             <h3>Capital Commitment & Source</h3>
             <p>Acquire premium tequila from established distilleries with denomination of origin protection.</p>
-            <p style="margin-top: 16px; font-size: 0.9rem; color: var(--muted);"><strong>Typical investment:</strong> $500K - $5M USD</p>
+            <div class="investment-range">
+              <strong>Typical investment:</strong> $500K - $5M USD
+            </div>
           </div>
-          <div class="card">
+          <div class="card how-it-works-card">
             <span class="pill">Step 2</span>
             <h3>Custody</h3>
             <p>Hold under bonded storage with climate control, inventory tracking, and insurance.</p>
-            <p style="margin-top: 16px; font-size: 0.9rem; color: var(--muted);"><strong>Our service:</strong> Complete custody management</p>
+            <div class="service-note">
+              <strong>Our service:</strong> Complete custody management
+            </div>
             
-            <div class="custody-checklist" style="margin-top: 20px;">
+            <div class="custody-checklist">
               <div class="checklist-item" data-delay="0">
                 <div class="check-circle">
                   <div class="check-fill"></div>
@@ -3650,22 +3688,31 @@
       function initCustodyChecklist() {
         const checklistItems = document.querySelectorAll('.checklist-item');
         
-        // Create intersection observer for the checklist
+        // Create intersection observer for the checklist section
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              const delay = parseInt(entry.target.dataset.delay);
-              setTimeout(() => {
-                entry.target.classList.add('checked');
-              }, delay);
+              // Reset all checklist items when section comes into view
+              checklistItems.forEach(item => {
+                item.classList.remove('checked');
+              });
+              
+              // Start the animation sequence
+              checklistItems.forEach(item => {
+                const delay = parseInt(item.dataset.delay);
+                setTimeout(() => {
+                  item.classList.add('checked');
+                }, delay);
+              });
             }
           });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.3 });
         
-        // Observe each checklist item
-        checklistItems.forEach(item => {
-          observer.observe(item);
-        });
+        // Observe the checklist container instead of individual items
+        const checklistContainer = document.querySelector('.custody-checklist');
+        if (checklistContainer) {
+          observer.observe(checklistContainer);
+        }
       }
 
       // Initialize simulator
