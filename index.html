@@ -448,13 +448,18 @@
           background: #fff;
           border: 1px solid var(--line);
           border-radius: 16px;
-          padding: 24px;
+          padding: 32px 20px;
           box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-          max-width: 280px;
+          width: 180px;
+          height: 240px;
           text-align: center;
           pointer-events: auto;
           will-change: transform, opacity, filter;
           transition: box-shadow 0.3s ease;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
         }
 
         .opp-card:hover {
@@ -553,6 +558,20 @@
 
         /* Mobile adjustments */
         @media (max-width: 960px) {
+          .opp-card {
+            width: 140px;
+            height: 200px;
+            padding: 24px 16px;
+          }
+          
+          .opp-card h3 {
+            font-size: 18px;
+          }
+          
+          .opp-card p {
+            font-size: 14px;
+          }
+          
           .opp-guardrails {
             gap: 12px;
           }
@@ -3190,9 +3209,13 @@
             const startX = Math.cos(angleRad) * startDist;
             const startY = Math.sin(angleRad) * startDist * yScale;
             
-            // Horizontal row position (collision point)
-            const rowSpacing = Math.min(120, window.innerWidth * 0.15); // Responsive spacing
-            const rowX = (index - 2) * rowSpacing; // Center cards horizontally
+            // Horizontal row position (collision point) - with proper spacing
+            const isMobile = window.innerWidth <= 960;
+            const cardWidth = isMobile ? 140 : 180; // Smaller on mobile
+            const cardSpacing = isMobile ? 20 : 40; // Tighter spacing on mobile
+            const totalWidth = (5 * cardWidth) + (4 * cardSpacing); // Total width for 5 cards + 4 gaps
+            const rowStartX = -totalWidth / 2 + cardWidth / 2; // Start position for first card
+            const rowX = rowStartX + index * (cardWidth + cardSpacing); // Position each card with spacing
             const rowY = 0; // All at same vertical level
             
             card.dataset.startX = startX;
