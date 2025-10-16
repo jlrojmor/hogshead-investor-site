@@ -3901,12 +3901,22 @@
 
       // Scroll to section function
       function scrollToSection(sectionId) {
+        console.log('Attempting to scroll to:', sectionId);
         const element = document.getElementById(sectionId);
+        console.log('Element found:', element);
+        
         if (element) {
-          element.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
+          // Add a small offset to account for any fixed headers
+          const elementPosition = element.offsetTop - 100;
+          
+          window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth'
           });
+          
+          console.log('Scrolling to position:', elementPosition);
+        } else {
+          console.error('Element not found:', sectionId);
         }
       }
 
