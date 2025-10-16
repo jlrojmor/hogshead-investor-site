@@ -3875,19 +3875,16 @@
         const scrolled   = window.scrollY - sectionTop;
         const p          = clamp(scrolled / sectionH, 0, 1);  // master progress 0..1
 
-        // STEP 1 range: 0.00 → 0.22 (hero animation only)
-        const tHero = remap(p, 0.00, 0.22);
+        // Extended animation: 0.00 → 1.00 (entire scroll range)
+        const tHero = p; // Use full progress for continuous animation
 
-        // Start: huge & slightly low. End: compact & exact center.
-        const scale      = lerp(1.15, 0.72, tHero);  // heroic → compact
-        const translateY = lerp(8, 0, tHero);        // vh, arrive to center
-        const opacity    = lerp(1.00, 0.90, tHero);  // stays visible
+        // Start: huge & slightly low. End: very small & transparent.
+        const scale      = lerp(1.15, 0.3, tHero);   // heroic → very small
+        const translateY = lerp(8, 0, Math.min(tHero * 2, 1)); // vh, arrive to center by 0.5
+        const opacity    = lerp(1.00, 0.2, tHero);   // stays visible → very transparent
 
         titleEl.style.transform = `translate3d(0, ${translateY}vh, 0) scale(${scale})`;
         titleEl.style.opacity   = opacity;
-
-        // Do NOT fade out or move it after 0.22. It stays compact & centered
-        // to serve as the anchor for Step 2 (cards) in the next task.
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
