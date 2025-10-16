@@ -2235,7 +2235,7 @@
             <h3>Aging & Appreciation</h3>
             <p>Time compounds value: the asset appreciates over time while being in the barrel. Scarcity increases while demand grows for premium aged expressions, creating natural price appreciation.</p>
             <div class="aging-cta">
-              <button class="btn btn-secondary" onclick="scrollToSection('aging-simulator')">
+              <button class="btn btn-secondary" onclick="scrollToAgingSimulator()">
                 <span>Try the Aging Value Simulator</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M7 17L17 7M17 7H7M17 7V17"/>
@@ -3899,7 +3899,50 @@
         requestAnimationFrame(updateNumber);
       }
 
-      // Scroll to section function
+      // Scroll to Aging Simulator function
+      function scrollToAgingSimulator() {
+        console.log('Attempting to scroll to Aging Value Simulator');
+        
+        // Try multiple selectors to find the aging simulator
+        let element = document.getElementById('aging-simulator');
+        
+        if (!element) {
+          element = document.querySelector('.aging-simulator-section');
+        }
+        
+        if (!element) {
+          // Fallback: find by heading text
+          const headings = document.querySelectorAll('h3');
+          for (let heading of headings) {
+            if (heading.textContent.includes('Aging Value Simulator')) {
+              element = heading.closest('.aging-simulator-section') || heading;
+              break;
+            }
+          }
+        }
+        
+        console.log('Element found:', element);
+        
+        if (element) {
+          const elementPosition = element.offsetTop - 80;
+          
+          window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth'
+          });
+          
+          console.log('Scrolling to position:', elementPosition);
+        } else {
+          console.error('Aging Simulator section not found');
+          // Fallback: scroll to bottom of page
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+          });
+        }
+      }
+
+      // Scroll to section function (generic)
       function scrollToSection(sectionId) {
         console.log('Attempting to scroll to:', sectionId);
         const element = document.getElementById(sectionId);
