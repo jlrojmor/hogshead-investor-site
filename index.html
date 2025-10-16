@@ -2144,6 +2144,165 @@
           text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
         }
 
+        /* Step 4 Exit Grid Layout */
+        .step-4-card {
+          min-height: 400px;
+        }
+
+        .exit-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
+          gap: 16px;
+          height: 320px;
+          margin-top: 20px;
+        }
+
+        .exit-btn {
+          background: white;
+          border: 2px solid var(--line);
+          border-radius: 12px;
+          padding: 20px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .exit-btn:hover {
+          border-color: var(--agave);
+          background: rgba(45, 106, 79, 0.05);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(45, 106, 79, 0.15);
+        }
+
+        .exit-btn h4 {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: var(--ink);
+          margin: 0 0 8px 0;
+          line-height: 1.3;
+        }
+
+        .exit-btn p {
+          font-size: 0.9rem;
+          color: var(--muted);
+          margin: 0;
+          line-height: 1.4;
+        }
+
+        /* Modal System */
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.7);
+          backdrop-filter: blur(4px);
+          z-index: 1000;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+          display: flex;
+          opacity: 1;
+        }
+
+        .modal-content {
+          background: white;
+          border-radius: 16px;
+          padding: 32px;
+          max-width: 500px;
+          width: 90%;
+          max-height: 80vh;
+          overflow-y: auto;
+          position: relative;
+          transform: scale(0.9);
+          transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+          transform: scale(1);
+        }
+
+        .modal-close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          background: none;
+          border: none;
+          font-size: 24px;
+          cursor: pointer;
+          color: var(--muted);
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+          background: rgba(0, 0, 0, 0.1);
+          color: var(--ink);
+        }
+
+        .modal-content h3 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--ink);
+          margin: 0 0 16px 0;
+        }
+
+        .modal-content p {
+          font-size: 1rem;
+          color: var(--ink);
+          line-height: 1.6;
+          margin: 0;
+        }
+
+        @media (max-width: 768px) {
+          .exit-grid {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(4, 1fr);
+            height: auto;
+            gap: 12px;
+          }
+
+          .exit-btn {
+            padding: 16px;
+            height: auto;
+            min-height: 80px;
+          }
+
+          .exit-btn h4 {
+            font-size: 1rem;
+          }
+
+          .exit-btn p {
+            font-size: 0.85rem;
+          }
+
+          .modal-content {
+            padding: 24px;
+            margin: 20px;
+          }
+
+          .modal-content h3 {
+            font-size: 1.3rem;
+          }
+        }
+
         @media (max-width: 768px) {
           .custody-checklist {
             grid-template-columns: 1fr;
@@ -2294,13 +2453,40 @@
               </button>
             </div>
           </div>
-          <div class="card">
+          <div class="card step-4-card">
             <span class="pill">Step 4</span>
-            <h3>Exit</h3>
-            <p>Plan exits around category step-ups and buyer demand via resale or bottling.</p>
+            <h3>Exit Strategies</h3>
+            <div class="exit-grid">
+              <button class="exit-btn" onclick="openExitModal('investor')">
+                <h4>Sell Certificate to Another Investor</h4>
+                <p>Early liquidity, no physical movement</p>
+              </button>
+              <button class="exit-btn" onclick="openExitModal('bottlers')">
+                <h4>Sell to Bottlers/Brands</h4>
+                <p>Bottling under established labels</p>
+              </button>
+              <button class="exit-btn" onclick="openExitModal('corporate')">
+                <h4>Corporate Clients</h4>
+                <p>Hotels, restaurants, bars</p>
+              </button>
+              <button class="exit-btn" onclick="openExitModal('marketplace')">
+                <h4>Hogshead Market Place</h4>
+                <p>E-commerce for rare tequilas</p>
+              </button>
+            </div>
           </div>
         </div>
       </section>
+
+      <!-- Exit Strategy Modals -->
+      <div id="modal-overlay" class="modal-overlay" onclick="closeExitModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+          <button class="modal-close" onclick="closeExitModal()">&times;</button>
+          <div id="modal-body">
+            <!-- Modal content will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
 
       <!-- OPPORTUNITY -->
       <section id="opportunity">
@@ -3949,6 +4135,55 @@
         
         requestAnimationFrame(updateNumber);
       }
+
+      // Exit Strategy Modal System
+      const exitStrategyData = {
+        investor: {
+          title: "Sell Certificate to Another Investor",
+          content: "Titles can be resold to other investors who are interested in holding the cask for a more extended period of time. There's no physical movement of tequila required, and provides liquidity to investor who wants to exit early."
+        },
+        bottlers: {
+          title: "Sell to Bottlers/Brands",
+          content: "Bottlers and established brands can purchase certificates to bottle tequila under their own labels. These companies are always looking for aged tequila to release under their label. Once bottled, tequila is exported from Mexico and commercialized internationally."
+        },
+        corporate: {
+          title: "Corporate Clients",
+          content: "Several types of companies are usually seeking for casks to bottle under own label. This type of clients include major corporations, hotels & restaurants primarily and bars. This practice is usually used to differentiate themselves."
+        },
+        marketplace: {
+          title: "Hogshead Market Place",
+          content: "Casks can be uploaded into e-commerce platforms to be sold. Usually, sales that occur in this type of platforms are smaller sales, and the main goal of buyers is to buy scarce and rare product. Great opportunity for extra aged añejos and premium aged tequilas."
+        }
+      };
+
+      window.openExitModal = function(strategy) {
+        const modal = document.getElementById('modal-overlay');
+        const modalBody = document.getElementById('modal-body');
+        const data = exitStrategyData[strategy];
+        
+        if (data) {
+          modalBody.innerHTML = `
+            <h3>${data.title}</h3>
+            <p>${data.content}</p>
+          `;
+          
+          modal.classList.add('show');
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+      };
+
+      window.closeExitModal = function() {
+        const modal = document.getElementById('modal-overlay');
+        modal.classList.remove('show');
+        document.body.style.overflow = ''; // Restore scrolling
+      };
+
+      // Close modal with Escape key
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          closeExitModal();
+        }
+      });
 
       // Make function globally accessible
       window.scrollToAgingSimulator = function() {
