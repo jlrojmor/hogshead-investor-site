@@ -1976,43 +1976,90 @@
         }
 
         .checklist-item span {
-          font-size: 0.9rem;
+          font-size: 1.1rem;
           color: var(--ink);
-          font-weight: 500;
+          font-weight: 600;
+        }
+
+        .check-circle {
+          width: 24px;
+          height: 24px;
+          border: 2px solid var(--line);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: border-color 0.3s ease;
+          flex-shrink: 0;
+        }
+
+        .check-icon {
+          width: 14px;
+          height: 14px;
+          color: white;
+          opacity: 0;
+          transform: scale(0.5);
+          transition: all 0.3s ease;
+          z-index: 1;
+          position: relative;
         }
 
         /* How It Works Card Styling */
         .how-it-works-card {
           max-width: 100%;
-          padding: 24px;
+          padding: 32px;
           min-height: auto;
         }
 
         .how-it-works-card h3 {
-          font-size: 1.4rem;
-          margin-bottom: 12px;
-          line-height: 1.3;
+          font-size: 1.8rem;
+          margin-bottom: 16px;
+          line-height: 1.2;
+          font-weight: 700;
         }
 
         .how-it-works-card p {
-          font-size: 0.95rem;
-          line-height: 1.5;
-          margin-bottom: 16px;
+          font-size: 1.1rem;
+          line-height: 1.6;
+          margin-bottom: 20px;
+          color: var(--ink);
         }
 
-        .investment-range,
-        .service-note {
-          font-size: 0.85rem;
-          color: var(--muted);
-          margin-top: 16px;
-          padding: 12px;
-          background: rgba(45, 106, 79, 0.05);
-          border-radius: 8px;
-          border-left: 3px solid var(--agave);
+        .investment-range {
+          font-size: 1rem;
+          color: var(--ink);
+          margin-top: 20px;
+          padding: 16px;
+          background: rgba(45, 106, 79, 0.08);
+          border-radius: 12px;
+          border-left: 4px solid var(--agave);
+          font-weight: 600;
         }
 
         .custody-checklist {
-          margin-top: 16px;
+          margin-top: 24px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+          .custody-checklist {
+            grid-template-columns: 1fr;
+            gap: 12px;
+          }
+          
+          .how-it-works-card {
+            padding: 24px;
+          }
+          
+          .how-it-works-card h3 {
+            font-size: 1.5rem;
+          }
+          
+          .how-it-works-card p {
+            font-size: 1rem;
+          }
         }
   </style>
 </head>
@@ -2065,18 +2112,15 @@
           <div class="card how-it-works-card">
             <span class="pill">Step 1</span>
             <h3>Capital Commitment & Source</h3>
-            <p>Acquire premium tequila from established distilleries with denomination of origin protection.</p>
+            <p>We help you invest in premium tequila from established distilleries with denomination of origin protection. This ensures authentic, high-quality product with regulatory backing.</p>
             <div class="investment-range">
-              <strong>Typical investment:</strong> $500K - $5M USD
+              <strong>Investment Range:</strong> $500K - $5M USD
             </div>
           </div>
           <div class="card how-it-works-card">
             <span class="pill">Step 2</span>
-            <h3>Custody</h3>
-            <p>Hold under bonded storage with climate control, inventory tracking, and insurance.</p>
-            <div class="service-note">
-              <strong>Our service:</strong> Complete custody management
-            </div>
+            <h3>Professional Custody</h3>
+            <p>Once acquired, we provide complete custody management through our bonded storage facilities. Your investment is professionally managed with climate control, inventory tracking, and comprehensive insurance.</p>
             
             <div class="custody-checklist">
               <div class="checklist-item" data-delay="0">
