@@ -3715,8 +3715,13 @@
       // Opportunity Cinematic Sequence v3 - Scroll-driven with exact 72° spacing
       class OpportunityCinematic {
         constructor() {
+          console.log('OpportunityCinematic constructor called');
           this.section = document.getElementById('opportunity');
-          if (!this.section) return;
+          if (!this.section) {
+            console.error('Opportunity section not found in constructor!');
+            return;
+          }
+          console.log('Opportunity section found in constructor');
           
           this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           
@@ -4072,7 +4077,14 @@
       
       // Initialize opportunity cinematic
       document.addEventListener('DOMContentLoaded', function() {
-        new OpportunityCinematic();
+        console.log('DOM Content Loaded - Initializing Opportunity Cinematic...');
+        const opportunitySection = document.getElementById('opportunity');
+        if (opportunitySection) {
+          console.log('Opportunity section found, initializing...');
+          new OpportunityCinematic();
+        } else {
+          console.error('Opportunity section NOT FOUND!');
+        }
         
         // Initialize custody checklist animation
         initCustodyChecklist();
