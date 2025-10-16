@@ -403,23 +403,20 @@
           * { animation: none !important; transition: none !important; }
         }
 
-        /* === OPPORTUNITY CINEMATIC SEQUENCE === */
+        /* === OPPORTUNITY SECTION === */
         #opportunity {
-          height: 400vh; /* Scroll distance for smooth scrubbing */
+          padding: 80px 20px;
           background: var(--paper);
-          position: relative;
-          overflow: hidden;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
 
-        /* Scene 1: Giant Question (always visible, pinned) */
         .opp-question {
-          position: sticky;
-          top: 50vh;
-          transform: translateY(-50%);
           text-align: center;
-          z-index: 10;
-          padding: 0 20px;
-          pointer-events: none;
+          margin-bottom: 60px;
         }
 
         .opp-question h2 {
@@ -428,58 +425,41 @@
           color: var(--ink);
           margin: 0;
           line-height: 1.1;
-          will-change: transform, opacity;
         }
 
-        /* Scene 2: Five Cards Converge */
         .opp-cards {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
+          display: flex;
+          gap: 20px;
+          justify-content: center;
+          flex-wrap: wrap;
+          max-width: 1200px;
+          margin: 0 auto;
         }
 
         .opp-card {
-          position: absolute;
-          top: 50%;
-          left: 50%;
           background: #fff;
           border: 1px solid var(--line);
           border-radius: 16px;
           padding: 24px;
           box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-          max-width: 280px;
+          width: 200px;
+          min-height: 200px;
           text-align: center;
-          pointer-events: auto;
-          will-change: transform, opacity, filter;
           transition: all 0.8s ease-out;
           opacity: 0;
-          transform: translate(-50%, -50%) translateX(-100vw);
+          transform: translateX(-100px);
         }
 
         .opp-card.slide-in {
           opacity: 1;
-        }
-
-        /* Position cards in horizontal row */
-        .opp-card.card-1.slide-in { transform: translate(-50%, -50%) translateX(-400px); }
-        .opp-card.card-2.slide-in { transform: translate(-50%, -50%) translateX(-200px); }
-        .opp-card.card-3.slide-in { transform: translate(-50%, -50%) translateX(0); }
-        .opp-card.card-4.slide-in { transform: translate(-50%, -50%) translateX(200px); }
-        .opp-card.card-5.slide-in { transform: translate(-50%, -50%) translateX(400px); }
-
-        .opp-card:hover {
-          box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-          transform: translateY(-2px) !important;
+          transform: translateX(0);
         }
 
         .opp-card h3 {
           font-size: 18px;
           font-weight: 600;
           color: var(--ink);
-          margin: 0 0 8px;
+          margin: 0 0 12px;
         }
 
         .opp-card p {
@@ -489,129 +469,25 @@
           line-height: 1.4;
         }
 
-        /* Scene 4: Big Proof Banners (single unit: number + label) */
-        .opp-banners {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          padding: 0 20px;
-          pointer-events: none;
-          z-index: 15;
-        }
-
-        .opp-banner {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          text-align: center;
-          will-change: transform, opacity;
-        }
-
-        .banner-number {
-          display: block;
-          font-size: clamp(64px, 15vw, 140px);
-          font-weight: 700;
-          color: var(--agave);
-          line-height: 1;
-          margin-bottom: 16px;
-        }
-
-        .banner-label {
-          display: block;
-          font-size: clamp(18px, 4vw, 28px);
-          color: var(--muted);
-          font-weight: 400;
-          line-height: 1.3;
-        }
-
-        /* Scene 5: Guardrails Ribbon */
+        /* Hide the complex elements for now */
+        .opp-banners,
         .opp-guardrails {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          display: flex;
-          gap: 16px;
-          flex-wrap: wrap;
-          justify-content: center;
-          max-width: 600px;
-          padding: 0 20px;
-          will-change: transform, opacity;
-          z-index: 15;
+          display: none;
         }
 
-        .opp-chip {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          background: #fff;
-          border: 1px solid var(--line);
-          border-radius: 20px;
-          padding: 8px 16px;
-          font-size: 14px;
-          color: var(--ink);
-        }
-
-        .chip-icon {
-          color: var(--agave);
-          font-weight: 600;
-        }
-
-        /* Mobile adjustments */
-        @media (max-width: 960px) {
-          .opp-guardrails {
-            gap: 12px;
-          }
-          
-          .opp-chip {
-            font-size: 13px;
-            padding: 6px 12px;
-          }
-        }
-
-        /* Reduced motion support */
-        @media (prefers-reduced-motion: reduce) {
+        @media (max-width: 768px) {
           #opportunity {
-            height: 100vh;
+            padding: 60px 20px;
           }
           
-          .opp-question h2 {
-            opacity: 0.7;
-            transform: scale(0.9);
+          .opp-cards {
+            flex-direction: column;
+            align-items: center;
           }
           
           .opp-card {
-            opacity: 0.3;
-            scale: 0.92;
-            filter: blur(2px);
-          }
-          
-          .opp-banner {
-            position: relative;
-            opacity: 1;
-            transform: none;
-            margin: 20px 0;
-          }
-          
-          .opp-banners {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-          }
-          
-          .opp-guardrails {
-            position: relative;
-            opacity: 1;
-            transform: none;
-            margin-top: 40px;
+            width: 100%;
+            max-width: 300px;
           }
         }
 
