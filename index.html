@@ -3899,10 +3899,9 @@
         requestAnimationFrame(updateNumber);
       }
 
-      // Scroll to Aging Simulator function
-      function scrollToAgingSimulator() {
-        alert('Button clicked! Function is working!');
-        console.log('Attempting to scroll to Aging Value Simulator');
+      // Make function globally accessible
+      window.scrollToAgingSimulator = function() {
+        console.log('Button clicked! Function is working!');
         
         // Try multiple selectors to find the aging simulator
         let element = document.getElementById('aging-simulator');
@@ -3936,18 +3935,15 @@
             top: elementPosition,
             behavior: 'smooth'
           });
-          
-          alert('Scrolling to position: ' + elementPosition);
         } else {
           console.error('Aging Simulator section not found');
-          alert('Aging Simulator section not found!');
           // Fallback: scroll to bottom of page
           window.scrollTo({
             top: document.body.scrollHeight,
             behavior: 'smooth'
           });
         }
-      }
+      };
 
       // Scroll to section function (generic)
       function scrollToSection(sectionId) {
