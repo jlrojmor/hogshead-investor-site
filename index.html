@@ -454,8 +454,21 @@
           text-align: center;
           pointer-events: auto;
           will-change: transform, opacity, filter;
-          transition: box-shadow 0.3s ease;
+          transition: all 0.8s ease-out;
+          opacity: 0;
+          transform: translate(-50%, -50%) translateX(-100vw);
         }
+
+        .opp-card.slide-in {
+          opacity: 1;
+        }
+
+        /* Position cards in horizontal row */
+        .opp-card.card-1.slide-in { transform: translate(-50%, -50%) translateX(-400px); }
+        .opp-card.card-2.slide-in { transform: translate(-50%, -50%) translateX(-200px); }
+        .opp-card.card-3.slide-in { transform: translate(-50%, -50%) translateX(0); }
+        .opp-card.card-4.slide-in { transform: translate(-50%, -50%) translateX(200px); }
+        .opp-card.card-5.slide-in { transform: translate(-50%, -50%) translateX(400px); }
 
         .opp-card:hover {
           box-shadow: 0 15px 40px rgba(0,0,0,0.12);
@@ -2527,23 +2540,23 @@
           
         <!-- Scene 2: Five Cards Converge -->
         <div class="opp-cards">
-          <div class="opp-card" data-card="1">
+          <div class="opp-card card-1">
             <h3>Regulated Origin</h3>
             <p>Protected by denomination.</p>
           </div>
-          <div class="opp-card" data-card="2">
+          <div class="opp-card card-2">
             <h3>Historic Low Entry</h3>
             <p>Attractive basis this cycle as agave is in an historic low price</p>
           </div>
-          <div class="opp-card" data-card="3">
+          <div class="opp-card card-3">
             <h3>Proven Model</h3>
             <p>Time-in-wood already won in bourbon.</p>
           </div>
-          <div class="opp-card" data-card="4">
+          <div class="opp-card card-4">
             <h3>Natural & Additive-Free</h3>
             <p>Premium aligns with consumer demand.</p>
           </div>
-          <div class="opp-card" data-card="5">
+          <div class="opp-card card-5">
             <h3>Aging → Appreciation</h3>
             <p>Time compounds value.</p>
           </div>
@@ -4073,13 +4086,31 @@
         }
       }
       
-      // Initialize opportunity cinematic
+      // Initialize simple opportunity animation
       document.addEventListener('DOMContentLoaded', function() {
-        console.log('DOM Content Loaded - Initializing Opportunity Cinematic...');
+        console.log('DOM Content Loaded - Initializing Simple Opportunity Animation...');
         const opportunitySection = document.getElementById('opportunity');
         if (opportunitySection) {
           console.log('Opportunity section found, initializing...');
-          new OpportunityCinematic();
+          
+          // Simple intersection observer to trigger animations
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                console.log('Opportunity section in view - triggering card animations');
+                const cards = opportunitySection.querySelectorAll('.opp-card');
+                cards.forEach((card, index) => {
+                  setTimeout(() => {
+                    card.classList.add('slide-in');
+                    console.log(`Card ${index + 1} animating in`);
+                  }, index * 300); // 300ms delay between each card
+                });
+                observer.unobserve(entry.target); // Only trigger once
+              }
+            });
+          }, { threshold: 0.3 });
+          
+          observer.observe(opportunitySection);
         } else {
           console.error('Opportunity section NOT FOUND!');
         }
