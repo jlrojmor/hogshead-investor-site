@@ -3901,39 +3901,46 @@
 
       // Scroll to Aging Simulator function
       function scrollToAgingSimulator() {
+        alert('Button clicked! Function is working!');
         console.log('Attempting to scroll to Aging Value Simulator');
         
         // Try multiple selectors to find the aging simulator
         let element = document.getElementById('aging-simulator');
+        console.log('Element by ID:', element);
         
         if (!element) {
           element = document.querySelector('.aging-simulator-section');
+          console.log('Element by class:', element);
         }
         
         if (!element) {
           // Fallback: find by heading text
           const headings = document.querySelectorAll('h3');
+          console.log('Found headings:', headings.length);
           for (let heading of headings) {
             if (heading.textContent.includes('Aging Value Simulator')) {
               element = heading.closest('.aging-simulator-section') || heading;
+              console.log('Element by heading:', element);
               break;
             }
           }
         }
         
-        console.log('Element found:', element);
+        console.log('Final element found:', element);
         
         if (element) {
           const elementPosition = element.offsetTop - 80;
+          console.log('Scrolling to position:', elementPosition);
           
           window.scrollTo({
             top: elementPosition,
             behavior: 'smooth'
           });
           
-          console.log('Scrolling to position:', elementPosition);
+          alert('Scrolling to position: ' + elementPosition);
         } else {
           console.error('Aging Simulator section not found');
+          alert('Aging Simulator section not found!');
           // Fallback: scroll to bottom of page
           window.scrollTo({
             top: document.body.scrollHeight,
