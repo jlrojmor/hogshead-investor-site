@@ -446,13 +446,15 @@
           min-height: 200px;
           text-align: center;
           transition: all 0.8s ease-out;
-          opacity: 0;
-          transform: translateX(-100px);
+          opacity: 0 !important;
+          transform: translateX(-200px) !important;
+          visibility: hidden;
         }
 
         .opp-card.slide-in {
-          opacity: 1;
-          transform: translateX(0);
+          opacity: 1 !important;
+          transform: translateX(0) !important;
+          visibility: visible;
         }
 
         .opp-card h3 {
@@ -3973,18 +3975,22 @@
           const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
               if (entry.isIntersecting) {
-                console.log('Opportunity section in view - triggering card animations');
+                console.log('🎯 Opportunity section in view - triggering card animations');
                 const cards = opportunitySection.querySelectorAll('.opp-card');
+                console.log(`Found ${cards.length} cards to animate`);
+                
                 cards.forEach((card, index) => {
+                  console.log(`Card ${index + 1} starting animation in ${index * 300}ms`);
                   setTimeout(() => {
                     card.classList.add('slide-in');
-                    console.log(`Card ${index + 1} animating in`);
+                    console.log(`✅ Card ${index + 1} animated in`);
                   }, index * 300); // 300ms delay between each card
                 });
+                
                 observer.unobserve(entry.target); // Only trigger once
               }
             });
-          }, { threshold: 0.3 });
+          }, { threshold: 0.1 });
           
           observer.observe(opportunitySection);
         } else {
