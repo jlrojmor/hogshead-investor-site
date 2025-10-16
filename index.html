@@ -2059,6 +2059,40 @@
           gap: 14px;
         }
 
+        .aging-cta {
+          margin-top: 20px;
+        }
+
+        .aging-cta .btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 20px;
+          background: var(--agave);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+
+        .aging-cta .btn:hover {
+          background: #2d5a4a;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(45, 106, 79, 0.3);
+        }
+
+        .aging-cta .btn svg {
+          transition: transform 0.3s ease;
+        }
+
+        .aging-cta .btn:hover svg {
+          transform: translate(2px, -2px);
+        }
+
         @media (max-width: 768px) {
           .custody-checklist {
             grid-template-columns: 1fr;
@@ -2196,11 +2230,19 @@
           </div>
         </div>
         <div class="grid grid-2" style="gap: 32px; margin: 32px 0;">
-          <div class="card">
+          <div class="card how-it-works-card">
             <span class="pill">Step 3</span>
-            <h3>Aging</h3>
-            <p>Time compounds value: scarcity increases while demand grows for premium aged expressions.</p>
+            <h3>Aging & Appreciation</h3>
+            <p>Time compounds value: the asset appreciates over time while being in the barrel. Scarcity increases while demand grows for premium aged expressions, creating natural price appreciation.</p>
+            <div class="aging-cta">
+              <button class="btn btn-secondary" onclick="scrollToSection('aging-simulator')">
+                <span>Try the Aging Value Simulator</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+              </button>
             </div>
+          </div>
           <div class="card">
             <span class="pill">Step 4</span>
             <h3>Exit</h3>
@@ -3855,6 +3897,17 @@
         }
         
         requestAnimationFrame(updateNumber);
+      }
+
+      // Scroll to section function
+      function scrollToSection(sectionId) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
       }
 
       // Initialize simulator
