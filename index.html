@@ -1976,15 +1976,16 @@
         }
 
         .checklist-item span {
-          font-size: 1.1rem;
+          font-size: 1.4rem;
           color: var(--ink);
-          font-weight: 600;
+          font-weight: 700;
+          letter-spacing: 0.5px;
         }
 
         .check-circle {
-          width: 24px;
-          height: 24px;
-          border: 2px solid var(--line);
+          width: 32px;
+          height: 32px;
+          border: 3px solid var(--line);
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -1994,8 +1995,8 @@
         }
 
         .check-icon {
-          width: 14px;
-          height: 14px;
+          width: 18px;
+          height: 18px;
           color: white;
           opacity: 0;
           transform: scale(0.5);
@@ -2046,7 +2047,7 @@
         @media (max-width: 768px) {
           .custody-checklist {
             grid-template-columns: 1fr;
-            gap: 12px;
+            gap: 16px;
           }
           
           .how-it-works-card {
@@ -2059,6 +2060,20 @@
           
           .how-it-works-card p {
             font-size: 1rem;
+          }
+          
+          .checklist-item span {
+            font-size: 1.2rem;
+          }
+          
+          .check-circle {
+            width: 28px;
+            height: 28px;
+          }
+          
+          .check-icon {
+            width: 16px;
+            height: 16px;
           }
         }
   </style>
@@ -2112,15 +2127,16 @@
           <div class="card how-it-works-card">
             <span class="pill">Step 1</span>
             <h3>Capital Commitment & Source</h3>
-            <p>We help you invest in premium tequila from established distilleries with denomination of origin protection. This ensures authentic, high-quality product with regulatory backing.</p>
+            <p>Investor purchases certificates of title representing ownership of bulk tequila from established distilleries with denomination of origin protection. Tequila production starts at this point, ensuring authentic, high-quality product with regulatory backing.</p>
             <div class="investment-range">
-              <strong>Investment Range:</strong> $500K - $5M USD
+              <strong>Investment Range:</strong> $500K - $5M USD<br>
+              <strong>Result:</strong> Certificate of title ownership
             </div>
           </div>
           <div class="card how-it-works-card">
             <span class="pill">Step 2</span>
             <h3>Professional Custody</h3>
-            <p>Once acquired, we provide complete custody management through our bonded storage facilities. Your investment is professionally managed with climate control, inventory tracking, and comprehensive insurance.</p>
+            <p>We manage complete logistics including barrel purchase, tequila new fill, warehousing, and custody through bonded storage facilities with climate control, inventory tracking, and comprehensive insurance.</p>
             
             <div class="custody-checklist">
               <div class="checklist-item" data-delay="0">
