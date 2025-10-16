@@ -403,176 +403,44 @@
           * { animation: none !important; transition: none !important; }
         }
 
-    /* === OPPORTUNITY SECTION - CLEAN IMPLEMENTATION === */
-    #opportunity {
-      height: 600vh; /* Scroll distance for smooth scrubbing */
-      background: var(--paper);
-      position: relative;
+    /* === OPPORTUNITY SECTION - STEP 1 ONLY === */
+    .opportunity { 
+      background: var(--sand, #f3eee6); 
+    }
+
+    .opp-scroller {
+      height: 500vh; /* large canvas; Step 1 uses the first ~22% */
+    }
+
+    .opp-sticky {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
       overflow: hidden;
     }
 
-    /* Scene 1: Title (sticky, pinned) */
-    .opp-question {
-      position: sticky;
-      top: 50vh;
-      transform: translateY(-50%);
+    .opp-hero {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;     /* perfect center */
+      pointer-events: none;    /* visual only */
+    }
+
+    .opp-title {
+      color: var(--ink, #0f3a34);
+      line-height: .95;
       text-align: center;
-      z-index: 10;
-      padding: 0 20px;
-      pointer-events: none;
+      max-width: 12ch;                     /* dramatic wrap on big screens */
+      font-size: clamp(48px, 10vw, 132px); /* huge but responsive */
+      transform-origin: 50% 50%;
       will-change: transform, opacity;
     }
 
-    .opp-question h2 {
-      font-size: clamp(42px, 8vw, 120px);
-      font-weight: 700;
-      color: var(--ink);
-      margin: 0;
-      line-height: 1.1;
-      will-change: transform, opacity;
-    }
-
-    /* Scene 2: Five Cards (initially hidden) */
-    .opp-cards {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    .opp-card {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-      max-width: 280px;
-      text-align: center;
-      pointer-events: auto;
-      will-change: transform, opacity, filter;
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.94);
-      filter: blur(2px);
-    }
-
-    .opp-card h3 {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--ink);
-      margin: 0 0 8px;
-    }
-
-    .opp-card p {
-      font-size: 14px;
-      color: var(--muted);
-      margin: 0;
-      line-height: 1.4;
-    }
-
-    /* Scene 4: Metrics (initially hidden) */
-    .opp-banners {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 15;
-    }
-
-    .opp-banner {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      will-change: transform, opacity;
-      opacity: 0;
-      min-height: 200px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .banner-number {
-      display: block;
-      font-size: clamp(64px, 15vw, 140px);
-      font-weight: 700;
-      color: var(--agave);
-      line-height: 1;
-      margin-bottom: 16px;
-    }
-
-    .banner-label {
-      display: block;
-      font-size: clamp(18px, 4vw, 28px);
-      color: var(--muted);
-      font-weight: 400;
-      line-height: 1.3;
-    }
-
-    /* Scene 5: Guardrails (initially hidden) */
-    .opp-guardrails {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      will-change: transform, opacity;
-      opacity: 0;
-      z-index: 20;
-    }
-
-    .guardrails-chips {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .guardrails-chip {
-      background: rgba(45, 106, 79, 0.1);
-      color: var(--agave);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      border: 1px solid rgba(45, 106, 79, 0.2);
-    }
-
-    /* Reduced motion support */
     @media (prefers-reduced-motion: reduce) {
-      #opportunity {
-        height: 100vh;
-      }
-      
-      .opp-question h2 {
-        opacity: 0.75;
-        transform: translateY(-50%) scale(0.92);
-      }
-      
-      .opp-card {
-        display: none;
-      }
-      
-      .opp-banner {
-        position: relative;
-        opacity: 1;
-        transform: none;
-        margin: 20px 0;
-      }
-      
-      .opp-banners {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-        padding-top: 40px;
+      .opp-title { 
+        transform: none !important; 
+        opacity: 1 !important; 
       }
     }
 
@@ -2492,70 +2360,14 @@
         </div>
           </div>
           
-      <!-- OPPORTUNITY -->
-      <section id="opportunity">
-        <!-- Scene 1: Giant Question (entry) -->
-        <div class="opp-question">
-          <h2>Why now? What's the Opportunity?</h2>
-          </div>
-          
-        <!-- Scene 2: Five Cards Converge -->
-        <div class="opp-cards">
-          <div class="opp-card card-1">
-            <h3>Regulated Origin</h3>
-            <p>Protected by denomination.</p>
-          </div>
-          <div class="opp-card card-2">
-            <h3>Historic Low Entry</h3>
-            <p>Attractive basis this cycle as agave is in an historic low price</p>
-          </div>
-          <div class="opp-card card-3">
-            <h3>Proven Model</h3>
-            <p>Time-in-wood already won in bourbon.</p>
-          </div>
-          <div class="opp-card card-4">
-            <h3>Natural & Additive-Free</h3>
-            <p>Premium aligns with consumer demand.</p>
-          </div>
-          <div class="opp-card card-5">
-            <h3>Aging → Appreciation</h3>
-            <p>Time compounds value.</p>
-          </div>
-        </div>
-
-        <!-- Scene 4: Big Proof Banners -->
-        <div class="opp-banners">
-          <div class="opp-banner" data-banner="1">
-            <span class="banner-number" data-value="13.4" data-unit="%" data-decimals="1" data-animate="true">13.4%</span>
-            <span class="banner-label">US Tequila CAGR</span>
-          </div>
-          <div class="opp-banner" data-banner="2">
-            <span class="banner-number" data-animate="false">13–15%</span>
-            <span class="banner-label">Bourbon Barrel IRR (precedent)</span>
-          </div>
-          <div class="opp-banner" data-banner="3">
-            <span class="banner-number" data-value="-50" data-unit="%" data-decimals="0" data-animate="true">−50%</span>
-            <span class="banner-label">Agave margin when turned tequila</span>
-          </div>
-        </div>
-
-        <!-- Scene 5: Guardrails Ribbon -->
-        <div class="opp-guardrails">
-          <div class="opp-chip">
-            <span class="chip-icon">✓</span>
-            <span>Custody</span>
-                    </div>
-          <div class="opp-chip">
-            <span class="chip-icon">✓</span>
-            <span>Insurance</span>
-                  </div>
-          <div class="opp-chip">
-            <span class="chip-icon">✓</span>
-            <span>Denomination</span>
-                </div>
-          <div class="opp-chip">
-            <span class="chip-icon">✓</span>
-            <span>QC & Monitoring</span>
+      <!-- OPPORTUNITY - STEP 1 ONLY -->
+      <section id="opportunity" class="opportunity">
+        <div class="opp-scroller">
+          <div class="opp-sticky">
+            <div class="opp-hero">
+              <h2 class="opp-title">Why now? What's the Opportunity?</h2>
+            </div>
+            <!-- Step 2+ content will go here later -->
           </div>
         </div>
       </section>
@@ -4047,326 +3859,41 @@
         }
       }
       
-    // Opportunity Scroll-Driven Animation v5 - CLEAN IMPLEMENTATION
-    class OpportunityScrollSequence {
-      constructor() {
-        console.log('🎬 Initializing Opportunity Scroll Sequence v5...');
-        this.section = document.getElementById('opportunity');
-        if (!this.section) {
-          console.error('Opportunity section not found!');
-          return;
-        }
-        
-        this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (this.reducedMotion) {
-          this.applyReducedMotion();
-          return;
-        }
-        
-        this.question = this.section.querySelector('.opp-question h2');
-        this.cards = this.section.querySelectorAll('.opp-card');
-        this.banners = this.section.querySelectorAll('.opp-banner');
-        this.guardrails = this.section.querySelector('.opp-guardrails');
-        
-        // Track which numbers have been animated
-        this.animatedNumbers = new Set();
-        
-        this.setupCardPositions();
-        this.initScrollSequence();
-      }
-      
-      setupCardPositions() {
-        // Calculate 5 equally spaced angles (72° apart)
-        const baseAngle = -90; // Start at -90° (top)
-        const angleStep = 72; // 360° / 5 = 72°
-        
-        this.cards.forEach((card, index) => {
-          const angle = baseAngle + (index * angleStep);
-          const angleRad = (angle * Math.PI) / 180;
-          
-          // Store angle for radial positioning
-          card.dataset.angle = angle;
-          card.dataset.angleRad = angleRad;
-          
-          console.log(`Card ${index + 1}: angle = ${angle}° (${angleRad.toFixed(3)} rad)`);
-        });
-      }
-      
-      initScrollSequence() {
-        window.addEventListener('scroll', () => this.handleScroll(), { passive: true });
-        window.addEventListener('resize', () => {
-          this.setupCardPositions();
-          this.handleScroll();
-        });
-        
-        // Initial update
-        this.handleScroll();
-      }
-      
-      handleScroll() {
-        const viewportHeight = window.innerHeight;
-        const sectionHeight = this.section.offsetHeight;
-        
-        // Calculate scroll progress through the section (0 to 1)
-        const scrollTop = window.pageYOffset;
-        const sectionTop = this.section.offsetTop;
-        const p = Math.max(0, Math.min(1, 
-          (scrollTop - sectionTop) / (sectionHeight - viewportHeight)
-        ));
-        
-        // Debug logging
-        let scene = '';
-        if (p < 0.15) scene = '1: Giant Question';
-        else if (p < 0.40) scene = '2: Cards Flying In';
-        else if (p < 0.55) scene = '3: Cards Exit';
-        else if (p < 0.70) scene = '4A: Metric #1';
-        else if (p < 0.85) scene = '4B: Metric #2';
-        else if (p < 0.98) scene = '4C: Metric #3';
-        else scene = '5: Guardrails';
-        
-        console.log(`🎬 Progress: ${(p * 100).toFixed(1)}% | Scene: ${scene}`);
-        
-        // Update all elements based on progress
-        this.updateTitle(p);
-        this.updateCards(p);
-        this.updateMetrics(p);
-        this.updateGuardrails(p);
-      }
-      
-      updateTitle(p) {
-        let scale, opacity;
-        
-        if (p <= 0.15) {
-          // 0.00 → 0.15: scale 1.00 → 0.92, opacity 1.00 → 0.75
-          const t = p / 0.15;
-          scale = 1.0 - 0.08 * t; // 1.0 → 0.92
-          opacity = 1.0 - 0.25 * t; // 1.0 → 0.75
-        } else if (p <= 0.55) {
-          // 0.15 → 0.55: maintain scale 0.92, fade out
-          scale = 0.92;
-          const fadeProgress = (p - 0.15) / 0.40;
-          opacity = Math.max(0, 0.75 - fadeProgress * 0.75);
-        } else {
-          // 0.55+: hidden
-          scale = 0.92;
-          opacity = 0;
-        }
-        
-        this.question.style.transform = `translateY(-50%) scale(${scale})`;
-        this.question.style.opacity = opacity;
-      }
-      
-      updateCards(p) {
-        this.cards.forEach((card, index) => {
-          let x, y, opacity, scale, blur;
-          
-          if (p < 0.15) {
-            // Before cards appear - COMPLETELY HIDDEN
-            opacity = 0;
-            scale = 0.94;
-            blur = 2;
-            x = 0;
-            y = 0;
-          } else if (p <= 0.40) {
-            // 0.15 → 0.40: Cards fly in from 5 angles
-            const t = (p - 0.15) / 0.25;
-            const eased = this.easeOut(t);
-            
-            // Add slight stagger by index
-            const staggerDelay = (index * 90) / 1000; // 90ms per card
-            const staggeredT = Math.max(0, (t - staggerDelay) / (1 - staggerDelay));
-            const staggeredEased = this.easeOut(staggeredT);
-            
-            // Radial positioning from off-screen
-            const angleRad = parseFloat(card.dataset.angleRad);
-            const startRadius = Math.max(window.innerWidth, window.innerHeight) * 0.8; // Well off-screen
-            const endRadius = 0;
-            
-            const currentRadius = startRadius + (endRadius - startRadius) * staggeredEased;
-            
-            x = Math.cos(angleRad) * currentRadius;
-            y = Math.sin(angleRad) * currentRadius;
-            
-            opacity = staggeredEased;
-            scale = 0.94 + 0.06 * staggeredEased; // 0.94 → 1.0
-            blur = 2 * (1 - staggeredEased); // 2 → 0
-          } else if (p <= 0.55) {
-            // 0.40 → 0.55: Cards exit up and fade
-            const t = (p - 0.40) / 0.15;
-            const eased = this.easeOut(t);
-            
-            // Cards move to center and exit up
-            x = 0;
-            y = -window.innerHeight * 0.4 * eased; // Move up and out
-            opacity = 1 - eased; // Fade out completely
-            scale = 1.0 - 0.1 * eased; // 1.0 → 0.9
-            blur = eased * 2; // Add blur as they exit
-          } else {
-            // 0.55+: Cards completely gone
-            x = 0;
-            y = -window.innerHeight * 0.4;
-            opacity = 0;
-            scale = 0.9;
-            blur = 2;
-          }
-          
-          card.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
-          card.style.opacity = opacity;
-          card.style.filter = `blur(${blur}px)`;
-        });
-      }
-      
-      updateMetrics(p) {
-        // Update each metric based on its timeline
-        this.updateSingleMetric(this.banners[0], p, 0.55, 0.70, 0); // Metric #1
-        this.updateSingleMetric(this.banners[1], p, 0.70, 0.85, 1); // Metric #2  
-        this.updateSingleMetric(this.banners[2], p, 0.85, 0.98, 2); // Metric #3
-      }
-      
-      updateSingleMetric(metric, p, start, end, index) {
-        if (!metric) return;
-        
-        const t = Math.max(0, Math.min(1, (p - start) / (end - start)));
-        
-        let yPercent, opacity, scale;
-        
-        if (t === 0) {
-          // Before this metric - HIDDEN
-          yPercent = 110;
-          opacity = 0;
-          scale = 1;
-        } else if (t <= 0.4) {
-          // Rising to center (0 → 0.4)
-          const riseT = t / 0.4;
-          const eased = this.easeOut(riseT);
-          yPercent = 110 * (1 - eased);
-          opacity = eased;
-          scale = 1;
-        } else if (t <= 0.6) {
-          // At center (0.4 → 0.6) - VISIBLE
-          yPercent = 0;
-          opacity = 1;
-          scale = 1;
-          
-          // Trigger count-up once
-          const numberEl = metric.querySelector('.banner-number');
-          if (numberEl && !this.animatedNumbers.has(numberEl)) {
-            this.animatedNumbers.add(numberEl);
-            this.animateNumber(numberEl);
-          }
-        } else {
-          // Shrinking and exiting (0.6 → 1.0)
-          const exitT = (t - 0.6) / 0.4;
-          const eased = this.easeOut(exitT);
-          
-          yPercent = -50 * eased; // Move up and out
-          opacity = 1 - eased; // Fade out
-          scale = 1 - 0.3 * eased; // Shrink slightly
-        }
-        
-        metric.style.transform = `translate(-50%, calc(-50% + ${yPercent}%)) scale(${scale})`;
-        metric.style.opacity = opacity;
-      }
-      
-      updateGuardrails(p) {
-        if (!this.guardrails) return;
-        
-        if (p >= 0.98) {
-          // 0.98 → 1.00: Guardrails appear
-          const t = (p - 0.98) / 0.02;
-          const eased = this.easeOut(t);
-          
-          this.guardrails.style.opacity = eased;
-          this.guardrails.style.transform = `translate(-50%, calc(-50% + ${50 * (1 - eased)}px))`;
-        } else {
-          // Before 0.98: Hidden
-          this.guardrails.style.opacity = 0;
-          this.guardrails.style.transform = `translate(-50%, -50%)`;
-        }
-      }
-      
-      animateNumber(element) {
-        const value = element.dataset.value;
-        const unit = element.dataset.unit || '';
-        const decimals = parseInt(element.dataset.decimals) || 1;
-        const animate = element.dataset.animate === 'true';
-        
-        if (!animate) return;
-        
-        let current = 0;
-        const target = parseFloat(value);
-        const duration = 800;
-        const startTime = performance.now();
-        
-        const animateFrame = (currentTime) => {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = this.easeOut(progress);
-          
-          current = target * eased;
-          
-          let displayValue;
-          if (target < 0) {
-            displayValue = `−${Math.abs(current).toFixed(decimals)}${unit}`;
-          } else {
-            displayValue = `${current.toFixed(decimals)}${unit}`;
-          }
-          
-          element.textContent = displayValue;
-          
-          if (progress < 1) {
-            requestAnimationFrame(animateFrame);
-          }
-        };
-        
-        requestAnimationFrame(animateFrame);
-      }
-      
-      easeOut(t) {
-        return 1 - Math.pow(1 - t, 3);
-      }
-      
-      applyReducedMotion() {
-        // Static final state for reduced motion
-        this.question.style.transform = 'translateY(-50%) scale(0.92)';
-        this.question.style.opacity = '0.75';
-        
-        // Hide cards
-        this.cards.forEach(card => {
-          card.style.display = 'none';
-        });
-        
-        // Show metrics in static state
-        this.banners.forEach(metric => {
-          metric.style.transform = 'translate(-50%, -50%)';
-          metric.style.opacity = '1';
-        });
-        
-        // Show guardrails
-        if (this.guardrails) {
-          this.guardrails.style.opacity = '1';
-          this.guardrails.style.transform = 'translate(-50%, -50%)';
-        }
-      }
-    }
+    // Opportunity Step 1 - Jeton-style shrinking title
+    (function initOppStep1(){
+      const scroller = document.querySelector('.opp-scroller');
+      const titleEl  = document.querySelector('.opp-title');
+      if (!scroller || !titleEl) return;
 
-    // Initialize opportunity scroll sequence
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('🎬 DOM Content Loaded - Initializing Opportunity Scroll Sequence v5...');
-      const opportunitySection = document.getElementById('opportunity');
-      if (opportunitySection) {
-        console.log('✅ Opportunity section found, initializing scroll sequence...');
-        new OpportunityScrollSequence();
-      } else {
-        console.error('❌ Opportunity section NOT FOUND!');
+      const clamp = (n,a,b)=>Math.max(a,Math.min(b,n));
+      const lerp  = (a,b,t)=>a + (b - a) * t;
+      const remap = (p,a,b)=>clamp((p - a)/(b - a), 0, 1);
+
+      function onScroll(){
+        const sectionTop = scroller.offsetTop;
+        const sectionH   = scroller.offsetHeight - window.innerHeight;
+        const scrolled   = window.scrollY - sectionTop;
+        const p          = clamp(scrolled / sectionH, 0, 1);  // master progress 0..1
+
+        // STEP 1 range: 0.00 → 0.22 (hero animation only)
+        const tHero = remap(p, 0.00, 0.22);
+
+        // Start: huge & slightly low. End: compact & exact center.
+        const scale      = lerp(1.15, 0.72, tHero);  // heroic → compact
+        const translateY = lerp(8, 0, tHero);        // vh, arrive to center
+        const opacity    = lerp(1.00, 0.90, tHero);  // stays visible
+
+        titleEl.style.transform = `translate3d(0, ${translateY}vh, 0) scale(${scale})`;
+        titleEl.style.opacity   = opacity;
+
+        // Do NOT fade out or move it after 0.22. It stays compact & centered
+        // to serve as the anchor for Step 2 (cards) in the next task.
       }
-      
-      // Initialize custody checklist animation
-      initCustodyChecklist();
-      
-      // Initialize investment counter animation
-      initInvestmentCounter();
-    });
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      onScroll();
+    })();
 
       // Custody Checklist Animation
       function initCustodyChecklist() {
