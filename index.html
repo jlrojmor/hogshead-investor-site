@@ -444,6 +444,44 @@
       }
     }
 
+    /* Cards container fills the sticky viewport */
+    .opp-cards{
+      position:absolute;
+      inset:0;
+      pointer-events:none;                 /* visual only for this step */
+      z-index: 2;                          /* above the title; adjust if needed */
+    }
+
+    /* Base card style (match site aesthetic) */
+    .opp-card{
+      position:absolute;
+      top:50%; left:50%;                   /* we'll translate from this origin */
+      width:min(320px, 80vw);
+      padding:16px 18px;
+      background:#fff;                     /* replace with token if available */
+      color:var(--ink, #0f3a34);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius:16px;                  /* match site radius */
+      box-shadow:0 8px 20px rgba(0,0,0,.06);
+      transform:translate(-50%,-50%) translate3d(0,0,0) scale(0.94);
+      opacity:0;
+      filter:blur(2px);
+      will-change: transform, opacity, filter;
+    }
+
+    /* Text trims inside cards */
+    .opp-card h3{ margin:0 0 6px; font-size:16px; line-height:1.15; }
+    .opp-card p { margin:0; font-size:13px; opacity:.8; }
+
+    @media (max-width: 960px){
+      .opp-card{ width:min(280px, 86vw); }
+    }
+
+    /* Reduced motion: show final stacked state statically */
+    @media (prefers-reduced-motion: reduce){
+      .opp-card{ opacity:1; filter:none; }
+    }
+
         /* === AGING SIMULATOR STYLES === */
         #agingSlider {
           -webkit-appearance: none;
@@ -2360,14 +2398,37 @@
         </div>
           </div>
           
-      <!-- OPPORTUNITY - STEP 1 ONLY -->
+      <!-- OPPORTUNITY - STEP 1 + STEP 2 -->
       <section id="opportunity" class="opportunity">
         <div class="opp-scroller">
           <div class="opp-sticky">
             <div class="opp-hero">
               <h2 class="opp-title">Why now? What's the Opportunity?</h2>
             </div>
-            <!-- Step 2+ content will go here later -->
+            <!-- Step 2: Five Cards Converge -->
+            <div class="opp-cards" aria-hidden="true">
+              <div class="opp-card">
+                <h3>Regulated Origin</h3>
+                <p>Protected by denomination.</p>
+              </div>
+              <div class="opp-card">
+                <h3>Historic Low Entry</h3>
+                <p>Attractive basis this cycle as agave is in an historic low price</p>
+              </div>
+              <div class="opp-card">
+                <h3>Proven Model</h3>
+                <p>Time-in-wood already won in bourbon.</p>
+              </div>
+              <div class="opp-card">
+                <h3>Natural &amp; Additive-Free</h3>
+                <p>Premium aligns with consumer demand.</p>
+              </div>
+              <div class="opp-card">
+                <h3>Aging → Appreciation</h3>
+                <p>Time compounds value.</p>
+              </div>
+            </div>
+            <!-- Step 3+ content will go here later -->
           </div>
         </div>
       </section>
@@ -3859,15 +3920,67 @@
         }
       }
       
-    // Opportunity Step 1 - Jeton-style shrinking title
-    (function initOppStep1(){
+    // Opportunity Step 1 + Step 2 - Jeton-style shrinking title + cards flying in
+    (function initOppSteps(){
       const scroller = document.querySelector('.opp-scroller');
       const titleEl  = document.querySelector('.opp-title');
+      const cards = Array.from(document.querySelectorAll('.opp-cards .opp-card'));
       if (!scroller || !titleEl) return;
 
       const clamp = (n,a,b)=>Math.max(a,Math.min(b,n));
       const lerp  = (a,b,t)=>a + (b - a) * t;
       const remap = (p,a,b)=>clamp((p - a)/(b - a), 0, 1);
+      const easeOut = t => 1 - Math.pow(1 - t, 2); // gentle ease-out
+
+      function updateCards(p){
+        if (!cards.length) return;
+        
+        // STEP 2 should overlap STEP 1: start while title is still shrinking.
+        // Use 0.12 → 0.38 so we overlap the Step 1 (0.00 → 0.22) range.
+        const tCards = remap(p, 0.12, 0.38); // 0..1
+
+        // Equal angular spacing: 72° apart, computed, not hard-coded.
+        const baseAngle = -90; // top
+        const angles = cards.map((_, i) => baseAngle + i * 72); // [-90, -18, 54, 126, 198]
+
+        // Radii: very far → center (0). Use viewport-based for consistent feel.
+        const rStart = Math.max(window.innerWidth, window.innerHeight) * 1.2; // ~120vw/vh
+        const rEnd   = 0; // converge to exact center
+
+        // Small fan-out at the very end so we can see there are five cards.
+        const fan = 4; // px offset for end-state fanning
+
+        cards.forEach((card, i) => {
+          // Slight per-card stagger: shift the local progress left-to-right by ~0.08
+          const local = clamp(tCards * 1.08 - i * 0.08, 0, 1);
+          const t = easeOut(local);
+
+          // Lerp radius from off-screen to center
+          const r = lerp(rStart, rEnd, t);
+
+          // Convert degrees to radians
+          const rad = angles[i] * (Math.PI / 180);
+
+          // Position relative to center (we already centered each card with translate(-50%,-50%))
+          const x = Math.cos(rad) * r;
+          const y = Math.sin(rad) * r;
+
+          // At the very end, fan slightly so they're distinguishable
+          const endFanX = (i - (cards.length - 1)/2) * fan;
+          const endFanY = (i - (cards.length - 1)/2) * (fan * 0.2);
+          const fx = lerp(0, endFanX, t);
+          const fy = lerp(0, endFanY, t);
+
+          // Opacity / scale / blur polish
+          const opacity = lerp(0.0, 1.0, t);
+          const scale   = lerp(0.94, 1.00, t);
+          const blur    = lerp(2, 0, t);
+
+          card.style.transform = `translate(-50%, -50%) translate3d(${x + fx}px, ${y + fy}px, 0) scale(${scale})`;
+          card.style.opacity   = opacity.toFixed(3);
+          card.style.filter    = `blur(${blur}px)`;
+        });
+      }
 
       function onScroll(){
         const sectionTop = scroller.offsetTop;
@@ -3875,7 +3988,7 @@
         const scrolled   = window.scrollY - sectionTop;
         const p          = clamp(scrolled / sectionH, 0, 1);  // master progress 0..1
 
-        // Extended animation: 0.00 → 1.00 (entire scroll range)
+        // STEP 1: Extended animation: 0.00 → 1.00 (entire scroll range)
         const tHero = p; // Use full progress for continuous animation
 
         // Start: huge & slightly low. End: very small & transparent.
@@ -3885,6 +3998,9 @@
 
         titleEl.style.transform = `translate3d(0, ${translateY}vh, 0) scale(${scale})`;
         titleEl.style.opacity   = opacity;
+
+        // STEP 2: Cards flying in
+        updateCards(p);
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
