@@ -403,20 +403,24 @@
           * { animation: none !important; transition: none !important; }
         }
 
-        /* === OPPORTUNITY SECTION === */
+        /* === OPPORTUNITY SECTION - SCROLL-DRIVEN === */
         #opportunity {
-          padding: 80px 20px;
+          height: 600vh; /* Scroll distance for smooth scrubbing */
           background: var(--paper);
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
+          position: relative;
+          overflow: hidden;
         }
 
+        /* Scene 1: Title (always visible, pinned) */
         .opp-question {
+          position: sticky;
+          top: 50vh;
+          transform: translateY(-50%);
           text-align: center;
-          margin-bottom: 60px;
+          z-index: 10;
+          padding: 0 20px;
+          pointer-events: none;
+          will-change: transform, opacity;
         }
 
         .opp-question h2 {
@@ -425,43 +429,42 @@
           color: var(--ink);
           margin: 0;
           line-height: 1.1;
+          will-change: transform, opacity;
         }
 
+        /* Scene 2: Five Cards Converge */
         .opp-cards {
-          display: flex;
-          gap: 20px;
-          justify-content: center;
-          flex-wrap: wrap;
-          max-width: 1200px;
-          margin: 0 auto;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
         }
 
         .opp-card {
+          position: absolute;
+          top: 50%;
+          left: 50%;
           background: #fff;
           border: 1px solid var(--line);
           border-radius: 16px;
           padding: 24px;
           box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-          width: 200px;
-          min-height: 200px;
+          max-width: 280px;
           text-align: center;
-          transition: all 0.8s ease-out;
-          opacity: 0 !important;
-          transform: translateX(-200px) !important;
-          visibility: hidden;
-        }
-
-        .opp-card.slide-in {
-          opacity: 1 !important;
-          transform: translateX(0) !important;
-          visibility: visible;
+          pointer-events: auto;
+          will-change: transform, opacity, filter;
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.94);
+          filter: blur(2px);
         }
 
         .opp-card h3 {
           font-size: 18px;
           font-weight: 600;
           color: var(--ink);
-          margin: 0 0 12px;
+          margin: 0 0 8px;
         }
 
         .opp-card p {
@@ -471,25 +474,102 @@
           line-height: 1.4;
         }
 
-        /* Hide the complex elements for now */
-        .opp-banners,
-        .opp-guardrails {
-          display: none;
+        /* Scene 4: Metrics (single unit: number + label) */
+        .opp-banners {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          padding: 0 20px;
+          pointer-events: none;
+          z-index: 15;
+          /* Reserve space for docked metrics at top */
+          padding-top: 120px;
         }
 
-        @media (max-width: 768px) {
+        .opp-banner {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          text-align: center;
+          will-change: transform, opacity;
+          /* Reserve space to prevent CLS */
+          min-height: 200px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .banner-number {
+          display: block;
+          font-size: clamp(64px, 15vw, 140px);
+          font-weight: 700;
+          color: var(--agave);
+          line-height: 1;
+          margin-bottom: 16px;
+        }
+
+        .banner-label {
+          display: block;
+          font-size: clamp(18px, 4vw, 28px);
+          color: var(--muted);
+          font-weight: 400;
+          line-height: 1.3;
+        }
+
+        /* Docked metrics stack at top */
+        .opp-banners.docked .opp-banner {
+          position: relative;
+          top: auto;
+          left: auto;
+          transform: none;
+          margin: 20px 0;
+          min-height: auto;
+        }
+
+        .opp-banners.docked .banner-number {
+          font-size: clamp(24px, 3vw, 32px);
+          margin-bottom: 8px;
+        }
+
+        .opp-banners.docked .banner-label {
+          font-size: clamp(14px, 2vw, 18px);
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
           #opportunity {
-            padding: 60px 20px;
+            height: 100vh;
           }
           
-          .opp-cards {
-            flex-direction: column;
-            align-items: center;
+          .opp-question h2 {
+            opacity: 0.75;
+            transform: translateY(-50%) scale(0.92);
           }
           
           .opp-card {
-            width: 100%;
-            max-width: 300px;
+            display: none;
+          }
+          
+          .opp-banner {
+            position: relative;
+            opacity: 1;
+            transform: none;
+            margin: 20px 0;
+          }
+          
+          .opp-banners {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding-top: 40px;
           }
         }
 
@@ -3964,37 +4044,294 @@
         }
       }
       
-      // Initialize simple opportunity animation
+      // Opportunity Scroll-Driven Animation v4
+      class OpportunityScrollSequence {
+        constructor() {
+          console.log('🎬 Initializing Opportunity Scroll Sequence v4...');
+          this.section = document.getElementById('opportunity');
+          if (!this.section) {
+            console.error('Opportunity section not found!');
+            return;
+          }
+          
+          this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (this.reducedMotion) {
+            this.applyReducedMotion();
+            return;
+          }
+          
+          this.question = this.section.querySelector('.opp-question h2');
+          this.cards = this.section.querySelectorAll('.opp-card');
+          this.banners = this.section.querySelectorAll('.opp-banner');
+          this.bannersContainer = this.section.querySelector('.opp-banners');
+          
+          // Track which numbers have been animated
+          this.animatedNumbers = new Set();
+          
+          this.setupCardPositions();
+          this.initScrollSequence();
+        }
+        
+        setupCardPositions() {
+          // Calculate 5 equally spaced angles (72° apart)
+          const baseAngle = -90; // Start at -90° (top)
+          const angleStep = 72; // 360° / 5 = 72°
+          
+          this.cards.forEach((card, index) => {
+            const angle = baseAngle + (index * angleStep);
+            const angleRad = (angle * Math.PI) / 180;
+            
+            // Store angle for radial positioning
+            card.dataset.angle = angle;
+            card.dataset.angleRad = angleRad;
+            
+            console.log(`Card ${index + 1}: angle = ${angle}° (${angleRad.toFixed(3)} rad)`);
+          });
+        }
+        
+        initScrollSequence() {
+          window.addEventListener('scroll', () => this.handleScroll(), { passive: true });
+          window.addEventListener('resize', () => {
+            this.setupCardPositions();
+            this.handleScroll();
+          });
+          
+          // Initial update
+          this.handleScroll();
+        }
+        
+        handleScroll() {
+          const viewportHeight = window.innerHeight;
+          const sectionHeight = this.section.offsetHeight;
+          
+          // Calculate scroll progress through the section (0 to 1)
+          const scrollTop = window.pageYOffset;
+          const sectionTop = this.section.offsetTop;
+          const p = Math.max(0, Math.min(1, 
+            (scrollTop - sectionTop) / (sectionHeight - viewportHeight)
+          ));
+          
+          // Update all elements based on progress
+          this.updateTitle(p);
+          this.updateCards(p);
+          this.updateMetrics(p);
+        }
+        
+        updateTitle(p) {
+          let scale, opacity;
+          
+          if (p <= 0.15) {
+            // 0.00 → 0.15: scale 1.00 → 0.92, opacity 1.00 → 0.75
+            const t = p / 0.15;
+            scale = 1.0 - 0.08 * t; // 1.0 → 0.92
+            opacity = 1.0 - 0.25 * t; // 1.0 → 0.75
+          } else if (p <= 0.55) {
+            // 0.15 → 0.55: maintain scale 0.92, fade out
+            scale = 0.92;
+            const fadeProgress = (p - 0.15) / 0.40;
+            opacity = Math.max(0, 0.75 - fadeProgress * 0.75);
+          } else {
+            // 0.55+: hidden
+            scale = 0.92;
+            opacity = 0;
+          }
+          
+          this.question.style.transform = `translateY(-50%) scale(${scale})`;
+          this.question.style.opacity = opacity;
+        }
+        
+        updateCards(p) {
+          this.cards.forEach((card, index) => {
+            let x, y, opacity, scale, blur;
+            
+            if (p < 0.15) {
+              // Before cards appear
+              opacity = 0;
+              scale = 0.94;
+              blur = 2;
+              x = 0;
+              y = 0;
+            } else if (p <= 0.40) {
+              // 0.15 → 0.40: Cards fly in and settle
+              const t = (p - 0.15) / 0.25;
+              const eased = this.easeOut(t);
+              
+              // Add slight stagger by index
+              const staggerDelay = (index * 90) / 1000; // 90ms per card
+              const staggeredT = Math.max(0, (t - staggerDelay) / (1 - staggerDelay));
+              const staggeredEased = this.easeOut(staggeredT);
+              
+              // Radial positioning
+              const angleRad = parseFloat(card.dataset.angleRad);
+              const startRadius = Math.max(120 * window.innerWidth / 100, 120 * window.innerHeight / 100); // max(120vw, 120vh)
+              const endRadius = 0;
+              
+              const currentRadius = startRadius + (endRadius - startRadius) * staggeredEased;
+              
+              x = Math.cos(angleRad) * currentRadius;
+              y = Math.sin(angleRad) * currentRadius;
+              
+              opacity = staggeredEased;
+              scale = 0.94 + 0.06 * staggeredEased; // 0.94 → 1.0
+              blur = 2 * (1 - staggeredEased); // 2 → 0
+            } else if (p <= 0.55) {
+              // 0.40 → 0.55: Cards exit
+              const t = (p - 0.40) / 0.15;
+              const eased = this.easeOut(t);
+              
+              // Cards move to center and shrink
+              x = 0;
+              y = -window.innerHeight * 0.3 * eased; // Move up to top third
+              opacity = 1 - eased; // Fade out
+              scale = 1.0 - 0.1 * eased; // 1.0 → 0.9
+              blur = eased * 2; // Add blur as they exit
+            } else {
+              // 0.55+: Cards gone
+              x = 0;
+              y = -window.innerHeight * 0.3;
+              opacity = 0;
+              scale = 0.9;
+              blur = 2;
+            }
+            
+            card.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
+            card.style.opacity = opacity;
+            card.style.filter = `blur(${blur}px)`;
+          });
+        }
+        
+        updateMetrics(p) {
+          // Update each metric based on its timeline
+          this.updateSingleMetric(this.banners[0], p, 0.55, 0.70, 0); // Metric #1
+          this.updateSingleMetric(this.banners[1], p, 0.70, 0.85, 1); // Metric #2  
+          this.updateSingleMetric(this.banners[2], p, 0.85, 0.98, 2); // Metric #3
+          
+          // Handle docking state
+          if (p >= 0.98) {
+            this.bannersContainer.classList.add('docked');
+          } else {
+            this.bannersContainer.classList.remove('docked');
+          }
+        }
+        
+        updateSingleMetric(metric, p, start, end, index) {
+          if (!metric) return;
+          
+          const t = Math.max(0, Math.min(1, (p - start) / (end - start)));
+          
+          let yPercent, opacity, scale;
+          
+          if (t === 0) {
+            // Before this metric
+            yPercent = 110;
+            opacity = 0;
+            scale = 1;
+          } else if (t <= 0.4) {
+            // Rising to center (0 → 0.4)
+            const riseT = t / 0.4;
+            const eased = this.easeOut(riseT);
+            yPercent = 110 * (1 - eased);
+            opacity = eased;
+            scale = 1;
+          } else if (t <= 0.6) {
+            // At center (0.4 → 0.6)
+            yPercent = 0;
+            opacity = 1;
+            scale = 1;
+            
+            // Trigger count-up once
+            const numberEl = metric.querySelector('.banner-number');
+            if (numberEl && !this.animatedNumbers.has(numberEl)) {
+              this.animatedNumbers.add(numberEl);
+              this.animateNumber(numberEl);
+            }
+          } else {
+            // Shrinking and docking (0.6 → 1.0)
+            const dockT = (t - 0.6) / 0.4;
+            const eased = this.easeOut(dockT);
+            
+            yPercent = -50 * eased; // Move up to dock position
+            opacity = 1;
+            scale = 1 - 0.3 * eased; // Shrink slightly
+            
+            // Calculate dock position based on index
+            const dockY = index * 80; // Stack vertically
+            yPercent = -50 + dockY * eased;
+          }
+          
+          metric.style.transform = `translate(-50%, calc(-50% + ${yPercent}%)) scale(${scale})`;
+          metric.style.opacity = opacity;
+        }
+        
+        animateNumber(element) {
+          const value = element.dataset.value;
+          const unit = element.dataset.unit || '';
+          const decimals = parseInt(element.dataset.decimals) || 1;
+          const animate = element.dataset.animate === 'true';
+          
+          if (!animate) return;
+          
+          let current = 0;
+          const target = parseFloat(value);
+          const duration = 800;
+          const startTime = performance.now();
+          
+          const animateFrame = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = this.easeOut(progress);
+            
+            current = target * eased;
+            
+            let displayValue;
+            if (target < 0) {
+              displayValue = `−${Math.abs(current).toFixed(decimals)}${unit}`;
+            } else {
+              displayValue = `${current.toFixed(decimals)}${unit}`;
+            }
+            
+            element.textContent = displayValue;
+            
+            if (progress < 1) {
+              requestAnimationFrame(animateFrame);
+            }
+          };
+          
+          requestAnimationFrame(animateFrame);
+        }
+        
+        easeOut(t) {
+          return 1 - Math.pow(1 - t, 3);
+        }
+        
+        applyReducedMotion() {
+          // Static final state for reduced motion
+          this.question.style.transform = 'translateY(-50%) scale(0.92)';
+          this.question.style.opacity = '0.75';
+          
+          // Hide cards
+          this.cards.forEach(card => {
+            card.style.display = 'none';
+          });
+          
+          // Show metrics in docked state
+          this.bannersContainer.classList.add('docked');
+          this.banners.forEach(metric => {
+            metric.style.transform = 'none';
+            metric.style.opacity = '1';
+          });
+        }
+      }
+
+      // Initialize opportunity scroll sequence
       document.addEventListener('DOMContentLoaded', function() {
-        console.log('DOM Content Loaded - Initializing Simple Opportunity Animation...');
+        console.log('🎬 DOM Content Loaded - Initializing Opportunity Scroll Sequence v4...');
         const opportunitySection = document.getElementById('opportunity');
         if (opportunitySection) {
-          console.log('Opportunity section found, initializing...');
-          
-          // Simple intersection observer to trigger animations
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                console.log('🎯 Opportunity section in view - triggering card animations');
-                const cards = opportunitySection.querySelectorAll('.opp-card');
-                console.log(`Found ${cards.length} cards to animate`);
-                
-                cards.forEach((card, index) => {
-                  console.log(`Card ${index + 1} starting animation in ${index * 300}ms`);
-                  setTimeout(() => {
-                    card.classList.add('slide-in');
-                    console.log(`✅ Card ${index + 1} animated in`);
-                  }, index * 300); // 300ms delay between each card
-                });
-                
-                observer.unobserve(entry.target); // Only trigger once
-              }
-            });
-          }, { threshold: 0.1 });
-          
-          observer.observe(opportunitySection);
+          console.log('✅ Opportunity section found, initializing scroll sequence...');
+          new OpportunityScrollSequence();
         } else {
-          console.error('Opportunity section NOT FOUND!');
+          console.error('❌ Opportunity section NOT FOUND!');
         }
         
         // Initialize custody checklist animation
