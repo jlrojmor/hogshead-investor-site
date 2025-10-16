@@ -2106,13 +2106,21 @@
           content: '';
           position: absolute;
           top: 0;
-          left: 0;
+          left: 100%;
           right: 0;
           bottom: 0;
           background: rgba(255, 255, 255, 0.85);
           border-radius: 12px;
           z-index: 1;
-          transition: all 2s ease-in-out;
+          transition: left 2s ease-in-out;
+        }
+
+        .step-3-card:hover::before {
+          left: 100%;
+        }
+
+        .step-3-card:not(:hover)::before {
+          left: 0;
         }
 
         .step-3-card > * {
