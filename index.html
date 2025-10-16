@@ -3743,24 +3743,14 @@
         }
         
         setupCardPositions() {
-          // Compute angles programmatically: exactly 72° apart
-          const baseAngle = -90; // top
-          this.angles = Array.from({length: 5}, (_, i) => baseAngle + i * 72);
-          // Result: [-90, -18, 54, 126, 198] where 198° ≡ -162°
-          
           // Card dimensions for horizontal row
           const cardWidth = 180; // pixels (matches CSS)
           const cardSpacing = 20; // spacing between cards
           
           this.cards.forEach((card, index) => {
-            const angleDeg = this.angles[index];
-            const angleRad = (angleDeg * Math.PI) / 180;
-            
-            // Start position - ensure cards start from 5 different screen edges
-            // Use a large distance to ensure they're well off-screen
-            const startDist = Math.max(window.innerWidth * 1.5, window.innerHeight * 1.5);
-            const startX = Math.cos(angleRad) * startDist;
-            const startY = Math.sin(angleRad) * startDist * 0.85; // Y-scale for oval
+            // Start position - all cards start from left side of screen
+            const startX = -window.innerWidth * 0.5; // well off-screen to the left
+            const startY = 0; // centered vertically
             
             // Horizontal row position (center of viewport)
             const rowX = (index - 2) * (cardWidth + cardSpacing); // -2 to center: [-2, -1, 0, 1, 2]
@@ -3770,8 +3760,7 @@
             const exitX = rowX; // maintain horizontal spacing
             const exitY = -window.innerHeight * 0.6; // well above viewport
             
-            // Debug logging
-            console.log(`Card ${index}: angle=${angleDeg}°, start=(${startX.toFixed(0)}, ${startY.toFixed(0)}), row=(${rowX}, ${rowY})`);
+            console.log(`Card ${index}: start=(${startX}, ${startY}), row=(${rowX}, ${rowY}), exit=(${exitX}, ${exitY})`);
             
             card.dataset.startX = startX;
             card.dataset.startY = startY;
@@ -3807,7 +3796,7 @@
           // Log progress and active scene
           let scene = '';
           if (p < 0.15) scene = '1: Giant Question';
-          else if (p < 0.35) scene = '2: Cards Flying In';
+          else if (p < 0.35) scene = '2: Cards Sliding In from Left (Staggered)';
           else if (p < 0.55) scene = '3: Cards in Horizontal Row (READABLE)';
           else if (p < 0.70) scene = '4: Cards Moving Up';
           else if (p < 0.82) scene = '5A: KPI 13.4%';
@@ -3861,16 +3850,20 @@
             const exitX = parseFloat(card.dataset.exitX);
             const exitY = parseFloat(card.dataset.exitY);
             
-            if (p < 0.15) {
-              // Off-screen
+            // Calculate when this specific card should appear (staggered from left to right)
+            const cardAppearStart = 0.15 + (index * 0.04); // Each card appears 0.04 progress later
+            const cardAppearEnd = cardAppearStart + 0.12; // 0.12 progress to slide in
+            
+            if (p < cardAppearStart) {
+              // Card not yet started appearing
               x = startX;
               y = startY;
               opacity = 0;
               scale = 0.94;
               blur = 2;
-            } else if (p <= 0.35) {
-              // Flying in to horizontal row (0.15 → 0.35)
-              const t = (p - 0.15) / 0.20;
+            } else if (p <= cardAppearEnd) {
+              // Card sliding in from left (staggered)
+              const t = (p - cardAppearStart) / (cardAppearEnd - cardAppearStart);
               const eased = this.easeOut(t);
               
               x = startX + (rowX - startX) * eased;
@@ -3879,7 +3872,7 @@
               scale = 0.94 + 0.06 * eased; // 0.94 → 1.0
               blur = 2 * (1 - eased); // 2 → 0
             } else if (p <= 0.55) {
-              // Stay in horizontal row - CLEARLY VISIBLE (0.35 → 0.55)
+              // Stay in horizontal row - CLEARLY VISIBLE
               x = rowX;
               y = rowY;
               opacity = 1.0; // Fully visible!
