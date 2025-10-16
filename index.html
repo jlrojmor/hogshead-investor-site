@@ -2208,17 +2208,6 @@
           left: 100%;
         }
 
-        .exit-icon {
-          font-size: 1.5rem;
-          margin-bottom: 8px;
-          opacity: 0.8;
-          transition: all 0.3s ease;
-        }
-
-        .exit-btn:hover .exit-icon {
-          opacity: 1;
-          transform: scale(1.1) rotate(5deg);
-        }
 
         .exit-btn h4 {
           font-size: 0.9rem;
@@ -2499,22 +2488,18 @@
             <h3>Exit Strategies</h3>
             <div class="exit-grid">
               <button class="exit-btn" onclick="openExitModal('investor')">
-                <div class="exit-icon">💼</div>
                 <h4>Sell Certificate to Another Investor</h4>
                 <p>Early liquidity, no physical movement</p>
               </button>
               <button class="exit-btn" onclick="openExitModal('bottlers')">
-                <div class="exit-icon">🏷️</div>
                 <h4>Sell to Bottlers/Brands</h4>
                 <p>Bottling under established labels</p>
               </button>
               <button class="exit-btn" onclick="openExitModal('corporate')">
-                <div class="exit-icon">🏢</div>
                 <h4>Corporate Clients</h4>
                 <p>Hotels, restaurants, bars</p>
               </button>
               <button class="exit-btn" onclick="openExitModal('marketplace')">
-                <div class="exit-icon">🛒</div>
                 <h4>Hogshead Market Place</h4>
                 <p>E-commerce for rare tequilas</p>
               </button>
