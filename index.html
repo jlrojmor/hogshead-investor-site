@@ -1889,21 +1889,21 @@
   }
 }
 
-        /* Reduced Motion */
-        @media (prefers-reduced-motion: reduce) {
-          .timeline-glow,
-          .node-pulse,
-          .premium-stage-image.loaded {
-            animation: none;
-          }
-          
-          .timeline-progress-bar,
-          .premium-stage,
-          .stage-card,
-          .premium-stage-image {
-            transition: none;
-          }
-        }
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .timeline-glow,
+  .node-pulse,
+  .premium-stage-image.loaded {
+    animation: none;
+  }
+  
+  .timeline-progress-bar,
+  .premium-stage,
+  .stage-card,
+  .premium-stage-image {
+    transition: none;
+  }
+}
 
         /* Custody Checklist Animation */
         .custody-checklist {
@@ -2038,6 +2038,19 @@
           font-weight: 600;
         }
 
+        .investment-min,
+        .investment-max {
+          font-weight: 700;
+          color: var(--agave);
+          transition: all 0.3s ease;
+        }
+
+        .investment-min:hover,
+        .investment-max:hover {
+          transform: scale(1.05);
+          cursor: pointer;
+        }
+
         .custody-checklist {
           margin-top: 16px;
           display: grid;
@@ -2075,8 +2088,8 @@
           .check-icon {
             width: 16px;
             height: 16px;
-          }
-        }
+  }
+}
   </style>
 </head>
 <body>
@@ -2130,7 +2143,9 @@
             <h3>Capital Commitment & Source</h3>
             <p>Investor purchases certificates of title representing ownership of bulk tequila from established distilleries with denomination of origin protection. Tequila production starts at this point, ensuring authentic, high-quality product with regulatory backing.</p>
             <div class="investment-range">
-              <strong>Investment Range:</strong> $500K - $5M USD<br>
+              <strong>Investment Range:</strong> 
+              <span class="investment-min" data-target="500">$0K</span> - 
+              <span class="investment-max" data-target="5000">$0M</span> USD<br>
               <strong>Result:</strong> Certificate of title ownership
             </div>
           </div>
@@ -2145,26 +2160,26 @@
                   <div class="check-fill"></div>
                   <svg class="check-icon" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
+              </svg>
+            </div>
                 <span>New Fill</span>
-              </div>
+          </div>
               <div class="checklist-item" data-delay="900">
                 <div class="check-circle">
                   <div class="check-fill"></div>
                   <svg class="check-icon" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
+              </svg>
+            </div>
                 <span>Storage</span>
-              </div>
+          </div>
               <div class="checklist-item" data-delay="1800">
                 <div class="check-circle">
                   <div class="check-fill"></div>
                   <svg class="check-icon" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
-                </div>
+        </div>
                 <span>Insurance</span>
               </div>
               <div class="checklist-item" data-delay="2700">
@@ -2172,10 +2187,10 @@
                   <div class="check-fill"></div>
                   <svg class="check-icon" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
+              </svg>
+            </div>
                 <span>Compliance</span>
-              </div>
+          </div>
             </div>
           </div>
         </div>
@@ -2184,7 +2199,7 @@
             <span class="pill">Step 3</span>
             <h3>Aging</h3>
             <p>Time compounds value: scarcity increases while demand grows for premium aged expressions.</p>
-          </div>
+            </div>
           <div class="card">
             <span class="pill">Step 4</span>
             <h3>Exit</h3>
@@ -2198,8 +2213,8 @@
         <!-- Scene 1: Giant Question (entry) -->
         <div class="opp-question">
           <h2>Why now? What's the Opportunity?</h2>
-        </div>
-
+          </div>
+          
         <!-- Scene 2: Five Cards Converge -->
         <div class="opp-cards">
           <div class="opp-card" data-card="1">
@@ -2245,15 +2260,15 @@
           <div class="opp-chip">
             <span class="chip-icon">✓</span>
             <span>Custody</span>
-          </div>
+                    </div>
           <div class="opp-chip">
             <span class="chip-icon">✓</span>
             <span>Insurance</span>
-          </div>
+                  </div>
           <div class="opp-chip">
             <span class="chip-icon">✓</span>
             <span>Denomination</span>
-          </div>
+                </div>
           <div class="opp-chip">
             <span class="chip-icon">✓</span>
             <span>QC & Monitoring</span>
@@ -2274,35 +2289,35 @@
               <div class="stat-display highlight" style="margin-bottom: 12px;">
                 <div class="stat-number" data-target="28.3" data-suffix="B" data-prefix="$" style="font-size: 1.4rem;">$0B</div>
                 <div class="stat-label" style="font-size: 0.85rem;">Actual Sales 2024</div>
-              </div>
+                          </div>
               <div class="stat-display" style="margin-bottom: 12px;">
                 <div class="stat-number" data-target="13.4" data-suffix="%" style="font-size: 1.4rem;">0%</div>
                 <div class="stat-label" style="font-size: 0.85rem;">Historic CAGR</div>
-              </div>
+                        </div>
               <div class="stat-display" style="margin-bottom: 12px;">
                 <div class="stat-number" data-target="6.7" data-suffix="%" style="font-size: 1.4rem;">0%</div>
                 <div class="stat-label" style="font-size: 0.85rem;">Forecast CAGR (2025-2029)</div>
-              </div>
+                          </div>
               <div class="stat-display highlight">
                 <div class="stat-number" data-target="39" data-suffix="B" data-prefix="$" style="font-size: 1.4rem;">$0B</div>
                 <div class="stat-label" style="font-size: 0.85rem;">Sales Forecast 2029</div>
-              </div>
+                        </div>
               <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f8;">
                 <div class="stat-display" style="margin-bottom: 8px;">
                   <div class="stat-number" data-target="496" data-suffix="M" style="font-size: 1.2rem;">0M</div>
                   <div class="stat-label" style="font-size: 0.8rem;">Total Production 2024 (Liters)</div>
-                </div>
+                          </div>
                 <div class="stat-display">
                   <div class="stat-number" data-target="400" data-suffix="M" style="font-size: 1.2rem;">0M</div>
                   <div class="stat-label" style="font-size: 0.8rem;">Exported 2024 (Liters)</div>
-                </div>
-              </div>
-            </div>
+                        </div>
+                          </div>
+                        </div>
             <div>
               <span class="pill">Regional Growth Analysis</span>
               <div id="regional-map" style="width:100%; height:500px; margin: 16px 0;"></div>
-            </div>
-          </div>
+                      </div>
+                    </div>
           <div class="legend">
             <div class="item" data-region="UK"><span class="sw"></span><div><b>UK — 12.4% CAGR</b><span class="sub">$0.4B Market</span></div></div>
             <div class="item" data-region="WESTERN_EUROPE"><span class="sw"></span><div><b>Western Europe — 9.5% CAGR</b><span class="sub">$1.5B Market</span></div></div>
@@ -2313,8 +2328,8 @@
             <div class="item" data-region="CANADA"><span class="sw"></span><div><b>Canada — 2.6% CAGR</b><span class="sub">$4.2B Market</span></div></div>
             <div class="item" data-region="CHINA"><span class="sw"></span><div><b>China — 4.5% CAGR</b><span class="sub">$0.1B Market</span></div></div>
             <div class="item" data-region="APAC"><span class="sw"></span><div><b>Asia Pacific — 4.1% CAGR</b><span class="sub">$1.2B Market</span></div></div>
-          </div>
-        </div>
+                  </div>
+                </div>
 
         <!-- US Market Focus -->
         <div class="grid grid-3" style="margin-top: 32px;">
@@ -2332,8 +2347,8 @@
             <div class="stat-display highlight">
               <div class="stat-number" data-target="28" data-suffix="B" data-prefix="$">$0B</div>
               <div class="stat-label">2029 Forecast</div>
-            </div>
-          </div>
+                  </div>
+                </div>
 
           <div class="card">
             <span class="pill">Export Trends</span>
@@ -2343,19 +2358,19 @@
               <div class="progress-track">
                 <div class="progress-fill" data-width="84">
                   <span class="progress-text">84%</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
             <div class="progress-item">
               <div class="progress-label">Premium Agave 100%</div>
               <div class="progress-track">
                 <div class="progress-fill" data-width="73">
                   <span class="progress-text">73%</span>
-                </div>
               </div>
             </div>
+            </div>
             <p class="note">Super premium growing 2x standard by 2029</p>
-          </div>
+                </div>
 
           <div class="card">
             <h3>Tequila vs. Other Spirits: US Market Superior Growth</h3>
@@ -2365,39 +2380,39 @@
                 <div class="spirit-bar">
                   <div class="bar-fill" data-width="6.7" style="background: var(--agave);">
                     <span class="bar-value">6.7%</span>
-                  </div>
-                </div>
-              </div>
+                        </div>
+                        </div>
+                        </div>
               <div class="spirit-item">
                 <div class="spirit-name">Gin</div>
                 <div class="spirit-bar">
                   <div class="bar-fill" data-width="4.5" style="background: var(--sage);">
                     <span class="bar-value">4.5%</span>
                   </div>
-                </div>
-              </div>
+                        </div>
+                        </div>
               <div class="spirit-item">
                 <div class="spirit-name">Whiskey</div>
                 <div class="spirit-bar">
                   <div class="bar-fill" data-width="3.2" style="background: var(--amber);">
                     <span class="bar-value">3.2%</span>
+                        </div>
                   </div>
-                </div>
-              </div>
+                        </div>
               <div class="spirit-item">
                 <div class="spirit-name">Vodka</div>
                 <div class="spirit-bar">
                   <div class="bar-fill" data-width="2.1" style="background: var(--muted);">
                     <span class="bar-value">2.1%</span>
+                        </div>
+                        </div>
                   </div>
-                </div>
-              </div>
               <div class="spirit-item">
                 <div class="spirit-name">Rum</div>
                 <div class="spirit-bar">
                   <div class="bar-fill" data-width="1.8" style="background: var(--rose);">
                     <span class="bar-value">1.8%</span>
-                  </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -3743,6 +3758,9 @@
         
         // Initialize custody checklist animation
         initCustodyChecklist();
+        
+        // Initialize investment counter animation
+        initInvestmentCounter();
       });
 
       // Custody Checklist Animation
@@ -3774,6 +3792,64 @@
         if (checklistContainer) {
           observer.observe(checklistContainer);
         }
+      }
+
+      // Investment Counter Animation
+      function initInvestmentCounter() {
+        const investmentMin = document.querySelector('.investment-min');
+        const investmentMax = document.querySelector('.investment-max');
+        
+        if (!investmentMin || !investmentMax) return;
+        
+        // Create intersection observer for the investment range
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.hasAttribute('data-animated')) {
+              // Mark as animated to prevent re-triggering
+              entry.target.setAttribute('data-animated', 'true');
+              
+              // Animate minimum value first (500K)
+              animateNumber(investmentMin, 500, 'K', 1000, () => {
+                // Then animate maximum value (5M)
+                animateNumber(investmentMax, 5, 'M', 1200);
+              });
+            }
+          });
+        }, { threshold: 0.5 });
+        
+        // Observe the investment range container
+        const investmentRange = document.querySelector('.investment-range');
+        if (investmentRange) {
+          observer.observe(investmentRange);
+        }
+      }
+
+      // Helper function to animate numbers
+      function animateNumber(element, target, suffix, duration, onComplete) {
+        const startTime = Date.now();
+        const startValue = 0;
+        
+        function updateNumber() {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Easing function for smooth animation
+          const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+          const currentValue = Math.floor(startValue + (target - startValue) * easeOutQuart);
+          
+          // Format the number
+          element.textContent = `$${currentValue}${suffix}`;
+          
+          if (progress < 1) {
+            requestAnimationFrame(updateNumber);
+          } else {
+            // Ensure final value is exact
+            element.textContent = `$${target}${suffix}`;
+            if (onComplete) onComplete();
+          }
+        }
+        
+        requestAnimationFrame(updateNumber);
       }
 
       // Initialize simulator
@@ -4054,7 +4130,7 @@
               // Image height is constrained, width extends beyond hero
               isScrollingEnabled = true;
               console.log('Horizontal scrolling enabled - image extends beyond width');
-          } else {
+              } else {
               // Image width is constrained, height extends beyond hero
               isScrollingEnabled = true;
               console.log('Vertical scrolling enabled - image extends beyond height');
