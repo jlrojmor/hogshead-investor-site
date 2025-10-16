@@ -3746,14 +3746,14 @@
           // Card dimensions for horizontal row
           const cardWidth = 180; // pixels (matches CSS)
           const cardSpacing = 20; // spacing between cards
-          const totalWidth = (cardWidth + cardSpacing) * 5 - cardSpacing;
           
           this.cards.forEach((card, index) => {
             const angleDeg = this.angles[index];
             const angleRad = (angleDeg * Math.PI) / 180;
             
-            // Start position (well off-screen along same vector)
-            const startDist = Math.max(window.innerWidth * 1.2, window.innerHeight * 1.2);
+            // Start position - ensure cards start from 5 different screen edges
+            // Use a large distance to ensure they're well off-screen
+            const startDist = Math.max(window.innerWidth * 1.5, window.innerHeight * 1.5);
             const startX = Math.cos(angleRad) * startDist;
             const startY = Math.sin(angleRad) * startDist * 0.85; // Y-scale for oval
             
@@ -3764,6 +3764,9 @@
             // Upper exit position (all move up together)
             const exitX = rowX; // maintain horizontal spacing
             const exitY = -window.innerHeight * 0.6; // well above viewport
+            
+            // Debug logging
+            console.log(`Card ${index}: angle=${angleDeg}°, start=(${startX.toFixed(0)}, ${startY.toFixed(0)}), row=(${rowX}, ${rowY})`);
             
             card.dataset.startX = startX;
             card.dataset.startY = startY;
