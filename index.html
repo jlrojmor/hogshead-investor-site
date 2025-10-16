@@ -3793,6 +3793,11 @@
             (scrollTop - sectionTop) / (sectionHeight - viewportHeight)
           ));
           
+          // Debug: Log every scroll event to see if it's working
+          if (p > 0) {
+            console.log(`Scroll: p=${p.toFixed(3)}, scrollTop=${scrollTop}, sectionTop=${sectionTop}, sectionHeight=${sectionHeight}`);
+          }
+          
           // Log progress and active scene
           let scene = '';
           if (p < 0.15) scene = '1: Giant Question';
