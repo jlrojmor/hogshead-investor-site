@@ -448,18 +448,13 @@
           background: #fff;
           border: 1px solid var(--line);
           border-radius: 16px;
-          padding: 32px 20px;
+          padding: 24px;
           box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-          width: 180px;
-          height: 240px;
+          max-width: 280px;
           text-align: center;
           pointer-events: auto;
           will-change: transform, opacity, filter;
           transition: box-shadow 0.3s ease;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
         }
 
         .opp-card:hover {
@@ -468,14 +463,14 @@
         }
 
         .opp-card h3 {
-          font-size: 22px;
+          font-size: 18px;
           font-weight: 600;
           color: var(--ink);
-          margin: 0 0 12px;
+          margin: 0 0 8px;
         }
 
         .opp-card p {
-          font-size: 16px;
+          font-size: 14px;
           color: var(--muted);
           margin: 0;
           line-height: 1.4;
@@ -508,16 +503,16 @@
 
         .banner-number {
           display: block;
-          font-size: clamp(80px, 18vw, 180px);
+          font-size: clamp(64px, 15vw, 140px);
           font-weight: 700;
           color: var(--agave);
           line-height: 1;
-          margin-bottom: 24px;
+          margin-bottom: 16px;
         }
 
         .banner-label {
           display: block;
-          font-size: clamp(22px, 5vw, 36px);
+          font-size: clamp(18px, 4vw, 28px);
           color: var(--muted);
           font-weight: 400;
           line-height: 1.3;
@@ -558,29 +553,6 @@
 
         /* Mobile adjustments */
         @media (max-width: 960px) {
-          .opp-card {
-            width: 140px;
-            height: 200px;
-            padding: 24px 16px;
-          }
-          
-          .opp-card h3 {
-            font-size: 18px;
-          }
-          
-          .opp-card p {
-            font-size: 14px;
-          }
-          
-          .banner-number {
-            font-size: clamp(60px, 12vw, 120px);
-            margin-bottom: 16px;
-          }
-          
-          .banner-label {
-            font-size: clamp(18px, 4vw, 24px);
-          }
-          
           .opp-guardrails {
             gap: 12px;
           }
@@ -612,21 +584,21 @@
             position: relative;
             opacity: 1;
             transform: none;
-            margin: 60px 0;
+            margin: 20px 0;
           }
           
           .opp-banners {
             position: relative;
             display: flex;
             flex-direction: column;
-            gap: 80px;
+            gap: 40px;
           }
           
           .opp-guardrails {
             position: relative;
             opacity: 1;
             transform: none;
-            margin-top: 60px;
+            margin-top: 40px;
           }
         }
 
@@ -1989,200 +1961,20 @@
             <span class="pill">Step 2</span>
             <h3>Custody</h3>
             <p>Hold under bonded storage with climate control, inventory tracking, and insurance.</p>
-            </div>
           </div>
+        </div>
         <div class="grid grid-2" style="gap: 32px; margin: 32px 0;">
           <div class="card">
             <span class="pill">Step 3</span>
             <h3>Aging</h3>
             <p>Time compounds value: scarcity increases while demand grows for premium aged expressions.</p>
-            </div>
+          </div>
           <div class="card">
             <span class="pill">Step 4</span>
             <h3>Exit</h3>
             <p>Plan exits around category step-ups and buyer demand via resale or bottling.</p>
           </div>
         </div>
-        
-        <!-- Asset Appreciation Section -->
-        <div class="grid grid-2" style="gap: 32px; margin: 32px 0;">
-          <!-- Tequila Aging Journey -->
-          <div class="card premium-timeline">
-            <div style="margin-bottom: 12px;">
-              <span class="pill">Aging Process</span>
-              <h3>Tequila Aging Journey</h3>
-              <p style="font-size: 0.9rem; color: var(--muted); margin: 6px 0 0;">Interactive Timeline - Click stages or use navigation to explore each aging phase</p>
-            </div>
-            
-            <div class="premium-timeline-container">
-              <!-- Animated Background -->
-              <div class="timeline-background">
-                <div class="timeline-glow"></div>
-          </div>
-
-              <!-- Main Timeline -->
-              <div class="timeline-track">
-                <div class="timeline-progress-bar">
-                  <div class="timeline-progress-fill"></div>
-            </div>
-                
-                <!-- Timeline Nodes -->
-                <div class="timeline-nodes">
-                  <div class="timeline-node active" data-stage="0">
-                    <div class="node-connector"></div>
-                    <div class="node-circle">
-                      <div class="node-pulse"></div>
-          </div>
-        </div>
-                  <div class="timeline-node" data-stage="1">
-                    <div class="node-connector"></div>
-                    <div class="node-circle">
-                      <div class="node-pulse"></div>
-                    </div>
-                  </div>
-                  <div class="timeline-node" data-stage="2">
-                    <div class="node-connector"></div>
-                    <div class="node-circle">
-                      <div class="node-pulse"></div>
-                    </div>
-                  </div>
-                  <div class="timeline-node" data-stage="3">
-                    <div class="node-connector"></div>
-                    <div class="node-circle">
-                      <div class="node-pulse"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Stage Cards -->
-              <div class="premium-stages">
-                <div class="premium-stage active" data-stage="0">
-                  <div class="stage-card">
-                    <div class="stage-image-frame">
-                      <img src="images/blanco.png" alt="Blanco Tequila" class="premium-stage-image">
-                      <div class="stage-glow-ring"></div>
-                    </div>
-                    <div class="stage-content">
-                      <h4 class="stage-name">Blanco</h4>
-                      <p class="stage-description">0-2 months<br>Fresh, pure agave</p>
-                    </div>
-                  </div>
-          </div>
-          
-                <div class="premium-stage" data-stage="1">
-                  <div class="stage-card">
-                    <div class="stage-image-frame">
-                      <img src="images/reposado.png" alt="Reposado Tequila" class="premium-stage-image">
-                      <div class="stage-glow-ring"></div>
-                    </div>
-                    <div class="stage-content">
-                      <h4 class="stage-name">Reposado</h4>
-                      <p class="stage-description">2-12 months<br>Light oak influence</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="premium-stage" data-stage="2">
-                  <div class="stage-card">
-                    <div class="stage-image-frame">
-                      <img src="images/anejo.png" alt="Añejo Tequila" class="premium-stage-image">
-                      <div class="stage-glow-ring"></div>
-                    </div>
-                    <div class="stage-content">
-                      <h4 class="stage-name">Añejo</h4>
-                      <p class="stage-description">1-3 years<br>Rich complexity</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="premium-stage" data-stage="3">
-                  <div class="stage-card">
-                    <div class="stage-image-frame">
-                      <img src="images/extra-anejo.png" alt="Extra Añejo Tequila" class="premium-stage-image">
-                      <div class="stage-glow-ring"></div>
-                    </div>
-                    <div class="stage-content">
-                      <h4 class="stage-name">Extra Añejo</h4>
-                      <p class="stage-description">3+ years<br>Ultra-premium rarity</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Navigation Controls -->
-              <div class="timeline-controls">
-                <button class="timeline-nav" id="prevStage" disabled>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-                  </svg>
-                </button>
-                
-                <div class="timeline-dots">
-                  <button class="timeline-dot active" data-stage="0"></button>
-                  <button class="timeline-dot" data-stage="1"></button>
-                  <button class="timeline-dot" data-stage="2"></button>
-                  <button class="timeline-dot" data-stage="3"></button>
-                    </div>
-                
-                <button class="timeline-nav" id="nextStage">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                  </svg>
-                </button>
-                  </div>
-                </div>
-
-            <div class="timeline-footer">
-              <p class="source-note">Source: NOM-006-SCFI, CRT</p>
-                          </div>
-                        </div>
-
-          <!-- Price Appreciation Chart -->
-          <div class="card">
-            <div style="margin-bottom: 12px;">
-              <span class="pill">Value Growth</span>
-              <h3>Aging Value Simulator</h3>
-              <p style="font-size: 0.9rem; color: var(--muted); margin: 6px 0 0;">Adjust aging time to see potential value appreciation</p>
-                          </div>
-            
-            <div style="margin: 20px 0;">
-              <label for="agingSlider" style="display: block; margin-bottom: 12px; font-weight: 600;">Aging Time: <span id="agingValue">24</span> months</label>
-              <input 
-                type="range" 
-                id="agingSlider" 
-                min="0" 
-                max="120" 
-                value="24" 
-                step="1"
-                style="width: 100%; height: 8px; border-radius: 4px; background: var(--line); outline: none; -webkit-appearance: none;"
-              />
-              <div style="display: flex; justify-content: space-between; margin-top: 6px; font-size: 13px; color: var(--muted);">
-                <span>0m</span>
-                <span>120m</span>
-                        </div>
-                          </div>
-
-            <div class="grid grid-2" style="gap: 16px; margin: 20px 0;">
-              <div style="text-align: center; padding: 16px; background: var(--paper); border-radius: 8px; border: 1px solid var(--line);">
-                <div style="font-size: 24px; font-weight: 700; color: var(--agave); margin-bottom: 4px;" id="remainingVolume">1000</div>
-                <div style="font-size: 14px; color: var(--muted);">Remaining Volume</div>
-                        </div>
-              <div style="text-align: center; padding: 16px; background: var(--paper); border-radius: 8px; border: 1px solid var(--line);">
-                <div style="font-size: 24px; font-weight: 700; color: var(--agave); margin-bottom: 4px;" id="barrelValue">$50,000</div>
-                <div style="font-size: 14px; color: var(--muted);">Barrel Value</div>
-                          </div>
-              <div style="text-align: center; padding: 16px; background: var(--paper); border-radius: 8px; border: 1px solid var(--line);">
-                <div style="font-size: 24px; font-weight: 700; color: var(--agave); margin-bottom: 4px;" id="valuePerLiter">$50</div>
-                <div style="font-size: 14px; color: var(--muted);">Value per Liter</div>
-                        </div>
-              <div style="text-align: center; padding: 16px; background: var(--paper); border-radius: 8px; border: 1px solid var(--line);">
-                <div style="font-size: 24px; font-weight: 700; color: var(--agave); margin-bottom: 4px;" id="angelsShare">2.0%</div>
-                <div style="font-size: 14px; color: var(--muted);">Angel's Share</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
       </section>
 
       <!-- OPPORTUNITY -->
@@ -2190,7 +1982,7 @@
         <!-- Scene 1: Giant Question (entry) -->
         <div class="opp-question">
           <h2>Why now? What's the Opportunity?</h2>
-            </div>
+        </div>
 
         <!-- Scene 2: Five Cards Converge -->
         <div class="opp-cards">
@@ -2209,19 +2001,19 @@
           <div class="opp-card" data-card="4">
             <h3>Natural & Additive-Free</h3>
             <p>Premium aligns with consumer demand.</p>
-        </div>
+          </div>
           <div class="opp-card" data-card="5">
             <h3>Aging → Appreciation</h3>
             <p>Time compounds value.</p>
-                  </div>
-                </div>
+          </div>
+        </div>
 
         <!-- Scene 4: Big Proof Banners -->
         <div class="opp-banners">
           <div class="opp-banner" data-banner="1">
             <span class="banner-number" data-value="13.4" data-unit="%" data-decimals="1" data-animate="true">13.4%</span>
             <span class="banner-label">US Tequila CAGR</span>
-            </div>
+          </div>
           <div class="opp-banner" data-banner="2">
             <span class="banner-number" data-animate="false">13–15%</span>
             <span class="banner-label">Bourbon Barrel IRR (precedent)</span>
@@ -2229,28 +2021,28 @@
           <div class="opp-banner" data-banner="3">
             <span class="banner-number" data-value="-50" data-unit="%" data-decimals="0" data-animate="true">−50%</span>
             <span class="banner-label">Agave margin when turned tequila</span>
-        </div>
           </div>
-          
+        </div>
+
         <!-- Scene 5: Guardrails Ribbon -->
         <div class="opp-guardrails">
           <div class="opp-chip">
             <span class="chip-icon">✓</span>
             <span>Custody</span>
-                    </div>
+          </div>
           <div class="opp-chip">
             <span class="chip-icon">✓</span>
             <span>Insurance</span>
-                  </div>
+          </div>
           <div class="opp-chip">
             <span class="chip-icon">✓</span>
             <span>Denomination</span>
-                </div>
+          </div>
           <div class="opp-chip">
             <span class="chip-icon">✓</span>
             <span>QC & Monitoring</span>
-              </div>
-            </div>
+          </div>
+        </div>
       </section>
 
       <!-- MARKET INTELLIGENCE -->
@@ -2266,35 +2058,35 @@
               <div class="stat-display highlight" style="margin-bottom: 12px;">
                 <div class="stat-number" data-target="28.3" data-suffix="B" data-prefix="$" style="font-size: 1.4rem;">$0B</div>
                 <div class="stat-label" style="font-size: 0.85rem;">Actual Sales 2024</div>
-                </div>
+              </div>
               <div class="stat-display" style="margin-bottom: 12px;">
                 <div class="stat-number" data-target="13.4" data-suffix="%" style="font-size: 1.4rem;">0%</div>
                 <div class="stat-label" style="font-size: 0.85rem;">Historic CAGR</div>
-                        </div>
+              </div>
               <div class="stat-display" style="margin-bottom: 12px;">
                 <div class="stat-number" data-target="6.7" data-suffix="%" style="font-size: 1.4rem;">0%</div>
                 <div class="stat-label" style="font-size: 0.85rem;">Forecast CAGR (2025-2029)</div>
-                        </div>
+              </div>
               <div class="stat-display highlight">
                 <div class="stat-number" data-target="39" data-suffix="B" data-prefix="$" style="font-size: 1.4rem;">$0B</div>
                 <div class="stat-label" style="font-size: 0.85rem;">Sales Forecast 2029</div>
-                        </div>
+              </div>
               <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f8;">
                 <div class="stat-display" style="margin-bottom: 8px;">
                   <div class="stat-number" data-target="496" data-suffix="M" style="font-size: 1.2rem;">0M</div>
                   <div class="stat-label" style="font-size: 0.8rem;">Total Production 2024 (Liters)</div>
-                          </div>
+                </div>
                 <div class="stat-display">
                   <div class="stat-number" data-target="400" data-suffix="M" style="font-size: 1.2rem;">0M</div>
                   <div class="stat-label" style="font-size: 0.8rem;">Exported 2024 (Liters)</div>
-                        </div>
-                          </div>
-                        </div>
+                </div>
+              </div>
+            </div>
             <div>
               <span class="pill">Regional Growth Analysis</span>
               <div id="regional-map" style="width:100%; height:500px; margin: 16px 0;"></div>
-                      </div>
-                    </div>
+            </div>
+          </div>
           <div class="legend">
             <div class="item" data-region="UK"><span class="sw"></span><div><b>UK — 12.4% CAGR</b><span class="sub">$0.4B Market</span></div></div>
             <div class="item" data-region="WESTERN_EUROPE"><span class="sw"></span><div><b>Western Europe — 9.5% CAGR</b><span class="sub">$1.5B Market</span></div></div>
@@ -2305,8 +2097,8 @@
             <div class="item" data-region="CANADA"><span class="sw"></span><div><b>Canada — 2.6% CAGR</b><span class="sub">$4.2B Market</span></div></div>
             <div class="item" data-region="CHINA"><span class="sw"></span><div><b>China — 4.5% CAGR</b><span class="sub">$0.1B Market</span></div></div>
             <div class="item" data-region="APAC"><span class="sw"></span><div><b>Asia Pacific — 4.1% CAGR</b><span class="sub">$1.2B Market</span></div></div>
-                  </div>
-                  </div>
+          </div>
+        </div>
 
         <!-- US Market Focus -->
         <div class="grid grid-3" style="margin-top: 32px;">
@@ -2316,16 +2108,16 @@
             <div class="stat-display">
               <div class="stat-number" data-target="17" data-suffix="%">0%</div>
               <div class="stat-label">Historic CAGR</div>
-                        </div>
+            </div>
             <div class="stat-display">
               <div class="stat-number" data-target="6.3" data-suffix="%">0%</div>
               <div class="stat-label">Projected CAGR</div>
-                        </div>
+            </div>
             <div class="stat-display highlight">
               <div class="stat-number" data-target="28" data-suffix="B" data-prefix="$">$0B</div>
               <div class="stat-label">2029 Forecast</div>
-                        </div>
-                  </div>
+            </div>
+          </div>
 
           <div class="card">
             <span class="pill">Export Trends</span>
@@ -2335,19 +2127,19 @@
               <div class="progress-track">
                 <div class="progress-fill" data-width="84">
                   <span class="progress-text">84%</span>
-                        </div>
-                        </div>
-                        </div>
+                </div>
+              </div>
+            </div>
             <div class="progress-item">
               <div class="progress-label">Premium Agave 100%</div>
               <div class="progress-track">
                 <div class="progress-fill" data-width="73">
                   <span class="progress-text">73%</span>
-                  </div>
-            </div>
+                </div>
+              </div>
             </div>
             <p class="note">Super premium growing 2x standard by 2029</p>
-                </div>
+          </div>
 
           <div class="card">
             <h3>Tequila vs. Other Spirits: US Market Superior Growth</h3>
@@ -2357,39 +2149,39 @@
                 <div class="spirit-bar">
                   <div class="bar-fill" data-width="6.7" style="background: var(--agave);">
                     <span class="bar-value">6.7%</span>
+                  </div>
                 </div>
               </div>
-            </div>
               <div class="spirit-item">
                 <div class="spirit-name">Gin</div>
                 <div class="spirit-bar">
                   <div class="bar-fill" data-width="4.5" style="background: var(--sage);">
                     <span class="bar-value">4.5%</span>
                   </div>
-                        </div>
-                        </div>
+                </div>
+              </div>
               <div class="spirit-item">
                 <div class="spirit-name">Whiskey</div>
                 <div class="spirit-bar">
                   <div class="bar-fill" data-width="3.2" style="background: var(--amber);">
                     <span class="bar-value">3.2%</span>
-                        </div>
                   </div>
-                        </div>
+                </div>
+              </div>
               <div class="spirit-item">
                 <div class="spirit-name">Vodka</div>
                 <div class="spirit-bar">
                   <div class="bar-fill" data-width="2.1" style="background: var(--muted);">
                     <span class="bar-value">2.1%</span>
-                        </div>
-                        </div>
                   </div>
+                </div>
+              </div>
               <div class="spirit-item">
                 <div class="spirit-name">Rum</div>
                 <div class="spirit-bar">
                   <div class="bar-fill" data-width="1.8" style="background: var(--rose);">
                     <span class="bar-value">1.8%</span>
-                </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -3429,21 +3221,16 @@
             const startX = Math.cos(angleRad) * startDist;
             const startY = Math.sin(angleRad) * startDist * yScale;
             
-            // Horizontal row position (collision point) - with proper spacing
-            const isMobile = window.innerWidth <= 960;
-            const cardWidth = isMobile ? 140 : 180; // Smaller on mobile
-            const cardSpacing = isMobile ? 20 : 40; // Tighter spacing on mobile
-            const totalWidth = (5 * cardWidth) + (4 * cardSpacing); // Total width for 5 cards + 4 gaps
-            const rowStartX = -totalWidth / 2 + cardWidth / 2; // Start position for first card
-            const rowX = rowStartX + index * (cardWidth + cardSpacing); // Position each card with spacing
-            const rowY = 0; // All at same vertical level
+            // Stack position (upper third, tight)
+            const stackX = (index - 2) * 35;
+            const stackY = -window.innerHeight * 0.3;
             
             card.dataset.startX = startX;
             card.dataset.startY = startY;
             card.dataset.ringX = ringX;
             card.dataset.ringY = ringY;
-            card.dataset.rowX = rowX;
-            card.dataset.rowY = rowY;
+            card.dataset.stackX = stackX;
+            card.dataset.stackY = stackY;
           });
         }
         
@@ -3465,30 +3252,18 @@
           // Calculate scroll progress through the section (0 to 1)
           const scrollTop = window.pageYOffset;
           const sectionTop = this.section.offsetTop;
-          
-          // Debug: log section info
-          console.log('Section info:', {
-            scrollTop,
-            sectionTop,
-            sectionHeight,
-            viewportHeight,
-            relativeScroll: scrollTop - sectionTop
-          });
-          
           const p = Math.max(0, Math.min(1, 
             (scrollTop - sectionTop) / (sectionHeight - viewportHeight)
           ));
           
           // Log progress and active scene
           let scene = '';
-          if (p < 0.10) scene = '1: Giant Question';
-          else if (p < 0.25) scene = '2: Cards Converge (72° apart)';
-          else if (p < 0.35) scene = '2: Cards at Ring';
-          else if (p < 0.50) scene = '3: Cards Collide to Row (EARLIER)';
-          else if (p < 0.75) scene = '3: Cards in Horizontal Row (READING TIME)';
-          else if (p < 0.85) scene = '3: Cards Move Up & Fade';
-          else if (p < 0.93) scene = '4: KPI A+B (13.4% + 13-15%)';
-          else if (p < 1.00) scene = '4: KPI A+B+C (all 3 visible)';
+          if (p < 0.15) scene = '1: Giant Question';
+          else if (p < 0.40) scene = '2: Cards Converge';
+          else if (p < 0.55) scene = '3: Stack & Drift';
+          else if (p < 0.67) scene = '4A: KPI 13.4%';
+          else if (p < 0.80) scene = '4B: KPI 13-15%';
+          else if (p < 0.94) scene = '4C: KPI -50%';
           else scene = '5: Guardrails';
           
           if (!this.lastScene || this.lastScene !== scene) {
@@ -3534,64 +3309,42 @@
             const startY = parseFloat(card.dataset.startY);
             const ringX = parseFloat(card.dataset.ringX);
             const ringY = parseFloat(card.dataset.ringY);
-            const rowX = parseFloat(card.dataset.rowX);
-            const rowY = parseFloat(card.dataset.rowY);
+            const stackX = parseFloat(card.dataset.stackX);
+            const stackY = parseFloat(card.dataset.stackY);
             
-            if (p < 0.10) {
+            if (p < 0.15) {
               // Off-screen
               x = startX;
               y = startY;
               opacity = 0;
-              scale = 1.0;
-              blur = 0;
-            } else if (p <= 0.25) {
-              // Flying in to ring (0.10 → 0.25) - EARLIER
-              const t = (p - 0.10) / 0.15;
-              const eased = this.easeOut(t);
+              scale = 0.94;
+              blur = 2;
+            } else if (p <= 0.40) {
+              // Flying in to ring (0.15 → 0.40)
+              const t = (p - 0.15) / 0.25;
+              const stagger = index * 0.06;
+              const tAdj = Math.max(0, Math.min(1, (t - stagger) / (1 - stagger * 2)));
+              const eased = this.easeOut(tAdj);
               
               x = startX + (ringX - startX) * eased;
               y = startY + (ringY - startY) * eased;
               opacity = eased;
-              scale = 1.0;
-              blur = 0;
-            } else if (p <= 0.35) {
-              // Stay at ring briefly (0.25 → 0.35)
-              x = ringX;
-              y = ringY;
-              opacity = 1.0;
-              scale = 1.0;
-              blur = 0;
-            } else if (p <= 0.50) {
-              // Collide into horizontal row (0.35 → 0.50) - MUCH EARLIER
-              const t = (p - 0.35) / 0.15;
+              scale = 0.94 + 0.06 * eased; // 0.94 → 1.0
+              blur = 2 * (1 - eased); // 2 → 0
+            } else if (p <= 0.55) {
+              // Stacking (0.40 → 0.55)
+              const t = (p - 0.40) / 0.15;
               const eased = this.easeOut(t);
               
-              x = ringX + (rowX - ringX) * eased;
-              y = ringY + (rowY - ringY) * eased;
-              opacity = 1.0;
-              scale = 1.0;
-              blur = 0;
-            } else if (p <= 0.75) {
-              // Stay in horizontal row for EXTENDED reading (0.50 → 0.75) - EARLIER
-              x = rowX;
-              y = rowY;
-              opacity = 1.0;
-              scale = 1.0;
-              blur = 0;
-            } else if (p <= 0.85) {
-              // Move up and start fading (0.75 → 0.85)
-              const t = (p - 0.75) / 0.10;
-              const eased = this.easeOut(t);
-              
-              x = rowX;
-              y = rowY - (eased * 100); // Move up 100px
-              opacity = 1.0 - eased * 0.7; // 1.0 → 0.3
-              scale = 1.0 - eased * 0.08; // 1.0 → 0.92
-              blur = eased * 2; // 0 → 2
+              x = ringX + (stackX - ringX) * eased;
+              y = ringY + (stackY - ringY) * eased;
+              opacity = 1.0 - 0.7 * eased; // 1.0 → 0.3
+              scale = 1.0 - 0.08 * eased; // 1.0 → 0.92
+              blur = 2 * eased; // 0 → 2
             } else {
-              // Final faded state
-              x = rowX;
-              y = rowY - 100;
+              // Stacked
+              x = stackX;
+              y = stackY;
               opacity = 0.3;
               scale = 0.92;
               blur = 2;
@@ -3600,99 +3353,63 @@
             card.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
             card.style.opacity = opacity;
             card.style.filter = `blur(${blur}px)`;
-            card.style.zIndex = p >= 0.75 ? 5 : 12;
+            card.style.zIndex = p >= 0.55 ? 5 : 12;
           });
         }
         
         updateKPIs(p) {
-          // KPIs stack vertically - large and clean, one on top of the other:
-          // 0.75-0.85: KPI A appears (as cards move up and fade)
-          // 0.85-0.93: KPI B appears BELOW A (A stays)
-          // 0.93-1.00: KPI C appears BELOW B (A & B stay)
-          // All 3 visible together before guardrails
+          // KPI A: 0.55 → 0.67
+          // KPI B: 0.67 → 0.80
+          // KPI C: 0.80 → 0.94
           
-          // Calculate vertical spacing for large KPIs
-          const kpiSpacing = 320; // Large spacing between KPIs
-          const startY = -320; // Start position for first KPI
+          this.updateSingleKPI(this.banners[0], p, 0.55, 0.67);
+          this.updateSingleKPI(this.banners[1], p, 0.67, 0.80);
+          this.updateSingleKPI(this.banners[2], p, 0.80, 0.94);
+        }
+        
+        updateSingleKPI(kpi, p, start, end) {
+          if (!kpi) return;
           
-          // KPI A
-          let kpiA_y, kpiA_opacity;
-          if (p < 0.75) {
-            kpiA_y = 110; // Below viewport
-            kpiA_opacity = 0;
-          } else if (p <= 0.85) {
-            // Rising (0.75 → 0.85)
-            const t = (p - 0.75) / 0.10;
-            const eased = this.easeOut(t);
-            kpiA_y = 110 * (1 - eased) + startY; // End at startY (top position)
-            kpiA_opacity = eased;
+          // Compute local progress
+          const t = Math.max(0, Math.min(1, (p - start) / (end - start)));
+          
+          let yPercent, opacity;
+          
+          if (t === 0) {
+            // Before this KPI
+            yPercent = 110;
+            opacity = 0;
+          } else if (t <= 0.45) {
+            // Rising to center (0 → 0.45)
+            const riseT = t / 0.45;
+            const eased = this.easeOut(riseT);
+            yPercent = 110 * (1 - eased);
+            opacity = eased;
+          } else if (t <= 0.55) {
+            // At center (0.45 → 0.55)
+            yPercent = 0;
+            opacity = 1;
             
             // Trigger count-up once
-            const numberEl = this.banners[0].querySelector('.banner-number');
-            if (numberEl && !this.animatedNumbers.has(numberEl) && t > 0.3) {
+            const numberEl = kpi.querySelector('.banner-number');
+            if (numberEl && !this.animatedNumbers.has(numberEl)) {
               this.animatedNumbers.add(numberEl);
               this.animateNumber(numberEl);
             }
+          } else if (t < 1) {
+            // Exiting upward (0.55 → 1.0)
+            const exitT = (t - 0.55) / 0.45;
+            const eased = this.easeOut(exitT);
+            yPercent = -110 * eased;
+            opacity = 1 - eased;
           } else {
-            // Stays at top position
-            kpiA_y = startY;
-            kpiA_opacity = 1;
+            // After this KPI
+            yPercent = -110;
+            opacity = 0;
           }
           
-          // KPI B
-          let kpiB_y, kpiB_opacity;
-          if (p < 0.85) {
-            kpiB_y = 110;
-            kpiB_opacity = 0;
-          } else if (p <= 0.93) {
-            // Rising (0.85 → 0.93)
-            const t = (p - 0.85) / 0.08;
-            const eased = this.easeOut(t);
-            kpiB_y = 110 * (1 - eased) + (startY + kpiSpacing); // End at second position
-            kpiB_opacity = eased;
-          } else {
-            // Stays at middle position
-            kpiB_y = startY + kpiSpacing;
-            kpiB_opacity = 1;
-          }
-          
-          // KPI C
-          let kpiC_y, kpiC_opacity;
-          if (p < 0.93) {
-            kpiC_y = 110;
-            kpiC_opacity = 0;
-          } else if (p <= 1.00) {
-            // Rising (0.93 → 1.00)
-            const t = (p - 0.93) / 0.07;
-            const eased = this.easeOut(t);
-            kpiC_y = 110 * (1 - eased) + (startY + kpiSpacing * 2); // End at third position
-            kpiC_opacity = eased;
-            
-            // Trigger count-up once
-            const numberEl = this.banners[2].querySelector('.banner-number');
-            if (numberEl && !this.animatedNumbers.has(numberEl) && t > 0.3) {
-              this.animatedNumbers.add(numberEl);
-              this.animateNumber(numberEl);
-            }
-          } else {
-            // All 3 stay visible together
-            kpiC_y = startY + kpiSpacing * 2;
-            kpiC_opacity = 1;
-          }
-          
-          // Apply transforms
-          if (this.banners[0]) {
-            this.banners[0].style.transform = `translate(-50%, calc(-50% + ${kpiA_y}px))`;
-            this.banners[0].style.opacity = kpiA_opacity;
-          }
-          if (this.banners[1]) {
-            this.banners[1].style.transform = `translate(-50%, calc(-50% + ${kpiB_y}px))`;
-            this.banners[1].style.opacity = kpiB_opacity;
-          }
-          if (this.banners[2]) {
-            this.banners[2].style.transform = `translate(-50%, calc(-50% + ${kpiC_y}px))`;
-            this.banners[2].style.opacity = kpiC_opacity;
-          }
+          kpi.style.transform = `translate(-50%, calc(-50% + ${yPercent}%))`;
+          kpi.style.opacity = opacity;
         }
         
         updateGuardrails(p) {
@@ -3700,14 +3417,26 @@
           
           let yPercent, opacity;
           
-          if (p < 1.00) {
+          if (p < 0.94) {
             // Hidden below
             yPercent = 110;
             opacity = 0;
           } else {
-            // Appears at the very end (p=1.00)
-            yPercent = 0;
-            opacity = 1;
+            const t = (p - 0.94) / 0.06; // 0 to 1 over 0.94-1.0
+            
+            if (t <= 0.5) {
+              // Rising to center
+              const riseT = t / 0.5;
+              const eased = this.easeOut(riseT);
+              yPercent = 110 * (1 - eased);
+              opacity = eased;
+            } else {
+              // At center, then ease up slightly
+              const exitT = (t - 0.5) / 0.5;
+              const eased = this.easeOut(exitT);
+              yPercent = -30 * eased;
+              opacity = 1 - eased * 0.5;
+            }
           }
           
           this.guardrails.style.transform = `translate(-50%, calc(-50% + ${yPercent}%))`;
@@ -3773,25 +3502,16 @@
           this.question.style.transform = 'scale(0.9)';
           
           this.cards.forEach((card, index) => {
-            const isMobile = window.innerWidth <= 960;
-            const cardWidth = isMobile ? 140 : 180;
-            const cardSpacing = isMobile ? 20 : 40;
-            const totalWidth = (5 * cardWidth) + (4 * cardSpacing);
-            const rowStartX = -totalWidth / 2 + cardWidth / 2;
-            const rowX = rowStartX + index * (cardWidth + cardSpacing);
-            const rowY = 0;
-            card.style.transform = `translate(calc(-50% + ${rowX}px), calc(-50% + ${rowY}px)) scale(1.0)`;
-            card.style.opacity = 1.0;
-            card.style.filter = 'blur(0px)';
+            const stackX = (index - 2) * 35;
+            const stackY = -window.innerHeight * 0.3;
+            card.style.transform = `translate(calc(-50% + ${stackX}px), calc(-50% + ${stackY}px)) scale(0.92)`;
+            card.style.opacity = 0.3;
+            card.style.filter = 'blur(2px)';
           });
           
-          // Position KPIs in vertical stack for reduced motion
-          this.banners.forEach((banner, index) => {
-            const kpiSpacing = 320;
-            const startY = -320;
-            const yOffset = startY + (index * kpiSpacing);
+          this.banners.forEach(banner => {
             banner.style.opacity = 1;
-            banner.style.transform = `translate(-50%, calc(-50% + ${yOffset}px))`;
+            banner.style.transform = 'translate(-50%, -50%)';
           });
           
           if (this.guardrails) {
@@ -4084,7 +3804,7 @@
               // Image height is constrained, width extends beyond hero
               isScrollingEnabled = true;
               console.log('Horizontal scrolling enabled - image extends beyond width');
-              } else {
+          } else {
               // Image width is constrained, height extends beyond hero
               isScrollingEnabled = true;
               console.log('Vertical scrolling enabled - image extends beyond height');
