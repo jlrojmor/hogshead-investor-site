@@ -1889,21 +1889,97 @@
   }
 }
 
-/* Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-  .timeline-glow,
-  .node-pulse,
-  .premium-stage-image.loaded {
-    animation: none;
-  }
-  
-  .timeline-progress-bar,
-  .premium-stage,
-  .stage-card,
-  .premium-stage-image {
-    transition: none;
-  }
-}
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+          .timeline-glow,
+          .node-pulse,
+          .premium-stage-image.loaded {
+            animation: none;
+          }
+          
+          .timeline-progress-bar,
+          .premium-stage,
+          .stage-card,
+          .premium-stage-image {
+            transition: none;
+          }
+        }
+
+        /* Custody Checklist Animation */
+        .custody-checklist {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .checklist-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          opacity: 0.6;
+          transition: opacity 0.3s ease;
+        }
+
+        .checklist-item.checked {
+          opacity: 1;
+        }
+
+        .check-circle {
+          position: relative;
+          width: 20px;
+          height: 20px;
+          border: 2px solid var(--line);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: border-color 0.3s ease;
+        }
+
+        .checklist-item.checked .check-circle {
+          border-color: var(--agave);
+          background: var(--agave);
+        }
+
+        .check-fill {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0%;
+          height: 0%;
+          background: var(--agave);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: all 0.4s ease;
+        }
+
+        .checklist-item.checked .check-fill {
+          width: 100%;
+          height: 100%;
+        }
+
+        .check-icon {
+          width: 12px;
+          height: 12px;
+          color: white;
+          opacity: 0;
+          transform: scale(0.5);
+          transition: all 0.3s ease;
+          z-index: 1;
+          position: relative;
+        }
+
+        .checklist-item.checked .check-icon {
+          opacity: 1;
+          transform: scale(1);
+          transition-delay: 0.2s;
+        }
+
+        .checklist-item span {
+          font-size: 0.9rem;
+          color: var(--ink);
+          font-weight: 500;
+        }
   </style>
 </head>
 <body>
@@ -1954,13 +2030,54 @@
         <div class="grid grid-2" style="gap: 32px; margin: 32px 0;">
           <div class="card">
             <span class="pill">Step 1</span>
-            <h3>Source</h3>
+            <h3>Capital Commitment & Source</h3>
             <p>Acquire premium tequila from established distilleries with denomination of origin protection.</p>
+            <p style="margin-top: 16px; font-size: 0.9rem; color: var(--muted);"><strong>Typical investment:</strong> $500K - $5M USD</p>
           </div>
           <div class="card">
             <span class="pill">Step 2</span>
             <h3>Custody</h3>
             <p>Hold under bonded storage with climate control, inventory tracking, and insurance.</p>
+            <p style="margin-top: 16px; font-size: 0.9rem; color: var(--muted);"><strong>Our service:</strong> Complete custody management</p>
+            
+            <div class="custody-checklist" style="margin-top: 20px;">
+              <div class="checklist-item" data-delay="0">
+                <div class="check-circle">
+                  <div class="check-fill"></div>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span>New Fill</span>
+              </div>
+              <div class="checklist-item" data-delay="900">
+                <div class="check-circle">
+                  <div class="check-fill"></div>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span>Storage</span>
+              </div>
+              <div class="checklist-item" data-delay="1800">
+                <div class="check-circle">
+                  <div class="check-fill"></div>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span>Insurance</span>
+              </div>
+              <div class="checklist-item" data-delay="2700">
+                <div class="check-circle">
+                  <div class="check-fill"></div>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span>Compliance</span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="grid grid-2" style="gap: 32px; margin: 32px 0;">
@@ -3524,7 +3641,32 @@
       // Initialize opportunity cinematic
       document.addEventListener('DOMContentLoaded', function() {
         new OpportunityCinematic();
+        
+        // Initialize custody checklist animation
+        initCustodyChecklist();
       });
+
+      // Custody Checklist Animation
+      function initCustodyChecklist() {
+        const checklistItems = document.querySelectorAll('.checklist-item');
+        
+        // Create intersection observer for the checklist
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const delay = parseInt(entry.target.dataset.delay);
+              setTimeout(() => {
+                entry.target.classList.add('checked');
+              }, delay);
+            }
+          });
+        }, { threshold: 0.5 });
+        
+        // Observe each checklist item
+        checklistItems.forEach(item => {
+          observer.observe(item);
+        });
+      }
 
       // Initialize simulator
       document.addEventListener('DOMContentLoaded', async function() {
