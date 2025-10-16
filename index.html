@@ -2009,7 +2009,9 @@
         .how-it-works-card {
           max-width: 100%;
           padding: 24px;
-          min-height: auto;
+          min-height: 320px;
+          display: flex;
+          flex-direction: column;
         }
 
         .how-it-works-card h3 {
@@ -2100,8 +2102,6 @@
           background-position: center;
           background-repeat: no-repeat;
           position: relative;
-          min-height: auto;
-          padding: 24px;
         }
 
         .step-3-card::before {
@@ -2148,8 +2148,7 @@
 
         /* Step 4 Exit Grid Layout */
         .step-4-card {
-          min-height: auto;
-          padding: 24px;
+          /* Inherits from .how-it-works-card */
         }
 
         .exit-grid {
@@ -2157,7 +2156,6 @@
           grid-template-columns: 1fr 1fr;
           grid-template-rows: 1fr 1fr;
           gap: 16px;
-          height: 320px;
           margin-top: 20px;
         }
 
