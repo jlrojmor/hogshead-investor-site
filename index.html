@@ -2047,8 +2047,9 @@
 
         .investment-min:hover,
         .investment-max:hover {
-          transform: scale(1.05);
+          transform: scale(1.15);
           cursor: pointer;
+          text-shadow: 0 2px 4px rgba(45, 106, 79, 0.3);
         }
 
         .custody-checklist {
@@ -3804,15 +3805,19 @@
         // Create intersection observer for the investment range
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
-            if (entry.isIntersecting && !entry.target.hasAttribute('data-animated')) {
-              // Mark as animated to prevent re-triggering
-              entry.target.setAttribute('data-animated', 'true');
+            if (entry.isIntersecting) {
+              // Reset numbers to 0 for fresh animation
+              investmentMin.textContent = '$0K';
+              investmentMax.textContent = '$0M';
               
-              // Animate minimum value first (500K)
-              animateNumber(investmentMin, 500, 'K', 1000, () => {
-                // Then animate maximum value (5M)
-                animateNumber(investmentMax, 5, 'M', 1200);
-              });
+              // Small delay to ensure reset is visible
+              setTimeout(() => {
+                // Animate minimum value first (500K)
+                animateNumber(investmentMin, 500, 'K', 1000, () => {
+                  // Then animate maximum value (5M)
+                  animateNumber(investmentMax, 5, 'M', 1200);
+                });
+              }, 100);
             }
           });
         }, { threshold: 0.5 });
