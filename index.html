@@ -3743,35 +3743,34 @@
           this.angles = Array.from({length: 5}, (_, i) => baseAngle + i * 72);
           // Result: [-90, -18, 54, 126, 198] where 198° ≡ -162°
           
-          this.radiusVw = window.innerWidth > 960 ? 28 : 40; // vw units
-          const radiusPx = (this.radiusVw * window.innerWidth) / 100;
-          
-          // Y-scale to create oval (so cards don't clip at top/bottom)
-          const yScale = 0.85;
+          // Card dimensions for horizontal row
+          const cardWidth = 180; // pixels (matches CSS)
+          const cardSpacing = 20; // spacing between cards
+          const totalWidth = (cardWidth + cardSpacing) * 5 - cardSpacing;
           
           this.cards.forEach((card, index) => {
             const angleDeg = this.angles[index];
             const angleRad = (angleDeg * Math.PI) / 180;
             
-            // Ring position (oval)
-            const ringX = Math.cos(angleRad) * radiusPx;
-            const ringY = Math.sin(angleRad) * radiusPx * yScale;
-            
             // Start position (well off-screen along same vector)
             const startDist = Math.max(window.innerWidth * 1.2, window.innerHeight * 1.2);
             const startX = Math.cos(angleRad) * startDist;
-            const startY = Math.sin(angleRad) * startDist * yScale;
+            const startY = Math.sin(angleRad) * startDist * 0.85; // Y-scale for oval
             
-            // Stack position (upper third, tight)
-            const stackX = (index - 2) * 35;
-            const stackY = -window.innerHeight * 0.3;
+            // Horizontal row position (center of viewport)
+            const rowX = (index - 2) * (cardWidth + cardSpacing); // -2 to center: [-2, -1, 0, 1, 2]
+            const rowY = 0; // perfectly centered vertically
+            
+            // Upper exit position (all move up together)
+            const exitX = rowX; // maintain horizontal spacing
+            const exitY = -window.innerHeight * 0.6; // well above viewport
             
             card.dataset.startX = startX;
             card.dataset.startY = startY;
-            card.dataset.ringX = ringX;
-            card.dataset.ringY = ringY;
-            card.dataset.stackX = stackX;
-            card.dataset.stackY = stackY;
+            card.dataset.rowX = rowX;
+            card.dataset.rowY = rowY;
+            card.dataset.exitX = exitX;
+            card.dataset.exitY = exitY;
           });
         }
         
@@ -3800,12 +3799,13 @@
           // Log progress and active scene
           let scene = '';
           if (p < 0.15) scene = '1: Giant Question';
-          else if (p < 0.40) scene = '2: Cards Converge';
-          else if (p < 0.55) scene = '3: Stack & Drift';
-          else if (p < 0.67) scene = '4A: KPI 13.4%';
-          else if (p < 0.80) scene = '4B: KPI 13-15%';
-          else if (p < 0.94) scene = '4C: KPI -50%';
-          else scene = '5: Guardrails';
+          else if (p < 0.35) scene = '2: Cards Flying In';
+          else if (p < 0.55) scene = '3: Cards in Horizontal Row (READABLE)';
+          else if (p < 0.70) scene = '4: Cards Moving Up';
+          else if (p < 0.82) scene = '5A: KPI 13.4%';
+          else if (p < 0.88) scene = '5B: KPI 13-15%';
+          else if (p < 0.94) scene = '5C: KPI -50%';
+          else scene = '6: Guardrails';
           
           if (!this.lastScene || this.lastScene !== scene) {
             console.log(`Opportunity p=${p.toFixed(3)} | ${scene}`);
@@ -3848,10 +3848,10 @@
             
             const startX = parseFloat(card.dataset.startX);
             const startY = parseFloat(card.dataset.startY);
-            const ringX = parseFloat(card.dataset.ringX);
-            const ringY = parseFloat(card.dataset.ringY);
-            const stackX = parseFloat(card.dataset.stackX);
-            const stackY = parseFloat(card.dataset.stackY);
+            const rowX = parseFloat(card.dataset.rowX);
+            const rowY = parseFloat(card.dataset.rowY);
+            const exitX = parseFloat(card.dataset.exitX);
+            const exitY = parseFloat(card.dataset.exitY);
             
             if (p < 0.15) {
               // Off-screen
@@ -3860,52 +3860,57 @@
               opacity = 0;
               scale = 0.94;
               blur = 2;
-            } else if (p <= 0.40) {
-              // Flying in to ring (0.15 → 0.40)
-              const t = (p - 0.15) / 0.25;
-              const stagger = index * 0.06;
-              const tAdj = Math.max(0, Math.min(1, (t - stagger) / (1 - stagger * 2)));
-              const eased = this.easeOut(tAdj);
+            } else if (p <= 0.35) {
+              // Flying in to horizontal row (0.15 → 0.35)
+              const t = (p - 0.15) / 0.20;
+              const eased = this.easeOut(t);
               
-              x = startX + (ringX - startX) * eased;
-              y = startY + (ringY - startY) * eased;
+              x = startX + (rowX - startX) * eased;
+              y = startY + (rowY - startY) * eased;
               opacity = eased;
               scale = 0.94 + 0.06 * eased; // 0.94 → 1.0
               blur = 2 * (1 - eased); // 2 → 0
             } else if (p <= 0.55) {
-              // Stacking (0.40 → 0.55)
-              const t = (p - 0.40) / 0.15;
+              // Stay in horizontal row - CLEARLY VISIBLE (0.35 → 0.55)
+              x = rowX;
+              y = rowY;
+              opacity = 1.0; // Fully visible!
+              scale = 1.0; // Full size!
+              blur = 0; // Sharp!
+            } else if (p <= 0.70) {
+              // All cards move up together (0.55 → 0.70)
+              const t = (p - 0.55) / 0.15;
               const eased = this.easeOut(t);
               
-              x = ringX + (stackX - ringX) * eased;
-              y = ringY + (stackY - ringY) * eased;
+              x = rowX + (exitX - rowX) * eased;
+              y = rowY + (exitY - rowY) * eased;
               opacity = 1.0 - 0.7 * eased; // 1.0 → 0.3
-              scale = 1.0 - 0.08 * eased; // 1.0 → 0.92
-              blur = 2 * eased; // 0 → 2
+              scale = 1.0; // maintain full size
+              blur = 0; // keep sharp
             } else {
-              // Stacked
-              x = stackX;
-              y = stackY;
+              // Gone (above viewport)
+              x = exitX;
+              y = exitY;
               opacity = 0.3;
-              scale = 0.92;
-              blur = 2;
+              scale = 1.0;
+              blur = 0;
             }
             
             card.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
             card.style.opacity = opacity;
             card.style.filter = `blur(${blur}px)`;
-            card.style.zIndex = p >= 0.55 ? 5 : 12;
+            card.style.zIndex = p >= 0.70 ? 5 : 12; // Behind KPIs after they exit
           });
         }
         
         updateKPIs(p) {
-          // KPI A: 0.55 → 0.67
-          // KPI B: 0.67 → 0.80
-          // KPI C: 0.80 → 0.94
+          // KPI A: 0.70 → 0.82
+          // KPI B: 0.82 → 0.88
+          // KPI C: 0.88 → 0.94
           
-          this.updateSingleKPI(this.banners[0], p, 0.55, 0.67);
-          this.updateSingleKPI(this.banners[1], p, 0.67, 0.80);
-          this.updateSingleKPI(this.banners[2], p, 0.80, 0.94);
+          this.updateSingleKPI(this.banners[0], p, 0.70, 0.82);
+          this.updateSingleKPI(this.banners[1], p, 0.82, 0.88);
+          this.updateSingleKPI(this.banners[2], p, 0.88, 0.94);
         }
         
         updateSingleKPI(kpi, p, start, end) {
