@@ -3936,8 +3936,8 @@
         if (!cards.length) return;
         
         // STEP 2: Cards fly in and arrange in vertical column
-        // Use 0.12 → 0.50 for longer animation range
-        const tCards = remap(p, 0.12, 0.50); // 0..1
+        // Use 0.12 → 0.65 for slower, more gradual convergence
+        const tCards = remap(p, 0.12, 0.65); // 0..1
 
         // Equal angular spacing: 72° apart, computed, not hard-coded.
         const baseAngle = -90; // top
