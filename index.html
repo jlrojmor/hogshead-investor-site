@@ -456,8 +456,8 @@
     .opp-card{
       position:absolute;
       top:50%; left:50%;                   /* we'll translate from this origin */
-      width:min(400px, 85vw);              /* bigger cards for better readability */
-      padding:20px 24px;                   /* more padding for bigger cards */
+      width:min(480px, 90vw);              /* wider cards for better readability */
+      padding:24px 28px;                   /* more padding for wider cards */
       background:#fff;                     /* replace with token if available */
       color:var(--ink, #0f3a34);
       border:1px solid rgba(0,0,0,.06);
@@ -469,16 +469,34 @@
       will-change: transform, opacity, filter;
     }
 
-    /* Text trims inside cards - bigger text for readability */
-    .opp-card h3{ margin:0 0 8px; font-size:18px; line-height:1.2; font-weight:600; }
-    .opp-card p { margin:0; font-size:15px; opacity:.85; line-height:1.4; }
+    /* Text trims inside cards - bold, colorful headers */
+    .opp-card h3{ 
+      margin:0 0 12px; 
+      font-size:20px; 
+      line-height:1.2; 
+      font-weight:700; 
+      letter-spacing:0.5px;
+    }
+    .opp-card p { 
+      margin:0; 
+      font-size:15px; 
+      opacity:.85; 
+      line-height:1.4; 
+    }
+
+    /* Individual card header colors using site palette */
+    .opp-card:nth-child(1) h3 { color: var(--agave); }        /* Historic Low Entry - deep agave */
+    .opp-card:nth-child(2) h3 { color: var(--hh-gold); }      /* Demand Boom - gold */
+    .opp-card:nth-child(3) h3 { color: var(--hh-navy); }      /* Protected Scarcity - navy */
+    .opp-card:nth-child(4) h3 { color: var(--gold-700); }     /* Proven Model - deeper gold */
+    .opp-card:nth-child(5) h3 { color: var(--agave-400); }    /* Natural & Additive-Free - lighter agave */
 
     @media (max-width: 960px){
       .opp-card{ 
-        width:min(350px, 90vw); 
-        padding:18px 20px;
+        width:min(420px, 92vw); 
+        padding:20px 24px;
       }
-      .opp-card h3{ font-size:16px; }
+      .opp-card h3{ font-size:18px; }
       .opp-card p { font-size:14px; }
     }
 
