@@ -767,6 +767,35 @@
       height: 180px;
       justify-content: center;
       box-shadow: 0 8px 24px rgba(14, 91, 98, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .ticker-item::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent 0deg, var(--sage) 0deg, transparent 0deg);
+      transition: background 0.3s ease;
+      z-index: -1;
+    }
+    
+    .ticker-item.animating::before {
+      background: conic-gradient(from 0deg, transparent 0deg, var(--sage) 360deg, transparent 360deg);
+      animation: tickerProgress 1.2s ease-out forwards;
+    }
+    
+    @keyframes tickerProgress {
+      0% {
+        background: conic-gradient(from 0deg, transparent 0deg, var(--sage) 0deg, transparent 0deg);
+      }
+      100% {
+        background: conic-gradient(from 0deg, transparent 0deg, var(--sage) 360deg, transparent 360deg);
+      }
     }
     
     .ticker-item:hover {
@@ -4604,6 +4633,7 @@
               // Animate each number with a slight stagger
               tickerNumbers.forEach((numberEl, index) => {
                 const delay = index * 150; // 150ms delay between each number
+                const tickerItem = numberEl.closest('.ticker-item');
                 
                 setTimeout(() => {
                   const target = parseFloat(numberEl.dataset.target);
@@ -4612,7 +4642,19 @@
                   
                   console.log(`Animating ticker number ${index + 1}: ${prefix}${target}${suffix}`);
                   
+                  // Add animating class for circular progress effect
+                  if (tickerItem) {
+                    tickerItem.classList.add('animating');
+                  }
+                  
                   animateTickerNumber(numberEl, target, prefix, suffix, 1200);
+                  
+                  // Remove animating class after animation completes
+                  setTimeout(() => {
+                    if (tickerItem) {
+                      tickerItem.classList.remove('animating');
+                    }
+                  }, 1200);
                 }, delay);
               });
               
