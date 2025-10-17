@@ -3935,9 +3935,9 @@
       function updateCards(p){
         if (!cards.length) return;
         
-        // STEP 2 should overlap STEP 1: start while title is still shrinking.
-        // Use 0.12 → 0.38 so we overlap the Step 1 (0.00 → 0.22) range.
-        const tCards = remap(p, 0.12, 0.38); // 0..1
+        // STEP 2: Cards fly in and arrange in vertical column
+        // Use 0.12 → 0.50 for longer animation range
+        const tCards = remap(p, 0.12, 0.50); // 0..1
 
         // Equal angular spacing: 72° apart, computed, not hard-coded.
         const baseAngle = -90; // top
@@ -3947,13 +3947,12 @@
         const rStart = Math.max(window.innerWidth, window.innerHeight) * 1.2; // ~120vw/vh
         const rEnd   = 0; // converge to exact center
 
-        // Small fan-out at the very end so we can see there are five cards.
-        const fan = 4; // px offset for end-state fanning
+        // Vertical column spacing
+        const columnSpacing = 80; // px between cards in final column
 
         cards.forEach((card, i) => {
-          // Slight per-card stagger: shift the local progress left-to-right by ~0.08
-          const local = clamp(tCards * 1.08 - i * 0.08, 0, 1);
-          const t = easeOut(local);
+          // NO STAGGER - all cards appear simultaneously
+          const t = easeOut(tCards);
 
           // Lerp radius from off-screen to center
           const r = lerp(rStart, rEnd, t);
@@ -3965,18 +3964,20 @@
           const x = Math.cos(rad) * r;
           const y = Math.sin(rad) * r;
 
-          // At the very end, fan slightly so they're distinguishable
-          const endFanX = (i - (cards.length - 1)/2) * fan;
-          const endFanY = (i - (cards.length - 1)/2) * (fan * 0.2);
-          const fx = lerp(0, endFanX, t);
-          const fy = lerp(0, endFanY, t);
+          // Final column position: vertical stack
+          const finalX = 0; // centered horizontally
+          const finalY = (i - (cards.length - 1)/2) * columnSpacing; // vertical spacing
+
+          // Interpolate from radial position to column position
+          const finalXPos = lerp(x, finalX, t);
+          const finalYPos = lerp(y, finalY, t);
 
           // Opacity / scale / blur polish
           const opacity = lerp(0.0, 1.0, t);
           const scale   = lerp(0.94, 1.00, t);
           const blur    = lerp(2, 0, t);
 
-          card.style.transform = `translate(-50%, -50%) translate3d(${x + fx}px, ${y + fy}px, 0) scale(${scale})`;
+          card.style.transform = `translate(-50%, -50%) translate3d(${finalXPos}px, ${finalYPos}px, 0) scale(${scale})`;
           card.style.opacity   = opacity.toFixed(3);
           card.style.filter    = `blur(${blur}px)`;
         });
