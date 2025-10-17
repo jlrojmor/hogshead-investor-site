@@ -2585,7 +2585,7 @@
           <div class="ticker-item">
             <div class="ticker-number" data-target="400" data-suffix="M">0M</div>
             <div class="ticker-label">Exported 2024 (Liters)</div>
-          </div>
+                  </div>
                 </div>
 
         <!-- Global Market Hero -->
@@ -4588,7 +4588,7 @@
                 }, delay);
               });
               
-              observer.unobserve(entry.target); // Only trigger once
+              // Don't unobserve - keep watching for re-entry
             }
           });
         }, { threshold: 0.3 });
