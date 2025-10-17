@@ -4033,33 +4033,6 @@
     })();
 
 
-      // Helper function to animate numbers
-      function animateNumber(element, target, suffix, duration, onComplete) {
-        const startTime = Date.now();
-        const startValue = 0;
-        
-        function updateNumber() {
-          const elapsed = Date.now() - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          
-          // Easing function for smooth animation
-          const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-          const currentValue = Math.floor(startValue + (target - startValue) * easeOutQuart);
-          
-          // Format the number
-          element.textContent = `$${currentValue}${suffix}`;
-          
-          if (progress < 1) {
-            requestAnimationFrame(updateNumber);
-          } else {
-            // Ensure final value is exact
-            element.textContent = `$${target}${suffix}`;
-            if (onComplete) onComplete();
-          }
-        }
-        
-        requestAnimationFrame(updateNumber);
-      }
 
       // Exit Strategy Modal System
       const exitStrategyData = {
@@ -4485,6 +4458,34 @@
         if (investmentRange) {
           observer.observe(investmentRange);
         }
+      }
+
+      // Helper function to animate numbers
+      function animateNumber(element, target, suffix, duration, onComplete) {
+        const startTime = Date.now();
+        const startValue = 0;
+        
+        function updateNumber() {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Easing function for smooth animation
+          const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+          const currentValue = Math.floor(startValue + (target - startValue) * easeOutQuart);
+          
+          // Format the number
+          element.textContent = `$${currentValue}${suffix}`;
+          
+          if (progress < 1) {
+            requestAnimationFrame(updateNumber);
+          } else {
+            // Ensure final value is exact
+            element.textContent = `$${target}${suffix}`;
+            if (onComplete) onComplete();
+          }
+        }
+        
+        requestAnimationFrame(updateNumber);
       }
     
           // Initialize when page loads
