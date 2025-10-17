@@ -735,10 +735,11 @@
 
     /* Market Intelligence Ticker */
     .market-ticker {
-      display: flex;
-      gap: 32px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
       margin: 32px 0;
-      padding: 24px;
+      padding: 32px;
       background: linear-gradient(135deg, rgba(45, 106, 79, 0.05) 0%, rgba(125, 187, 184, 0.05) 100%);
       border: 1px solid rgba(45, 106, 79, 0.1);
       border-radius: 16px;
@@ -756,61 +757,78 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      min-width: 140px;
-      padding: 16px;
+      padding: 24px 16px;
       background: rgba(255, 255, 255, 0.8);
       border-radius: 12px;
       border: 1px solid rgba(45, 106, 79, 0.1);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       backdrop-filter: blur(10px);
+      min-height: 120px;
+      justify-content: center;
     }
     
     .ticker-item:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 12px 32px rgba(45, 106, 79, 0.15);
+      transform: translateY(-6px) scale(1.05);
+      box-shadow: 0 16px 40px rgba(45, 106, 79, 0.2);
       background: rgba(255, 255, 255, 0.95);
     }
     
     .ticker-number {
-      font-size: clamp(24px, 3vw, 32px);
+      font-size: clamp(32px, 4vw, 48px);
       font-weight: 700;
       color: var(--agave);
       line-height: 1;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       transition: all 0.3s ease;
     }
     
     .ticker-item:hover .ticker-number {
-      transform: scale(1.1);
+      transform: scale(1.15);
       color: var(--hh-navy);
     }
     
     .ticker-label {
-      font-size: clamp(12px, 1.5vw, 14px);
+      font-size: clamp(14px, 1.8vw, 16px);
       color: var(--muted);
       font-weight: 500;
       line-height: 1.3;
       text-align: center;
     }
     
+    @media (max-width: 1200px) {
+      .market-ticker {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        padding: 24px;
+      }
+    }
+    
     @media (max-width: 768px) {
       .market-ticker {
-        gap: 16px;
-        padding: 16px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 20px;
         margin: 24px 0;
       }
       
       .ticker-item {
-        min-width: 120px;
-        padding: 12px;
+        padding: 20px 12px;
+        min-height: 100px;
       }
       
       .ticker-number {
-        font-size: 20px;
+        font-size: 28px;
       }
       
       .ticker-label {
-        font-size: 11px;
+        font-size: 13px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .market-ticker {
+        grid-template-columns: 1fr;
+        gap: 12px;
       }
     }
 
@@ -2522,19 +2540,19 @@
               <div class="opp-card">
                 <h3>Protected Scarcity</h3>
                 <p>Denomination of Origin restricts who/where can produce—structural supply constraint.</p>
-              </div>
+                          </div>
               <div class="opp-card">
                 <h3>Proven Model</h3>
                 <p>This playbook already works in bourbon: buy young, age, sell higher.</p>
-              </div>
+                        </div>
               <div class="opp-card">
                 <h3>Natural &amp; Additive-Free Premium</h3>
                 <p>Aged, additive-free tequila fits "clean premium" consumer preference and commands higher prices.</p>
-              </div>
-            </div>
+                          </div>
+                        </div>
             <!-- Step 3+ content will go here later -->
-          </div>
-        </div>
+                          </div>
+                        </div>
       </section>
 
       <!-- MARKET INTELLIGENCE -->
@@ -2547,29 +2565,29 @@
           <div class="ticker-item">
             <div class="ticker-number" data-target="28.3" data-suffix="B" data-prefix="$">$0B</div>
             <div class="ticker-label">Actual Sales 2024</div>
-          </div>
+                          </div>
           <div class="ticker-item">
             <div class="ticker-number" data-target="13.4" data-suffix="%">0%</div>
             <div class="ticker-label">Historic CAGR</div>
-          </div>
+                        </div>
           <div class="ticker-item">
             <div class="ticker-number" data-target="6.7" data-suffix="%">0%</div>
             <div class="ticker-label">Forecast CAGR</div>
-          </div>
+                      </div>
           <div class="ticker-item">
             <div class="ticker-number" data-target="39" data-suffix="B" data-prefix="$">$0B</div>
             <div class="ticker-label">Sales Forecast 2029</div>
-          </div>
+                    </div>
           <div class="ticker-item">
             <div class="ticker-number" data-target="496" data-suffix="M">0M</div>
-            <div class="ticker-label">Total Production 2024</div>
+            <div class="ticker-label">Total Production 2024 (Liters)</div>
           </div>
           <div class="ticker-item">
             <div class="ticker-number" data-target="400" data-suffix="M">0M</div>
-            <div class="ticker-label">Exported 2024</div>
+            <div class="ticker-label">Exported 2024 (Liters)</div>
           </div>
-        </div>
-        
+                </div>
+
         <!-- Global Market Hero -->
         <div class="card">
           <div style="padding: 24px;">
@@ -4451,7 +4469,7 @@
         return;
       }
     });
-    
+
       // Custody Checklist Animation
       function initCustodyChecklist() {
         console.log('🔧 Initializing Custody Checklist...');
@@ -4587,6 +4605,15 @@
 
       // Helper function to animate ticker numbers
       function animateTickerNumber(element, target, prefix, suffix, duration) {
+        console.log(`🎯 Starting animation for: ${prefix}${target}${suffix}`);
+        
+        // Reset to 0 first
+        if (suffix === '%') {
+          element.textContent = `0.0${suffix}`;
+        } else {
+          element.textContent = `${prefix}0${suffix}`;
+        }
+        
         const startTime = Date.now();
         const startValue = 0;
         
@@ -4619,6 +4646,7 @@
             } else {
               element.textContent = `${prefix}${target}${suffix}`;
             }
+            console.log(`✅ Animation complete: ${element.textContent}`);
           }
         }
         
@@ -4651,9 +4679,9 @@
         }
         
         requestAnimationFrame(updateNumber);
-      }
+    }
     
-          // Initialize when page loads
+        // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
           console.log('TIMELINE INITIALIZING...');
           updateTimeline();
