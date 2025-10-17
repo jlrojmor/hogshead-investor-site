@@ -4034,12 +4034,20 @@
 
       // Custody Checklist Animation
       function initCustodyChecklist() {
+        console.log('🔧 Initializing Custody Checklist...');
         const checklistItems = document.querySelectorAll('.checklist-item');
+        console.log(`Found ${checklistItems.length} checklist items`);
+        
+        if (checklistItems.length === 0) {
+          console.error('No checklist items found!');
+          return;
+        }
         
         // Create intersection observer for the checklist section
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
+              console.log('📋 Checklist section in view - starting animation');
               // Reset all checklist items when section comes into view
               checklistItems.forEach(item => {
                 item.classList.remove('checked');
@@ -4048,8 +4056,10 @@
               // Start the animation sequence
               checklistItems.forEach(item => {
                 const delay = parseInt(item.dataset.delay);
+                console.log(`Setting up item with delay: ${delay}ms`);
                 setTimeout(() => {
                   item.classList.add('checked');
+                  console.log('✅ Item checked');
                 }, delay);
               });
             }
@@ -4059,27 +4069,38 @@
         // Observe the checklist container instead of individual items
         const checklistContainer = document.querySelector('.custody-checklist');
         if (checklistContainer) {
+          console.log('👀 Observing checklist container');
           observer.observe(checklistContainer);
+        } else {
+          console.error('Checklist container not found!');
         }
       }
 
       // Investment Counter Animation
       function initInvestmentCounter() {
+        console.log('💰 Initializing Investment Counter...');
         const investmentMin = document.querySelector('.investment-min');
         const investmentMax = document.querySelector('.investment-max');
         
-        if (!investmentMin || !investmentMax) return;
+        if (!investmentMin || !investmentMax) {
+          console.error('Investment counter elements not found!');
+          return;
+        }
+        
+        console.log('Found investment counter elements');
         
         // Create intersection observer for the investment range
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
+              console.log('💰 Investment range in view - starting animation');
               // Reset numbers to 0 for fresh animation
               investmentMin.textContent = '$0K';
               investmentMax.textContent = '$0M';
               
               // Small delay to ensure reset is visible
               setTimeout(() => {
+                console.log('Starting number animations...');
                 // Animate minimum value first (500K)
                 animateNumber(investmentMin, 500, 'K', 1000, () => {
                   // Then animate maximum value (5M)
@@ -4472,6 +4493,7 @@
           console.log('TIMELINE READY!');
           
           // Initialize How It Works animations
+          console.log('🚀 Initializing How It Works animations...');
           initCustodyChecklist();
           initInvestmentCounter();
           
