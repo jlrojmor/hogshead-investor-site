@@ -4465,11 +4465,15 @@
       }
     });
     
-        // Initialize when page loads
+          // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
           console.log('TIMELINE INITIALIZING...');
           updateTimeline();
           console.log('TIMELINE READY!');
+          
+          // Initialize How It Works animations
+          initCustodyChecklist();
+          initInvestmentCounter();
           
           // Staggered fade-in animation for Opportunity section cards
           const opportunitySection = document.getElementById('opportunity');
