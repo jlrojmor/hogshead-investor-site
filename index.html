@@ -456,8 +456,8 @@
     .opp-card{
       position:absolute;
       top:50%; left:50%;                   /* we'll translate from this origin */
-      width:min(320px, 80vw);
-      padding:16px 18px;
+      width:min(400px, 85vw);              /* bigger cards for better readability */
+      padding:20px 24px;                   /* more padding for bigger cards */
       background:#fff;                     /* replace with token if available */
       color:var(--ink, #0f3a34);
       border:1px solid rgba(0,0,0,.06);
@@ -469,12 +469,17 @@
       will-change: transform, opacity, filter;
     }
 
-    /* Text trims inside cards */
-    .opp-card h3{ margin:0 0 6px; font-size:16px; line-height:1.15; }
-    .opp-card p { margin:0; font-size:13px; opacity:.8; }
+    /* Text trims inside cards - bigger text for readability */
+    .opp-card h3{ margin:0 0 8px; font-size:18px; line-height:1.2; font-weight:600; }
+    .opp-card p { margin:0; font-size:15px; opacity:.85; line-height:1.4; }
 
     @media (max-width: 960px){
-      .opp-card{ width:min(280px, 86vw); }
+      .opp-card{ 
+        width:min(350px, 90vw); 
+        padding:18px 20px;
+      }
+      .opp-card h3{ font-size:16px; }
+      .opp-card p { font-size:14px; }
     }
 
     /* Reduced motion: show final stacked state statically */
@@ -3936,8 +3941,8 @@
         if (!cards.length) return;
         
         // STEP 2: Cards fly in and arrange in vertical column
-        // Use 0.12 → 0.65 for slower, more gradual convergence
-        const tCards = remap(p, 0.12, 0.65); // 0..1
+        // Use 0.12 → 0.80 for much slower convergence so users can read
+        const tCards = remap(p, 0.12, 0.80); // 0..1
 
         // Equal angular spacing: 72° apart, computed, not hard-coded.
         const baseAngle = -90; // top
@@ -3947,8 +3952,8 @@
         const rStart = Math.max(window.innerWidth, window.innerHeight) * 1.2; // ~120vw/vh
         const rEnd   = 0; // converge to exact center
 
-        // Vertical column spacing
-        const columnSpacing = 80; // px between cards in final column
+        // Vertical column spacing - equal separation between all 5 cards
+        const columnSpacing = 100; // px between cards in final column (increased for better separation)
 
         cards.forEach((card, i) => {
           // NO STAGGER - all cards appear simultaneously
