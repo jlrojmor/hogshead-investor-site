@@ -786,7 +786,7 @@
     
     .ticker-item.animating::before {
       background: conic-gradient(from 0deg, transparent 0deg, var(--sage) 360deg, transparent 360deg);
-      animation: tickerProgress 1.2s ease-out forwards;
+      animation: tickerProgress 2.5s ease-out forwards;
     }
     
     @keyframes tickerProgress {
@@ -4647,14 +4647,14 @@
                     tickerItem.classList.add('animating');
                   }
                   
-                  animateTickerNumber(numberEl, target, prefix, suffix, 1200);
+                  animateTickerNumber(numberEl, target, prefix, suffix, 2500);
                   
                   // Remove animating class after animation completes
                   setTimeout(() => {
                     if (tickerItem) {
                       tickerItem.classList.remove('animating');
                     }
-                  }, 1200);
+                  }, 2500);
                 }, delay);
               });
               
