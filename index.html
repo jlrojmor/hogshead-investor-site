@@ -444,6 +444,514 @@
       }
     }
 
+    /* === TEQUILA APPRECIATION STYLES === */
+    .appreciation-scroller {
+      height: 500vh; /* large canvas for smooth scrolling */
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+    }
+
+    .appreciation-sticky {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+    }
+
+    .appreciation-hero {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;     /* perfect center */
+      pointer-events: none;    /* visual only */
+    }
+
+    .appreciation-title {
+      color: white;
+      line-height: .95;
+      text-align: center;
+      max-width: 12ch;                     /* dramatic wrap on big screens */
+      font-size: clamp(48px, 10vw, 132px); /* huge but responsive */
+      transform-origin: 50% 50%;
+      will-change: transform, opacity;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3); /* white title needs shadow on barrel background */
+    }
+
+    .appreciation-three-cards {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      padding: 0 40px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .appreciation-card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 32px 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      max-width: 300px;
+      text-align: center;
+      color: var(--ink);
+    }
+
+    .appreciation-journey {
+      position: relative;
+      z-index: 10;
+      padding: 100px 20px 20px;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      opacity: 0;
+      pointer-events: none;
+      display: none;
+    }
+
+    /* Tequila Aging Journey Overlay Styles */
+    .journey-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(20,20,20,0.98) 100%);
+      backdrop-filter: blur(20px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .journey-overlay.active {
+      opacity: 1 !important;
+      visibility: visible !important;
+      display: flex !important;
+    }
+
+    .journey-container {
+      max-width: 1200px;
+      width: 90%;
+      text-align: center;
+      color: white;
+    }
+
+    .journey-title {
+      margin-bottom: 60px;
+    }
+
+    .journey-title h2 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin: 0 0 20px 0;
+      background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #F4A460 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .journey-title p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.8);
+      margin: 0;
+    }
+
+    .journey-start-section {
+      margin-bottom: 80px;
+    }
+
+    .journey-start-btn {
+      position: relative;
+      background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+      border: none;
+      border-radius: 50px;
+      padding: 20px 50px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+    }
+
+    .journey-start-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(139, 69, 19, 0.4);
+    }
+
+    .btn-pulse {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      border-radius: 50px;
+      transform: translate(-50%, -50%) scale(0);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+    }
+
+    .skip-hint {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .journey-cards-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .journey-card {
+      width: 220px;
+      height: 300px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 18px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.35);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0.4;
+      transform: scale(0.85);
+      filter: blur(1.5px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      overflow: visible;
+    }
+
+    .journey-card.active {
+      opacity: 1;
+      transform: scale(1.4);
+      filter: blur(0);
+      box-shadow: 0 25px 80px rgba(139, 69, 19, 0.4);
+      background: rgba(255,255,255,0.35);
+      border: 1px solid rgba(255,255,255,0.5);
+      z-index: 10;
+    }
+
+    .card-image-container {
+      position: relative;
+      width: 100%;
+      height: 90px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: bottom center;
+    }
+
+    .journey-card.active .card-image {
+      transform: scale(1.8);
+    }
+
+    .card-glow {
+      position: absolute;
+      top: -15px;
+      left: -15px;
+      right: -15px;
+      bottom: -15px;
+      background: radial-gradient(circle, rgba(139, 69, 19, 0.4) 0%, transparent 70%);
+      border-radius: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .journey-card.active .card-glow {
+      opacity: 1;
+    }
+
+    .card-content {
+      text-align: center;
+      padding: 0 4px;
+      height: calc(100% - 102px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-content h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      color: #F4A460;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      letter-spacing: 0.3px;
+    }
+
+    .card-time {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.9);
+      margin: 0 0 8px 0;
+      font-weight: 500;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-description {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.8);
+      margin: 0 0 12px 0;
+      font-weight: 400;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+      line-height: 1.3;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-characteristics {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      min-height: 28px;
+      margin-top: auto;
+    }
+
+    .card-characteristics span {
+      background: rgba(139, 69, 19, 0.4);
+      color: #F4A460;
+      padding: 4px 8px;
+      border-radius: 14px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(244, 164, 96, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .journey-progress {
+      margin-bottom: 40px;
+    }
+
+    .progress-dots {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .progress-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .progress-dot.active {
+      background: #D2691E;
+      box-shadow: 0 0 20px rgba(210, 105, 30, 0.6);
+    }
+
+    .progress-bar {
+      width: 300px;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #8B4513 0%, #D2691E 100%);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .journey-skip-btn {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.7);
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .journey-skip-btn:hover {
+      border-color: rgba(255,255,255,0.6);
+      color: white;
+    }
+
+    /* Journey Button Container */
+    .journey-button-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      padding: 40px 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 10;
+    }
+
+    .journey-description {
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+    }
+
+    /* Elegant Journey Trigger Button - Pill Style */
+    .journey-trigger-btn {
+      display: inline-block;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #D78A3B 0%, #B8860B 50%, #D78A3B 100%);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      text-transform: uppercase;
+      font-weight: 700;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(215, 138, 59, 0.4);
+    }
+
+    .journey-trigger-btn:hover {
+      background: linear-gradient(135deg, #E6A047 0%, #CD9A0C 50%, #E6A047 100%);
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(215, 138, 59, 0.6);
+    }
+
+    .journey-trigger-btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-text {
+      position: relative;
+      z-index: 2;
+      display: block;
+    }
+
+    .btn-shine {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .journey-trigger-btn:hover .btn-shine {
+      left: 100%;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .journey-title h2 {
+        font-size: 2.5rem;
+      }
+      
+      .journey-cards-container {
+        gap: 20px;
+      }
+      
+      .journey-card {
+        width: 180px;
+        height: 260px;
+        padding: 14px;
+      }
+      
+      .card-image-container {
+        height: 80px;
+        margin-bottom: 10px;
+      }
+      
+      .card-content {
+        height: calc(100% - 90px);
+        padding: 0 2px;
+      }
+      
+      .card-content h3 {
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+      }
+      
+      .card-time {
+        font-size: 0.75rem;
+        margin-bottom: 6px;
+      }
+      
+      .card-description {
+        font-size: 0.7rem;
+        margin-bottom: 8px;
+        line-height: 1.2;
+      }
+      
+      .card-characteristics {
+        gap: 4px;
+        min-height: 24px;
+      }
+      
+      .card-characteristics span {
+        padding: 3px 6px;
+        font-size: 0.65rem;
+      }
+      
+      .progress-bar {
+        width: 250px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .appreciation-title { 
+        transform: none !important; 
+        opacity: 1 !important; 
+      }
+    }
+
     /* Cards container fills the sticky viewport */
     .opp-cards{
       position:absolute;
@@ -503,6 +1011,18 @@
     /* Reduced motion: show final stacked state statically */
     @media (prefers-reduced-motion: reduce){
       .opp-card{ opacity:1; filter:none; }
+        }
+
+    /* Hide Asset Appreciation Section initially */
+    .appreciation-asset-section {
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.5s ease;
+    }
+    
+    .appreciation-asset-section.visible {
+      opacity: 1;
+      pointer-events: auto;
         }
 
         /* === AGING SIMULATOR STYLES === */
@@ -2755,38 +3275,169 @@
       </section>
 
       <!-- ASSET APPRECIATION -->
-      <section id="appreciation">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
-          <div>
-            <h2>Tequila Appreciation</h2>
-            <p class="sub">Understanding the aging process and value drivers that create premium pricing.</p>
-          </div>
-          <div style="text-align: right;">
-            <h3 style="color: var(--agave); font-size: 1.8rem; margin: 0; font-weight: 700;">TIME + SCARCITY = PRICE POWER</h3>
-          </div>
+      <!-- ASSET APPRECIATION -->
+      <section id="appreciation" class="appreciation">
+        <div class="appreciation-scroller">
+          <div class="appreciation-sticky" style="background-image: url('images/Barrel-aging-copy-5.jpeg'); background-size: cover; background-position: center; background-attachment: fixed;">
+        <div class="appreciation-hero">
+              <h2 class="appreciation-title">Tequila Appreciation</h2>
         </div>
 
-        <!-- Key Value Drivers -->
-        <div class="grid grid-3">
-          <div class="card">
-            <span class="pill">Aging Process</span>
+            <!-- Content -->
+            <!-- Phase 2: Three Key Cards -->
+            <div class="appreciation-three-cards">
+              <div class="appreciation-card">
+                <span class="pill">Aging Process</span>
             <h3>Barrel-Only Aging</h3>
             <p>Tequila only ages in barrel (not in bottle) – value builds while resting. This creates a unique investment opportunity where time directly correlates with value appreciation.</p>
           </div>
-          <div class="card">
-            <span class="pill">Scarcity Factors</span>
+              <div class="appreciation-card">
+                <span class="pill">Scarcity Factors</span>
             <h3>Compounding Scarcity</h3>
             <p>Scarcity compounds: angel's share, long cycles, limited long-term stock. Each year of aging reduces available inventory while increasing demand for premium aged expressions.</p>
           </div>
-          <div class="card">
-            <span class="pill">Premium Pricing</span>
+              <div class="appreciation-card">
+                <span class="pill">Premium Pricing</span>
             <h3>Step-Change Pricing</h3>
             <p>Result: Older, limited releases command step-change pricing. Aged tequila achieves exponential price increases as it becomes increasingly rare and sought after.</p>
           </div>
         </div>
 
+            <!-- Journey Trigger Button -->
+            <div id="journeyButtonContainer" class="journey-button-container">
+              <p class="journey-description">Understanding the aging process and value drivers that create premium pricing.</p>
+              <button class="journey-trigger-btn" id="journeyTriggerBtn">
+                <span class="btn-text">Experience the Aging Journey</span>
+                <div class="btn-shine"></div>
+              </button>
+          </div>
+          
+            <!-- Phase 3: Tequila Aging Journey -->
+            <div class="appreciation-journey">
+              
+              <!-- Retail Price Appreciation Chart -->
+              <div class="retail-price-chart" id="retailPriceChart" style="margin-top: 40px;">
+                <h3 style="text-align: center; margin-bottom: 20px; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Retail Price Appreciation Over Time</h3>
+                <div id="retailChart" style="width: 100%; height: 400px;"></div>
+              </div>
+              
+            </div>
+
+        <!-- Tequila Aging Journey Overlay (moved outside to avoid display conflicts) -->
+        <div class="journey-overlay" id="journeyOverlay">
+          <div class="journey-container">
+            <!-- Journey Title -->
+            <div class="journey-title">
+            <h2>Tequila Aging Journey</h2>
+              <p>Experience the transformation from crystal clear to deep mahogany</p>
+            </div>
+
+            <!-- Start Button -->
+            <div class="journey-start-section">
+              <button class="journey-start-btn" id="journeyStartBtn">
+                <span class="btn-text">Start Aging Journey</span>
+                <div class="btn-pulse"></div>
+              </button>
+              <p class="skip-hint">Press ESC to skip</p>
+            </div>
+
+            <!-- Journey Cards Container -->
+            <div class="journey-cards-container" id="journeyCardsContainer">
+              <!-- Joven Card -->
+              <div class="journey-card" data-stage="0" id="journeyCard0">
+                <div class="card-image-container">
+                  <img src="images/blanco.png" alt="Joven tequila" class="card-image" />
+                  <div class="card-glow"></div>
+                </div>
+                <div class="card-content">
+                <h3>JOVEN</h3>
+                  <p class="card-time">0-2 months</p>
+                  <p class="card-description">Pure agave foundation with fresh citrus and herbal notes. The journey begins with Blanco tequila.</p>
+                  <div class="card-characteristics">
+                    <span>Fresh</span>
+                    <span>Agave</span>
+                    <span>Citrus</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Reposado Card -->
+              <div class="journey-card" data-stage="1" id="journeyCard1">
+                <div class="card-image-container">
+                  <img src="images/reposado.png" alt="Reposado tequila" class="card-image" />
+                  <div class="card-glow"></div>
+                </div>
+                <div class="card-content">
+                <h3>REPOSADO</h3>
+                  <p class="card-time">at least 2 months</p>
+                  <p class="card-description">Oak barrel aging introduces vanilla and caramel notes. The tequila develops complexity and smoothness.</p>
+                  <div class="card-characteristics">
+                    <span>Vanilla</span>
+                    <span>Caramel</span>
+                    <span>Smooth</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Añejo Card -->
+              <div class="journey-card" data-stage="2" id="journeyCard2">
+                <div class="card-image-container">
+                  <img src="images/anejo.png" alt="Añejo tequila" class="card-image" />
+                  <div class="card-glow"></div>
+                </div>
+                <div class="card-content">
+                <h3>AÑEJO</h3>
+                  <p class="card-time">at least 12 months</p>
+                  <p class="card-description">Extended aging creates deep amber color and rich flavors. Oak influence intensifies with spice and wood notes.</p>
+                  <div class="card-characteristics">
+                    <span>Rich</span>
+                    <span>Spice</span>
+                    <span>Wood</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Extra Añejo Card -->
+              <div class="journey-card" data-stage="3" id="journeyCard3">
+                <div class="card-image-container">
+                  <img src="images/extra-anejo.png" alt="Extra Añejo tequila" class="card-image" />
+                  <div class="card-glow"></div>
+                </div>
+                <div class="card-content">
+                <h3>EXTRA AÑEJO</h3>
+                  <p class="card-time">at least 36 months</p>
+                  <p class="card-description">Ultra-premium aging creates mahogany color and exceptional complexity. The pinnacle of tequila craftsmanship.</p>
+                  <div class="card-characteristics">
+                    <span>Premium</span>
+                    <span>Complex</span>
+                    <span>Rare</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Progress Indicator -->
+            <div class="journey-progress" id="journeyProgress">
+              <div class="progress-dots">
+                <div class="progress-dot active" data-stage="0"></div>
+                <div class="progress-dot" data-stage="1"></div>
+                <div class="progress-dot" data-stage="2"></div>
+                <div class="progress-dot" data-stage="3"></div>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+            </div>
+
+            <!-- Skip Button -->
+            <button class="journey-skip-btn" id="journeySkipBtn">
+              Skip Journey
+            </button>
+          </div>
+        </div>
+
         <!-- Asset Appreciation Section -->
-        <div class="grid grid-2" style="gap: 32px; margin: 32px 0;">
+        <div class="grid grid-2 appreciation-asset-section" style="gap: 32px; margin: 32px 0;">
           <!-- Tequila Aging Journey -->
           <div class="card premium-timeline">
             <div style="margin-bottom: 12px;">
@@ -2944,13 +3595,17 @@
           </div>
 
           <!-- Price Appreciation Chart -->
-          <div class="card">
+          <div class="card retail-price-chart" style="opacity: 0; pointer-events: none; transition: opacity 0.5s ease;">
             <h3>Retail Price Appreciation Over Time</h3>
             <p class="sub" style="margin-bottom: 8px;">USD currency - 750ml bottle pricing</p>
             <div id="retailPriceChart" style="width:100%;height:400px"></div>
             <p class="note" style="font-size: 0.8rem; margin-top: 4px;">Data: Joe's benchmark (0–120 months). Values are medians/representative prices per cohort; not investment advice.</p>
           </div>
         </div>
+            </div> <!-- /appreciation-journey -->
+          </div> <!-- /appreciation-sticky -->
+        </div> <!-- /appreciation-scroller -->
+      </section>
 
         <!-- Interactive Aging Simulator -->
         <div id="aging-simulator" class="aging-simulator-section" style="margin-top: 48px;">
@@ -3590,24 +4245,24 @@
         const chart = echarts.init(document.getElementById('agingChart'));
         
         chart.setOption({
-          grid: { left: 60, right: 40, top: 50, bottom: 50 },
-          backgroundColor: 'transparent',
-          tooltip: {
-            trigger: 'axis',
-            backgroundColor: 'rgba(255,255,255,0.95)',
-            borderColor: '#0E5B62',
-            borderWidth: 1,
-            borderRadius: 8,
+        grid: { left: 60, right: 40, top: 50, bottom: 50 },
+        backgroundColor: 'transparent',
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: 'rgba(255,255,255,0.95)',
+          borderColor: '#0E5B62',
+          borderWidth: 1,
+          borderRadius: 8,
             textStyle: { 
               color: '#1B2629',
               fontFamily: 'system-ui, sans-serif',
               fontSize: 12
             },
-            formatter: (params) => {
-              const years = Math.floor(params[0].axisValue / 12);
-              const months = params[0].axisValue % 12;
-              const ageText = years > 0 ? `${years}y ${months}m` : `${months}m`;
-              
+          formatter: (params) => {
+            const years = Math.floor(params[0].axisValue / 12);
+            const months = params[0].axisValue % 12;
+            const ageText = years > 0 ? `${years}y ${months}m` : `${months}m`;
+
               const valueData = params.find(p => p.seriesName === 'Barrel Value');
               const costData = params.find(p => p.seriesName === 'Cumulative Cost');
               
@@ -3615,23 +4270,23 @@
               const cost = costData ? Math.round(costData.data) : 0;
               const profit = value - cost;
               const yieldPct = cost > 0 ? ((profit / cost) * 100).toFixed(1) : 0;
-              
-              return `<div style="font-family: system-ui, sans-serif;">
-                <div style="font-weight: 600; color: #0E5B62; margin-bottom: 4px;">Age: ${ageText}</div>
+
+            return `<div style="font-family: system-ui, sans-serif;">
+              <div style="font-weight: 600; color: #0E5B62; margin-bottom: 4px;">Age: ${ageText}</div>
                 <div style="font-weight: 600; color: #1B2629;">Value: $${value.toLocaleString()}</div>
                 <div style="font-weight: 500; color: #6A7A81;">Cost: $${cost.toLocaleString()}</div>
                 <div style="font-weight: 600; color: ${profit >= 0 ? '#0E5B62' : '#A85D5D'}; margin-top: 2px;">
                   Profit: $${profit.toLocaleString()} (${yieldPct}%)
-                </div>
-              </div>`;
-            }
-          },
-          xAxis: {
+              </div>
+            </div>`;
+          }
+        },
+        xAxis: {
             type: 'category',
             data: chartData.map(d => d.month),
             axisLine: { lineStyle: { color: '#E9E3DA' } },
             axisTick: { show: false },
-            axisLabel: { 
+          axisLabel: { 
               color: '#6A7A81', 
               fontFamily: 'system-ui, sans-serif',
               fontSize: 11,
@@ -4185,6 +4840,341 @@
       window.addEventListener('resize', onScroll);
       onScroll();
     })();
+
+    // Tequila Appreciation - 3 Phase Animation
+    (function initAppreciationAnimation(){
+      const scroller = document.querySelector('.appreciation-scroller');
+      const titleEl  = document.querySelector('.appreciation-title');
+      const threeCards = document.querySelector('.appreciation-three-cards');
+      const journey = document.querySelector('.appreciation-journey');
+      const assetSection = document.querySelector('.appreciation-asset-section');
+      if (!scroller || !titleEl) return;
+
+      const clamp = (n,a,b)=>Math.max(a,Math.min(b,n));
+      const lerp  = (a,b,t)=>a + (b - a) * t;
+      const easeOut = t => 1 - Math.pow(1 - t, 2);
+
+      function onScroll(){
+        const sectionTop = scroller.offsetTop;
+        const sectionH   = scroller.offsetHeight - window.innerHeight;
+        const scrolled   = window.scrollY - sectionTop;
+        const p          = clamp(scrolled / sectionH, 0, 1);  // master progress 0..1
+
+        // Phase 1: Title animation (0.0 → 0.4)
+        if (p <= 0.4) {
+          const tTitle = p / 0.4; // 0 → 1
+          const scale      = lerp(1.15, 0.3, tTitle);   // heroic → very small
+          const translateY = lerp(8, 0, Math.min(tTitle * 2, 1)); // vh, arrive to center by 0.5
+          const opacity    = lerp(1.00, 0.2, tTitle);   // stays visible → very transparent
+
+          titleEl.style.transform = `translate3d(0, ${translateY}vh, 0) scale(${scale})`;
+          titleEl.style.opacity   = opacity;
+          
+          // Hide other elements during title phase
+          if (threeCards) threeCards.style.opacity = '0';
+          if (journey && !journeyOverlay.classList.contains('active')) {
+            journey.style.opacity = '0';
+          }
+          if (assetSection) assetSection.style.opacity = '0';
+          
+          // Hide button during title phase
+          const buttonContainer = document.getElementById('journeyButtonContainer');
+          if (buttonContainer) {
+            buttonContainer.style.opacity = '0';
+            buttonContainer.style.pointerEvents = 'none';
+          }
+        }
+        
+        // Phase 2: Three cards fade in (0.4 → 0.7)
+        else if (p <= 0.7) {
+          const tCards = (p - 0.4) / 0.3; // 0 → 1
+          const cardOpacity = easeOut(tCards);
+          
+          if (threeCards) {
+            threeCards.style.opacity = cardOpacity;
+            threeCards.style.pointerEvents = cardOpacity > 0.5 ? 'auto' : 'none';
+          }
+          
+          // Hide other elements during card phase
+          if (journey && !journeyOverlay.classList.contains('active')) {
+            journey.style.opacity = '0';
+          }
+          if (assetSection) assetSection.style.opacity = '0';
+          
+          // Hide button during card phase
+          const buttonContainer = document.getElementById('journeyButtonContainer');
+          if (buttonContainer) {
+            buttonContainer.style.opacity = '0';
+            buttonContainer.style.pointerEvents = 'none';
+          }
+          
+          // Hide title and journey
+          titleEl.style.opacity = '0';
+          if (journey && !journeyOverlay.classList.contains('active')) {
+            journey.style.opacity = '0';
+          }
+        }
+        
+        // Phase 3: Cards fade out, button appears, journey stays hidden (0.7 → 1.0)
+        else {
+          const tJourney = (p - 0.7) / 0.3; // 0 → 1
+          const cardOpacity = 1 - easeOut(tJourney);
+          const buttonOpacity = easeOut(tJourney);
+          
+          if (threeCards) {
+            threeCards.style.opacity = cardOpacity;
+            threeCards.style.pointerEvents = 'none';
+          }
+          
+          // Show button as cards fade out
+          const buttonContainer = document.getElementById('journeyButtonContainer');
+          if (buttonContainer) {
+            buttonContainer.style.opacity = buttonOpacity;
+            buttonContainer.style.pointerEvents = buttonOpacity > 0.5 ? 'auto' : 'none';
+          }
+          
+          // Keep journey section hidden - it will only show after animation completes
+          // But don't interfere if the journey overlay is active
+          if (journey && !journeyOverlay.classList.contains('active')) {
+            journey.style.display = 'none';
+            journey.style.opacity = '0';
+            journey.style.pointerEvents = 'none';
+          }
+          
+          // Hide title
+          titleEl.style.opacity = '0';
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      onScroll();
+    })();
+
+    // Tequila Aging Journey Interactive Experience
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded, initializing journey experience...');
+      const journeyOverlay = document.getElementById('journeyOverlay');
+      console.log('Journey overlay found:', journeyOverlay);
+      
+      if (!journeyOverlay) {
+        console.error('Journey overlay not found!');
+        return;
+      }
+      const journeyStartBtn = document.getElementById('journeyStartBtn');
+      const journeySkipBtn = document.getElementById('journeySkipBtn');
+      const journeyCards = document.querySelectorAll('.journey-card');
+      const progressDots = document.querySelectorAll('.progress-dot');
+      const progressFill = document.getElementById('progressFill');
+      const journeyCardsContainer = document.getElementById('journeyCardsContainer');
+      
+      if (!journeyOverlay || !journeyStartBtn) return;
+
+      // Journey state management
+      const journeyStates = {
+        IDLE: 'idle',
+        PLAYING: 'playing',
+        COMPLETED: 'completed'
+      };
+      
+      let currentState = journeyStates.IDLE;
+      let currentStage = 0;
+      let isAnimating = false;
+      let scrollLocked = false;
+
+      // Scroll lock system
+      function lockScroll() {
+        if (scrollLocked) return;
+        scrollLocked = true;
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.top = `-${window.scrollY}px`;
+      }
+
+      function unlockScroll() {
+        if (!scrollLocked) return;
+        scrollLocked = false;
+        const scrollY = document.body.style.top;
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.top = '';
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+
+      // Show journey overlay
+      function showJourney() {
+        journeyOverlay.classList.add('active');
+        currentState = journeyStates.IDLE;
+      }
+
+      // Hide journey overlay
+      function hideJourney() {
+        journeyOverlay.classList.remove('active');
+        unlockScroll();
+        currentState = journeyStates.COMPLETED;
+        
+        // Reset journey state
+        currentStage = 0;
+        isAnimating = false;
+        
+        // Reset cards to initial state
+        journeyCards.forEach(card => card.classList.remove('active'));
+        progressDots.forEach(dot => dot.classList.remove('active'));
+        progressFill.style.width = '0%';
+        
+        // Reset start button
+        journeyStartBtn.style.opacity = '1';
+        journeyStartBtn.style.pointerEvents = 'auto';
+        
+        // Hide cards container
+        journeyCardsContainer.style.opacity = '0';
+        journeyCardsContainer.style.pointerEvents = 'none';
+        
+        // Show the journey section and retail price chart after journey completion
+        setTimeout(() => {
+          const journeySection = document.querySelector('.appreciation-journey');
+          if (journeySection) {
+            journeySection.style.display = 'block';
+            journeySection.style.opacity = '1';
+            journeySection.style.pointerEvents = 'auto';
+          }
+          
+          // DON'T show the asset section - keep it hidden permanently
+          // const assetSection = document.querySelector('.appreciation-asset-section');
+          // if (assetSection) {
+          //   assetSection.style.opacity = '1';
+          //   assetSection.style.pointerEvents = 'auto';
+          // }
+          
+          const retailChart = document.querySelector('.retail-price-chart');
+          if (retailChart) {
+            retailChart.style.opacity = '1';
+            retailChart.style.pointerEvents = 'auto';
+          }
+        }, 500);
+      }
+
+      // Animate individual card
+      function animateCard(stageIndex, duration = 3000) {
+        return new Promise((resolve) => {
+          if (isAnimating) return resolve();
+          
+          isAnimating = true;
+          const card = journeyCards[stageIndex];
+          const dot = progressDots[stageIndex];
+          
+          if (!card || !dot) {
+            isAnimating = false;
+            return resolve();
+          }
+
+          // Activate card
+          card.classList.add('active');
+          dot.classList.add('active');
+          
+          // Update progress bar
+          const progressPercent = ((stageIndex + 1) / journeyCards.length) * 100;
+          progressFill.style.width = `${progressPercent}%`;
+
+          // Hold the animation for the specified duration
+          setTimeout(() => {
+            // Deactivate card (back to blurry state)
+            card.classList.remove('active');
+            
+            // Move to next stage
+            currentStage = stageIndex + 1;
+            isAnimating = false;
+            resolve();
+          }, duration);
+        });
+      }
+
+      // Start the journey sequence
+      async function startJourney() {
+        if (currentState !== journeyStates.IDLE || isAnimating) return;
+        
+        currentState = journeyStates.PLAYING;
+        currentStage = 0;
+        
+        // Hide start button
+        journeyStartBtn.style.opacity = '0';
+        journeyStartBtn.style.pointerEvents = 'none';
+        
+        // Show cards container
+        journeyCardsContainer.style.opacity = '1';
+        journeyCardsContainer.style.pointerEvents = 'auto';
+        
+        // Animate each card sequentially
+        for (let i = 0; i < journeyCards.length; i++) {
+          await animateCard(i, 5000); // 5 seconds per card as requested
+        }
+        
+        // Journey completed
+        currentState = journeyStates.COMPLETED;
+        
+        // Show completion message and hide journey
+        setTimeout(() => {
+          hideJourney();
+        }, 1000);
+      }
+
+      // Skip journey
+      function skipJourney() {
+        if (currentState === journeyStates.COMPLETED) return;
+        hideJourney();
+      }
+
+      // Event listeners
+      journeyStartBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setFallbackTimeout(); // Set fallback timeout
+        startJourney();
+      });
+      
+      journeySkipBtn.addEventListener('click', skipJourney);
+
+      // ESC key to skip
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && journeyOverlay.classList.contains('active')) {
+          skipJourney();
+        }
+      });
+
+      // Manual journey trigger - user clicks to start journey
+      // Remove automatic trigger to prevent freezing issues
+      
+      // Add manual trigger button event listener
+      const journeyTriggerBtn = document.getElementById('journeyTriggerBtn');
+      if (journeyTriggerBtn) {
+        journeyTriggerBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          showJourney();
+        });
+      }
+      
+      // Fallback timeout (auto-unlock after 30 seconds)
+      let fallbackTimeout;
+      function setFallbackTimeout() {
+        clearTimeout(fallbackTimeout);
+        fallbackTimeout = setTimeout(() => {
+          if (scrollLocked) {
+            console.warn('Journey fallback: Auto-unlocking scroll after 30 seconds');
+            unlockScroll();
+          }
+        }, 30000);
+      }
+      
+      // Cleanup on page unload
+      window.addEventListener('beforeunload', () => {
+        unlockScroll();
+        clearTimeout(fallbackTimeout);
+      });
+
+    });
 
 
 
