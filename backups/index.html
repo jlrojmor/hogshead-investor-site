@@ -1,0 +1,4574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Hogshead Agave Spirits — Investor Overview</title>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* Jeton-style fluid type scale using clamp(min, vw-based, max) */
+      --step--1: clamp(0.85rem, 0.74rem + 0.35vw, 1.00rem);
+      --step-0 : clamp(1.00rem, 0.90rem + 0.50vw, 1.20rem);
+      --step-1 : clamp(1.20rem, 1.05rem + 0.80vw, 1.60rem);
+      --step-2 : clamp(1.50rem, 1.25rem + 1.10vw, 2.20rem);
+      --step-3 : clamp(2.00rem, 1.60rem + 1.80vw, 3.00rem);
+
+      /* layout tokens */
+      --container-max: 1180px;
+      --gutter: clamp(16px, 4vw, 40px);
+      --radius-xl: 24px;
+      --radius-lg: 16px;
+      --shadow-card: 0 10px 30px rgba(0,0,0,.08);
+
+      /* hero sizing - use small viewport units to ignore browser UI bars on mobile */
+      --hero-min: 520px;
+      --hero-max: 760px;
+      --hero-h: clamp(var(--hero-min), 75svh, var(--hero-max));
+
+      /* brand colors – adjust to your palette */
+      --paper: #F6F3EE;        /* sand */
+      --ink: #1B2629;          /* charcoal */
+      --ink-muted: #6A7A81;    /* cool slate */
+      --cta-bg: #0E5B62;       /* deep agave */
+      --cta-bg-hover:#0D4F55;
+      --cta-ghost: #0E5B62;
+      --card-bg: #ffffffE6;
+      
+      /* Legacy variables for compatibility */
+      --bg-page: var(--paper);
+      --card:#FFFFFF;         /* white */
+      --muted:#6A7A81;        /* cool slate */
+      --line:#E9E3DA;         /* hairline */
+      --agave:#0E5B62;        /* deep agave */
+      --sage:#5FA8A5;         /* sea-sage */
+      --amber:#D78A3B;        /* barrel amber */
+      --rose:#A85D5D;         /* soft accent */
+      --shadow:0 12px 28px rgba(18,28,30,.08);
+      --radius:16px;
+      
+      /* ==== PALETTE (Hogshead) ==== */
+      --hh-navy:#023E48;
+      --hh-gold:#DB9251;
+      
+      /* derived tones for distinct regions (all inside brand family) */
+      --gold-700:#B9732F;      /* deeper gold */
+      --navy-400:#3B6E78;      /* softened navy */
+      --agave-400:#3D825E;     /* lighter agave */
+      --slate-500:#7B8E99;     /* neutral for APAC/China */
+    }
+    *,*::before,*::after{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0; color:var(--ink); background:var(--paper);
+      font: 400 var(--step-0)/1.45 system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+      text-rendering:optimizeLegibility;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    
+    /* Jeton-style container and button system */
+    .container{
+      width:min(100% - 2*var(--gutter), var(--container-max));
+      margin-inline:auto;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      height: clamp(40px, 3.8vw, 52px);
+      padding-inline: clamp(16px, 2.2vw, 22px);
+      border-radius: 999px;
+      gap: 10px; font-size: var(--step-0); font-weight:600;
+      border:1px solid transparent; text-decoration:none;
+    }
+    .btn.primary{ background:var(--cta-bg); color:#fff; }
+    .btn.primary:hover{ background:var(--cta-bg-hover); }
+    .btn.ghost{ background:transparent; border-color:var(--cta-ghost); color:var(--cta-ghost); }
+    .btn.ghost:hover{ background:color-mix(in oklab, var(--cta-ghost) 10%, #fff); }
+    
+    @media (max-width: 520px){
+      /* tighten gutters on tiny screens */
+      :root{ --gutter: clamp(12px, 5vw, 24px); }
+    }
+    
+    /* Add padding to account for fixed header */
+    main {
+      padding-top: 0; /* No padding since hero is full viewport */
+    }
+    a{color:var(--agave);text-decoration:none}
+    a:hover{text-decoration:underline}
+    /* Jeton-style header - locked at all sizes */
+    .site-header{
+      position: sticky; top:0; z-index:1000;
+      background: color-mix(in oklab, #fff 88%, var(--paper) 12%);
+      backdrop-filter: blur(6px);
+      border-bottom:1px solid rgba(0,0,0,.06);
+      width: 100%;
+    }
+    .site-header .container{
+      display:flex; align-items:center; gap: clamp(8px, 1.5vw, 20px);
+      min-height: clamp(56px, 8vh, 80px); 
+      padding: clamp(8px, 1.5vh, 16px) 0;
+    }
+    .nav{ 
+      margin-left:auto; 
+      display:flex; 
+      gap: clamp(8px, 1.5vw, 16px);
+    }
+    
+    /* Legacy wrap class for compatibility */
+    .wrap{
+      max-width: 100vw; /* Full viewport width */
+      width: 100%; /* Full width */
+      margin: 0; /* No margins */
+      padding: 0 5vw; /* Responsive padding that scales with viewport */
+    }
+    .brand{
+      display:flex;align-items:center;gap:clamp(8px, 1.5vw, 12px);
+      font-weight:400;letter-spacing:.05em;
+      font-size:clamp(0.9rem, 2.0vw, 1.3rem); /* More responsive brand text */
+      color: var(--ink);
+      text-transform: uppercase;
+      font-family: "SF Pro Display", "Helvetica Neue", "Arial Narrow", "Arial Condensed", "Roboto Condensed", sans-serif;
+      font-stretch: condensed;
+    }
+    .logo{
+      width:clamp(36px, 6vh, 48px);height:clamp(36px, 6vh, 48px);border-radius:14px;display:grid;place-items:center;
+      background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);
+      flex-shrink: 0; /* Prevent logo from shrinking */
+    }
+    .logo svg{stroke:var(--agave);opacity:.95}
+    .logo img{width:100%;height:100%;object-fit:contain;}
+    nav a{
+      margin:0 clamp(6px, 1.2vw, 12px);
+      font-weight:500;
+      color:var(--ink-muted);
+      font-size:clamp(0.85rem, 1.3vw, 1.0rem);
+      transition: color 0.2s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    nav a:hover{
+      color: var(--ink);
+    }
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height: clamp(40px, 4.5vh, 48px);
+      padding-inline: clamp(16px, 2.5vw, 24px);
+      border-radius: 999px;
+      font-weight:600;
+      border:none;
+      color:#fff;
+      background:var(--cta-bg);
+      font-size:clamp(0.85rem, 1.3vw, 0.95rem);
+      transition:all 0.3s ease;
+      text-decoration:none;
+      white-space:nowrap;
+      flex-shrink: 0; /* Prevent button from shrinking */
+    }
+    .cta:hover{
+      text-decoration:none;
+      background:var(--cta-bg-hover);
+      transform:translateY(-1px);
+    }
+
+    /* Mobile header adjustments */
+    @media (max-width: 768px){
+      .site-header .container{
+        gap: clamp(8px, 2vw, 12px);
+        min-height: clamp(48px, 7vh, 64px);
+      }
+      .brand{
+        font-size: clamp(0.8rem, 2.5vw, 1.0rem);
+        gap: clamp(6px, 1.2vw, 8px);
+        letter-spacing: .03em;
+      }
+      .logo{
+        width:clamp(32px, 5vh, 40px);
+        height:clamp(32px, 5vh, 40px);
+      }
+      .nav{
+        gap: clamp(4px, 1vw, 8px);
+      }
+      nav a{
+        font-size: clamp(0.75rem, 1.1vw, 0.85rem);
+        margin: 0 clamp(2px, 0.5vw, 6px);
+      }
+      .cta{
+        height: clamp(36px, 4vh, 44px);
+        font-size: clamp(0.75rem, 1.2vw, 0.85rem);
+        padding-inline: clamp(12px, 2vw, 20px);
+      }
+    }
+
+    /* Very small screens */
+    @media (max-width: 480px){
+      .site-header .container{
+        flex-wrap: wrap;
+        gap: clamp(4px, 1vw, 8px);
+        padding: clamp(4px, 1vh, 8px) 0;
+      }
+      .nav{
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        margin-top: clamp(4px, 1vh, 8px);
+      }
+      .cta{
+        order: 2;
+        margin-left: auto;
+      }
+    }
+
+    /* Jeton-style hero section */
+    .site-hero{
+      position:relative;
+      min-height: var(--hero-h);   /* fixed visual band like Jeton */
+      isolation:isolate;           /* keep overlays contained */
+      overflow:hidden;
+      width: 100vw;                /* Full viewport width */
+      margin-left: calc(-50vw + 50%); /* Extend beyond container */
+      margin-right: calc(-50vw + 50%); /* Extend beyond container */
+    }
+    .hero-media{
+      position:absolute; inset:0; z-index:0;
+      width: 100%;
+      overflow: hidden;
+    }
+    .hero-media img{
+      width:100vw; height:100%; object-fit:cover; object-position:center 75%;
+      filter: none; /* keep your clean grade */
+      transform: translateZ(0);    /* helps GPU on Safari */
+      margin-left: 0;              /* No margins */
+      margin-right: 0;             /* No margins */
+    }
+    .hero-card{
+      position:absolute; z-index:1;
+      width: min(600px, 45%);                    /* Better max width for large screens */
+      top: clamp(15%, 10vh, 20%);               /* Better upper positioning */
+      right: clamp(5%, 3vw, 8%);                /* Better right positioning */
+      padding: clamp(8px, 1vw, 12px) clamp(20px, 3vw, 32px); /* Shorter vertical, wider horizontal */
+      border-radius: 20px;                       /* Previous design radius */
+      background: rgba(255, 255, 255, 0.95);    /* Previous design background */
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25); /* Previous design shadow */
+      backdrop-filter: blur(10px);               /* Previous design blur */
+      border: 1px solid rgba(255,255,255,0.3);  /* Previous design border */
+    }
+    .hero-card .eyebrow{
+      font-size: clamp(0.6rem, 0.8vw, 0.75rem);  /* Even smaller */
+      letter-spacing:.08em; text-transform:uppercase;
+      color: #0B6C6C; margin:0 0 2px;             /* Even tighter spacing */
+      font-weight: 600;                           /* Previous design weight */
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
+    }
+    .hero-card h1{
+      margin:0 0 3px;                             /* Even tighter spacing */
+      font-size: clamp(1.4rem, 3vw, 2.4rem);     /* Modern responsive size like h2 */
+      line-height:1.2; font-weight:700;           /* Bold weight like h2 */
+      color: #102b2f;                             /* Same color as h2 */
+      letter-spacing: 0;                          /* Normal letter spacing like h2 */
+      font-family: Fraunces, serif;               /* Same Fraunces font as h2 */
+    }
+    .hero-card .lead{
+      font-size: clamp(0.8rem, 1.2vw, 0.95rem);  /* Even smaller body */
+      color: var(--muted); margin: 0 0 16px;      /* More space before buttons */
+      max-width: 60ch;                            /* Wider for wider card */
+      line-height: 1.35;                          /* Tighter line height */
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
+    }
+    .hero-card .actions{ 
+      display:flex; gap:12px; flex-wrap:wrap;     /* Better spacing between buttons */
+      margin-top: clamp(8px, 1.5vh, 12px);        /* More space from text */
+    }
+    .hero-card .btn{
+      padding: clamp(8px, 1.4vh, 12px) clamp(16px, 2.5vw, 24px); /* Better button size */
+      font-size: clamp(0.7rem, 1vw, 0.85rem);     /* Better font size */
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
+      font-weight: 500;                            /* Medium weight for freshness */
+      border-radius: 50px;                         /* Much more circular */
+      height: auto;                                /* Remove fixed height */
+      min-height: 36px;                            /* Better minimum height */
+      transition: all 0.3s ease;                   /* Smoother transitions */
+      white-space: nowrap;                         /* Prevent text wrapping */
+    }
+    .hero-card .btn.primary{
+      background: #0B6C6C;                         /* Your teal color */
+      color: white;
+      border: none;
+    }
+    .hero-card .btn.primary:hover{
+      background: #095b5b;                         /* Darker teal on hover */
+      transform: translateY(-1px);                 /* Subtle lift effect */
+    }
+    .hero-card .btn.ghost{
+      background: transparent;                     /* Clean transparent */
+      color: #0B6C6C;                              /* Teal text to match palette */
+      border: 1px solid #0B6C6C;                   /* Teal border */
+    }
+    .hero-card .btn.ghost:hover{
+      background: rgba(11, 108, 108, 0.05);       /* Light teal background on hover */
+      border-color: #095b5b;                       /* Darker teal border on hover */
+      transform: translateY(-1px);                 /* Subtle lift effect */
+    }
+
+    /* Large screens - better positioning */
+    @media (min-width: 1400px){
+      .hero-card{ 
+        width: min(650px, 40%);                   /* Slightly larger on big screens */
+        top: clamp(12%, 8vh, 18%);               /* Better positioning */
+        right: clamp(6%, 4vw, 10%);              /* More space from edge */
+      }
+    }
+    
+    /* Very large screens - optimal positioning */
+    @media (min-width: 1800px){
+      .hero-card{ 
+        width: min(700px, 35%);                   /* Even better proportions */
+        top: clamp(10%, 6vh, 16%);               /* Optimal positioning */
+        right: clamp(8%, 5vw, 12%);              /* Perfect spacing */
+      }
+    }
+
+    @media (max-width: 840px){
+      .hero-card{ 
+        position: absolute;
+        top: clamp(10%, 8vh, 20%);               /* Higher on mobile */
+        right: clamp(2%, 1vw, 4%);               /* Closer to edge on mobile */
+        width: min(500px, 85%);                  /* Wider on mobile */
+        padding: clamp(6px, 0.8vw, 10px) clamp(16px, 2vw, 24px); /* Tighter on mobile */
+      }
+      .hero-card h1{ font-size: clamp(1.3rem, 2.8vw, 2.2rem); } /* Modern responsive size like h2 */
+      .hero-card .btn{ 
+        padding: clamp(6px, 1.2vh, 10px) clamp(12px, 2vw, 18px); /* Better size on mobile */
+        font-size: clamp(0.65rem, 0.9vw, 0.8rem); /* Better font size on mobile */
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif; /* Same as sections */
+        border-radius: 50px;                       /* Keep circular on mobile */
+        min-height: 32px;                          /* Slightly smaller on mobile */
+        gap: 8px;                                   /* Smaller gap on mobile */
+      }
+      .hero-card .actions{ 
+        gap: 8px;                                   /* Smaller gap between buttons on mobile */
+      }
+    }
+
+    /* Modern Section Headers - Serif Style */
+    h2{
+      font-size: clamp(26px, 3.2vw, 40px);
+      margin: 0 0 10px;
+      color: #102b2f;
+      font-family: Fraunces, serif;
+    }
+    h3{
+      font-size: clamp(18px, 2.5vw, 24px);
+      margin: 0 0 8px;
+      color: #102b2f;
+      font-weight: 600;
+    }
+
+    /* Section spacing system - ensures every section "snaps" with predictable spacing */
+    section.section{
+      padding-block: clamp(48px, 8svh, 96px);
+    }
+    .section .section-head{
+      margin-bottom: clamp(20px, 3svh, 36px);
+    }
+
+    /* Jeton-style grid system - stable across zoom */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: clamp(12px, 1.6vw, 20px);
+    }
+    .card{
+      background:#fff; border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card); padding: clamp(16px, 1.8vw, 24px);
+    }
+    @media (min-width: 960px){
+      .col-4{ grid-column: span 4; }
+      .col-6{ grid-column: span 6; }
+      .col-8{ grid-column: span 8; }
+    }
+    @media (max-width: 959.98px){
+      .col-4, .col-6, .col-8{ grid-column: 1 / -1; }
+    }
+
+    /* Accessibility & motion preferences */
+        @media (prefers-reduced-motion: reduce){
+          * { animation: none !important; transition: none !important; }
+        }
+
+        /* === OPPORTUNITY SECTION === */
+        #opportunity {
+          padding: 80px 20px;
+          background: var(--paper);
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .opp-question {
+          text-align: center;
+          margin-bottom: 60px;
+        }
+
+        .opp-question h2 {
+          font-size: clamp(42px, 8vw, 120px);
+          font-weight: 700;
+          color: var(--ink);
+          margin: 0;
+          line-height: 1.1;
+        }
+
+        .opp-cards {
+          display: flex;
+          gap: 20px;
+          justify-content: center;
+          flex-wrap: wrap;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .opp-card {
+          background: #fff;
+          border: 1px solid var(--line);
+          border-radius: 16px;
+          padding: 24px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+          width: 200px;
+          min-height: 200px;
+          text-align: center;
+          transition: all 0.8s ease-out;
+          opacity: 0 !important;
+          transform: translateX(-200px) !important;
+          visibility: hidden;
+        }
+
+        .opp-card.slide-in {
+          opacity: 1 !important;
+          transform: translateX(0) !important;
+          visibility: visible;
+        }
+
+        .opp-card h3 {
+          font-size: 18px;
+          font-weight: 600;
+          color: var(--ink);
+          margin: 0 0 12px;
+        }
+
+        .opp-card p {
+          font-size: 14px;
+          color: var(--muted);
+          margin: 0;
+          line-height: 1.4;
+        }
+
+        /* Hide the complex elements for now */
+        .opp-banners,
+        .opp-guardrails {
+          display: none;
+        }
+
+        @media (max-width: 768px) {
+          #opportunity {
+            padding: 60px 20px;
+          }
+          
+          .opp-cards {
+            flex-direction: column;
+            align-items: center;
+          }
+          
+          .opp-card {
+            width: 100%;
+            max-width: 300px;
+          }
+        }
+
+        /* === AGING SIMULATOR STYLES === */
+        #agingSlider {
+          -webkit-appearance: none;
+          appearance: none;
+          background: var(--line);
+          height: 8px;
+          border-radius: 4px;
+          outline: none;
+          transition: all 0.3s ease;
+        }
+
+        #agingSlider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: var(--agave);
+          cursor: pointer;
+          border: 3px solid #fff;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+          transition: all 0.3s ease;
+        }
+
+        #agingSlider::-webkit-slider-thumb:hover {
+          transform: scale(1.1);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        #agingSlider::-moz-range-thumb {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: var(--agave);
+          cursor: pointer;
+          border: 3px solid #fff;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+          transition: all 0.3s ease;
+        }
+
+        #agingSlider::-moz-range-thumb:hover {
+          transform: scale(1.1);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .kpi-card {
+          transition: all 0.3s ease;
+        }
+
+        .kpi-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+          border-color: var(--agave);
+        }
+
+        .initial-cost-card:hover {
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+          border-color: var(--agave);
+        }
+
+        .initial-cost-card:hover #initialBarrelCost {
+          color: var(--agave);
+          transform: scale(1.05);
+        }
+
+        /* Mobile responsiveness for simulator */
+        @media (max-width: 768px) {
+          .simulator-container {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+          }
+          
+          .kpi-grid {
+            grid-template-columns: 1fr !important;
+          }
+          
+          .aging-simulator-section .card {
+            padding: 20px !important;
+          }
+          
+          .initial-cost-card {
+            position: static !important;
+            width: 100% !important;
+            margin-top: 16px !important;
+          }
+        }
+    
+    .kicker{color:var(--sage);font-weight:800;letter-spacing:.18em;text-transform:uppercase;font-size:.78rem}
+    h1{
+      font-family:Fraunces,serif;font-weight:700;line-height:1.08;margin:.15em 0 .35em;
+      font-size: clamp(34px, 5vw, 56px); color:#0e2427;
+    }
+    .lead{color:#3a4a4f;font-size:1.08rem;max-width:56ch}
+    .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .btn{
+      display:inline-block;padding:12px 18px;border-radius:12px;font-weight:800;border:1px solid var(--line);background:var(--card);color:#203238;box-shadow:var(--shadow)
+    }
+    .btn.alt{border-color:var(--agave);color:var(--agave);background:#f1faf9}
+
+    /* Decorative, CSS-only agave */
+    .hero-visual{
+      position:relative;border-radius:22px;background:var(--card);
+      border:1px solid var(--line);box-shadow:var(--shadow);min-height:320px;overflow:hidden;
+    }
+    .hero-visual:before{
+      content:"";position:absolute;inset:-15% -10% auto -10%;height:120%;
+      background: radial-gradient(120% 120% at 25% 5%, rgba(14,91,98,.12) 0%, rgba(14,91,98,0) 62%);
+    }
+    .hero-visual:after{
+      content:"";position:absolute;right:-20%;bottom:-10%;width:60%;height:60%;
+      background: radial-gradient(60% 60% at 30% 30%, rgba(215,138,59,.18) 0%, rgba(215,138,59,0) 70%);
+    }
+    .hero-caption{position:absolute;bottom:0;left:0;right:0;padding:14px 16px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.9));border-top:1px solid var(--line);color:#2b3a3f}
+
+    /* Sections */
+    section{padding:56px 0;border-top:1px solid var(--line)}
+    /* h2 styling consolidated above */
+    .sub{color:var(--muted);margin:0 0 18px}
+    .grid{display:grid;gap:18px}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2vw,24px)}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,24px)}
+    .grid-4{grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.5vw,20px)}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:clamp(16px, 2vw, 24px);
+      box-shadow:var(--shadow);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 1;
+      transform: translateY(0);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s;
+    }
+    .card:hover::before{
+      left: 100%;
+    }
+    .card:hover{
+      transform: translateY(-8px) rotateY(8deg) scale(1.02) !important;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15) !important;
+      background: #ffffff !important;
+    }
+    
+    /* More specific selector for opportunity cards */
+    #opportunity .card:hover{
+      transform: translateY(-8px) rotateY(8deg) scale(1.02) !important;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15) !important;
+      background: #ffffff !important;
+    }
+    .card.animate-in{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .card h3{
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: 600;
+      color: #102b2f;
+      margin: 0 0 clamp(8px, 1vh, 12px) 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+    }
+    .card p{
+      font-size: clamp(14px, 1.5vw, 16px);
+      color: #6A7A81;
+      line-height: 1.5;
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+    }
+    .mini{font-size:.9rem;color:var(--muted)}
+    .list{padding-left:18px;margin:0}
+    .list li{margin:6px 0}
+    .icon{
+      width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:10px;
+      background:#f1faf9;border:1px solid #d7ecef;
+      transition: all 0.3s ease;
+    }
+    .card:hover .icon{
+      transform: scale(1.1) rotate(5deg);
+      background:color-mix(in oklab, var(--agave) 12%, #fff 88%);
+    }
+    .pill{display:inline-block;font-size:.72rem;letter-spacing:.12em;padding:6px 10px;border-radius:999px;background:#eef7f8;color:var(--agave);border:1px solid #d7ecef}
+
+    /* Bars (illustrative) */
+    .chart{height:260px;position:relative;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:var(--shadow);padding:14px}
+    .bars{position:absolute;inset:40px 14px 16px;display:flex;align-items:flex-end;gap:14px}
+    .bar{flex:1;background:linear-gradient(180deg,#D78A3B33,#D78A3B11);border:1px solid #D78A3B80;border-radius:6px 6px 0 0}
+    .legend{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:.9rem;margin-top:12px}
+    .swatch{width:10px;height:10px;border-radius:2px;background:#D78A3B;opacity:.7}
+
+    /* FAQ */
+    details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+    summary{cursor:pointer;font-weight:700}
+    summary::-webkit-details-marker{display:none}
+    summary:after{content:"+";float:right;color:var(--agave)}
+    details[open] summary:after{content:"–"}
+
+    /* Footer */
+    footer{border-top:1px solid var(--line);background:#FAF8F4;padding:34px 0 56px;color:#39474c}
+    .disclaimer{font-size:.86rem;color:#6f7f85}
+
+    /* smaller legend "cards" - ALL 9 IN ONE ROW - SAME SIZE */
+    .legend{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin:12px 6px 6px}
+    .legend .item{
+      display:flex;flex-direction:column;align-items:center;gap:6px;
+      background:#EEF3F6;border-radius:8px;padding:12px 8px;
+      font-size:10px;line-height:1.1;text-align:center;
+      height:80px; /* Fixed height for all cards */
+      justify-content:center;
+    }
+    .legend .item > div{
+      display:flex;flex-direction:column;align-items:center;gap:3px;
+    }
+    .legend .sub{display:block;font-size:11px;opacity:.75;margin-top:1px}
+    .legend .sw{width:12px;height:12px;border-radius:3px;border:1px solid rgba(0,0,0,.06);flex:0 0 12px}
+    @media (max-width:1200px){ .legend{grid-template-columns:repeat(5,1fr)} }
+    @media (max-width:900px){ .legend{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width:600px){ .legend{grid-template-columns:repeat(2,1fr)} }
+
+    /* Market Intelligence Animations */
+    .stat-card {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(14,91,98,0.1), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .stat-card:hover::before {
+      left: 100%;
+    }
+    
+    .stat-display {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 12px 0;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f5f8;
+    }
+    
+    .stat-display:last-child {
+      border-bottom: none;
+    }
+    
+    .stat-display.highlight {
+      background: rgba(14,91,98,0.05);
+      border-radius: 8px;
+      padding: 12px;
+      margin: 16px 0 8px 0;
+    }
+    
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--agave);
+      font-family: 'Fraunces', serif;
+      min-width: 60px;
+      text-align: right;
+    }
+    
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    
+    .progress-item {
+      margin: 16px 0;
+    }
+    
+    .progress-label {
+      font-size: 0.85rem;
+      color: var(--ink);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    
+    .progress-track {
+      height: 20px;
+      background: #f1f5f8;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--agave), var(--sage));
+      width: 0%;
+      transition: width 2s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+    
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      z-index: 2;
+    }
+    
+    .spirits-comparison {
+      margin: 20px 0;
+    }
+    
+    .spirit-item {
+      display: flex;
+      align-items: center;
+      margin: 12px 0;
+      gap: 12px;
+    }
+    
+    .spirit-name {
+      width: 70px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    
+    .spirit-bar {
+      flex: 1;
+      height: 24px;
+      background: #f1f5f8;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .bar-fill {
+      height: 100%;
+      border-radius: 12px;
+      width: 0%;
+      transition: width 2s ease-in-out;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    
+    .bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+    
+    .bar-value {
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-right: 8px;
+      z-index: 2;
+      position: relative;
+    }
+    
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes timelineProgress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    /* Responsive - Smaller, more reasonable proportions */
+    @media (max-width:940px){
+      .hero{height: 100vh; /* Keep full viewport */}
+      .hero-content-card{padding: clamp(14px, 2vh, 20px) clamp(18px, 2.5vw, 28px); max-width: clamp(300px, 50vw, 400px); width: auto;}
+      .grid-2{grid-template-columns:1fr;gap:clamp(12px,3vw,18px)}
+      .grid-3{grid-template-columns:1fr;gap:clamp(12px,3vw,18px)}
+      .grid-4{grid-template-columns:repeat(2,1fr);gap:clamp(10px,2.5vw,16px)}
+    }
+    
+    @media (max-width:768px){
+      .hero{height: 100vh; /* Keep full viewport */}
+      .hero-content-card{padding: clamp(12px, 1.8vh, 18px) clamp(16px, 2.2vw, 24px); max-width: clamp(280px, 60vw, 360px); width: auto;}
+    }
+    
+    @media (max-width:480px){
+      .hero-content-card{padding: clamp(10px, 1.5vh, 16px) clamp(14px, 2vw, 20px); max-width: clamp(260px, 70vw, 320px); width: auto;}
+    }
+@media (max-width:480px){
+  .grid-4{grid-template-columns:1fr}
+}
+
+/* Timeline Styles */
+.timeline-container {
+  position: relative;
+  margin: 40px 0;
+  padding: 20px 0;
+}
+
+.timeline-svg {
+  width: 100%;
+  max-width: 800px;
+  height: 100px;
+  margin: 0 auto;
+  display: block;
+}
+
+.timeline-line {
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+  transition: stroke-dashoffset 0.8s ease-out;
+}
+
+.timeline-line.animate {
+  stroke-dashoffset: 0;
+}
+
+.timeline-stop {
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s ease-out;
+}
+
+.timeline-stop.animate {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.timeline-progress {
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+  transition: stroke-dashoffset 0.6s ease-out;
+}
+
+.timeline-stages {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.timeline-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+  transition: all 0.4s ease-out;
+}
+
+.timeline-stage.animate {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.stage-image-frame {
+  position: relative;
+  margin-bottom: 16px;
+  width: 150px;
+  height: 190px;
+  background: linear-gradient(180deg, #F8FAFB 0%, #F1F5F9 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-out;
+  outline: 1px solid rgba(0,0,0,.06);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.08);
+}
+
+.stage-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: none;
+  opacity: 0;
+  transition: all 0.3s ease-out;
+  z-index: 2;
+  position: relative;
+}
+
+.stage-image.glass-visible {
+  opacity: 1;
+}
+
+.stage-image.image-error {
+  opacity: 1;
+  background: 
+    linear-gradient(45deg, transparent 25%, rgba(0,0,0,0.1) 25%, rgba(0,0,0,0.1) 50%, transparent 50%, transparent 75%, rgba(0,0,0,0.1) 75%),
+    linear-gradient(180deg, #F8FAFB 0%, #F1F5F9 100%);
+  background-size: 20px 20px, 100% 100%;
+  background-position: 0 0, 0 0;
+  position: relative;
+}
+
+.stage-image.image-error::before {
+  content: '📷';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.stage-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45,106,79,0.18) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.timeline-stage.active .stage-glow {
+  opacity: 1;
+}
+
+.timeline-stage:hover .stage-image-frame {
+  transform: rotate(2.5deg) translateY(-6px);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.04), 0 12px 32px rgba(0,0,0,.15);
+  z-index: 10;
+}
+
+.timeline-stage:hover .stage-image {
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.25));
+}
+
+.stage-label {
+  text-align: center;
+  transition: color 0.3s ease-out;
+}
+
+.stage-name {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.stage-details {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+.timeline-stage.active .stage-name {
+  color: var(--agave);
+}
+
+.stage-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background: var(--ink);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.15s ease-out;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.stage-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--ink);
+}
+
+.timeline-stage:hover .stage-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-12px);
+}
+
+.timeline-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.timeline-nav {
+  background: var(--agave);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.timeline-nav:hover {
+  background: var(--gold);
+  transform: scale(1.1);
+}
+
+.timeline-nav:disabled {
+  background: var(--muted);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.timeline-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--muted);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.timeline-dot.active,
+.timeline-dot:hover {
+  border-color: var(--agave);
+  background: var(--agave);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+.stage-image.glass-visible {
+  animation: float 3.5s ease-in-out infinite;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .timeline-svg {
+    height: 80px;
+  }
+  
+  .stage-image-frame {
+    width: 120px;
+    height: 150px;
+  }
+  
+  .timeline-stages {
+    margin-top: 15px;
+  }
+  
+  .stage-name {
+    font-size: 0.8rem;
+  }
+  
+  .stage-details {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stage-image-frame {
+    width: 96px;
+    height: 120px;
+  }
+  
+  .timeline-container {
+    margin: 30px 0;
+  }
+  
+  .timeline-controls {
+    margin-top: 24px;
+  }
+  
+  .timeline-nav {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Premium Timeline Styles */
+.premium-timeline {
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #fafbfc 0%, #f8f9fa 100%);
+}
+
+.timeline-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.timeline-header h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--navy);
+  background: linear-gradient(135deg, var(--agave), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.timeline-subtitle {
+  font-family: "Manrope", system-ui, sans-serif;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.premium-timeline-container {
+  position: relative;
+  padding: 12px 12px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.timeline-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.timeline-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(45,106,79,0.03) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  animation: rotateGlow 20s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes rotateGlow {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.timeline-track {
+  position: relative;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(45,106,79,0.1) 0%, rgba(219,146,81,0.1) 100%);
+  border-radius: 2px;
+  margin: 12px 0 16px;
+  z-index: 2;
+  max-width: 100%;
+}
+
+.timeline-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--agave) 0%, var(--gold) 100%);
+  border-radius: 2px;
+  width: 25%;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-nodes {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  z-index: 3;
+}
+
+.timeline-node {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.node-connector {
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  right: -10px;
+  height: 2px;
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-50%);
+  border-radius: 1px;
+}
+
+.timeline-node.active .node-connector {
+  background: linear-gradient(90deg, var(--agave), var(--gold));
+}
+
+.node-circle {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 3px solid var(--muted);
+  border-radius: 50%;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+
+.timeline-node.active .node-circle {
+  border-color: var(--agave);
+  box-shadow: 0 0 0 4px rgba(45,106,79,0.2);
+  transform: scale(1.2);
+}
+
+.node-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--agave);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.timeline-node.active .node-pulse {
+  opacity: 1;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.7; }
+}
+
+.premium-stages {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.premium-stage {
+  opacity: 0.6;
+  transform: scale(0.95);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  min-width: 0;
+  position: relative;
+  z-index: 50;
+  pointer-events: auto;
+}
+
+.premium-stage.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.premium-stage:hover {
+  transform: scale(1.02);
+}
+
+.premium-stage:hover .premium-stage-image {
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.15));
+  transform: translateY(-4px);
+}
+
+.premium-stage:hover .stage-card {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+.premium-stage.active .stage-card {
+  border-color: var(--agave);
+  box-shadow: 0 6px 25px rgba(45,106,79,0.15);
+}
+
+.stage-card {
+  background: white;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.05);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.stage-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--agave), var(--gold));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.premium-stage.active .stage-card::before {
+  opacity: 1;
+}
+
+.stage-image-container {
+  position: relative;
+  height: 80px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.image-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #f8fafb 0%, #f1f5f9 100%);
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.stage-glow-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45,106,79,0.1) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.premium-stage.active .stage-glow-ring {
+  opacity: 1;
+}
+
+.premium-stage-image {
+  width: 50px;
+  height: 65px;
+  object-fit: contain;
+  z-index: 2;
+  position: relative;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+  transition: all 0.3s ease;
+}
+
+.premium-stage-image.loaded {
+  animation: floatIn 0.6s ease-out;
+}
+
+@keyframes floatIn {
+  0% { opacity: 0; transform: translateY(20px) scale(0.9); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.stage-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 3;
+}
+
+.stage-badge {
+  background: linear-gradient(135deg, var(--agave), var(--gold));
+  color: white;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(45,106,79,0.3);
+  white-space: nowrap;
+}
+
+.stage-info {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stage-title {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 6px;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.stage-time {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: var(--agave);
+  font-weight: 600;
+  margin: 0 0 3px;
+}
+
+.stage-description {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin: 0 0 8px;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+.stage-characteristics {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.characteristic {
+  background: rgba(45,106,79,0.1);
+  color: var(--agave);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.premium-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.nav-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--muted);
+  background: white;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.nav-button:hover {
+  background: var(--agave);
+  color: white;
+  border-color: var(--agave);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(45,106,79,0.2);
+}
+
+.nav-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(45,106,79,0.15);
+}
+
+.nav-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+  background: #f8f9fa;
+  color: #dee2e6;
+  border-color: #dee2e6;
+}
+
+.stage-indicators {
+  display: flex;
+  gap: 12px;
+}
+
+.indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--muted);
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.indicator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+.indicator.active,
+.indicator:hover {
+  border-color: var(--agave);
+  background: white;
+  transform: scale(1.1);
+}
+
+.indicator.active::before,
+.indicator:hover::before {
+  background: var(--agave);
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.timeline-footer {
+  text-align: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.source-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .premium-stages {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  .stage-image-container {
+    height: 120px;
+  }
+  
+  .premium-stage-image {
+    width: 70px;
+    height: 90px;
+  }
+  
+  .stage-card {
+    padding: 12px;
+  }
+  
+  .stage-title {
+    font-size: 0.9rem;
+  }
+  
+  .stage-time {
+    font-size: 0.75rem;
+  }
+  
+  .stage-description {
+    font-size: 0.7rem;
+  }
+  
+  .characteristic {
+    font-size: 0.65rem;
+    padding: 2px 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .premium-timeline-container {
+    padding: 20px 10px;
+  }
+  
+  .timeline-header h3 {
+    font-size: 1.5rem;
+  }
+  
+  .timeline-track {
+    margin: 40px 0 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .premium-stages {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .premium-navigation {
+    gap: 16px;
+  }
+  
+  .nav-button {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .stage-image-container {
+    height: 100px;
+  }
+  
+  .premium-stage-image {
+    width: 60px;
+    height: 80px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .timeline-glow,
+  .node-pulse,
+  .premium-stage-image.loaded {
+    animation: none;
+  }
+  
+  .timeline-progress-bar,
+  .premium-stage,
+  .stage-card,
+  .premium-stage-image {
+    transition: none;
+  }
+}
+
+        /* Custody Checklist Animation */
+        .custody-checklist {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .checklist-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          opacity: 0.6;
+          transition: opacity 0.3s ease;
+        }
+
+        .checklist-item.checked {
+          opacity: 1;
+        }
+
+        .check-circle {
+          position: relative;
+          width: 20px;
+          height: 20px;
+          border: 2px solid var(--line);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: border-color 0.3s ease;
+        }
+
+        .checklist-item.checked .check-circle {
+          border-color: var(--agave);
+          background: var(--agave);
+        }
+
+        .check-fill {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 0%;
+          height: 0%;
+          background: var(--agave);
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          transition: all 0.4s ease;
+        }
+
+        .checklist-item.checked .check-fill {
+          width: 100%;
+          height: 100%;
+        }
+
+        .check-icon {
+          width: 12px;
+          height: 12px;
+          color: white;
+          opacity: 0;
+          transform: scale(0.5);
+          transition: all 0.3s ease;
+          z-index: 1;
+          position: relative;
+        }
+
+        .checklist-item.checked .check-icon {
+          opacity: 1;
+          transform: scale(1);
+          transition-delay: 0.2s;
+        }
+
+        .checklist-item span {
+          font-size: 1.4rem;
+          color: var(--ink);
+          font-weight: 700;
+          letter-spacing: 0.5px;
+        }
+
+        .check-circle {
+          width: 32px;
+          height: 32px;
+          border: 3px solid var(--line);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: border-color 0.3s ease;
+          flex-shrink: 0;
+        }
+
+        .check-icon {
+          width: 18px;
+          height: 18px;
+          color: white;
+          opacity: 0;
+          transform: scale(0.5);
+          transition: all 0.3s ease;
+          z-index: 1;
+          position: relative;
+        }
+
+        /* How It Works Card Styling */
+        .how-it-works-card {
+          max-width: 100%;
+          padding: 24px;
+          min-height: auto;
+        }
+
+        .how-it-works-card h3 {
+          font-size: 1.8rem;
+          margin-bottom: 16px;
+          line-height: 1.2;
+          font-weight: 700;
+        }
+
+        .how-it-works-card p {
+          font-size: 0.95rem;
+          line-height: 1.5;
+          margin-bottom: 16px;
+          color: #666;
+          font-weight: 400;
+        }
+
+        .investment-range {
+          font-size: 0.9rem;
+          color: var(--ink);
+          margin-top: 16px;
+          padding: 12px;
+          background: rgba(45, 106, 79, 0.08);
+          border-radius: 12px;
+          border-left: 4px solid var(--agave);
+          font-weight: 600;
+        }
+
+        .investment-min,
+        .investment-max {
+          font-weight: 700;
+          color: var(--agave);
+          transition: all 0.3s ease;
+        }
+
+        .investment-min:hover,
+        .investment-max:hover {
+          transform: scale(1.15);
+          cursor: pointer;
+          text-shadow: 0 2px 4px rgba(45, 106, 79, 0.3);
+        }
+
+        .custody-checklist {
+          margin-top: 16px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 14px;
+        }
+
+        .aging-cta {
+          margin-top: 20px;
+        }
+
+        .aging-cta .btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 20px;
+          background: var(--agave);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+
+        .aging-cta .btn:hover {
+          background: #2d5a4a;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(45, 106, 79, 0.3);
+        }
+
+        .aging-cta .btn svg {
+          transition: transform 0.3s ease;
+        }
+
+        .aging-cta .btn:hover svg {
+          transform: translate(2px, -2px);
+        }
+
+        /* Step 3 Card Background */
+        .step-3-card {
+          background-image: url('images/Agave fields 2.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          position: relative;
+          height: 280px;
+          overflow: hidden;
+        }
+
+        .step-3-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 100%;
+          right: 0;
+          bottom: 0;
+          background: rgba(255, 255, 255, 0.85);
+          border-radius: 12px;
+          z-index: 1;
+          transition: left 2s ease-in-out;
+        }
+
+        .step-3-card:hover::before {
+          left: 100%;
+        }
+
+        .step-3-card:not(:hover)::before {
+          left: 0;
+        }
+
+        .step-3-card > * {
+          position: relative;
+          z-index: 2;
+        }
+
+        .step-3-card .pill {
+          background: rgba(125, 187, 184, 0.636);
+          color: white;
+          border: 1px solid rgba(98, 158, 131, 0.9);
+        }
+
+        .step-3-card h3 {
+          color: var(--ink);
+          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .step-3-card p {
+          color: var(--ink);
+          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Step 4 Exit Grid Layout */
+        .step-4-card {
+          height: 280px;
+          overflow: hidden;
+        }
+
+        .step-4-card h3 {
+          font-size: 1.8rem;
+          margin-bottom: 16px;
+          line-height: 1.2;
+          font-weight: 700;
+        }
+
+        .exit-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
+          gap: 8px;
+          height: 160px;
+          margin-top: 12px;
+        }
+
+        .exit-btn {
+          background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+          border: 2px solid var(--line);
+          border-radius: 12px;
+          padding: 12px;
+          cursor: pointer;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          overflow: hidden;
+          min-height: 0;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .exit-btn:hover {
+          border-color: var(--agave);
+          background: linear-gradient(135deg, rgba(45, 106, 79, 0.08) 0%, rgba(45, 106, 79, 0.12) 100%);
+          transform: translateY(-4px) scale(1.02);
+          box-shadow: 0 12px 32px rgba(45, 106, 79, 0.2);
+        }
+
+        .exit-btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+          transition: left 0.6s ease;
+        }
+
+        .exit-btn:hover::before {
+          left: 100%;
+        }
+
+
+        .exit-btn h4 {
+          font-size: 0.9rem;
+          font-weight: 700;
+          color: var(--ink);
+          margin: 0 0 4px 0;
+          line-height: 1.2;
+        }
+
+        .exit-btn p {
+          font-size: 0.75rem;
+          color: var(--muted);
+          margin: 0;
+          line-height: 1.3;
+        }
+
+        /* Modal System */
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.7);
+          backdrop-filter: blur(4px);
+          z-index: 1000;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+          display: flex;
+          opacity: 1;
+        }
+
+        .modal-content {
+          background: white;
+          border-radius: 16px;
+          padding: 32px;
+          max-width: 500px;
+          width: 90%;
+          max-height: 80vh;
+          overflow-y: auto;
+          position: relative;
+          transform: scale(0.9);
+          transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+          transform: scale(1);
+        }
+
+        .modal-close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          background: none;
+          border: none;
+          font-size: 24px;
+          cursor: pointer;
+          color: var(--muted);
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+          background: rgba(0, 0, 0, 0.1);
+          color: var(--ink);
+        }
+
+        .modal-content h3 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--ink);
+          margin: 0 0 16px 0;
+        }
+
+        .modal-content p {
+          font-size: 1rem;
+          color: var(--ink);
+          line-height: 1.6;
+          margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .exit-grid {
+              grid-template-columns: 1fr;
+              grid-template-rows: repeat(4, 1fr);
+              height: auto;
+              gap: 6px;
+              margin-top: 10px;
+            }
+
+            .exit-btn {
+              padding: 6px;
+              height: auto;
+              min-height: 50px;
+            }
+
+            .exit-btn h4 {
+              font-size: 0.85rem;
+            }
+
+            .exit-btn p {
+              font-size: 0.7rem;
+            }
+
+          .modal-content {
+            padding: 24px;
+            margin: 20px;
+          }
+
+          .modal-content h3 {
+            font-size: 1.3rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .custody-checklist {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+          
+          .how-it-works-card {
+            padding: 20px;
+          }
+          
+          .how-it-works-card h3 {
+            font-size: 1.5rem;
+          }
+          
+          .how-it-works-card p {
+            font-size: 1rem;
+          }
+          
+          .checklist-item span {
+            font-size: 1.2rem;
+          }
+          
+          .check-circle {
+            width: 28px;
+            height: 28px;
+          }
+          
+          .check-icon {
+            width: 16px;
+            height: 16px;
+  }
+}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+          <img src="public/images/Logo_for_Website.png" alt="Hogshead Agave Spirits Logo" style="width: 100%; height: 100%; object-fit: contain;">
+          </div>
+          <span>Hogshead Agave Spirits</span>
+        </div>
+      <nav class="nav">
+          <a href="#opportunity">Opportunity</a>
+          <a href="#market">Market</a>
+          <a href="#whyus">Why Us</a>
+          <a href="#model">Model</a>
+          <a href="#guardrails">Guardrails</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <a class="cta" href="#contact">Request Memo</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <!-- HERO -->
+      <header class="site-hero" id="hero">
+        <picture class="hero-media">
+          <img src="public/images/Agave_Mountain.png" alt="Agave field with mountain" />
+        </picture>
+
+        <div class="hero-card">
+          <p class="eyebrow">ALTERNATIVE ASSET • MEXICO → U.S.</p>
+          <h1>Invest in aging tequila—<br>curated, compliant, and time-powered.</h1>
+          <p class="lead">We provide investors with institutional-grade exposure to aging tequila inventory held under professional custody. The thesis is simple: regulated origin, constrained supply, and value that compounds with time-in-barrel.</p>
+          <div class="actions">
+            <a class="btn primary" href="#opportunity">See the Opportunity</a>
+            <a class="btn ghost" href="#contact">Request Investor Memo</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- HOW IT WORKS -->
+      <section id="howitworks">
+        <h2>How It Works</h2>
+        <p class="sub">A proven model with four key steps that create value through time and scarcity.</p>
+
+        <div class="grid grid-2" style="gap: 24px; margin: 32px 0;">
+          <div class="card how-it-works-card">
+            <span class="pill">Step 1</span>
+            <h3>Capital Commitment & Source</h3>
+            <p>Investor purchases certificates of title representing ownership of bulk tequila from established distilleries with denomination of origin protection. Tequila production starts at this point, ensuring authentic, high-quality product with regulatory backing.</p>
+            <div class="investment-range">
+              <strong>Investment Range:</strong> 
+              <span class="investment-min" data-target="500">$0K</span> - 
+              <span class="investment-max" data-target="5000">$0M</span> USD<br>
+              <strong>Result:</strong> Certificate of title ownership
+            </div>
+          </div>
+          <div class="card how-it-works-card">
+            <span class="pill">Step 2</span>
+            <h3>Professional Custody</h3>
+            <p>We manage complete logistics including barrel purchase, tequila new fill, warehousing, and custody through bonded storage facilities with climate control, inventory tracking, and comprehensive insurance.</p>
+            
+            <div class="custody-checklist">
+              <div class="checklist-item" data-delay="0">
+                <div class="check-circle">
+                  <div class="check-fill"></div>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+                <span>New Fill</span>
+          </div>
+              <div class="checklist-item" data-delay="900">
+                <div class="check-circle">
+                  <div class="check-fill"></div>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+                <span>Storage</span>
+          </div>
+              <div class="checklist-item" data-delay="1800">
+                <div class="check-circle">
+                  <div class="check-fill"></div>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+        </div>
+                <span>Insurance</span>
+              </div>
+              <div class="checklist-item" data-delay="2700">
+                <div class="check-circle">
+                  <div class="check-fill"></div>
+                  <svg class="check-icon" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+                <span>Compliance</span>
+          </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-2" style="gap: 32px; margin: 32px 0;">
+          <div class="card how-it-works-card step-3-card">
+            <span class="pill">Step 3</span>
+            <h3>Aging & Appreciation</h3>
+            <p>Time compounds value: the asset appreciates over time while being in the barrel. Scarcity increases while demand grows for premium aged expressions, creating natural price appreciation.</p>
+            <div class="aging-cta">
+              <button class="btn btn-secondary" onclick="scrollToAgingSimulator()">
+                <span>Try the Aging Value Simulator</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+              </button>
+            </div>
+          </div>
+          <div class="card step-4-card">
+            <span class="pill">Step 4</span>
+            <h3>Exit Strategies</h3>
+            <div class="exit-grid">
+              <button class="exit-btn" onclick="openExitModal('investor')">
+                <h4>Sell Certificate to Another Investor</h4>
+                <p>Early liquidity, no physical movement</p>
+              </button>
+              <button class="exit-btn" onclick="openExitModal('bottlers')">
+                <h4>Sell to Bottlers/Brands</h4>
+                <p>Bottling under established labels</p>
+              </button>
+              <button class="exit-btn" onclick="openExitModal('corporate')">
+                <h4>Corporate Clients</h4>
+                <p>Hotels, restaurants, bars</p>
+              </button>
+              <button class="exit-btn" onclick="openExitModal('marketplace')">
+                <h4>Hogshead Market Place</h4>
+                <p>E-commerce for rare tequilas</p>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Exit Strategy Modals -->
+      <div id="modal-overlay" class="modal-overlay" onclick="closeExitModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+          <button class="modal-close" onclick="closeExitModal()">&times;</button>
+          <div id="modal-body">
+            <!-- Modal content will be populated by JavaScript -->
+          </div>
+        </div>
+          </div>
+          
+      <!-- OPPORTUNITY -->
+      <section id="opportunity">
+        <!-- Scene 1: Giant Question (entry) -->
+        <div class="opp-question">
+          <h2>Why now? What's the Opportunity?</h2>
+          </div>
+          
+        <!-- Scene 2: Five Cards Converge -->
+        <div class="opp-cards">
+          <div class="opp-card card-1">
+            <h3>Regulated Origin</h3>
+            <p>Protected by denomination.</p>
+          </div>
+          <div class="opp-card card-2">
+            <h3>Historic Low Entry</h3>
+            <p>Attractive basis this cycle as agave is in an historic low price</p>
+          </div>
+          <div class="opp-card card-3">
+            <h3>Proven Model</h3>
+            <p>Time-in-wood already won in bourbon.</p>
+          </div>
+          <div class="opp-card card-4">
+            <h3>Natural & Additive-Free</h3>
+            <p>Premium aligns with consumer demand.</p>
+          </div>
+          <div class="opp-card card-5">
+            <h3>Aging → Appreciation</h3>
+            <p>Time compounds value.</p>
+          </div>
+        </div>
+
+        <!-- Scene 4: Big Proof Banners -->
+        <div class="opp-banners">
+          <div class="opp-banner" data-banner="1">
+            <span class="banner-number" data-value="13.4" data-unit="%" data-decimals="1" data-animate="true">13.4%</span>
+            <span class="banner-label">US Tequila CAGR</span>
+          </div>
+          <div class="opp-banner" data-banner="2">
+            <span class="banner-number" data-animate="false">13–15%</span>
+            <span class="banner-label">Bourbon Barrel IRR (precedent)</span>
+          </div>
+          <div class="opp-banner" data-banner="3">
+            <span class="banner-number" data-value="-50" data-unit="%" data-decimals="0" data-animate="true">−50%</span>
+            <span class="banner-label">Agave margin when turned tequila</span>
+          </div>
+        </div>
+
+        <!-- Scene 5: Guardrails Ribbon -->
+        <div class="opp-guardrails">
+          <div class="opp-chip">
+            <span class="chip-icon">✓</span>
+            <span>Custody</span>
+                    </div>
+          <div class="opp-chip">
+            <span class="chip-icon">✓</span>
+            <span>Insurance</span>
+                  </div>
+          <div class="opp-chip">
+            <span class="chip-icon">✓</span>
+            <span>Denomination</span>
+                </div>
+          <div class="opp-chip">
+            <span class="chip-icon">✓</span>
+            <span>QC & Monitoring</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- MARKET INTELLIGENCE -->
+      <section id="market">
+        <h2>Market Intelligence</h2>
+        <p class="sub">Global tequila market growth by region and competitive positioning. All market values in USD billions.</p>
+        
+        <!-- Global Market Hero -->
+        <div class="card">
+          <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: start;">
+            <div style="min-width: 0;">
+              <span class="pill">Tequila Global Market</span>
+              <div class="stat-display highlight" style="margin-bottom: 12px;">
+                <div class="stat-number" data-target="28.3" data-suffix="B" data-prefix="$" style="font-size: 1.4rem;">$0B</div>
+                <div class="stat-label" style="font-size: 0.85rem;">Actual Sales 2024</div>
+                          </div>
+              <div class="stat-display" style="margin-bottom: 12px;">
+                <div class="stat-number" data-target="13.4" data-suffix="%" style="font-size: 1.4rem;">0%</div>
+                <div class="stat-label" style="font-size: 0.85rem;">Historic CAGR</div>
+                        </div>
+              <div class="stat-display" style="margin-bottom: 12px;">
+                <div class="stat-number" data-target="6.7" data-suffix="%" style="font-size: 1.4rem;">0%</div>
+                <div class="stat-label" style="font-size: 0.85rem;">Forecast CAGR (2025-2029)</div>
+                          </div>
+              <div class="stat-display highlight">
+                <div class="stat-number" data-target="39" data-suffix="B" data-prefix="$" style="font-size: 1.4rem;">$0B</div>
+                <div class="stat-label" style="font-size: 0.85rem;">Sales Forecast 2029</div>
+                        </div>
+              <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #f1f5f8;">
+                <div class="stat-display" style="margin-bottom: 8px;">
+                  <div class="stat-number" data-target="496" data-suffix="M" style="font-size: 1.2rem;">0M</div>
+                  <div class="stat-label" style="font-size: 0.8rem;">Total Production 2024 (Liters)</div>
+                          </div>
+                <div class="stat-display">
+                  <div class="stat-number" data-target="400" data-suffix="M" style="font-size: 1.2rem;">0M</div>
+                  <div class="stat-label" style="font-size: 0.8rem;">Exported 2024 (Liters)</div>
+                        </div>
+                          </div>
+                        </div>
+            <div>
+              <span class="pill">Regional Growth Analysis</span>
+              <div id="regional-map" style="width:100%; height:500px; margin: 16px 0;"></div>
+                      </div>
+                    </div>
+          <div class="legend">
+            <div class="item" data-region="UK"><span class="sw"></span><div><b>UK — 12.4% CAGR</b><span class="sub">$0.4B Market</span></div></div>
+            <div class="item" data-region="WESTERN_EUROPE"><span class="sw"></span><div><b>Western Europe — 9.5% CAGR</b><span class="sub">$1.5B Market</span></div></div>
+            <div class="item" data-region="EASTERN_EUROPE"><span class="sw"></span><div><b>Eastern Europe — 9.3% CAGR</b><span class="sub">$0.4B Market</span></div></div>
+            <div class="item" data-region="US"><span class="sw"></span><div><b>US — 6.3% CAGR</b><span class="sub">$20.5B Market</span></div></div>
+            <div class="item" data-region="MEXICO"><span class="sw"></span><div><b>Mexico — 6.6% CAGR</b><span class="sub">$2.9B Market</span></div></div>
+            <div class="item" data-region="LATAM"><span class="sw"></span><div><b>Latin America — 6.7% CAGR</b><span class="sub">$0.5B Market</span></div></div>
+            <div class="item" data-region="CANADA"><span class="sw"></span><div><b>Canada — 2.6% CAGR</b><span class="sub">$4.2B Market</span></div></div>
+            <div class="item" data-region="CHINA"><span class="sw"></span><div><b>China — 4.5% CAGR</b><span class="sub">$0.1B Market</span></div></div>
+            <div class="item" data-region="APAC"><span class="sw"></span><div><b>Asia Pacific — 4.1% CAGR</b><span class="sub">$1.2B Market</span></div></div>
+                  </div>
+                </div>
+
+        <!-- US Market Focus -->
+        <div class="grid grid-3" style="margin-top: 32px;">
+          <div class="card stat-card">
+            <span class="pill">US Market</span>
+            <h3>US Tequila Market</h3>
+            <div class="stat-display">
+              <div class="stat-number" data-target="17" data-suffix="%">0%</div>
+              <div class="stat-label">Historic CAGR</div>
+            </div>
+            <div class="stat-display">
+              <div class="stat-number" data-target="6.3" data-suffix="%">0%</div>
+              <div class="stat-label">Projected CAGR</div>
+            </div>
+            <div class="stat-display highlight">
+              <div class="stat-number" data-target="28" data-suffix="B" data-prefix="$">$0B</div>
+              <div class="stat-label">2029 Forecast</div>
+                  </div>
+                </div>
+
+          <div class="card">
+            <span class="pill">Export Trends</span>
+            <h3>Export Volume Trends</h3>
+            <div class="progress-item">
+              <div class="progress-label">US Export Volume</div>
+              <div class="progress-track">
+                <div class="progress-fill" data-width="84">
+                  <span class="progress-text">84%</span>
+                    </div>
+                  </div>
+                </div>
+            <div class="progress-item">
+              <div class="progress-label">Premium Agave 100%</div>
+              <div class="progress-track">
+                <div class="progress-fill" data-width="73">
+                  <span class="progress-text">73%</span>
+              </div>
+            </div>
+            </div>
+            <p class="note">Super premium growing 2x standard by 2029</p>
+                </div>
+
+          <div class="card">
+            <h3>Tequila vs. Other Spirits: US Market Superior Growth</h3>
+            <div class="spirits-comparison">
+              <div class="spirit-item">
+                <div class="spirit-name">Tequila</div>
+                <div class="spirit-bar">
+                  <div class="bar-fill" data-width="6.7" style="background: var(--agave);">
+                    <span class="bar-value">6.7%</span>
+                        </div>
+                        </div>
+                        </div>
+              <div class="spirit-item">
+                <div class="spirit-name">Gin</div>
+                <div class="spirit-bar">
+                  <div class="bar-fill" data-width="4.5" style="background: var(--sage);">
+                    <span class="bar-value">4.5%</span>
+                  </div>
+                        </div>
+                        </div>
+              <div class="spirit-item">
+                <div class="spirit-name">Whiskey</div>
+                <div class="spirit-bar">
+                  <div class="bar-fill" data-width="3.2" style="background: var(--amber);">
+                    <span class="bar-value">3.2%</span>
+                        </div>
+                  </div>
+                        </div>
+              <div class="spirit-item">
+                <div class="spirit-name">Vodka</div>
+                <div class="spirit-bar">
+                  <div class="bar-fill" data-width="2.1" style="background: var(--muted);">
+                    <span class="bar-value">2.1%</span>
+                        </div>
+                        </div>
+                  </div>
+              <div class="spirit-item">
+                <div class="spirit-name">Rum</div>
+                <div class="spirit-bar">
+                  <div class="bar-fill" data-width="1.8" style="background: var(--rose);">
+                    <span class="bar-value">1.8%</span>
+                </div>
+                </div>
+              </div>
+            </div>
+            <p class="note">CAGR comparison showing tequila's superior growth trajectory</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ASSET APPRECIATION -->
+      <section id="appreciation">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+          <div>
+            <h2>Tequila Appreciation</h2>
+            <p class="sub">Understanding the aging process and value drivers that create premium pricing.</p>
+          </div>
+          <div style="text-align: right;">
+            <h3 style="color: var(--agave); font-size: 1.8rem; margin: 0; font-weight: 700;">TIME + SCARCITY = PRICE POWER</h3>
+          </div>
+        </div>
+
+        <!-- Key Value Drivers -->
+        <div class="grid grid-3">
+          <div class="card">
+            <span class="pill">Aging Process</span>
+            <h3>Barrel-Only Aging</h3>
+            <p>Tequila only ages in barrel (not in bottle) – value builds while resting. This creates a unique investment opportunity where time directly correlates with value appreciation.</p>
+          </div>
+          <div class="card">
+            <span class="pill">Scarcity Factors</span>
+            <h3>Compounding Scarcity</h3>
+            <p>Scarcity compounds: angel's share, long cycles, limited long-term stock. Each year of aging reduces available inventory while increasing demand for premium aged expressions.</p>
+          </div>
+          <div class="card">
+            <span class="pill">Premium Pricing</span>
+            <h3>Step-Change Pricing</h3>
+            <p>Result: Older, limited releases command step-change pricing. Aged tequila achieves exponential price increases as it becomes increasingly rare and sought after.</p>
+          </div>
+        </div>
+
+        <!-- Asset Appreciation Section -->
+        <div class="grid grid-2" style="gap: 32px; margin: 32px 0;">
+          <!-- Tequila Aging Journey -->
+          <div class="card premium-timeline">
+            <div style="margin-bottom: 12px;">
+              <span class="pill">Aging Process</span>
+              <h3>Tequila Aging Journey</h3>
+              <p style="font-size: 0.9rem; color: var(--muted); margin: 6px 0 0;">Interactive Timeline - Click stages or use navigation to explore each aging phase</p>
+            </div>
+            
+            <div class="premium-timeline-container">
+              <!-- Animated Background -->
+              <div class="timeline-background">
+                <div class="timeline-glow"></div>
+              </div>
+
+              <!-- Main Timeline -->
+              <div class="timeline-track">
+                <div class="timeline-progress-bar">
+                  <div class="timeline-progress-fill"></div>
+                </div>
+                
+                <!-- Timeline Nodes -->
+                <div class="timeline-nodes">
+                  <div class="timeline-node active" data-stage="0">
+                    <div class="node-connector"></div>
+                    <div class="node-circle">
+                      <div class="node-pulse"></div>
+                    </div>
+                  </div>
+                  <div class="timeline-node" data-stage="1">
+                    <div class="node-connector"></div>
+                    <div class="node-circle">
+                      <div class="node-pulse"></div>
+                    </div>
+                  </div>
+                  <div class="timeline-node" data-stage="2">
+                    <div class="node-connector"></div>
+                    <div class="node-circle">
+                      <div class="node-pulse"></div>
+                    </div>
+                  </div>
+                  <div class="timeline-node" data-stage="3">
+                    <div class="node-connector"></div>
+                    <div class="node-circle">
+                      <div class="node-pulse"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tequila Stages -->
+              <div class="premium-stages">
+                <div class="premium-stage active" data-stage="0">
+                  <div class="stage-card">
+                    <div class="stage-image-container">
+                      <div class="image-backdrop"></div>
+                      <div class="stage-glow-ring"></div>
+                      <img src="images/blanco.png" alt="Joven tequila (0–2 months), crystal clear" class="premium-stage-image" loading="lazy" decoding="async" onload="this.classList.add('loaded')" onerror="this.classList.add('error')" />
+                    </div>
+                    <div class="stage-info">
+                      <h4 class="stage-title">JOVEN</h4>
+                      <p class="stage-time">0–2 months</p>
+                      <p class="stage-description">Crystal Clear</p>
+                      <div class="stage-characteristics">
+                        <span class="characteristic">Pure</span>
+                        <span class="characteristic">Fresh</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="premium-stage" data-stage="1">
+                  <div class="stage-card">
+                    <div class="stage-image-container">
+                      <div class="image-backdrop"></div>
+                      <div class="stage-glow-ring"></div>
+                      <img src="images/reposado.png" alt="Reposado tequila (≥ 2 months), light golden" class="premium-stage-image" loading="lazy" decoding="async" onload="this.classList.add('loaded')" onerror="this.classList.add('error')" />
+                    </div>
+                    <div class="stage-info">
+                      <h4 class="stage-title">REPOSADO</h4>
+                      <p class="stage-time">≥ 2 months</p>
+                      <p class="stage-description">Light Golden</p>
+                      <div class="stage-characteristics">
+                        <span class="characteristic">Smooth</span>
+                        <span class="characteristic">Balanced</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="premium-stage" data-stage="2">
+                  <div class="stage-card">
+                    <div class="stage-image-container">
+                      <div class="image-backdrop"></div>
+                      <div class="stage-glow-ring"></div>
+                      <img src="images/anejo.png" alt="Añejo tequila (≥ 12 months), rich amber" class="premium-stage-image" loading="lazy" decoding="async" onload="this.classList.add('loaded')" onerror="this.classList.add('error')" />
+                    </div>
+                    <div class="stage-info">
+                      <h4 class="stage-title">AÑEJO</h4>
+                      <p class="stage-time">≥ 12 months</p>
+                      <p class="stage-description">Rich Amber</p>
+                      <div class="stage-characteristics">
+                        <span class="characteristic">Complex</span>
+                        <span class="characteristic">Rich</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="premium-stage" data-stage="3">
+                  <div class="stage-card">
+                    <div class="stage-image-container">
+                      <div class="image-backdrop"></div>
+                      <div class="stage-glow-ring"></div>
+                      <img src="images/extra-anejo.png" alt="Extra Añejo tequila (≥ 36 months), deep mahogany" class="premium-stage-image" loading="lazy" decoding="async" onload="this.classList.add('loaded')" onerror="this.classList.add('error')" />
+                    </div>
+                    <div class="stage-info">
+                      <h4 class="stage-title">EXTRA AÑEJO</h4>
+                      <p class="stage-time">≥ 36 months</p>
+                      <p class="stage-description">Deep Mahogany</p>
+                      <div class="stage-characteristics">
+                        <span class="characteristic">Exquisite</span>
+                        <span class="characteristic">Rare</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Navigation -->
+              <div class="premium-navigation">
+                <button class="nav-button prev" id="prevStage" aria-label="Previous stage">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                  </svg>
+                </button>
+                
+                <div class="stage-indicators">
+                  <button class="indicator active" data-stage="0"></button>
+                  <button class="indicator" data-stage="1"></button>
+                  <button class="indicator" data-stage="2"></button>
+                  <button class="indicator" data-stage="3"></button>
+                </div>
+                
+                <button class="nav-button next" id="nextStage" aria-label="Next stage">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9,18 15,12 9,6"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="timeline-footer">
+              <p class="source-note">Source: NOM-006-SCFI, CRT</p>
+            </div>
+          </div>
+
+          <!-- Price Appreciation Chart -->
+          <div class="card">
+            <h3>Retail Price Appreciation Over Time</h3>
+            <p class="sub" style="margin-bottom: 8px;">USD currency - 750ml bottle pricing</p>
+            <div id="retailPriceChart" style="width:100%;height:400px"></div>
+            <p class="note" style="font-size: 0.8rem; margin-top: 4px;">Data: Joe's benchmark (0–120 months). Values are medians/representative prices per cohort; not investment advice.</p>
+          </div>
+        </div>
+
+        <!-- Interactive Aging Simulator -->
+        <div id="aging-simulator" class="aging-simulator-section" style="margin-top: 48px;">
+          <div class="card" style="padding: 32px; position: relative;">
+            <!-- Initial Cost Card - Top Right of entire simulator -->
+            <div class="initial-cost-card" style="position: absolute; top: 32px; right: 32px; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px; width: 180px; z-index: 10; transition: all 0.3s ease; cursor: pointer;">
+              <div style="font-size: 13px; color: var(--muted); margin-bottom: 4px;">Initial Investment</div>
+              <div style="font-size: 12px; color: var(--muted); margin-bottom: 2px;">Barrel Cost (Month 0)</div>
+              <div id="initialBarrelCost" style="font-weight: 600; color: var(--ink); font-size: 18px; transition: all 0.3s ease;">$0</div>
+            </div>
+
+            <div style="margin-bottom: 24px; margin-top: 2px;">
+              <span class="pill">Interactive Tool</span>
+              <h3 style="margin-top: 16px;">Aging Value Simulator</h3>
+              <p style="color: var(--muted); margin: 8px 0 0;">Slide through time to see how aging increases barrel value while angel's share reduces volume.</p>
+            </div>
+
+            <div class="simulator-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+
+              <!-- Left: Controls & KPIs -->
+              <div class="simulator-controls">
+                <!-- Slider -->
+                <div class="slider-container" style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin-bottom: 20px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span style="font-size: 15px; color: var(--muted);">Months aged</span>
+                    <span id="currentMonth" style="font-weight: 600; color: var(--ink); font-size: 18px;">24 mo</span>
+                  </div>
+                  <input 
+                    type="range" 
+                    id="agingSlider" 
+                    min="0" 
+                    max="120" 
+                    value="24" 
+                    step="1"
+                    style="width: 100%; height: 8px; border-radius: 4px; background: var(--line); outline: none; -webkit-appearance: none;"
+                  />
+                  <div style="display: flex; justify-content: space-between; margin-top: 6px; font-size: 13px; color: var(--muted);">
+                    <span>0m</span>
+                    <span>120m</span>
+                  </div>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="kpi-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
+                    <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Remaining Volume</div>
+                    <div id="remainingVolume" style="font-weight: 600; color: var(--ink); font-size: 28px;">180.0 L</div>
+                  </div>
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
+                    <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Angel's Share</div>
+                    <div id="angelShare" style="font-weight: 600; color: var(--ink); font-size: 28px;">10.0%</div>
+                  </div>
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
+                    <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Barrel Value</div>
+                    <div id="barrelValue" style="font-weight: 600; color: var(--agave); font-size: 28px;">$9,000</div>
+                  </div>
+                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
+                    <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Value per Liter</div>
+                    <div id="valuePerLiter" style="font-weight: 600; color: var(--ink); font-size: 28px;">$50.00</div>
+                  </div>
+                </div>
+
+                <!-- Value Band -->
+                <div class="value-band" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-top: 16px; min-height: 80px;">
+                  <div style="font-size: 15px; color: var(--muted); margin-bottom: 6px;">Value Range</div>
+                  <div id="valueRange" style="font-size: 22px; color: var(--ink); font-weight: 600; margin-bottom: 4px;">$8,100 – $9,900</div>
+                  <div style="font-size: 13px; color: var(--muted);">Low/Base/High resale scenarios</div>
+                </div>
+              </div>
+
+              <!-- Right: Chart -->
+              <div class="simulator-chart">
+                <div style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h4 style="margin: 0; color: var(--ink); font-size: 16px;">Yield Growth Over Time</h4>
+                    <span style="font-size: 11px; color: var(--muted);">Interactive • Real-time</span>
+                  </div>
+                  <div id="agingChart" style="width: 100%; height: 420px;"></div>
+                  <div style="font-size: 11px; color: var(--muted); margin-top: 8px;">
+                    Vertical line tracks current month. Value increases while volume decreases due to angel's share.
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Disclosures - Aligned with Grid -->
+            <div style="margin-top: 24px; padding: 12px; background: #f8f9fa; border-radius: 6px; border-left: 2px solid var(--agave);">
+              <div style="font-size: 9px; color: var(--muted); line-height: 1.3;">
+                <strong style="color: var(--ink);">Important Disclosures:</strong><br>
+                • Values shown are industry averages and estimates, not actual market prices<br>
+                • Resale prices are based on suggested retail bottle price growth trends<br>
+                • This is a representation for illustrative purposes only, not real investment data<br>
+                • Actual results may vary significantly based on market conditions, brand, and other factors<br>
+                • This tool is not investment advice and should not be used as the sole basis for investment decisions
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHY US -->
+      <section id="whyus">
+        <h2>Why Us</h2>
+        <p class="sub">Operators first. We build around discipline, transparency, and aligned incentives.</p>
+        <div class="grid grid-3" style="max-width:600px;margin:0 auto;">
+          <div class="card" style="padding:16px;">
+            <span class="pill" style="font-size:11px;padding:4px 8px;">Discipline</span>
+            <h3 style="font-size:1.1rem;margin:8px 0 4px;">Operational Backbone</h3>
+            <p style="font-size:0.9rem;margin:0;">Professional custody, inventory controls, and independent audits.</p>
+          </div>
+          <div class="card" style="padding:16px;">
+            <span class="pill" style="font-size:11px;padding:4px 8px;">Alignment</span>
+            <h3 style="font-size:1.1rem;margin:8px 0 4px;">We Win with You</h3>
+            <p style="font-size:0.9rem;margin:0;">We prioritize structures that align our incentives with investor outcomes.</p>
+          </div>
+          <div class="card" style="padding:16px;">
+            <span class="pill" style="font-size:11px;padding:4px 8px;">Selectivity</span>
+            <h3 style="font-size:1.1rem;margin:8px 0 4px;">Curated Supply</h3>
+            <p style="font-size:0.9rem;margin:0;">We focus on quality inventory and timing rather than maximum volume.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODEL (HIGH LEVEL) -->
+      <section id="model">
+        <h2>Model (High Level)</h2>
+        <p class="sub">Public-facing overview only; full operational detail is shared on request.</p>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Acquire</h3>
+            <p>Source qualified aging lots at the right specification and timing.</p>
+          </div>
+          <div class="card">
+            <h3>Custody</h3>
+            <p>Hold under bonded storage with climate control, inventory tracking, and insurance.</p>
+          </div>
+          <div class="card">
+            <h3>Exit</h3>
+            <p>Plan exits around category step-ups and buyer demand via resale or bottling.</p>
+          </div>
+        </div>
+        <div class="grid grid-2" style="margin-top:16px">
+          <div class="chart" aria-label="Illustrative value over time">
+            <h3 style="margin:0 0 8px">Illustrative Value Over Time</h3>
+            <div class="bars">
+              <div class="bar" style="height:22%"></div>
+              <div class="bar" style="height:48%"></div>
+              <div class="bar" style="height:74%"></div>
+              <div class="bar" style="height:96%"></div>
+            </div>
+            <div class="legend"><span class="swatch"></span> Early → Mid → Late → Extra-Mature</div>
+          </div>
+          <div class="card">
+            <h3>What We Share Publicly</h3>
+            <ul class="list">
+              <li>Investment thesis and approach</li>
+              <li>High-level custody and audit framework</li>
+              <li>Exit pathway examples</li>
+            </ul>
+            <p class="mini">Detailed sourcing, partners, pricing, and operational minutiae are reserved for qualified discussions.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- GUARDRails -->
+      <section id="guardrails">
+        <h2>Guardrails</h2>
+        <p class="sub">Clear, simple boundaries that protect both investors and operations.</p>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>No Sensitive Disclosures</h3>
+            <p>We do not publish private counterparties, specific storage locations, or proprietary process details.</p>
+          </div>
+          <div class="card">
+            <h3>Compliance First</h3>
+            <p>Operate within applicable regulations and category standards; maintain documentation and audit trails.</p>
+          </div>
+          <div class="card">
+            <h3>Transparent Communications</h3>
+            <p>Plain-language materials; data-backed updates; realistic framing without hype.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq">
+        <h2>FAQ</h2>
+        <p class="sub">A few basics. More detail is available via the investor memo.</p>
+        <div class="grid">
+          <details>
+            <summary>Is this an offer to invest?</summary>
+            <p>No. This page is informational only and not a solicitation or offer of securities. Detailed materials are provided upon request to appropriate parties.</p>
+          </details>
+          <details>
+            <summary>Where is the product held?</summary>
+            <p>Under professional custody with climate control, inventory tracking, and insurance. Specific facilities and counterparties are shared confidentially.</p>
+          </details>
+          <details>
+            <summary>What are the exit paths?</summary>
+            <p>Resale to brands and private-label bottling are common pathways. Timing is planned around category maturity and buyer demand.</p>
+          </details>
+          <details>
+            <summary>Why aging tequila?</summary>
+            <p>Regulated origin, premiumization trends, and time-based value drivers create a compelling backdrop when paired with disciplined operations.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <h2>Request the Investor Memo</h2>
+        <p class="sub">We’ll share the full deck and arrange a conversation.</p>
+        <div class="grid grid-2">
+          <form class="card" onsubmit="event.preventDefault(); alert('Thanks — we will reach out!');">
+            <label>Name<br/><input required type="text" placeholder="Your name" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035"></label><br/><br/>
+            <label>Email<br/><input required type="email" placeholder="you@company.com" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035"></label><br/><br/>
+            <button class="cta" type="submit">Request Memo</button>
+          </form>
+          <div class="card">
+            <h3>What you’ll receive</h3>
+            <ul class="list">
+              <li>Full thesis and model walkthrough</li>
+              <li>Custody & audit framework detail</li>
+              <li>Risk factors and exit planning approach</li>
+            </ul>
+            <p class="mini">We keep sensitive data confidential and share specifics during diligence.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div><strong>Hogshead Agave Spirits</strong> — Investor Overview</div>
+      <p class="disclaimer"><strong>Disclaimer:</strong> This page is for informational purposes only and does not constitute an offer to sell or a solicitation of an offer to buy any securities. Any projections are illustrative; outcomes depend on market conditions and execution.</p>
+      <div class="mini">© 2025 Hogshead Agave Spirits LLC. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Load Google Charts
+    google.charts.load('current', {'packages':['geochart']});
+    google.charts.setOnLoadCallback(drawRegionalMap);
+
+    function drawRegionalMap() {
+      // Create data table
+      const data = new google.visualization.DataTable();
+      data.addColumn('string', 'Country');
+      data.addColumn('number', 'CAGR');
+      data.addColumn({type:'string', role:'tooltip', p:{html:true}});
+
+      const add = (code, cagr, name, marketSize) =>
+        data.addRow([code, cagr, `<div style="padding:8px 12px; font-family: system-ui, Arial, sans-serif;"><b>${name}</b><br/>Market Size: ${marketSize}<br/>CAGR: ${cagr}%</div>`]);
+
+      // UK - Highest CAGR (12.4%)
+      add('GB', 9, 'United Kingdom', '$0.4B');
+
+      // Western Europe (9.5% CAGR)
+      ['FR','DE','ES','IT','NL','BE','CH','AT','PT','IE','NO','SE','FI','DK']
+        .forEach(c=>add(c, 8, 'Western Europe', '$1.5B'));
+
+      // Eastern Europe (9.3% CAGR)
+      ['PL','CZ','HU','RO','BG','HR','SK','SI','EE','LV','LT']
+        .forEach(c=>add(c, 7, 'Eastern Europe', '$0.4B'));
+
+      // US - Largest market (6.3% CAGR)
+      add('US', 6, 'United States', '$20.5B');
+
+      // Canada (2.6% CAGR)
+      add('CA', 4, 'Canada', '$4.2B');
+
+      // Mexico (6.6% CAGR)
+      add('MX', 5, 'Mexico', '$2.9B');
+
+      // Latin America excluding Mexico (6.7% CAGR)
+      ['BR','AR','CL','CO','PE','UY','PY','BO','VE','EC','GY','SR','GF']
+        .forEach(c=>add(c, 3, 'Latin America', '$0.5B'));
+
+      // China (4.5% CAGR)
+      add('CN', 2, 'China', '$0.1B');
+
+      // Asia Pacific excluding China (4.1% CAGR)
+      ['JP','KR','AU','IN','NZ','ID','MY','TH','PH','VN','SG','TW','HK','MO']
+        .forEach(c=>add(c, 1, 'Asia Pacific', '$1.2B'));
+
+      const options = {
+        legend: 'none',
+        tooltip: { isHtml:true },
+        backgroundColor: '#F5F3EF',
+        datalessRegionColor: '#E5E7EB',
+        colorAxis: {
+          minValue: 1,
+          maxValue: 9,
+          colors: ['#4F46E5', '#7B8E99', '#EA580C', '#C2410C', '#B9732F', '#DB9251', '#3D825E', '#3B6E78', '#0E5B62'] // Each region gets its own color
+        },
+        keepAspectRatio: true
+      };
+
+      const chart = new google.visualization.GeoChart(document.getElementById('regional-map'));
+      chart.draw(data, options);
+      
+      // Responsive handling
+      window.addEventListener('resize', () => chart.draw(data, options));
+
+      // ----- SYNC LEGEND SWATCHES TO EXACT COLORS -----
+      const REGIONS = {
+        UK: { color: '#0E5B62', value: 9 },
+        WESTERN_EUROPE: { color: '#3B6E78', value: 8 },
+        EASTERN_EUROPE: { color: '#3D825E', value: 7 },
+        US: { color: '#DB9251', value: 6 },
+        MEXICO: { color: '#B9732F', value: 5 },
+        CANADA: { color: '#C2410C', value: 4 },
+        LATAM: { color: '#EA580C', value: 3 },
+        CHINA: { color: '#7B8E99', value: 2 },
+        APAC: { color: '#4F46E5', value: 1 }
+      };
+
+      document.querySelectorAll('.legend .item').forEach(item => {
+        const key = item.dataset.region;
+        const cfg = REGIONS[key];
+        if (cfg) {
+          item.querySelector('.sw').style.background = cfg.color;
+        }
+      });
+    }
+
+    // === ASSET APPRECIATION CHART ===
+    (function(){
+      // === YOUR EXACT DATA (month -> USD per 750 ml) ===
+      const DATA = [
+        {m:0,p:40},{m:1,p:45},{m:2,p:45},{m:3,p:45},{m:4,p:45},{m:5,p:50},
+        {m:6,p:55},{m:7,p:55},{m:8,p:55},{m:9,p:60},{m:10,p:60},{m:11,p:60},
+        {m:12,p:60},{m:13,p:60},{m:14,p:60},{m:15,p:60},{m:16,p:60},{m:17,p:60},
+        {m:18,p:60},{m:19,p:60},{m:20,p:60},{m:21,p:66},{m:22,p:70},{m:23,p:80},
+        {m:24,p:80},{m:25,p:80},{m:26,p:80},{m:27,p:90},{m:28,p:110},{m:29,p:110},
+        {m:30,p:110},{m:31,p:135},{m:32,p:135},{m:33,p:135},{m:34,p:140},{m:35,p:140},
+        {m:36,p:140},{m:37,p:160},{m:38,p:160},{m:39,p:160},{m:40,p:175},{m:41,p:175},
+        {m:42,p:175},{m:43,p:175},{m:44,p:175},{m:45,p:175},{m:46,p:220},{m:47,p:220},
+        {m:48,p:220},{m:49,p:250},{m:50,p:250},{m:51,p:250},{m:52,p:250},{m:53,p:250},
+        {m:54,p:250},{m:55,p:250},{m:56,p:250},{m:57,p:250},{m:58,p:250},{m:59,p:250},
+        {m:60,p:252},{m:61,p:252},{m:62,p:252},{m:63,p:252},{m:64,p:300},{m:65,p:300},
+        {m:66,p:300},{m:67,p:300},{m:68,p:300},{m:69,p:300},{m:70,p:300},{m:71,p:300},
+        {m:72,p:300},{m:73,p:300},{m:74,p:300},{m:75,p:300},{m:76,p:300},{m:77,p:300},
+        {m:78,p:300},{m:79,p:300},{m:80,p:300},{m:81,p:300},{m:82,p:300},{m:83,p:300},
+        {m:84,p:304},{m:85,p:305},{m:86,p:305},{m:87,p:305},{m:88,p:330},{m:89,p:330},
+        {m:90,p:330},{m:91,p:330},{m:92,p:330},{m:93,p:330},{m:94,p:330},{m:95,p:330},
+        {m:96,p:335},{m:97,p:336},{m:98,p:336},{m:99,p:336},{m:100,p:336},{m:101,p:336},
+        {m:102,p:336},{m:103,p:336},{m:104,p:336},{m:105,p:336},{m:106,p:336},{m:107,p:336},
+        {m:108,p:363},{m:109,p:470},{m:110,p:470},{m:111,p:470},{m:112,p:470},{m:113,p:470},
+        {m:114,p:470},{m:115,p:470},{m:116,p:470},{m:117,p:470},{m:118,p:470},{m:119,p:470},
+        {m:120,p:470}
+      ];
+
+      // detect jump points for markPoints
+      const jumps = [];
+      for (let i = 1; i < DATA.length; i++){
+        if (DATA[i].p > DATA[i-1].p){
+          jumps.push({ coord:[DATA[i].m, DATA[i].p], value:`$${DATA[i].p}` });
+        }
+      }
+
+      const months = DATA.map(d=>d.m);
+      const prices = DATA.map(d=>d.p);
+      const fmtUSD = v => '$' + (v|0).toLocaleString();
+
+      const el = document.getElementById('retailPriceChart');
+      if (el) {
+        const chart = echarts.init(el);
+
+        chart.setOption({
+          grid: { left: 80, right: 40, top: 40, bottom: 60 },
+          backgroundColor: 'transparent',
+          animation: true,
+          animationDuration: 3000,
+          animationEasing: 'cubicOut',
+          animationDelay: function (idx) {
+            return idx * 20; // Stagger the animation
+          },
+          tooltip: {
+            trigger: 'axis',
+            backgroundColor: 'rgba(255,255,255,0.95)',
+            borderColor: '#0E5B62',
+            borderWidth: 1,
+            borderRadius: 8,
+            shadowBlur: 15,
+            shadowColor: 'rgba(0,0,0,0.1)',
+            textStyle: { 
+              color: '#1B2629', 
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 13
+            },
+            formatter: (params)=>{
+              const p = params[0];
+              const years = Math.floor(p.axisValue / 12);
+              const months = p.axisValue % 12;
+              const ageText = years > 0 ? `${years}y ${months}m` : `${months}m`;
+              return `<div style="font-family: system-ui, sans-serif;">
+                <div style="font-weight: 600; color: #0E5B62;">Age: ${ageText}</div>
+                <div style="font-weight: 600; color: #1B2629;">${fmtUSD(p.data)}</div>
+              </div>`;
+            }
+          },
+          xAxis: {
+            type: 'category',
+            data: months,
+            axisLine:{ lineStyle:{ color:'#E9E3DA' } },
+            axisTick:{ show:false },
+            axisLabel:{ 
+              color:'#6A7A81', 
+              fontFamily: 'Manrope, system-ui, sans-serif',
+              fontSize: 12,
+              interval: 0,
+              formatter: v => v % 12 === 0 ? v + 'm' : '' 
+            },
+            splitLine:{ show:false },
+            name: 'Age (months)', 
+            nameLocation:'middle', 
+            nameGap: 40, 
+            nameTextStyle:{ 
+              color:'#1B2629',
+              fontFamily: 'Manrope, system-ui, sans-serif',
+              fontSize: 12,
+              fontWeight: 600
+            }
+          },
+          yAxis: {
+            type: 'value',
+            min: 0,
+            max: Math.ceil(Math.max(...prices) / 50) * 50,
+            interval: 50,
+            axisLabel:{ 
+              color:'#6A7A81', 
+              fontFamily: 'Manrope, system-ui, sans-serif',
+              fontSize: 12,
+              formatter: v => '$' + v 
+            },
+            splitLine:{ lineStyle:{ color:'#E9E3DA', type:'solid', opacity: 0.3 } },
+            name: 'Retail price (USD, 750 ml)', 
+            nameGap: 20, 
+            nameTextStyle:{ 
+              color:'#1B2629',
+              fontFamily: 'Manrope, system-ui, sans-serif',
+              fontSize: 12,
+              fontWeight: 600
+            }
+          },
+          series: [{
+            name: 'Retail Price',
+            type: 'line',
+            data: prices,
+            step: 'middle',
+            symbol: 'none',
+            lineStyle: { 
+              width: 4, 
+              color: '#0E5B62'
+            },
+            emphasis: {
+              lineStyle: {
+                width: 5,
+                color: '#D78A3B'
+              }
+            },
+            label: {
+              show: false
+            }
+          }]
+        });
+
+        // Add color transition effect after animation completes
+        setTimeout(() => {
+          const colors = [
+            '#0E5B62', // Deep agave
+            '#3D825E', // Lighter agave  
+            '#5FA8A5', // Sea-sage
+            '#4A9B8E', // Teal blend
+            '#2D6B5D', // Forest agave
+            '#0E5B62'  // Back to start
+          ];
+          
+          let colorIndex = 0;
+          
+          const colorTransition = setInterval(() => {
+            colorIndex = (colorIndex + 1) % colors.length;
+            
+            chart.setOption({
+              series: [{
+                lineStyle: {
+                  color: colors[colorIndex]
+            }
+          }]
+        });
+          }, 2000); // Change color every 2 seconds
+          
+          // Stop the color transition on hover
+          chart.on('mouseover', () => {
+            clearInterval(colorTransition);
+            chart.setOption({
+              series: [{
+                lineStyle: {
+                  color: '#D78A3B' // Amber on hover
+                }
+              }]
+            });
+          });
+          
+          // Resume color transition when mouse leaves
+          chart.on('mouseout', () => {
+            colorIndex = 0;
+            const resumeTransition = setInterval(() => {
+              colorIndex = (colorIndex + 1) % colors.length;
+              
+              chart.setOption({
+                series: [{
+                  lineStyle: {
+                    color: colors[colorIndex]
+                  }
+                }]
+              });
+            }, 2000);
+          });
+        }, 3500); // Start color transition 3.5 seconds after page load
+
+        window.addEventListener('resize', () => chart.resize());
+      }
+    })();
+
+    // === AGING SIMULATOR ===
+    (function() {
+      let agingData = null;
+      let chartData = null;
+
+      // Load real aging data
+      async function loadAgingData() {
+        try {
+          const response = await fetch('/public/data/aging.json');
+          agingData = await response.json();
+          
+          // Generate chart data from real data
+          chartData = agingData.series.map(point => ({
+            month: point.month,
+            remainingVolume: point.liters_remaining,
+            barrelValue: point.liters_remaining * point.resale_price_per_l.base,
+            valueLow: point.liters_remaining * point.resale_price_per_l.low,
+            valueHigh: point.liters_remaining * point.resale_price_per_l.high,
+            costPerLiter: point.cost_per_l,
+            cumCost: point.cum_cost_per_bbl
+          }));
+          
+          return true;
+        } catch (error) {
+          console.error('Failed to load aging data:', error);
+          return false;
+        }
+      }
+
+      function getAgingMetrics(months) {
+        if (!agingData || !chartData) return null;
+        
+        // Find the closest month in the data
+        const dataPoint = chartData.find(point => point.month === months) || 
+                         chartData[Math.min(months, chartData.length - 1)];
+        
+        if (!dataPoint) return null;
+        
+        const originalVolume = agingData.meta.barrel_size_l;
+        const angelShare = ((originalVolume - dataPoint.remainingVolume) / originalVolume) * 100;
+        
+        return {
+          remainingVolume: dataPoint.remainingVolume,
+          angelShare: angelShare,
+          pricePerLiter: dataPoint.barrelValue / dataPoint.remainingVolume,
+          barrelValue: dataPoint.barrelValue,
+          valueLow: dataPoint.valueLow,
+          valueHigh: dataPoint.valueHigh,
+          costPerLiter: dataPoint.costPerLiter,
+          cumCost: dataPoint.cumCost
+        };
+      }
+
+      // Animate number counting
+      function animateNumber(element, start, end, duration = 1500) {
+        const startTime = performance.now();
+        const isCurrency = element.textContent.includes('$');
+        
+        function updateNumber(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Easing function for smooth animation
+          const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+          const current = start + (end - start) * easeOutCubic;
+          
+          if (isCurrency) {
+            element.textContent = `$${Math.round(current).toLocaleString()}`;
+          } else {
+            element.textContent = Math.round(current).toLocaleString();
+          }
+          
+          if (progress < 1) {
+            requestAnimationFrame(updateNumber);
+          }
+        }
+        
+        requestAnimationFrame(updateNumber);
+      }
+
+      function updateSimulator(months) {
+        const metrics = getAgingMetrics(months);
+        if (!metrics) return;
+        
+        // Update KPI displays with animation
+        document.getElementById('currentMonth').textContent = `${months} mo`;
+        animateNumber(document.getElementById('remainingVolume'), 0, metrics.remainingVolume, 1000);
+        animateNumber(document.getElementById('angelShare'), 0, metrics.angelShare, 1000);
+        animateNumber(document.getElementById('barrelValue'), 0, metrics.barrelValue, 1200);
+        animateNumber(document.getElementById('valuePerLiter'), 0, metrics.pricePerLiter, 1000);
+        
+        // Update value range
+        document.getElementById('valueRange').textContent = `$${Math.round(metrics.valueLow).toLocaleString()} – $${Math.round(metrics.valueHigh).toLocaleString()}`;
+        
+        // Update initial cost displays with animation (only set once)
+        if (agingData && !document.getElementById('initialBarrelCost').dataset.initialized) {
+          const initialData = agingData.series[0];
+          animateNumber(document.getElementById('initialBarrelCost'), 0, initialData.cum_cost_per_bbl, 1500);
+          document.getElementById('initialBarrelCost').dataset.initialized = 'true';
+        }
+        
+        // Update chart
+        updateAgingChart(months);
+      }
+
+      function updateAgingChart(currentMonth) {
+        if (!chartData) return;
+        
+        const chart = echarts.init(document.getElementById('agingChart'));
+        
+        chart.setOption({
+          grid: { left: 60, right: 40, top: 50, bottom: 50 },
+          backgroundColor: 'transparent',
+          tooltip: {
+            trigger: 'axis',
+            backgroundColor: 'rgba(255,255,255,0.95)',
+            borderColor: '#0E5B62',
+            borderWidth: 1,
+            borderRadius: 8,
+            textStyle: { 
+              color: '#1B2629',
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 12
+            },
+            formatter: (params) => {
+              const years = Math.floor(params[0].axisValue / 12);
+              const months = params[0].axisValue % 12;
+              const ageText = years > 0 ? `${years}y ${months}m` : `${months}m`;
+              
+              const valueData = params.find(p => p.seriesName === 'Barrel Value');
+              const costData = params.find(p => p.seriesName === 'Cumulative Cost');
+              
+              const value = valueData ? Math.round(valueData.data) : 0;
+              const cost = costData ? Math.round(costData.data) : 0;
+              const profit = value - cost;
+              const yieldPct = cost > 0 ? ((profit / cost) * 100).toFixed(1) : 0;
+              
+              return `<div style="font-family: system-ui, sans-serif;">
+                <div style="font-weight: 600; color: #0E5B62; margin-bottom: 4px;">Age: ${ageText}</div>
+                <div style="font-weight: 600; color: #1B2629;">Value: $${value.toLocaleString()}</div>
+                <div style="font-weight: 500; color: #6A7A81;">Cost: $${cost.toLocaleString()}</div>
+                <div style="font-weight: 600; color: ${profit >= 0 ? '#0E5B62' : '#A85D5D'}; margin-top: 2px;">
+                  Profit: $${profit.toLocaleString()} (${yieldPct}%)
+                </div>
+              </div>`;
+            }
+          },
+          xAxis: {
+            type: 'category',
+            data: chartData.map(d => d.month),
+            axisLine: { lineStyle: { color: '#E9E3DA' } },
+            axisTick: { show: false },
+            axisLabel: { 
+              color: '#6A7A81', 
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 11,
+              interval: 9,
+              formatter: v => v % 12 === 0 ? v + 'm' : ''
+            },
+            splitLine: { show: false },
+            name: 'Age (months)',
+            nameLocation: 'middle',
+            nameGap: 30,
+            nameTextStyle: { 
+              color: '#1B2629',
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 11,
+              fontWeight: 600
+            }
+          },
+          yAxis: {
+            type: 'value',
+            axisLabel: { 
+              color: '#6A7A81', 
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 11,
+              formatter: v => '$' + (v/1000).toFixed(0) + 'k'
+            },
+            splitLine: { lineStyle: { color: '#E9E3DA', type: 'solid', opacity: 0.3 } },
+            name: 'Value & Cost (USD)',
+            nameGap: 15,
+            nameTextStyle: { 
+              color: '#1B2629',
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 11,
+              fontWeight: 600
+            }
+          },
+          legend: {
+            data: ['Barrel Value', 'Cumulative Cost'],
+            top: 0,
+            right: 0,
+            textStyle: {
+              color: '#6A7A81',
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 11
+            }
+          },
+          series: [
+            {
+              name: 'Barrel Value',
+              type: 'line',
+              data: chartData.map(d => d.barrelValue),
+              smooth: true,
+              symbol: 'none',
+              lineStyle: { 
+                width: 3, 
+                color: '#0E5B62'
+              },
+              areaStyle: {
+                color: {
+                  type: 'linear',
+                  x: 0, y: 0, x2: 0, y2: 1,
+                  colorStops: [
+                    { offset: 0, color: 'rgba(14, 94, 98, 0.2)' },
+                    { offset: 1, color: 'rgba(14, 94, 98, 0.02)' }
+                  ]
+                }
+              },
+              markLine: {
+                data: [{
+                  xAxis: currentMonth,
+                  lineStyle: { 
+                    color: '#DB9251', 
+                    type: 'dotted',
+                    width: 2
+                  },
+            label: {
+              show: true,
+              position: 'top',
+                    formatter: `${currentMonth} mo`,
+              color: '#1B2629',
+                    fontSize: 12,
+              fontWeight: 600,
+                    backgroundColor: 'rgba(255,255,255,0.8)',
+                    padding: [4, 8],
+                    borderRadius: 4
+                  }
+                }]
+              }
+            },
+            {
+              name: 'Cumulative Cost',
+              type: 'line',
+              data: chartData.map(d => d.cumCost),
+              smooth: false,
+              symbol: 'none',
+              lineStyle: { 
+                width: 2, 
+                color: '#3D825E',
+                type: 'solid'
+              }
+            }
+          ]
+        });
+      }
+
+      // Opportunity Cinematic Sequence v3 - Scroll-driven with exact 72° spacing
+      class OpportunityCinematic {
+        constructor() {
+          console.log('OpportunityCinematic constructor called');
+          this.section = document.getElementById('opportunity');
+          if (!this.section) {
+            console.error('Opportunity section not found in constructor!');
+            return;
+          }
+          console.log('Opportunity section found in constructor');
+          
+          this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          
+          this.question = this.section.querySelector('.opp-question h2');
+          this.cards = this.section.querySelectorAll('.opp-card');
+          this.banners = this.section.querySelectorAll('.opp-banner');
+          this.guardrails = this.section.querySelector('.opp-guardrails');
+          
+          // Track which numbers have been animated
+          this.animatedNumbers = new Set();
+          
+          if (this.reducedMotion) {
+            this.applyReducedMotion();
+            return;
+          }
+          
+          this.setupCardPositions();
+          this.initScrollSequence();
+        }
+        
+        setupCardPositions() {
+          // Card dimensions for horizontal row
+          const cardWidth = 180; // pixels (matches CSS)
+          const cardSpacing = 20; // spacing between cards
+          
+          this.cards.forEach((card, index) => {
+            // Start position - all cards start from left side of screen
+            const startX = -window.innerWidth * 0.5; // well off-screen to the left
+            const startY = 0; // centered vertically
+            
+            // Horizontal row position (center of viewport)
+            const rowX = (index - 2) * (cardWidth + cardSpacing); // -2 to center: [-2, -1, 0, 1, 2]
+            const rowY = 0; // perfectly centered vertically
+            
+            // Upper exit position (all move up together)
+            const exitX = rowX; // maintain horizontal spacing
+            const exitY = -window.innerHeight * 0.6; // well above viewport
+            
+            console.log(`Card ${index}: start=(${startX}, ${startY}), row=(${rowX}, ${rowY}), exit=(${exitX}, ${exitY})`);
+            
+            card.dataset.startX = startX;
+            card.dataset.startY = startY;
+            card.dataset.rowX = rowX;
+            card.dataset.rowY = rowY;
+            card.dataset.exitX = exitX;
+            card.dataset.exitY = exitY;
+          });
+        }
+        
+        initScrollSequence() {
+          window.addEventListener('scroll', () => this.handleScroll(), { passive: true });
+          window.addEventListener('resize', () => {
+            this.setupCardPositions();
+            this.handleScroll();
+          });
+          
+          // Initial update
+          this.handleScroll();
+        }
+        
+        handleScroll() {
+          const viewportHeight = window.innerHeight;
+          const sectionHeight = this.section.offsetHeight;
+          
+          // Calculate scroll progress through the section (0 to 1)
+          const scrollTop = window.pageYOffset;
+          const sectionTop = this.section.offsetTop;
+          const p = Math.max(0, Math.min(1, 
+            (scrollTop - sectionTop) / (sectionHeight - viewportHeight)
+          ));
+          
+          // Debug: Log every scroll event to see if it's working
+          if (p > 0) {
+            console.log(`Scroll: p=${p.toFixed(3)}, scrollTop=${scrollTop}, sectionTop=${sectionTop}, sectionHeight=${sectionHeight}`);
+          }
+          
+          // Log progress and active scene
+          let scene = '';
+          if (p < 0.15) scene = '1: Giant Question';
+          else if (p < 0.35) scene = '2: Cards Sliding In from Left (Staggered)';
+          else if (p < 0.55) scene = '3: Cards in Horizontal Row (READABLE)';
+          else if (p < 0.70) scene = '4: Cards Moving Up';
+          else if (p < 0.82) scene = '5A: KPI 13.4%';
+          else if (p < 0.88) scene = '5B: KPI 13-15%';
+          else if (p < 0.94) scene = '5C: KPI -50%';
+          else scene = '6: Guardrails';
+          
+          if (!this.lastScene || this.lastScene !== scene) {
+            console.log(`Opportunity p=${p.toFixed(3)} | ${scene}`);
+            this.lastScene = scene;
+          }
+          
+          // Update all elements based on progress
+          this.updateQuestion(p);
+          this.updateCards(p);
+          this.updateKPIs(p);
+          this.updateGuardrails(p);
+        }
+        
+        updateQuestion(p) {
+          // 0.00–0.15: scale 1.00 → 0.90, opacity 1.0 → 0.7
+          // 0.15+: maintain at scale 0.90, opacity 0.7 until metrics
+          let scale, opacity;
+          
+          if (p <= 0.15) {
+            const t = p / 0.15;
+            scale = 1.0 - 0.1 * t; // 1.0 → 0.9
+            opacity = 1.0 - 0.3 * t; // 1.0 → 0.7
+          } else if (p <= 0.55) {
+            scale = 0.9;
+            opacity = 0.7;
+          } else {
+            // Fade during metrics
+            scale = 0.9;
+            const fadeProgress = (p - 0.55) / 0.4;
+            opacity = Math.max(0, 0.7 - fadeProgress * 0.7);
+          }
+          
+          this.question.style.transform = `scale(${scale})`;
+          this.question.style.opacity = opacity;
+        }
+        
+        updateCards(p) {
+          this.cards.forEach((card, index) => {
+            let x, y, opacity, scale, blur;
+            
+            const startX = parseFloat(card.dataset.startX);
+            const startY = parseFloat(card.dataset.startY);
+            const rowX = parseFloat(card.dataset.rowX);
+            const rowY = parseFloat(card.dataset.rowY);
+            const exitX = parseFloat(card.dataset.exitX);
+            const exitY = parseFloat(card.dataset.exitY);
+            
+            // Calculate when this specific card should appear (staggered from left to right)
+            const cardAppearStart = 0.15 + (index * 0.04); // Each card appears 0.04 progress later
+            const cardAppearEnd = cardAppearStart + 0.12; // 0.12 progress to slide in
+            
+            if (p < cardAppearStart) {
+              // Card not yet started appearing
+              x = startX;
+              y = startY;
+              opacity = 0;
+              scale = 0.94;
+              blur = 2;
+            } else if (p <= cardAppearEnd) {
+              // Card sliding in from left (staggered)
+              const t = (p - cardAppearStart) / (cardAppearEnd - cardAppearStart);
+              const eased = this.easeOut(t);
+              
+              x = startX + (rowX - startX) * eased;
+              y = startY + (rowY - startY) * eased;
+              opacity = eased;
+              scale = 0.94 + 0.06 * eased; // 0.94 → 1.0
+              blur = 2 * (1 - eased); // 2 → 0
+            } else if (p <= 0.55) {
+              // Stay in horizontal row - CLEARLY VISIBLE
+              x = rowX;
+              y = rowY;
+              opacity = 1.0; // Fully visible!
+              scale = 1.0; // Full size!
+              blur = 0; // Sharp!
+            } else if (p <= 0.70) {
+              // All cards move up together (0.55 → 0.70)
+              const t = (p - 0.55) / 0.15;
+              const eased = this.easeOut(t);
+              
+              x = rowX + (exitX - rowX) * eased;
+              y = rowY + (exitY - rowY) * eased;
+              opacity = 1.0 - 0.7 * eased; // 1.0 → 0.3
+              scale = 1.0; // maintain full size
+              blur = 0; // keep sharp
+            } else {
+              // Gone (above viewport)
+              x = exitX;
+              y = exitY;
+              opacity = 0.3;
+              scale = 1.0;
+              blur = 0;
+            }
+            
+            card.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${scale})`;
+            card.style.opacity = opacity;
+            card.style.filter = `blur(${blur}px)`;
+            card.style.zIndex = p >= 0.70 ? 5 : 12; // Behind KPIs after they exit
+          });
+        }
+        
+        updateKPIs(p) {
+          // KPI A: 0.70 → 0.82
+          // KPI B: 0.82 → 0.88
+          // KPI C: 0.88 → 0.94
+          
+          this.updateSingleKPI(this.banners[0], p, 0.70, 0.82);
+          this.updateSingleKPI(this.banners[1], p, 0.82, 0.88);
+          this.updateSingleKPI(this.banners[2], p, 0.88, 0.94);
+        }
+        
+        updateSingleKPI(kpi, p, start, end) {
+          if (!kpi) return;
+          
+          // Compute local progress
+          const t = Math.max(0, Math.min(1, (p - start) / (end - start)));
+          
+          let yPercent, opacity;
+          
+          if (t === 0) {
+            // Before this KPI
+            yPercent = 110;
+            opacity = 0;
+          } else if (t <= 0.45) {
+            // Rising to center (0 → 0.45)
+            const riseT = t / 0.45;
+            const eased = this.easeOut(riseT);
+            yPercent = 110 * (1 - eased);
+            opacity = eased;
+          } else if (t <= 0.55) {
+            // At center (0.45 → 0.55)
+            yPercent = 0;
+            opacity = 1;
+            
+            // Trigger count-up once
+            const numberEl = kpi.querySelector('.banner-number');
+            if (numberEl && !this.animatedNumbers.has(numberEl)) {
+              this.animatedNumbers.add(numberEl);
+              this.animateNumber(numberEl);
+            }
+          } else if (t < 1) {
+            // Exiting upward (0.55 → 1.0)
+            const exitT = (t - 0.55) / 0.45;
+            const eased = this.easeOut(exitT);
+            yPercent = -110 * eased;
+            opacity = 1 - eased;
+          } else {
+            // After this KPI
+            yPercent = -110;
+            opacity = 0;
+          }
+          
+          kpi.style.transform = `translate(-50%, calc(-50% + ${yPercent}%))`;
+          kpi.style.opacity = opacity;
+        }
+        
+        updateGuardrails(p) {
+          if (!this.guardrails) return;
+          
+          let yPercent, opacity;
+          
+          if (p < 0.94) {
+            // Hidden below
+            yPercent = 110;
+            opacity = 0;
+          } else {
+            const t = (p - 0.94) / 0.06; // 0 to 1 over 0.94-1.0
+            
+            if (t <= 0.5) {
+              // Rising to center
+              const riseT = t / 0.5;
+              const eased = this.easeOut(riseT);
+              yPercent = 110 * (1 - eased);
+              opacity = eased;
+            } else {
+              // At center, then ease up slightly
+              const exitT = (t - 0.5) / 0.5;
+              const eased = this.easeOut(exitT);
+              yPercent = -30 * eased;
+              opacity = 1 - eased * 0.5;
+            }
+          }
+          
+          this.guardrails.style.transform = `translate(-50%, calc(-50% + ${yPercent}%))`;
+          this.guardrails.style.opacity = opacity;
+        }
+        
+        animateNumber(element) {
+          const value = element.dataset.value;
+          const unit = element.dataset.unit || '';
+          const decimals = parseInt(element.dataset.decimals) || 1;
+          const shouldAnimate = element.dataset.animate === 'true';
+          
+          if (!shouldAnimate || !value) {
+            return;
+          }
+          
+          const targetNumber = parseFloat(value);
+          const isNegative = targetNumber < 0;
+          const absTarget = Math.abs(targetNumber);
+          
+          const duration = 1000;
+          const startTime = performance.now();
+          
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            const easeProgress = this.easeOut(progress);
+            const current = absTarget * easeProgress;
+            
+            let formattedNumber = decimals === 0 ? 
+              Math.round(current).toString() : 
+              current.toFixed(decimals);
+            
+            if (isNegative) {
+              formattedNumber = '−' + formattedNumber; // Unicode minus U+2212
+            }
+            
+            element.textContent = formattedNumber + unit;
+            
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+          
+          requestAnimationFrame(animate);
+        }
+        
+        easeOut(t) {
+          return 1 - Math.pow(1 - t, 3);
+        }
+        
+        lerp(a, b, t) {
+          return a + (b - a) * t;
+        }
+        
+        remap(value, inMin, inMax) {
+          return Math.max(0, Math.min(1, (value - inMin) / (inMax - inMin)));
+        }
+        
+        applyReducedMotion() {
+          this.question.style.opacity = 0.7;
+          this.question.style.transform = 'scale(0.9)';
+          
+          this.cards.forEach((card, index) => {
+            const stackX = (index - 2) * 35;
+            const stackY = -window.innerHeight * 0.3;
+            card.style.transform = `translate(calc(-50% + ${stackX}px), calc(-50% + ${stackY}px)) scale(0.92)`;
+            card.style.opacity = 0.3;
+            card.style.filter = 'blur(2px)';
+          });
+          
+          this.banners.forEach(banner => {
+            banner.style.opacity = 1;
+            banner.style.transform = 'translate(-50%, -50%)';
+          });
+          
+          if (this.guardrails) {
+            this.guardrails.style.opacity = 1;
+            this.guardrails.style.transform = 'translate(-50%, -50%)';
+          }
+        }
+      }
+      
+      // Initialize simple opportunity animation
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM Content Loaded - Initializing Simple Opportunity Animation...');
+        const opportunitySection = document.getElementById('opportunity');
+        if (opportunitySection) {
+          console.log('Opportunity section found, initializing...');
+          
+          // Simple intersection observer to trigger animations
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                console.log('🎯 Opportunity section in view - triggering card animations');
+                const cards = opportunitySection.querySelectorAll('.opp-card');
+                console.log(`Found ${cards.length} cards to animate`);
+                
+                cards.forEach((card, index) => {
+                  console.log(`Card ${index + 1} starting animation in ${index * 300}ms`);
+                  setTimeout(() => {
+                    card.classList.add('slide-in');
+                    console.log(`✅ Card ${index + 1} animated in`);
+                  }, index * 300); // 300ms delay between each card
+                });
+                
+                observer.unobserve(entry.target); // Only trigger once
+              }
+            });
+          }, { threshold: 0.1 });
+          
+          observer.observe(opportunitySection);
+        } else {
+          console.error('Opportunity section NOT FOUND!');
+        }
+        
+        // Initialize custody checklist animation
+        initCustodyChecklist();
+        
+        // Initialize investment counter animation
+        initInvestmentCounter();
+      });
+
+      // Custody Checklist Animation
+      function initCustodyChecklist() {
+        const checklistItems = document.querySelectorAll('.checklist-item');
+        
+        // Create intersection observer for the checklist section
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Reset all checklist items when section comes into view
+              checklistItems.forEach(item => {
+                item.classList.remove('checked');
+              });
+              
+              // Start the animation sequence
+              checklistItems.forEach(item => {
+                const delay = parseInt(item.dataset.delay);
+                setTimeout(() => {
+                  item.classList.add('checked');
+                }, delay);
+              });
+            }
+          });
+        }, { threshold: 0.3 });
+        
+        // Observe the checklist container instead of individual items
+        const checklistContainer = document.querySelector('.custody-checklist');
+        if (checklistContainer) {
+          observer.observe(checklistContainer);
+        }
+      }
+
+      // Investment Counter Animation
+      function initInvestmentCounter() {
+        const investmentMin = document.querySelector('.investment-min');
+        const investmentMax = document.querySelector('.investment-max');
+        
+        if (!investmentMin || !investmentMax) return;
+        
+        // Create intersection observer for the investment range
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Reset numbers to 0 for fresh animation
+              investmentMin.textContent = '$0K';
+              investmentMax.textContent = '$0M';
+              
+              // Small delay to ensure reset is visible
+              setTimeout(() => {
+                // Animate minimum value first (500K)
+                animateNumber(investmentMin, 500, 'K', 1000, () => {
+                  // Then animate maximum value (5M)
+                  animateNumber(investmentMax, 5, 'M', 1200);
+                });
+              }, 100);
+            }
+          });
+        }, { threshold: 0.5 });
+        
+        // Observe the investment range container
+        const investmentRange = document.querySelector('.investment-range');
+        if (investmentRange) {
+          observer.observe(investmentRange);
+        }
+      }
+
+      // Helper function to animate numbers
+      function animateNumber(element, target, suffix, duration, onComplete) {
+        const startTime = Date.now();
+        const startValue = 0;
+        
+        function updateNumber() {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          
+          // Easing function for smooth animation
+          const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+          const currentValue = Math.floor(startValue + (target - startValue) * easeOutQuart);
+          
+          // Format the number
+          element.textContent = `$${currentValue}${suffix}`;
+          
+          if (progress < 1) {
+            requestAnimationFrame(updateNumber);
+          } else {
+            // Ensure final value is exact
+            element.textContent = `$${target}${suffix}`;
+            if (onComplete) onComplete();
+          }
+        }
+        
+        requestAnimationFrame(updateNumber);
+      }
+
+      // Exit Strategy Modal System
+      const exitStrategyData = {
+        investor: {
+          title: "Sell Certificate to Another Investor",
+          content: "Titles can be resold to other investors who are interested in holding the cask for a more extended period of time. There's no physical movement of tequila required, and provides liquidity to investor who wants to exit early."
+        },
+        bottlers: {
+          title: "Sell to Bottlers/Brands",
+          content: "Bottlers and established brands can purchase certificates to bottle tequila under their own labels. These companies are always looking for aged tequila to release under their label. Once bottled, tequila is exported from Mexico and commercialized internationally."
+        },
+        corporate: {
+          title: "Corporate Clients",
+          content: "Several types of companies are usually seeking for casks to bottle under own label. This type of clients include major corporations, hotels & restaurants primarily and bars. This practice is usually used to differentiate themselves."
+        },
+        marketplace: {
+          title: "Hogshead Market Place",
+          content: "Casks can be uploaded into e-commerce platforms to be sold. Usually, sales that occur in this type of platforms are smaller sales, and the main goal of buyers is to buy scarce and rare product. Great opportunity for extra aged añejos and premium aged tequilas.<br><br><a href='https://www.hogshead.com' target='_blank' style='color: var(--agave); text-decoration: none; font-weight: 600;'>Visit www.hogshead.com →</a>"
+        }
+      };
+
+      window.openExitModal = function(strategy) {
+        const modal = document.getElementById('modal-overlay');
+        const modalBody = document.getElementById('modal-body');
+        const data = exitStrategyData[strategy];
+        
+        if (data) {
+          modalBody.innerHTML = `
+            <h3>${data.title}</h3>
+            <p>${data.content}</p>
+          `;
+          
+          modal.classList.add('show');
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+      };
+
+      window.closeExitModal = function() {
+        const modal = document.getElementById('modal-overlay');
+        modal.classList.remove('show');
+        document.body.style.overflow = ''; // Restore scrolling
+      };
+
+      // Close modal with Escape key
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          closeExitModal();
+        }
+      });
+
+      // Make function globally accessible
+      window.scrollToAgingSimulator = function() {
+        console.log('Button clicked! Function is working!');
+        
+        // Try multiple selectors to find the aging simulator
+        let element = document.getElementById('aging-simulator');
+        console.log('Element by ID:', element);
+        
+        if (!element) {
+          element = document.querySelector('.aging-simulator-section');
+          console.log('Element by class:', element);
+        }
+        
+        if (!element) {
+          // Fallback: find by heading text
+          const headings = document.querySelectorAll('h3');
+          console.log('Found headings:', headings.length);
+          for (let heading of headings) {
+            if (heading.textContent.includes('Aging Value Simulator')) {
+              element = heading.closest('.aging-simulator-section') || heading;
+              console.log('Element by heading:', element);
+              break;
+            }
+          }
+        }
+        
+        console.log('Final element found:', element);
+        
+        if (element) {
+          const elementPosition = element.offsetTop - 80;
+          console.log('Scrolling to position:', elementPosition);
+          
+          window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth'
+          });
+        } else {
+          console.error('Aging Simulator section not found');
+          // Fallback: scroll to bottom of page
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+          });
+        }
+      };
+
+      // Scroll to section function (generic)
+      function scrollToSection(sectionId) {
+        console.log('Attempting to scroll to:', sectionId);
+        const element = document.getElementById(sectionId);
+        console.log('Element found:', element);
+        
+        if (element) {
+          // Add a small offset to account for any fixed headers
+          const elementPosition = element.offsetTop - 100;
+          
+          window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth'
+          });
+          
+          console.log('Scrolling to position:', elementPosition);
+        } else {
+          console.error('Element not found:', sectionId);
+        }
+      }
+
+      // Initialize simulator
+      document.addEventListener('DOMContentLoaded', async function() {
+        const slider = document.getElementById('agingSlider');
+        if (slider) {
+          // Load real data first
+          const dataLoaded = await loadAgingData();
+          
+          if (dataLoaded && agingData) {
+            // Update slider range to match real data
+            const maxMonth = agingData.series[agingData.series.length - 1].month;
+            slider.max = maxMonth;
+            
+            // Update slider labels
+            const labels = slider.parentElement.querySelectorAll('span');
+            if (labels.length >= 2) {
+              labels[labels.length - 1].textContent = `${maxMonth}m`;
+            }
+            
+            // Initial update with real data
+            updateSimulator(24);
+            
+            // Slider event listener
+            slider.addEventListener('input', function() {
+              updateSimulator(parseInt(this.value));
+            });
+            
+            // Initialize chart
+            setTimeout(() => {
+              updateAgingChart(24);
+            }, 100);
+          } else {
+            console.error('Failed to load aging data');
+          }
+        }
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        const chartEl = document.getElementById('agingChart');
+        if (chartEl && echarts.getInstanceByDom(chartEl)) {
+          echarts.getInstanceByDom(chartEl).resize();
+        }
+      });
+    })();
+
+    // === MARKET INTELLIGENCE ANIMATIONS ===
+    (function() {
+      // Counter animation
+      function animateCounter(element, target, duration = 2000) {
+        const start = 0;
+        const increment = target / (duration / 16);
+        let current = start;
+        const prefix = element.dataset.prefix || '';
+        const suffix = element.dataset.suffix || '';
+        
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          element.textContent = prefix + current.toFixed(1) + suffix;
+        }, 16);
+      }
+
+      // Progress bar animation
+      function animateProgressBar(bar, targetWidth) {
+        setTimeout(() => {
+          bar.style.width = targetWidth + '%';
+        }, 300);
+      }
+
+      // Bar chart animation
+      function animateBarChart(bars) {
+        bars.forEach((bar, index) => {
+          setTimeout(() => {
+            const width = parseFloat(bar.dataset.width);
+            bar.style.width = (width * 15) + '%'; // Scale to fit visually
+          }, 500 + (index * 200));
+        });
+      }
+
+      // Intersection Observer
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const element = entry.target;
+            
+            // Animate counters
+            if (element.classList.contains('stat-number')) {
+              const target = parseFloat(element.dataset.target);
+              animateCounter(element, target);
+            }
+            
+            // Animate progress bars
+            if (element.classList.contains('progress-fill')) {
+              const targetWidth = parseInt(element.dataset.width);
+              animateProgressBar(element, targetWidth);
+            }
+            
+            // Animate bar chart
+            if (element.classList.contains('bar-fill')) {
+              const allBars = document.querySelectorAll('.spirits-comparison .bar-fill');
+              animateBarChart(Array.from(allBars));
+            }
+            
+            observer.unobserve(element);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      // Observe elements
+      document.querySelectorAll('.stat-number, .progress-fill, .bar-fill').forEach(el => {
+        observer.observe(el);
+      });
+    })();
+
+  </script>
+
+  <!-- SIMPLE Timeline Script -->
+  <script>
+    let currentStage = 0;
+    const totalStages = 4;
+    
+    function updateTimeline() {
+      console.log('UPDATING TO STAGE:', currentStage);
+      
+      // Update stage cards
+      const stages = document.querySelectorAll('.premium-stage');
+      stages.forEach((stage, index) => {
+        if (index === currentStage) {
+          stage.classList.add('active');
+        } else {
+          stage.classList.remove('active');
+        }
+      });
+      
+      // Update timeline nodes
+      const nodes = document.querySelectorAll('.timeline-node');
+      nodes.forEach((node, index) => {
+        if (index === currentStage) {
+          node.classList.add('active');
+        } else {
+          node.classList.remove('active');
+        }
+      });
+      
+      // Update indicators
+      const indicators = document.querySelectorAll('.indicator');
+      indicators.forEach((indicator, index) => {
+        if (index === currentStage) {
+          indicator.classList.add('active');
+        } else {
+          indicator.classList.remove('active');
+        }
+      });
+      
+      // Update progress bar
+        const progressBar = document.querySelector('.timeline-progress-bar');
+        if (progressBar) {
+        const progressPercentage = ((currentStage + 1) / totalStages) * 100;
+        progressBar.style.width = progressPercentage + '%';
+      }
+    }
+    
+    // Simple event delegation approach
+    document.addEventListener('click', function(e) {
+      console.log('CLICK DETECTED:', e.target);
+      
+      // Skip clicks on background elements
+      if (e.target.classList.contains('timeline-glow') || 
+          e.target.classList.contains('timeline-background') ||
+          e.target.classList.contains('image-backdrop') ||
+          e.target.classList.contains('stage-glow-ring')) {
+        console.log('Ignoring background click');
+        return;
+      }
+      
+      // Previous button
+      if (e.target.id === 'prevStage' || e.target.closest('#prevStage')) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('PREV CLICKED');
+        currentStage = (currentStage - 1 + totalStages) % totalStages;
+        updateTimeline();
+        return;
+      }
+      
+      // Next button
+      if (e.target.id === 'nextStage' || e.target.closest('#nextStage')) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('NEXT CLICKED');
+        currentStage = (currentStage + 1) % totalStages;
+        updateTimeline();
+        return;
+      }
+      
+      // Indicators
+      if (e.target.classList.contains('indicator')) {
+        e.preventDefault();
+        e.stopPropagation();
+        const index = parseInt(e.target.dataset.stage);
+        console.log('INDICATOR CLICKED:', index);
+        currentStage = index;
+        updateTimeline();
+        return;
+      }
+      
+      // Stage cards - check if click is on the actual stage card, not background elements
+      const stageCard = e.target.closest('.premium-stage');
+      if (stageCard && !e.target.classList.contains('timeline-glow') && 
+          !e.target.classList.contains('image-backdrop') && 
+          !e.target.classList.contains('stage-glow-ring')) {
+        e.preventDefault();
+        e.stopPropagation();
+        const index = parseInt(stageCard.dataset.stage);
+        console.log('STAGE CLICKED:', index);
+        currentStage = index;
+        updateTimeline();
+        return;
+      }
+    });
+    
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+          console.log('TIMELINE INITIALIZING...');
+          updateTimeline();
+          console.log('TIMELINE READY!');
+          
+          // Staggered fade-in animation for Opportunity section cards
+          const opportunitySection = document.getElementById('opportunity');
+          if (opportunitySection) {
+            const cards = opportunitySection.querySelectorAll('.card');
+            
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  cards.forEach((card, index) => {
+                    setTimeout(() => {
+                      card.classList.add('animate-in');
+                    }, index * 150); // 150ms stagger
+                  });
+                  observer.unobserve(entry.target);
+                }
+              });
+            }, { threshold: 0.2 });
+            
+            observer.observe(opportunitySection);
+          }
+          
+          // Initialize hero background scroll effect
+          initHeroScrollEffect();
+        });
+
+        // Hero Background Scroll Effect
+        function initHeroScrollEffect() {
+          const hero = document.querySelector('.hero');
+          if (!hero) return;
+          
+          let scrollPositionY = 0;
+          let scrollPositionX = 0;
+          let isScrollingEnabled = false;
+          
+          // Function to check if scrolling is needed
+          function checkScrollingNeeded() {
+            const heroRect = hero.getBoundingClientRect();
+            const heroAspectRatio = heroRect.width / heroRect.height;
+            
+            // Image aspect ratio (assuming the image is wider than tall)
+            const imageAspectRatio = 16 / 9; // Adjust this to match your actual image ratio
+            
+            // If hero is wider than image ratio, image height is constrained
+            // If hero is taller than image ratio, image width is constrained
+            if (heroAspectRatio > imageAspectRatio) {
+              // Image height is constrained, width extends beyond hero
+              isScrollingEnabled = true;
+              console.log('Horizontal scrolling enabled - image extends beyond width');
+              } else {
+              // Image width is constrained, height extends beyond hero
+              isScrollingEnabled = true;
+              console.log('Vertical scrolling enabled - image extends beyond height');
+            }
+            
+            // Reset scroll position when scrolling is disabled
+            if (!isScrollingEnabled) {
+              scrollPositionX = 0;
+              scrollPositionY = 0;
+              hero.style.backgroundPosition = 'center center';
+            }
+          }
+          
+          // Check scrolling on load and resize
+          checkScrollingNeeded();
+          window.addEventListener('resize', checkScrollingNeeded);
+          
+          // Handle wheel events on hero section
+          hero.addEventListener('wheel', function(e) {
+            if (!isScrollingEnabled) return; // Only scroll if needed
+            
+            e.preventDefault();
+            
+            // Use both deltaX and deltaY for natural scrolling
+            const deltaX = e.deltaX ? e.deltaX * 0.1 : 0; // Horizontal scroll
+            const deltaY = e.deltaY ? e.deltaY * 0.1 : 0; // Vertical scroll
+            
+            // Update both positions
+            scrollPositionX += deltaX;
+            scrollPositionY += deltaY;
+            
+            // Clamp positions (allow some negative values for better UX)
+            scrollPositionX = Math.max(-20, Math.min(120, scrollPositionX));
+            scrollPositionY = Math.max(-20, Math.min(120, scrollPositionY));
+            
+            // Update background position with both X and Y
+            const backgroundPosition = `${scrollPositionX}% ${scrollPositionY}%`;
+            hero.style.backgroundPosition = backgroundPosition;
+            
+            console.log('Background position:', backgroundPosition);
+          });
+          
+          // Handle touch events for mobile
+          let touchStartX = 0;
+          let touchStartY = 0;
+          
+          hero.addEventListener('touchstart', function(e) {
+            if (!isScrollingEnabled) return;
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+          });
+          
+          hero.addEventListener('touchmove', function(e) {
+            if (!isScrollingEnabled) return;
+            
+            e.preventDefault();
+            const touchX = e.touches[0].clientX;
+            const touchY = e.touches[0].clientY;
+            
+            // Calculate both X and Y deltas
+            const deltaX = (touchStartX - touchX) * 0.5;
+            const deltaY = (touchStartY - touchY) * 0.5;
+            
+            scrollPositionX += deltaX;
+            scrollPositionY += deltaY;
+            
+            // Clamp positions
+            scrollPositionX = Math.max(-20, Math.min(120, scrollPositionX));
+            scrollPositionY = Math.max(-20, Math.min(120, scrollPositionY));
+            
+            const backgroundPosition = `${scrollPositionX}% ${scrollPositionY}%`;
+            hero.style.backgroundPosition = backgroundPosition;
+            
+            touchStartX = touchX;
+            touchStartY = touchY;
+          });
+        }
+  </script>
+</body>
+</html>
