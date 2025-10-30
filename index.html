@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -446,7 +446,7 @@
 
     /* === TEQUILA APPRECIATION STYLES === */
     .appreciation-scroller {
-      height: 500vh; /* large canvas for smooth scrolling */
+      height: 600vh; /* increased height to provide more scrollable space for button hold period */
       margin: 0;
       padding: 0;
       width: 100vw;
@@ -840,32 +840,45 @@
     /* Elegant Journey Trigger Button - Pill Style */
     .journey-trigger-btn {
       display: inline-block;
-      font-size: 0.9rem;
-      letter-spacing: 0.12em;
-      padding: 12px 24px;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      padding: 16px 36px;
       border-radius: 999px;
       background: linear-gradient(135deg, #D78A3B 0%, #B8860B 50%, #D78A3B 100%);
       color: white;
-      border: 2px solid rgba(255, 255, 255, 0.4);
+      border: 3px solid rgba(255, 255, 255, 0.5);
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       backdrop-filter: blur(10px);
       text-transform: uppercase;
       font-weight: 700;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(215, 138, 59, 0.4);
+      box-shadow: 
+        0 8px 20px rgba(215, 138, 59, 0.5),
+        0 4px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+      transform: translateY(0);
     }
 
     .journey-trigger-btn:hover {
       background: linear-gradient(135deg, #E6A047 0%, #CD9A0C 50%, #E6A047 100%);
-      border-color: rgba(255, 255, 255, 0.6);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(215, 138, 59, 0.6);
+      border-color: rgba(255, 255, 255, 0.8);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 
+        0 12px 30px rgba(215, 138, 59, 0.7),
+        0 6px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.2);
     }
 
     .journey-trigger-btn:active {
-      transform: translateY(0);
+      transform: translateY(-1px) scale(0.98);
+      box-shadow: 
+        0 4px 12px rgba(215, 138, 59, 0.4),
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .btn-text {
@@ -1089,6 +1102,139 @@
         .initial-cost-card:hover #initialBarrelCost {
           color: var(--agave);
           transform: scale(1.05);
+        }
+
+        /* Smaller unit/symbol styling for KPI values */
+        .unit-small {
+          font-size: 0.5em;
+          font-weight: 400;
+          opacity: 0.7;
+          vertical-align: baseline;
+        }
+
+        /* Aging Simulator Section - Add side margins */
+        .aging-simulator-section {
+          max-width: 1600px;
+          margin-left: auto;
+          margin-right: auto;
+          padding-left: clamp(12px, 1.5vw, 24px);
+          padding-right: clamp(12px, 1.5vw, 24px);
+        }
+
+        /* Enhanced main simulator card */
+        .aging-simulator-section > .card {
+          box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+          border: 1px solid rgba(14, 94, 98, 0.08);
+          transition: box-shadow 0.3s ease;
+        }
+
+        .aging-simulator-section > .card:hover {
+          box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06);
+        }
+
+        /* Enhanced slider track with gradient fill effect */
+        #agingSlider {
+          position: relative;
+          background: linear-gradient(to right, var(--agave) 0%, var(--agave) var(--slider-progress, 20%), var(--line) var(--slider-progress, 20%), var(--line) 100%);
+        }
+
+        /* Enhanced slider thumb */
+        #agingSlider::-webkit-slider-thumb {
+          width: 24px;
+          height: 24px;
+          border: 4px solid #fff;
+          box-shadow: 0 3px 12px rgba(14, 94, 98, 0.4), 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        #agingSlider::-webkit-slider-thumb:hover {
+          transform: scale(1.15);
+          box-shadow: 0 5px 20px rgba(14, 94, 98, 0.5), 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        #agingSlider::-webkit-slider-thumb:active {
+          transform: scale(1.1);
+          box-shadow: 0 3px 16px rgba(14, 94, 98, 0.6);
+        }
+
+        #agingSlider::-moz-range-thumb {
+          width: 24px;
+          height: 24px;
+          border: 4px solid #fff;
+          box-shadow: 0 3px 12px rgba(14, 94, 98, 0.4), 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        #agingSlider::-moz-range-thumb:hover {
+          transform: scale(1.15);
+          box-shadow: 0 5px 20px rgba(14, 94, 98, 0.5), 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Enhanced KPI cards */
+        .kpi-card {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .kpi-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 4px;
+          height: 100%;
+          background: transparent;
+          transition: background 0.3s ease;
+        }
+
+        .kpi-card:hover::before {
+          background: var(--agave);
+        }
+
+        /* Special styling for Barrel Value card */
+        #barrelValue {
+          position: relative;
+        }
+
+        /* Use a class for better browser compatibility */
+        .kpi-card.barrel-value-highlight {
+          background: linear-gradient(135deg, #ffffff 0%, rgba(14, 94, 98, 0.02) 100%);
+          border-color: rgba(14, 94, 98, 0.12);
+        }
+
+        .kpi-card.barrel-value-highlight::before {
+          background: var(--agave);
+          opacity: 0.6;
+        }
+
+        /* Smooth value update animations */
+        #remainingVolume, #angelShare, #barrelValue, #valuePerLiter, #valueRange, #currentMonth {
+          transition: opacity 0.2s ease;
+        }
+
+        /* Enhanced slider container */
+        .slider-container {
+          box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+          transition: box-shadow 0.3s ease;
+        }
+
+        .slider-container:hover {
+          box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        /* Enhanced value range card */
+        .value-band {
+          background: linear-gradient(135deg, #ffffff 0%, rgba(14, 94, 98, 0.03) 100%);
+          border-color: rgba(14, 94, 98, 0.1);
+          box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        /* Refined chart container */
+        .simulator-chart > div {
+          box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+          transition: box-shadow 0.3s ease;
+        }
+
+        .simulator-chart > div:hover {
+          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         /* Mobile responsiveness for simulator */
@@ -2912,6 +3058,191 @@
           }
         }
 
+        /* Retail Price Modal Styles */
+        .retail-price-modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 10000;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+          transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .retail-price-modal.active {
+          display: flex !important;
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+        }
+
+        .retail-price-modal-backdrop {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          z-index: 10001;
+        }
+
+        .retail-price-modal-content {
+          position: relative;
+          background: white !important;
+          border-radius: 16px;
+          padding: 40px;
+          max-width: 900px;
+          width: 90%;
+          max-height: 85vh;
+          overflow-y: auto;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          transform: scale(0.95);
+          transition: transform 0.3s ease, opacity 0.3s ease;
+          z-index: 10002 !important;
+          pointer-events: auto;
+          opacity: 0;
+          visibility: hidden;
+          margin: auto;
+        }
+
+        .retail-price-modal.active .retail-price-modal-content {
+          transform: scale(1) !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+
+        .retail-price-modal-close {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          background: none;
+          border: none;
+          font-size: 32px;
+          line-height: 1;
+          cursor: pointer;
+          color: var(--muted);
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          transition: all 0.3s ease;
+          z-index: 10002;
+        }
+
+        .retail-price-modal-close:hover {
+          background: rgba(0, 0, 0, 0.1);
+          color: var(--ink);
+          transform: rotate(90deg);
+        }
+
+        .retail-price-modal-body {
+          position: relative;
+        }
+
+        /* Retail price button base style for a true button feel */
+        .retail-price-pill {
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+          background: linear-gradient(160deg, #16B0B9 0%, #0E5B62 60%);
+          border: 1px solid #0A4A4F;
+          box-shadow: 0 8px 18px rgba(14, 94, 98, 0.24), 0 0 0 1px rgba(10, 74, 79, 0.15);
+          border-radius: 12px;
+        }
+
+        .retail-price-pill::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(120% 80% at 0% 0%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%),
+                      linear-gradient(0deg, rgba(255,255,255,0.08), rgba(255,255,255,0.08));
+          pointer-events: none;
+        }
+
+        .retail-price-pill .btn-main {
+          font-weight: 800;
+          letter-spacing: 0.2px;
+        }
+
+        .retail-price-pill .btn-sub {
+          display: block;
+          font-size: 11px;
+          opacity: 0.85;
+          margin-top: 2px;
+        }
+
+        .retail-price-pill .btn-icon {
+          width: 18px;
+          height: 18px;
+          flex: 0 0 auto;
+          opacity: 0.9;
+        }
+
+        .retail-price-pill:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 12px 22px rgba(14, 94, 98, 0.30), 0 0 0 1px rgba(10, 74, 79, 0.22);
+          background: linear-gradient(160deg, #1AC3CD 0%, #116A71 60%);
+          border-color: #0A4A4F;
+        }
+
+        .retail-price-pill:active {
+          transform: translateY(1px);
+          box-shadow: 0 4px 10px rgba(14, 94, 98, 0.22) inset, 0 0 0 1px rgba(10, 74, 79, 0.25);
+        }
+
+        .retail-price-pill:focus-visible {
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(18, 146, 156, 0.3), 0 6px 14px rgba(14, 94, 98, 0.22);
+        }
+
+        /* Blur effect for page content when modal is open */
+        body.modal-open {
+          overflow: hidden;
+        }
+
+        body.modal-open main,
+        body.modal-open header,
+        body.modal-open footer {
+          filter: blur(5px);
+          transition: filter 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+          .retail-price-pill {
+            font-size: 10px !important;
+            padding: 8px 12px !important;
+            white-space: normal !important;
+            line-height: 1.3 !important;
+          }
+          
+          .retail-price-modal-content {
+            padding: 24px;
+            width: 95%;
+            max-height: 90vh;
+          }
+          
+          .retail-price-modal-close {
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            font-size: 28px;
+          }
+        }
+
         @media (max-width: 768px) {
           .custody-checklist {
             grid-template-columns: 1fr;
@@ -3305,9 +3636,8 @@
 
             <!-- Journey Trigger Button -->
             <div id="journeyButtonContainer" class="journey-button-container">
-              <p class="journey-description">Understanding the aging process and value drivers that create premium pricing.</p>
               <button class="journey-trigger-btn" id="journeyTriggerBtn">
-                <span class="btn-text">Experience the Aging Journey</span>
+                <span class="btn-text">Click to Experience the Aging Journey</span>
                 <div class="btn-shine"></div>
               </button>
           </div>
@@ -3599,7 +3929,7 @@
             <h3>Retail Price Appreciation Over Time</h3>
             <p class="sub" style="margin-bottom: 8px;">USD currency - 750ml bottle pricing</p>
             <div id="retailPriceChart" style="width:100%;height:400px"></div>
-            <p class="note" style="font-size: 0.8rem; margin-top: 4px;">Data: Joe's benchmark (0–120 months). Values are medians/representative prices per cohort; not investment advice.</p>
+            <p class="note" style="font-size: 0.75rem; margin-top: 4px; line-height: 1.5;">Data compiled from retail online and physical store pricing collected throughout September and October 2025. Analysis based on over 500 samples using statistical and probabilistic methods to normalize averages, remove outliers, and calculate accurate price estimates for each aging stage. Samples included various detail levels (e.g., specific aging duration, barrel type, or age ranges). This information is for informational purposes only and does not constitute investment, financial, or pricing advice.</p>
           </div>
         </div>
             </div> <!-- /appreciation-journey -->
@@ -3611,19 +3941,25 @@
         <div id="aging-simulator" class="aging-simulator-section" style="margin-top: 48px;">
           <div class="card" style="padding: 32px; position: relative;">
             <!-- Initial Cost Card - Top Right of entire simulator -->
-            <div class="initial-cost-card" style="position: absolute; top: 32px; right: 32px; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px; width: 180px; z-index: 10; transition: all 0.3s ease; cursor: pointer;">
-              <div style="font-size: 13px; color: var(--muted); margin-bottom: 4px;">Initial Investment</div>
-              <div style="font-size: 12px; color: var(--muted); margin-bottom: 2px;">Barrel Cost (Month 0)</div>
-              <div id="initialBarrelCost" style="font-weight: 600; color: var(--ink); font-size: 18px; transition: all 0.3s ease;">$0</div>
+            <div style="position: absolute; top: 32px; right: 32px; display: flex; gap: 12px; align-items: flex-start; z-index: 10;">
+              <div class="initial-cost-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px; width: 180px; transition: all 0.3s ease; cursor: pointer;">
+                <div style="font-size: 13px; color: var(--muted); margin-bottom: 4px;">Initial Investment</div>
+                <div style="font-size: 12px; color: var(--muted); margin-bottom: 2px;">Barrel Cost (Month 0)</div>
+                <div id="initialBarrelCost" style="font-weight: 600; color: var(--ink); font-size: 18px; transition: all 0.3s ease;"><span class="unit-small">$</span>0</div>
+              </div>
+              <button id="retailPriceBtn" class="retail-price-pill" style="color: #fff; border-radius: 12px; padding: 14px; width: 180px; font-size: 13px; font-weight: 700; cursor: pointer; text-align: left; line-height: 1.2; transition: box-shadow 0.2s ease, transform 0.1s ease; white-space: normal; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                <span style="display:block"><span class="btn-main">View Retail Prices</span><span class="btn-sub">by aging stage</span></span>
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 5l7 7-7 7" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
             </div>
 
             <div style="margin-bottom: 24px; margin-top: 2px;">
               <span class="pill">Interactive Tool</span>
-              <h3 style="margin-top: 16px;">Aging Value Simulator</h3>
+              <h3 style="margin-top: 16px; font-size: clamp(24px, 2.5vw, 32px); font-weight: 700; line-height: 1.2;">Aging Value Simulator</h3>
               <p style="color: var(--muted); margin: 8px 0 0;">Slide through time to see how aging increases barrel value while angel's share reduces volume.</p>
             </div>
 
-            <div class="simulator-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+            <div class="simulator-container" style="display: grid; grid-template-columns: 380px 1fr; gap: 32px; align-items: start;">
 
               <!-- Left: Controls & KPIs -->
               <div class="simulator-controls">
@@ -3640,7 +3976,7 @@
                     max="120" 
                     value="24" 
                     step="1"
-                    style="width: 100%; height: 8px; border-radius: 4px; background: var(--line); outline: none; -webkit-appearance: none;"
+                    style="width: 100%; height: 8px; border-radius: 4px; outline: none; -webkit-appearance: none; appearance: none;"
                   />
                   <div style="display: flex; justify-content: space-between; margin-top: 6px; font-size: 13px; color: var(--muted);">
                     <span>0m</span>
@@ -3652,26 +3988,26 @@
                 <div class="kpi-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                   <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
                     <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Remaining Volume</div>
-                    <div id="remainingVolume" style="font-weight: 600; color: var(--ink); font-size: 28px;">180.0 L</div>
+                    <div id="remainingVolume" style="font-weight: 600; color: var(--ink); font-size: 28px;">180 <span class="unit-small">liters</span></div>
                   </div>
                   <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
                     <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Angel's Share</div>
-                    <div id="angelShare" style="font-weight: 600; color: var(--ink); font-size: 28px;">10.0%</div>
+                    <div id="angelShare" style="font-weight: 600; color: var(--ink); font-size: 28px;">10.0<span class="unit-small">%</span></div>
                   </div>
-                  <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
+                  <div class="kpi-card barrel-value-highlight" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
                     <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Barrel Value</div>
-                    <div id="barrelValue" style="font-weight: 600; color: var(--agave); font-size: 28px;">$9,000</div>
+                    <div id="barrelValue" style="font-weight: 600; color: var(--agave); font-size: 28px;"><span class="unit-small">$</span>9,000 <span class="unit-small">USD</span></div>
                   </div>
                   <div class="kpi-card" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 100px;">
                     <div style="font-size: 15px; color: var(--muted); margin-bottom: 8px;">Value per Liter</div>
-                    <div id="valuePerLiter" style="font-weight: 600; color: var(--ink); font-size: 28px;">$50.00</div>
+                    <div id="valuePerLiter" style="font-weight: 600; color: var(--ink); font-size: 28px;"><span class="unit-small">$</span>50.00 <span class="unit-small">USD</span></div>
                   </div>
                 </div>
 
                 <!-- Value Band -->
                 <div class="value-band" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-top: 16px; min-height: 80px;">
                   <div style="font-size: 15px; color: var(--muted); margin-bottom: 6px;">Value Range</div>
-                  <div id="valueRange" style="font-size: 22px; color: var(--ink); font-weight: 600; margin-bottom: 4px;">$8,100 – $9,900</div>
+                  <div id="valueRange" style="font-size: 22px; color: var(--ink); font-weight: 600; margin-bottom: 4px;"><span class="unit-small">$</span>8,100 – <span class="unit-small">$</span>9,900</div>
                   <div style="font-size: 13px; color: var(--muted);">Low/Base/High resale scenarios</div>
                 </div>
               </div>
@@ -3707,24 +4043,29 @@
       </section>
 
       <!-- WHY US -->
-      <section id="whyus">
+      <section id="whyus" style="padding-left: clamp(16px, 2.5vw, 32px); padding-right: clamp(16px, 2.5vw, 32px);">
         <h2>Why Us</h2>
         <p class="sub">Operators first. We build around discipline, transparency, and aligned incentives.</p>
-        <div class="grid grid-3" style="max-width:600px;margin:0 auto;">
-          <div class="card" style="padding:16px;">
-            <span class="pill" style="font-size:11px;padding:4px 8px;">Discipline</span>
-            <h3 style="font-size:1.1rem;margin:8px 0 4px;">Operational Backbone</h3>
-            <p style="font-size:0.9rem;margin:0;">Professional custody, inventory controls, and independent audits.</p>
+        <div class="grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; align-items: stretch; margin-top: 12px;">
+          <div class="card" style="padding:16px; min-height: 140px;">
+            <h3 style="font-size:1.1rem;margin:0 0 6px;">Real Ownership of a Real Asset</h3>
+            <p style="font-size:0.9rem;margin:0;">Investors hold legal title to CRT/NOM‑certified tequila barrels — stored, insured, and audited in bonded facilities.</p>
           </div>
-          <div class="card" style="padding:16px;">
-            <span class="pill" style="font-size:11px;padding:4px 8px;">Alignment</span>
-            <h3 style="font-size:1.1rem;margin:8px 0 4px;">We Win with You</h3>
-            <p style="font-size:0.9rem;margin:0;">We prioritize structures that align our incentives with investor outcomes.</p>
+          <div class="card" style="padding:16px; min-height: 140px;">
+            <h3 style="font-size:1.1rem;margin:0 0 6px;">Backed by World‑Class Producers</h3>
+            <p style="font-size:0.9rem;margin:0;">Partner distilleries (incl. Tequilera Trujillo) operate at national scale with full traceability from field to barrel.</p>
           </div>
-          <div class="card" style="padding:16px;">
-            <span class="pill" style="font-size:11px;padding:4px 8px;">Selectivity</span>
-            <h3 style="font-size:1.1rem;margin:8px 0 4px;">Curated Supply</h3>
-            <p style="font-size:0.9rem;margin:0;">We focus on quality inventory and timing rather than maximum volume.</p>
+          <div class="card" style="padding:16px; min-height: 140px;">
+            <h3 style="font-size:1.1rem;margin:0 0 6px;">Secure and Compliant Structure</h3>
+            <p style="font-size:0.9rem;margin:0;">Bonded, climate‑controlled storage; U.S. LLC governance; comprehensive insurance, independent audits, and quarterly reporting.</p>
+          </div>
+          <div class="card" style="padding:16px; min-height: 140px;">
+            <h3 style="font-size:1.1rem;margin:0 0 6px;">Discipline and Transparency</h3>
+            <p style="font-size:0.9rem;margin:0;">Institutional‑grade controls, professional custody, inventory tracking, and verified audit trails.</p>
+          </div>
+          <div class="card" style="padding:16px; min-height: 140px;">
+            <h3 style="font-size:1.1rem;margin:0 0 6px;">Bridging Tradition and Technology</h3>
+            <p style="font-size:0.9rem;margin:0;">Mexican craftsmanship meets modern investment infrastructure for a transparent, scalable gateway to a $30B+ market.</p>
           </div>
         </div>
       </section>
@@ -4134,6 +4475,388 @@
       }
     })();
 
+    // === RETAIL PRICE MODAL ===
+    (function() {
+      // Keep retail price button the same size as the mini initial-cost card
+      function syncRetailButtonSize() {
+        const card = document.querySelector('.initial-cost-card');
+        const btn = document.getElementById('retailPriceBtn');
+        if (!card || !btn) return;
+        const height = card.offsetHeight;
+        const width = card.offsetWidth;
+        if (height > 0) btn.style.height = height + 'px';
+        if (width > 0) btn.style.width = width + 'px';
+      }
+
+      // Run on load and on resize
+      window.addEventListener('DOMContentLoaded', syncRetailButtonSize);
+      window.addEventListener('load', syncRetailButtonSize);
+      window.addEventListener('resize', syncRetailButtonSize);
+
+      // Observe changes in the card (e.g., animated number updates) and resync
+      const cardEl = document.querySelector('.initial-cost-card');
+      if (cardEl && 'ResizeObserver' in window) {
+        const ro = new ResizeObserver(syncRetailButtonSize);
+        ro.observe(cardEl);
+      }
+      let modalChart = null;
+      
+      // Retail price chart data (same as above)
+      const MODAL_DATA = [
+        {m:0,p:40},{m:1,p:45},{m:2,p:45},{m:3,p:45},{m:4,p:45},{m:5,p:50},
+        {m:6,p:55},{m:7,p:55},{m:8,p:55},{m:9,p:60},{m:10,p:60},{m:11,p:60},
+        {m:12,p:60},{m:13,p:60},{m:14,p:60},{m:15,p:60},{m:16,p:60},{m:17,p:60},
+        {m:18,p:60},{m:19,p:60},{m:20,p:60},{m:21,p:66},{m:22,p:70},{m:23,p:80},
+        {m:24,p:80},{m:25,p:80},{m:26,p:80},{m:27,p:90},{m:28,p:110},{m:29,p:110},
+        {m:30,p:110},{m:31,p:135},{m:32,p:135},{m:33,p:135},{m:34,p:140},{m:35,p:140},
+        {m:36,p:140},{m:37,p:160},{m:38,p:160},{m:39,p:160},{m:40,p:175},{m:41,p:175},
+        {m:42,p:175},{m:43,p:175},{m:44,p:175},{m:45,p:175},{m:46,p:220},{m:47,p:220},
+        {m:48,p:220},{m:49,p:250},{m:50,p:250},{m:51,p:250},{m:52,p:250},{m:53,p:250},
+        {m:54,p:250},{m:55,p:250},{m:56,p:250},{m:57,p:250},{m:58,p:250},{m:59,p:250},
+        {m:60,p:252},{m:61,p:252},{m:62,p:252},{m:63,p:252},{m:64,p:300},{m:65,p:300},
+        {m:66,p:300},{m:67,p:300},{m:68,p:300},{m:69,p:300},{m:70,p:300},{m:71,p:300},
+        {m:72,p:300},{m:73,p:300},{m:74,p:300},{m:75,p:300},{m:76,p:300},{m:77,p:300},
+        {m:78,p:300},{m:79,p:300},{m:80,p:300},{m:81,p:300},{m:82,p:300},{m:83,p:300},
+        {m:84,p:304},{m:85,p:305},{m:86,p:305},{m:87,p:305},{m:88,p:330},{m:89,p:330},
+        {m:90,p:330},{m:91,p:330},{m:92,p:330},{m:93,p:330},{m:94,p:330},{m:95,p:330},
+        {m:96,p:335},{m:97,p:336},{m:98,p:336},{m:99,p:336},{m:100,p:336},{m:101,p:336},
+        {m:102,p:336},{m:103,p:336},{m:104,p:336},{m:105,p:336},{m:106,p:336},{m:107,p:336},
+        {m:108,p:363},{m:109,p:470},{m:110,p:470},{m:111,p:470},{m:112,p:470},{m:113,p:470},
+        {m:114,p:470},{m:115,p:470},{m:116,p:470},{m:117,p:470},{m:118,p:470},{m:119,p:470},
+        {m:120,p:470}
+      ];
+
+      function initializeModalChart() {
+        const el = document.getElementById('retailPriceModalChart');
+        if (!el) return;
+
+        // Dispose existing chart if any
+        if (modalChart) {
+          modalChart.dispose();
+          modalChart = null;
+        }
+
+        modalChart = echarts.init(el);
+        
+        const months = MODAL_DATA.map(d => d.m);
+        const prices = MODAL_DATA.map(d => d.p);
+        const fmtUSD = v => '$' + (v|0).toLocaleString();
+
+        // Helper function to get aging stage name
+        function getAgingStage(month) {
+          if (month < 2) return 'Blanco/Joven';
+          if (month < 12) return 'Reposado';
+          if (month < 36) return 'Añejo';
+          return 'Extra Añejo';
+        }
+
+        // Helper function to calculate price change percentage
+        function getPriceChange(currentIndex) {
+          if (currentIndex <= 0 || currentIndex >= prices.length) return null;
+          const currentPrice = prices[currentIndex];
+          
+          // Find the last DIFFERENT price (since step graph has same prices for multiple months)
+          let previousIndex = currentIndex - 1;
+          while (previousIndex >= 0 && prices[previousIndex] === currentPrice) {
+            previousIndex--;
+          }
+          
+          // If no previous different price found, return null
+          if (previousIndex < 0) return null;
+          
+          const previousPrice = prices[previousIndex];
+          if (!currentPrice || !previousPrice || previousPrice === 0 || isNaN(currentPrice) || isNaN(previousPrice)) return null;
+          if (currentPrice === previousPrice) return null;
+          
+          const change = ((currentPrice - previousPrice) / previousPrice) * 100;
+          if (isNaN(change) || !isFinite(change)) return null;
+          
+          return change > 0 ? `+${change.toFixed(1)}%` : `${change.toFixed(1)}%`;
+        }
+
+        modalChart.setOption({
+          grid: { left: 80, right: 40, top: 60, bottom: 100 },
+          backgroundColor: 'transparent',
+          animation: true,
+          animationDuration: 2500,
+          animationEasing: 'cubicOut',
+          animationDelay: function (idx) {
+            return idx * 20; // Stagger the animation for smooth line drawing
+          },
+          tooltip: {
+            trigger: 'axis',
+            backgroundColor: 'rgba(255,255,255,0.98)',
+            borderColor: '#0E5B62',
+            borderWidth: 2,
+            borderRadius: 12,
+            shadowBlur: 20,
+            shadowColor: 'rgba(14, 94, 98, 0.3)',
+            padding: [12, 16],
+            textStyle: { 
+              color: '#1B2629', 
+              fontFamily: 'system-ui, sans-serif',
+              fontSize: 13,
+              lineHeight: 20
+            },
+            formatter: (params) => {
+              const p = params[0];
+              const monthValue = parseInt(p.axisValue);
+              const monthIndex = months.indexOf(monthValue);
+              
+              // Handle invalid index
+              if (monthIndex === -1 || monthIndex >= prices.length) {
+                const years = Math.floor(monthValue / 12);
+                const monthVal = monthValue % 12;
+                const ageText = years > 0 ? `${years}y ${monthVal}m` : `${monthVal}m`;
+                const stage = getAgingStage(monthValue);
+                return `<div style="font-family: system-ui, sans-serif;">
+                  <div style="font-weight: 700; color: #0E5B62; font-size: 14px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">${stage}</div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #6A7A81; font-size: 12px;">Age:</span>
+                    <span style="font-weight: 600; color: #1B2629;">${ageText}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: #6A7A81; font-size: 12px;">Price:</span>
+                    <span style="font-weight: 700; color: #1B2629; font-size: 16px;">${fmtUSD(p.data)}</span>
+                  </div>
+                </div>`;
+              }
+              
+              const years = Math.floor(monthValue / 12);
+              const monthVal = monthValue % 12;
+              const ageText = years > 0 ? `${years}y ${monthVal}m` : `${monthVal}m`;
+              const stage = getAgingStage(monthValue);
+              const priceChange = getPriceChange(monthIndex);
+              
+              return `<div style="font-family: system-ui, sans-serif;">
+                <div style="font-weight: 700; color: #0E5B62; font-size: 14px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">${stage}</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="color: #6A7A81; font-size: 12px;">Age:</span>
+                  <span style="font-weight: 600; color: #1B2629;">${ageText}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: ${priceChange ? '6px' : '0'};">
+                  <span style="color: #6A7A81; font-size: 12px;">Price:</span>
+                  <span style="font-weight: 700; color: #1B2629; font-size: 16px;">${fmtUSD(p.data)}</span>
+                </div>
+                ${priceChange ? `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid #E9E3DA;">
+                  <span style="color: ${priceChange.startsWith('+') ? '#3D825E' : '#A85D5D'}; font-weight: 600; font-size: 12px;">
+                    ${priceChange} ${priceChange.startsWith('+') ? '↑' : '↓'} from previous
+                  </span>
+                </div>` : ''}
+              </div>`;
+            }
+          },
+          xAxis: {
+            type: 'category',
+            data: months,
+            axisLine: { lineStyle: { color: '#E9E3DA', width: 1 } },
+            axisTick: { show: false },
+            axisLabel: { 
+              color: '#6A7A81', 
+              fontFamily: 'Manrope, system-ui, sans-serif',
+              fontSize: 11,
+              interval: 0,
+              formatter: (v) => {
+                const monthNum = parseInt(v);
+                // Stage labels (omit Joven to prevent overlap near origin)
+                if (monthNum === 2) return 'Reposado\n2m';
+                if (monthNum === 12) return 'Añejo\n12m';
+                if (monthNum === 36) return 'Extra\nAñejo\n36m';
+                // Year markers (12m, 24m, ...; skip 0m and 36m to avoid overlap with stage labels)
+                if (monthNum % 12 === 0 && monthNum !== 0 && monthNum !== 36) return monthNum + 'm';
+                return '';
+              },
+              lineHeight: 14,
+              margin: 20,
+              rotate: 0
+            },
+            splitLine: { show: false },
+            name: 'Aging Stage & Age (months)', 
+            nameLocation: 'middle', 
+            nameGap: 50, 
+            nameTextStyle: { 
+              color: '#1B2629',
+              fontFamily: 'Manrope, system-ui, sans-serif',
+              fontSize: 12,
+              fontWeight: 600
+            }
+          },
+          yAxis: {
+            type: 'value',
+            min: 0,
+            max: Math.ceil(Math.max(...prices) / 50) * 50,
+            interval: 50,
+            axisLabel: { 
+              color: '#6A7A81', 
+              fontFamily: 'Manrope, system-ui, sans-serif',
+              fontSize: 12,
+              formatter: v => '$' + v 
+            },
+            splitLine: { lineStyle: { color: '#E9E3DA', type: 'solid', opacity: 0.3 } },
+            name: 'Retail price (USD, 750 ml)', 
+            nameGap: 20, 
+            nameTextStyle: { 
+              color: '#1B2629',
+              fontFamily: 'Manrope, system-ui, sans-serif',
+              fontSize: 12,
+              fontWeight: 600
+            }
+          },
+          series: [{
+            name: 'Retail Price',
+            type: 'line',
+            data: prices,
+            step: 'middle',
+            smooth: false,
+            symbol: 'circle',
+            symbolSize: 0,
+            showSymbol: false,
+            emphasis: {
+              symbolSize: 8,
+              focus: 'series'
+            },
+            lineStyle: { 
+              width: 4, 
+              color: '#0E5B62'
+            },
+            itemStyle: {
+              color: '#0E5B62',
+              borderWidth: 2,
+              borderColor: '#fff'
+            },
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  { offset: 0, color: 'rgba(14, 94, 98, 0.25)' },
+                  { offset: 0.5, color: 'rgba(95, 168, 165, 0.15)' },
+                  { offset: 1, color: 'rgba(14, 94, 98, 0.02)' }
+                ]
+              }
+            },
+            markPoint: {
+              data: [
+                { name: 'Blanco/Joven', coord: [0, prices[0]], symbol: 'circle', symbolSize: 8, itemStyle: { color: '#F6F3EE' }, label: { show: false } },
+                { name: 'Reposado', coord: [2, prices[2]], symbol: 'circle', symbolSize: 8, itemStyle: { color: '#5FA8A5' }, label: { show: false } },
+                { name: 'Añejo', coord: [12, prices[12]], symbol: 'circle', symbolSize: 8, itemStyle: { color: '#3D825E' }, label: { show: false } },
+                { name: 'Extra Añejo', coord: [36, prices[36]], symbol: 'circle', symbolSize: 8, itemStyle: { color: '#0E5B62' }, label: { show: false } }
+              ],
+              symbol: 'circle',
+              symbolSize: 8,
+              itemStyle: {
+                color: '#0E5B62',
+                borderColor: '#fff',
+                borderWidth: 2
+              },
+              animation: true,
+              animationDuration: 1500
+            },
+            markLine: {
+              silent: true,
+              animation: true,
+              animationDuration: 1500,
+              data: [
+                { xAxis: 2, lineStyle: { type: 'dashed', color: '#5FA8A5', opacity: 0.4, width: 1 }, label: { show: false } },
+                { xAxis: 12, lineStyle: { type: 'dashed', color: '#3D825E', opacity: 0.4, width: 1 }, label: { show: false } },
+                { xAxis: 36, lineStyle: { type: 'dashed', color: '#0E5B62', opacity: 0.4, width: 1 }, label: { show: false } }
+              ]
+            },
+            label: {
+              show: false
+            }
+          }]
+        });
+
+        window.addEventListener('resize', () => {
+          if (modalChart) modalChart.resize();
+        });
+      }
+
+      function openRetailPriceModal() {
+        const modal = document.getElementById('retailPriceModal');
+        if (!modal) {
+          console.error('Modal not found!');
+          return;
+        }
+
+        console.log('Opening modal...', modal);
+        // Add active class to show modal
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+
+        // Check if content exists
+        const content = modal.querySelector('.retail-price-modal-content');
+        console.log('Modal content:', content);
+        if (content) {
+          const computed = window.getComputedStyle(content);
+          console.log('Content computed styles:', computed);
+          console.log('Content opacity:', computed.opacity);
+          console.log('Content visibility:', computed.visibility);
+          console.log('Content display:', computed.display);
+          console.log('Content width:', content.offsetWidth, 'height:', content.offsetHeight);
+          console.log('Content position:', content.getBoundingClientRect());
+          console.log('Modal position:', modal.getBoundingClientRect());
+        }
+
+        // Force reflow to ensure CSS transitions work
+        void modal.offsetWidth;
+
+        // Initialize chart after a brief delay to ensure modal is visible
+        setTimeout(() => {
+          console.log('Initializing chart...');
+          initializeModalChart();
+        }, 200);
+      }
+
+      function closeRetailPriceModal() {
+        const modal = document.getElementById('retailPriceModal');
+        if (!modal) return;
+
+        // Remove active class to hide modal
+        modal.classList.remove('active');
+        document.body.classList.remove('modal-open');
+
+        // Dispose chart to free up resources
+        if (modalChart) {
+          modalChart.dispose();
+          modalChart = null;
+        }
+      }
+
+      // Event listeners
+      document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('retailPriceBtn');
+        const closeBtn = document.getElementById('retailPriceModalClose');
+        const backdrop = document.getElementById('retailPriceModalBackdrop');
+
+        if (btn) {
+          btn.addEventListener('click', openRetailPriceModal);
+        }
+
+        if (closeBtn) {
+          closeBtn.addEventListener('click', closeRetailPriceModal);
+        }
+
+        if (backdrop) {
+          backdrop.addEventListener('click', closeRetailPriceModal);
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            const modal = document.getElementById('retailPriceModal');
+            if (modal && modal.classList.contains('active')) {
+              closeRetailPriceModal();
+            }
+          }
+        });
+      });
+    })();
+
     // === AGING SIMULATOR ===
     (function() {
       let agingData = null;
@@ -4146,15 +4869,23 @@
           agingData = await response.json();
           
           // Generate chart data from real data
-          chartData = agingData.series.map(point => ({
-            month: point.month,
-            remainingVolume: point.liters_remaining,
-            barrelValue: point.liters_remaining * point.resale_price_per_l.base,
-            valueLow: point.liters_remaining * point.resale_price_per_l.low,
-            valueHigh: point.liters_remaining * point.resale_price_per_l.high,
-            costPerLiter: point.cost_per_l,
-            cumCost: point.cum_cost_per_bbl
-          }));
+          chartData = agingData.series.map(point => {
+            // Calculate ±30% variance instead of using JSON values
+            const basePricePerLiter = point.resale_price_per_l.base;
+            const baseBarrelValue = point.liters_remaining * basePricePerLiter;
+            const valueLow = baseBarrelValue * 0.7;  // -30%
+            const valueHigh = baseBarrelValue * 1.3; // +30%
+            
+            return {
+              month: point.month,
+              remainingVolume: point.liters_remaining,
+              barrelValue: baseBarrelValue,
+              valueLow: valueLow,
+              valueHigh: valueHigh,
+              costPerLiter: point.cost_per_l,
+              cumCost: point.cum_cost_per_bbl
+            };
+          });
           
           return true;
         } catch (error) {
@@ -4188,9 +4919,10 @@
       }
 
       // Animate number counting
-      function animateNumber(element, start, end, duration = 1500) {
+      function animateNumber(element, start, end, duration = 1500, suffix = '') {
         const startTime = performance.now();
-        const isCurrency = element.textContent.includes('$');
+        const isCurrency = element.textContent.includes('$') || suffix.includes('USD');
+        const suffixText = suffix.trim();
         
         function updateNumber(currentTime) {
           const elapsed = currentTime - startTime;
@@ -4200,10 +4932,35 @@
           const easeOutCubic = 1 - Math.pow(1 - progress, 3);
           const current = start + (end - start) * easeOutCubic;
           
-          if (isCurrency) {
-            element.textContent = `$${Math.round(current).toLocaleString()}`;
+          // Format numbers - use decimals for small USD values (price per liter), round for others
+          let formattedNumber;
+          if (isCurrency && suffixText === 'USD' && end < 200) {
+            // Likely a price per liter - show 2 decimals
+            formattedNumber = current.toFixed(2);
+          } else if (suffixText === '%') {
+            // Percentage - show 1 decimal
+            formattedNumber = current.toFixed(1);
           } else {
-            element.textContent = Math.round(current).toLocaleString();
+            formattedNumber = Math.round(current).toLocaleString();
+          }
+          
+          if (isCurrency && suffixText === 'USD') {
+            // Currency with USD suffix: $number USD
+            element.innerHTML = `<span class="unit-small">$</span>${formattedNumber} <span class="unit-small">${suffixText}</span>`;
+          } else if (isCurrency) {
+            // Currency without suffix: $number
+            element.innerHTML = `<span class="unit-small">$</span>${formattedNumber}`;
+          } else if (suffixText === '%') {
+            // Percentage: number%
+            element.innerHTML = `${formattedNumber}<span class="unit-small">${suffixText}</span>`;
+          } else if (suffixText === 'liters' || suffixText === 'liters') {
+            // Volume with unit: number liters
+            element.innerHTML = `${formattedNumber} <span class="unit-small">${suffixText}</span>`;
+          } else if (suffixText) {
+            // Generic suffix
+            element.innerHTML = `${formattedNumber} <span class="unit-small">${suffixText}</span>`;
+          } else {
+            element.textContent = formattedNumber;
           }
           
           if (progress < 1) {
@@ -4220,19 +4977,35 @@
         
         // Update KPI displays with animation
         document.getElementById('currentMonth').textContent = `${months} mo`;
-        animateNumber(document.getElementById('remainingVolume'), 0, metrics.remainingVolume, 1000);
-        animateNumber(document.getElementById('angelShare'), 0, metrics.angelShare, 1000);
-        animateNumber(document.getElementById('barrelValue'), 0, metrics.barrelValue, 1200);
-        animateNumber(document.getElementById('valuePerLiter'), 0, metrics.pricePerLiter, 1000);
+        animateNumber(document.getElementById('remainingVolume'), 0, metrics.remainingVolume, 1000, ' liters');
+        animateNumber(document.getElementById('angelShare'), 0, metrics.angelShare, 1000, ' %');
+        animateNumber(document.getElementById('barrelValue'), 0, metrics.barrelValue, 1200, ' USD');
+        animateNumber(document.getElementById('valuePerLiter'), 0, metrics.pricePerLiter, 1000, ' USD');
         
         // Update value range
-        document.getElementById('valueRange').textContent = `$${Math.round(metrics.valueLow).toLocaleString()} – $${Math.round(metrics.valueHigh).toLocaleString()}`;
+        const lowVal = Math.round(metrics.valueLow).toLocaleString();
+        const highVal = Math.round(metrics.valueHigh).toLocaleString();
+        document.getElementById('valueRange').innerHTML = `<span class="unit-small">$</span>${lowVal} – <span class="unit-small">$</span>${highVal}`;
         
         // Update initial cost displays with animation (only set once)
         if (agingData && !document.getElementById('initialBarrelCost').dataset.initialized) {
           const initialData = agingData.series[0];
-          animateNumber(document.getElementById('initialBarrelCost'), 0, initialData.cum_cost_per_bbl, 1500);
-          document.getElementById('initialBarrelCost').dataset.initialized = 'true';
+          const costElement = document.getElementById('initialBarrelCost');
+          // Use a modified animateNumber that handles currency prefix
+          const startTime = performance.now();
+          const duration = 1500;
+          function updateCostNumber(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+            const current = 0 + (initialData.cum_cost_per_bbl - 0) * easeOutCubic;
+            costElement.innerHTML = `<span class="unit-small">$</span>${Math.round(current).toLocaleString()}`;
+            if (progress < 1) {
+              requestAnimationFrame(updateCostNumber);
+            }
+          }
+          requestAnimationFrame(updateCostNumber);
+          costElement.dataset.initialized = 'true';
         }
         
         // Update chart
@@ -4245,19 +5018,42 @@
         const chart = echarts.init(document.getElementById('agingChart'));
         
         chart.setOption({
-        grid: { left: 60, right: 40, top: 50, bottom: 50 },
+        grid: { left: 70, right: 45, top: 40, bottom: 50, containLabel: false },
         backgroundColor: 'transparent',
         tooltip: {
           trigger: 'axis',
-          backgroundColor: 'rgba(255,255,255,0.95)',
+          backgroundColor: '#1B2629',
           borderColor: '#0E5B62',
           borderWidth: 1,
-          borderRadius: 8,
-            textStyle: { 
-              color: '#1B2629',
-              fontFamily: 'system-ui, sans-serif',
-              fontSize: 12
+          borderRadius: 4,
+          padding: [12, 16],
+          textStyle: { 
+            color: '#F6F3EE',
+            fontFamily: '"SF Mono", "Monaco", "Courier New", monospace',
+            fontSize: 12,
+            lineHeight: 20
+          },
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#DB9251',
+              width: 1,
+              type: 'dashed'
             },
+            lineStyle: {
+              color: '#DB9251',
+              width: 1,
+              type: 'dashed',
+              opacity: 0.8
+            },
+            label: {
+              backgroundColor: '#1B2629',
+              color: '#F6F3EE',
+              borderColor: '#0E5B62',
+              fontSize: 11,
+              fontFamily: '"SF Mono", "Monaco", "Courier New", monospace'
+            }
+          },
           formatter: (params) => {
             const years = Math.floor(params[0].axisValue / 12);
             const months = params[0].axisValue % 12;
@@ -4269,14 +5065,19 @@
               const value = valueData ? Math.round(valueData.data) : 0;
               const cost = costData ? Math.round(costData.data) : 0;
               const profit = value - cost;
-              const yieldPct = cost > 0 ? ((profit / cost) * 100).toFixed(1) : 0;
+              const yieldPct = cost > 0 ? ((profit / cost) * 100).toFixed(2) : 0;
 
-            return `<div style="font-family: system-ui, sans-serif;">
-              <div style="font-weight: 600; color: #0E5B62; margin-bottom: 4px;">Age: ${ageText}</div>
-                <div style="font-weight: 600; color: #1B2629;">Value: $${value.toLocaleString()}</div>
-                <div style="font-weight: 500; color: #6A7A81;">Cost: $${cost.toLocaleString()}</div>
-                <div style="font-weight: 600; color: ${profit >= 0 ? '#0E5B62' : '#A85D5D'}; margin-top: 2px;">
-                  Profit: $${profit.toLocaleString()} (${yieldPct}%)
+            const formatNumber = (num) => num.toLocaleString('en-US', { 
+              minimumFractionDigits: 0, 
+              maximumFractionDigits: 0 
+            }).padStart(10, ' ');
+
+            return `<div style="font-family: 'SF Mono', 'Monaco', 'Courier New', monospace; font-size: 12px;">
+              <div style="color: #DB9251; margin-bottom: 8px; font-weight: 600;">TIME: ${ageText}</div>
+              <div style="color: #60B8FF; margin: 6px 0; font-weight: 600;">VALUE: $${formatNumber(value)}</div>
+              <div style="color: #6A7A81; margin: 6px 0;">COST:  $${formatNumber(cost)}</div>
+              <div style="color: ${profit >= 0 ? '#3D825E' : '#A85D5D'}; margin: 6px 0; font-weight: 600;">
+                P&L:   $${formatNumber(profit)} (${yieldPct}%)
               </div>
             </div>`;
           }
@@ -4284,53 +5085,105 @@
         xAxis: {
             type: 'category',
             data: chartData.map(d => d.month),
-            axisLine: { lineStyle: { color: '#E9E3DA' } },
-            axisTick: { show: false },
-          axisLabel: { 
-              color: '#6A7A81', 
-              fontFamily: 'system-ui, sans-serif',
-              fontSize: 11,
-              interval: 9,
-              formatter: v => v % 12 === 0 ? v + 'm' : ''
+            axisLine: { 
+              lineStyle: { color: '#6A7A81', width: 1 },
+              onZero: false
             },
-            splitLine: { show: false },
+            axisTick: { 
+              show: true,
+              length: 4,
+              lineStyle: { color: '#6A7A81' },
+              alignWithLabel: false
+            },
+            axisLabel: { 
+              color: '#6A7A81', 
+              fontFamily: '"SF Mono", "Monaco", "Courier New", monospace',
+              fontSize: 10,
+              interval: 9,
+              formatter: v => v % 12 === 0 ? v + 'm' : '',
+              margin: 8
+            },
+            splitLine: { 
+              show: true,
+              lineStyle: { 
+                color: '#E9E3DA', 
+                type: 'solid', 
+                width: 1,
+                opacity: 0.4
+              }
+            },
             name: 'Age (months)',
             nameLocation: 'middle',
             nameGap: 30,
             nameTextStyle: { 
-              color: '#1B2629',
+              color: '#6A7A81',
               fontFamily: 'system-ui, sans-serif',
-              fontSize: 11,
-              fontWeight: 600
+              fontSize: 10,
+              fontWeight: 500,
+              letterSpacing: '0.5px'
             }
           },
           yAxis: {
             type: 'value',
-            axisLabel: { 
-              color: '#6A7A81', 
-              fontFamily: 'system-ui, sans-serif',
-              fontSize: 11,
-              formatter: v => '$' + (v/1000).toFixed(0) + 'k'
+            scale: false,
+            axisLine: {
+              show: true,
+              lineStyle: { color: '#6A7A81', width: 1 },
+              onZero: false
             },
-            splitLine: { lineStyle: { color: '#E9E3DA', type: 'solid', opacity: 0.3 } },
-            name: 'Value & Cost (USD)',
+            axisTick: {
+              show: true,
+              length: 4,
+              lineStyle: { color: '#6A7A81' },
+              inside: false
+            },
+            axisLabel: { 
+              color: '#6A7A81',
+              fontFamily: '"SF Mono", "Monaco", "Courier New", monospace',
+              fontSize: 10,
+              formatter: (v) => {
+                if (v >= 1000) {
+                  return '$' + (v/1000).toFixed(1) + 'k';
+                }
+                return '$' + v.toFixed(0);
+              },
+              margin: 8
+            },
+            splitLine: { 
+              show: true,
+              lineStyle: { 
+                color: '#E9E3DA', 
+                type: 'solid', 
+                width: 1,
+                opacity: 0.4
+              }
+            },
+            name: 'USD',
+            nameLocation: 'end',
             nameGap: 15,
+            nameRotate: 90,
             nameTextStyle: { 
-              color: '#1B2629',
+              color: '#6A7A81',
               fontFamily: 'system-ui, sans-serif',
-              fontSize: 11,
-              fontWeight: 600
+              fontSize: 10,
+              fontWeight: 500,
+              letterSpacing: '0.5px'
             }
           },
           legend: {
             data: ['Barrel Value', 'Cumulative Cost'],
-            top: 0,
-            right: 0,
+            top: 8,
+            right: 10,
+            itemGap: 20,
             textStyle: {
               color: '#6A7A81',
               fontFamily: 'system-ui, sans-serif',
-              fontSize: 11
-            }
+              fontSize: 10,
+              fontWeight: 500
+            },
+            icon: 'roundRect',
+            itemWidth: 12,
+            itemHeight: 4
           },
           series: [
             {
@@ -4338,39 +5191,53 @@
               type: 'line',
               data: chartData.map(d => d.barrelValue),
               smooth: true,
-              symbol: 'none',
+              symbol: 'circle',
+              symbolSize: 4,
+              showSymbol: false,
+              emphasis: {
+                focus: 'series',
+                symbolSize: 6
+              },
               lineStyle: { 
-                width: 3, 
+                width: 2.5, 
                 color: '#0E5B62'
+              },
+              itemStyle: {
+                color: '#0E5B62',
+                borderWidth: 2,
+                borderColor: '#fff'
               },
               areaStyle: {
                 color: {
                   type: 'linear',
                   x: 0, y: 0, x2: 0, y2: 1,
                   colorStops: [
-                    { offset: 0, color: 'rgba(14, 94, 98, 0.2)' },
-                    { offset: 1, color: 'rgba(14, 94, 98, 0.02)' }
+                    { offset: 0, color: 'rgba(14, 94, 98, 0.15)' },
+                    { offset: 1, color: 'rgba(14, 94, 98, 0.01)' }
                   ]
                 }
               },
               markLine: {
+                silent: true,
                 data: [{
                   xAxis: currentMonth,
                   lineStyle: { 
                     color: '#DB9251', 
-                    type: 'dotted',
-                    width: 2
+                    type: 'solid',
+                    width: 2,
+                    opacity: 0.9
                   },
-            label: {
-              show: true,
-              position: 'top',
-                    formatter: `${currentMonth} mo`,
-              color: '#1B2629',
-                    fontSize: 12,
-              fontWeight: 600,
-                    backgroundColor: 'rgba(255,255,255,0.8)',
-                    padding: [4, 8],
-                    borderRadius: 4
+                  label: {
+                    show: true,
+                    position: 'insideEndTop',
+                    formatter: `${currentMonth}m`,
+                    color: '#1B2629',
+                    fontSize: 10,
+                    fontWeight: 600,
+                    fontFamily: '"SF Mono", "Monaco", "Courier New", monospace',
+                    backgroundColor: '#DB9251',
+                    padding: [3, 6],
+                    borderRadius: 3
                   }
                 }]
               }
@@ -4380,11 +5247,22 @@
               type: 'line',
               data: chartData.map(d => d.cumCost),
               smooth: false,
-              symbol: 'none',
+              symbol: 'circle',
+              symbolSize: 3,
+              showSymbol: false,
+              emphasis: {
+                focus: 'series',
+                symbolSize: 5
+              },
               lineStyle: { 
-                width: 2, 
-                color: '#3D825E',
+                width: 2.5, 
+                color: '#10B981',
                 type: 'solid'
+              },
+              itemStyle: {
+                color: '#10B981',
+                borderWidth: 2,
+                borderColor: '#fff'
               }
             }
           ]
@@ -4857,8 +5735,21 @@
       function onScroll(){
         const sectionTop = scroller.offsetTop;
         const sectionH   = scroller.offsetHeight - window.innerHeight;
+        const sectionBottom = sectionTop + scroller.offsetHeight;
         const scrolled   = window.scrollY - sectionTop;
         const p          = clamp(scrolled / sectionH, 0, 1);  // master progress 0..1
+        
+        // Check if we're outside the section bounds - hide button if so
+        const buttonContainer = document.getElementById('journeyButtonContainer');
+        if (window.scrollY < sectionTop || window.scrollY > sectionBottom) {
+          // We're outside the section - hide button
+          if (buttonContainer) {
+            buttonContainer.style.opacity = '0';
+            buttonContainer.style.pointerEvents = 'none';
+          }
+          // Early return to prevent animation calculations when outside section
+          return;
+        }
 
         // Phase 1: Title animation (0.0 → 0.4)
         if (p <= 0.4) {
@@ -4915,9 +5806,10 @@
           }
         }
         
-        // Phase 3: Cards fade out, button appears, journey stays hidden (0.7 → 1.0)
-        else {
-          const tJourney = (p - 0.7) / 0.3; // 0 → 1
+        // Phase 3: Cards fade out, button appears (0.7 → 0.85)
+        // Phase 4: Button stable and visible (0.85 → 1.0) - creates a "hold" period
+        else if (p <= 0.85) {
+          const tJourney = (p - 0.7) / 0.15; // 0 → 1 (faster transition to complete by 0.85)
           const cardOpacity = 1 - easeOut(tJourney);
           const buttonOpacity = easeOut(tJourney);
           
@@ -4942,6 +5834,59 @@
           }
           
           // Hide title
+          titleEl.style.opacity = '0';
+        }
+        
+        // Phase 4: Button fully visible and stable - hold period (0.85 → 0.98)
+        // Hide button as we approach the end of the section
+        else if (p <= 0.98) {
+          // Keep button fully visible and interactive
+          const buttonContainer = document.getElementById('journeyButtonContainer');
+          if (buttonContainer) {
+            buttonContainer.style.opacity = '1';
+            buttonContainer.style.pointerEvents = 'auto';
+          }
+          
+          // Keep cards fully hidden
+          if (threeCards) {
+            threeCards.style.opacity = '0';
+            threeCards.style.pointerEvents = 'none';
+          }
+          
+          // Keep journey section hidden - it will only show after animation completes
+          // But don't interfere if the journey overlay is active
+          if (journey && !journeyOverlay.classList.contains('active')) {
+            journey.style.display = 'none';
+            journey.style.opacity = '0';
+            journey.style.pointerEvents = 'none';
+          }
+          
+          // Keep title hidden
+          titleEl.style.opacity = '0';
+        }
+        
+        // Phase 5: Fade out button as we exit the section (0.98 → 1.0)
+        else {
+          // Fade out button smoothly as we approach section end
+          const tFadeOut = (p - 0.98) / 0.02; // 0 → 1 over the last 2% of scroll
+          const buttonOpacity = 1 - easeOut(tFadeOut);
+          
+          const buttonContainer = document.getElementById('journeyButtonContainer');
+          if (buttonContainer) {
+            buttonContainer.style.opacity = buttonOpacity;
+            buttonContainer.style.pointerEvents = buttonOpacity > 0.5 ? 'auto' : 'none';
+          }
+          
+          // Keep everything else hidden
+          if (threeCards) {
+            threeCards.style.opacity = '0';
+            threeCards.style.pointerEvents = 'none';
+          }
+          if (journey && !journeyOverlay.classList.contains('active')) {
+            journey.style.display = 'none';
+            journey.style.opacity = '0';
+            journey.style.pointerEvents = 'none';
+          }
           titleEl.style.opacity = '0';
         }
       }
@@ -5316,8 +6261,20 @@
             updateSimulator(24);
             
             // Slider event listener
+            // Function to update slider gradient
+            function updateSliderGradient(slider) {
+              const value = parseInt(slider.value);
+              const max = parseInt(slider.max);
+              const percentage = (value / max) * 100;
+              slider.style.setProperty('--slider-progress', percentage + '%');
+            }
+            
+            // Initial gradient update
+            updateSliderGradient(slider);
+            
             slider.addEventListener('input', function() {
               updateSimulator(parseInt(this.value));
+              updateSliderGradient(this);
             });
             
             // Initialize chart
@@ -5884,5 +6841,19 @@
           });
         }
   </script>
+
+  <!-- Retail Price Modal Overlay - Must be at body level for proper positioning -->
+  <div id="retailPriceModal" class="retail-price-modal">
+    <div class="retail-price-modal-backdrop" id="retailPriceModalBackdrop"></div>
+    <div class="retail-price-modal-content">
+      <button class="retail-price-modal-close" id="retailPriceModalClose" aria-label="Close modal">&times;</button>
+      <div class="retail-price-modal-body">
+        <h3 style="text-align: center; margin-bottom: 20px; color: var(--ink);">Retail Price Appreciation Over Time</h3>
+        <p class="sub" style="text-align: center; margin-bottom: 8px; color: var(--muted);">USD currency - 750ml bottle pricing</p>
+        <div id="retailPriceModalChart" style="width: 100%; height: 500px;"></div>
+        <p class="note" style="font-size: 0.75rem; margin-top: 16px; text-align: center; color: var(--muted); line-height: 1.5; max-width: 900px; margin-left: auto; margin-right: auto;">Data compiled from retail online and physical store pricing collected throughout September and October 2025. Analysis based on over 500 samples using statistical and probabilistic methods to normalize averages, remove outliers, and calculate accurate price estimates for each aging stage. Samples included various detail levels (e.g., specific aging duration, barrel type, or age ranges). This information is for informational purposes only and does not constitute investment, financial, or pricing advice.</p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
