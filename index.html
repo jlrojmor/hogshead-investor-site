@@ -4930,7 +4930,7 @@
       // Load real aging data
       async function loadAgingData() {
         try {
-          const response = await fetch('/public/data/aging.json');
+          const response = await fetch('./public/data/aging.json');
           agingData = await response.json();
           
           // Generate chart data from real data
@@ -6922,3 +6922,4 @@
   </div>
 </body>
 </html>
+<!-- Redeploy trigger -->
