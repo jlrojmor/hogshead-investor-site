@@ -688,6 +688,68 @@
       }
     }
     
+    /* Footer scroll to top indicator */
+    .footer-scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .footer-scroll-indicator:hover {
+      transform: translateY(-5px);
+    }
+    
+    .footer-scroll-indicator-text {
+      font-size: clamp(0.7rem, 1vw, 0.9rem);
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--agave, #0E5B62);
+      font-family: system-ui, -apple-system, sans-serif;
+      animation: tiltText 3s ease-in-out infinite;
+      white-space: nowrap;
+    }
+    
+    .footer-scroll-indicator-arrow {
+      width: 24px;
+      height: 24px;
+      color: var(--agave, #0E5B62);
+      animation: bounceArrowUp 2s ease-in-out infinite;
+    }
+    
+    @keyframes bounceArrowUp {
+      0%, 100% {
+        transform: translateY(0);
+        opacity: 0.9;
+      }
+      50% {
+        transform: translateY(-8px);
+        opacity: 1;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .footer-scroll-indicator {
+        margin-top: 20px;
+        margin-bottom: 12px;
+      }
+      
+      .footer-scroll-indicator-text {
+        font-size: clamp(0.65rem, 0.9vw, 0.85rem);
+      }
+      
+      .footer-scroll-indicator-arrow {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    
     .hero-card .eyebrow{
       font-size: clamp(0.6rem, 0.8vw, 0.75rem);  /* Even smaller */
       letter-spacing:.08em; text-transform:uppercase;
@@ -5686,6 +5748,12 @@
           </svg>
         </a>
       </div>
+      <a href="#hero" class="footer-scroll-indicator" aria-label="Scroll back to top of page">
+        <svg class="footer-scroll-indicator-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M17 11l-5-5-5 5M17 18l-5-5-5 5"/>
+        </svg>
+        <span class="footer-scroll-indicator-text">Back to Top</span>
+      </a>
       <div class="mini" style="margin-top: 16px;">© 2025 Hogshead Agave Spirits LLC. All rights reserved.</div>
     </div>
   </footer>
