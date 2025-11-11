@@ -4050,11 +4050,35 @@
           overflow: hidden;
           display: flex;
           flex-direction: column;
+          align-items: flex-start;
+          padding: 24px;
+          max-width: 100%;
+          min-height: auto;
         }
         
         .step-4-card .exit-grid {
           flex: 1;
           min-height: 0;
+          width: 100%;
+          align-self: stretch;
+        }
+
+        .step-4-card .pill {
+          display: inline-block !important;
+          font-size: 0.72rem !important;
+          letter-spacing: 0.12em !important;
+          padding: 6px 10px !important;
+          border-radius: 999px !important;
+          background: #eef7f8 !important;
+          color: var(--agave) !important;
+          border: 1px solid #d7ecef !important;
+          width: auto !important;
+          max-width: none !important;
+          min-width: auto !important;
+          box-sizing: border-box !important;
+          flex-shrink: 0 !important;
+          align-self: flex-start !important;
+          margin: 0 !important;
         }
 
         .step-4-card h3 {
