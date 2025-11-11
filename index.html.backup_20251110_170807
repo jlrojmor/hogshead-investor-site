@@ -4,16 +4,6 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Hogshead Agave Spirits — Investor Overview</title>
-  <meta name="description" content="Learn about Hogshead Agave Spirits investment opportunities in aging tequila inventory. Institutional-grade exposure to regulated origin-protected tequila with professional custody."/>
-  <meta name="keywords" content="tequila investment, agave spirits, tequila barrels, investment opportunities, premium tequila"/>
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website"/>
-  <meta property="og:title" content="Hogshead Agave Spirits — Investor Overview"/>
-  <meta property="og:description" content="Learn about Hogshead Agave Spirits investment opportunities in aging tequila inventory."/>
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Hogshead Agave Spirits — Investor Overview"/>
-  <meta name="twitter:description" content="Learn about Hogshead Agave Spirits investment opportunities in aging tequila inventory."/>
   <script src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,22 +88,6 @@
       text-rendering:optimizeLegibility;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-    }
-    
-    /* Skip to content link for accessibility */
-    .skip-to-content {
-      position: absolute;
-      top: -40px;
-      left: 0;
-      background: var(--agave);
-      color: white;
-      padding: 8px 16px;
-      text-decoration: none;
-      z-index: 10000;
-      border-radius: 0 0 4px 0;
-    }
-    .skip-to-content:focus {
-      top: 0;
     }
     
     /* Jeton-style container and button system */
@@ -2481,46 +2455,7 @@
 
     /* Footer */
     footer{border-top:1px solid var(--line);background:#FAF8F4;padding:34px 0 56px;color:#39474c}
-    .disclaimer{font-size:.86rem;color:#6f7f85;line-height:1.6}
-    
-    /* Mobile responsiveness for market data disclaimer and footer */
-    @media (max-width: 768px) {
-      /* Market data disclaimer mobile styling */
-      #market > div[style*="background: #f8f9fa"] {
-        font-size: 0.75rem !important;
-        padding: 12px !important;
-        margin-bottom: 16px !important;
-      }
-      
-      /* Footer links mobile styling */
-      footer .wrap > div[style*="display: flex"] {
-        flex-direction: column;
-        gap: 8px !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
-      }
-      
-      footer .wrap > div[style*="display: flex"] span {
-        display: none;
-      }
-      
-      /* Footer disclaimer mobile styling */
-      footer .disclaimer {
-        font-size: 0.75rem !important;
-        line-height: 1.5 !important;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      footer .disclaimer {
-        font-size: 0.7rem !important;
-      }
-      
-      #market > div[style*="background: #f8f9fa"] {
-        font-size: 0.7rem !important;
-        padding: 10px !important;
-      }
-    }
+    .disclaimer{font-size:.86rem;color:#6f7f85}
 
     /* smaller legend "cards" - ALL 9 IN ONE ROW - SAME SIZE */
     .legend{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin:12px 6px 6px}
@@ -4508,8 +4443,7 @@
   </style>
 </head>
 <body>
-  <a href="#main-content" class="skip-to-content">Skip to main content</a>
-  <header class="site-header" role="banner">
+  <header class="site-header">
     <div class="container">
         <div class="brand">
           <div class="logo" aria-hidden="true">
@@ -4517,21 +4451,21 @@
           </div>
           <span>Hogshead Agave Spirits</span>
         </div>
-      <nav class="nav" role="navigation" aria-label="Main navigation">
-          <a href="#opportunity" aria-label="Opportunity section">Opportunity</a>
-          <a href="#market" aria-label="Market section">Market</a>
-          <a href="#appreciation" aria-label="Tequila Appreciation section">Tequila Appreciation</a>
-          <a href="#aging-simulator" aria-label="Aging Simulator section">Aging Simulator</a>
-          <a href="#whyus" aria-label="Why Us section">Why Us</a>
-          <a href="#guardrails" aria-label="Guardrails section">Guardrails</a>
-          <a href="#faq" aria-label="FAQ section">FAQ</a>
-      <a href="#" id="otherServicesTrigger" aria-label="Other Services information">Other Services</a>
+      <nav class="nav">
+          <a href="#opportunity">Opportunity</a>
+          <a href="#market">Market</a>
+          <a href="#appreciation">Tequila Appreciation</a>
+          <a href="#aging-simulator">Aging Simulator</a>
+          <a href="#whyus">Why Us</a>
+          <a href="#guardrails">Guardrails</a>
+          <a href="#faq">FAQ</a>
+      <a href="#" id="otherServicesTrigger">Other Services</a>
         </nav>
-        <a class="cta" href="#contact" aria-label="Request information">Request Info</a>
+        <a class="cta" href="#contact">Request Info</a>
     </div>
   </header>
 
-  <main id="main-content" role="main">
+  <main>
     <div class="wrap">
       <!-- HERO -->
       <header class="site-hero" id="hero">
@@ -4544,8 +4478,8 @@
           <h1>Invest in aging tequila—<br>curated, compliant, and time-powered.</h1>
           <p class="lead">We provide investors with institutional-grade exposure to aging tequila inventory held under professional custody. The thesis is simple: regulated origin, constrained supply, and value that compounds with time-in-barrel.</p>
           <div class="actions">
-            <a class="btn primary" href="#howitworks" aria-label="Navigate to How It Works section">See How it Works</a>
-            <a class="btn ghost" href="#contact" aria-label="Navigate to contact form">Request Info</a>
+            <a class="btn primary" href="#howitworks">See How it Works</a>
+            <a class="btn ghost" href="#contact">Request Info</a>
           </div>
         </div>
         
@@ -4619,9 +4553,9 @@
             <h3>Aging & Appreciation</h3>
             <p>Time compounds value: the asset appreciates over time while being in the barrel. Scarcity increases while demand grows for premium aged expressions, creating natural price appreciation.</p>
             <div class="aging-cta">
-              <button class="btn btn-secondary" onclick="scrollToAgingSimulator()" aria-label="Navigate to Aging Value Simulator">
+              <button class="btn btn-secondary" onclick="scrollToAgingSimulator()">
                 <span>Try the Aging Value Simulator</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M7 17L17 7M17 7H7M17 7V17"/>
               </svg>
               </button>
@@ -4631,19 +4565,19 @@
             <span class="pill">Step 4</span>
             <h3>Exit Strategies</h3>
             <div class="exit-grid">
-              <button class="exit-btn" data-strategy="investor" type="button" aria-label="Learn about selling certificate to another investor">
+              <button class="exit-btn" data-strategy="investor" type="button">
                 <h4>Sell Certificate to Another Investor</h4>
                 <p>Early liquidity, no physical movement</p>
               </button>
-              <button class="exit-btn" data-strategy="bottlers" type="button" aria-label="Learn about selling to bottlers and brands">
+              <button class="exit-btn" data-strategy="bottlers" type="button">
                 <h4>Sell to Bottlers/Brands</h4>
                 <p>Bottling under established labels</p>
               </button>
-              <button class="exit-btn" data-strategy="corporate" type="button" aria-label="Learn about selling to corporate clients">
+              <button class="exit-btn" data-strategy="corporate" type="button">
                 <h4>Corporate Clients</h4>
                 <p>Hotels, restaurants, bars</p>
               </button>
-              <button class="exit-btn" data-strategy="marketplace" type="button" aria-label="Learn about Hogshead Marketplace">
+              <button class="exit-btn" data-strategy="marketplace" type="button">
                 <h4>Hogshead Market Place</h4>
                 <p>E-commerce for rare tequilas</p>
               </button>
@@ -4655,7 +4589,7 @@
       <!-- Exit Strategy Modals -->
       <div id="modal-overlay" class="modal-overlay" onclick="closeExitModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeExitModal()" aria-label="Close modal">&times;</button>
+          <button class="modal-close" onclick="closeExitModal()">&times;</button>
           <div id="modal-body">
             <!-- Modal content will be populated by JavaScript -->
           </div>
@@ -4701,12 +4635,6 @@
       <section id="market">
         <h2>And Data Backs It Up</h2>
         <p class="sub">Global tequila market growth by region and competitive positioning. All market values in USD billions.</p>
-        
-        <!-- Market Data Disclaimer -->
-        <div style="margin-bottom: 24px; padding: 16px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid var(--agave); font-size: 0.85rem; color: var(--muted); line-height: 1.5;">
-          <strong style="color: var(--ink); display: block; margin-bottom: 8px;">Market Data Disclaimer:</strong>
-          Market data, including CAGR percentages, sales figures, and forecasts shown on this website are based on industry reports, market research, and estimates. Sources are available upon request. Past performance and market data do not guarantee future results. Forecasts are estimates based on historical trends and market conditions and are not guarantees of future performance. Actual results may vary significantly based on market conditions, regulatory changes, and other factors beyond our control. This information is for illustrative purposes only and should not be relied upon as the sole basis for investment decisions.
-        </div>
         
         <!-- Global Market Ticker -->
         <div class="market-ticker">
@@ -5002,7 +4930,7 @@
             </div>
 
             <!-- Skip Button -->
-            <button class="journey-skip-btn" id="journeySkipBtn" aria-label="Skip aging journey animation">
+            <button class="journey-skip-btn" id="journeySkipBtn">
               Skip Journey
             </button>
           </div>
@@ -5140,21 +5068,21 @@
 
               <!-- Navigation -->
               <div class="premium-navigation">
-                <button class="nav-button prev" id="prevStage" aria-label="Previous aging stage">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <button class="nav-button prev" id="prevStage" aria-label="Previous stage">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="15,18 9,12 15,6"></polyline>
                   </svg>
                 </button>
                 
                 <div class="stage-indicators">
-                  <button class="indicator active" data-stage="0" aria-label="Go to Joven stage"></button>
-                  <button class="indicator" data-stage="1" aria-label="Go to Reposado stage"></button>
-                  <button class="indicator" data-stage="2" aria-label="Go to Añejo stage"></button>
-                  <button class="indicator" data-stage="3" aria-label="Go to Extra Añejo stage"></button>
+                  <button class="indicator active" data-stage="0"></button>
+                  <button class="indicator" data-stage="1"></button>
+                  <button class="indicator" data-stage="2"></button>
+                  <button class="indicator" data-stage="3"></button>
                 </div>
                 
-                <button class="nav-button next" id="nextStage" aria-label="Next aging stage">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <button class="nav-button next" id="nextStage" aria-label="Next stage">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="9,18 15,12 9,6"></polyline>
                   </svg>
                 </button>
@@ -5431,19 +5359,15 @@
           <h2 style="margin-bottom: 10px; font-size: clamp(28px,3vw,40px);">Request More Information</h2>
           <p class="sub" style="margin-bottom: 18px;">Share a few details and we'll reach out to schedule a brief call.</p>
           <div class="grid" style="display:grid; grid-template-columns: 1fr 1.1fr; gap: 24px; align-items:start; max-width: 980px;">
-          <form id="contactForm" class="card" style="padding:16px 18px;" novalidate>
-            <div id="formMessage" style="display:none; padding:12px; border-radius:8px; margin-bottom:16px; font-size:0.9rem;"></div>
-            <label for="contactName">Name<br/><input id="contactName" name="name" required type="text" placeholder="Your name" aria-required="true" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035"></label><br/><br/>
-            <label for="contactEmail">Email<br/><input id="contactEmail" name="email" required type="email" placeholder="you@company.com" aria-required="true" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035"></label><br/><br/>
-            <label for="contactCompany">Company (optional)<br/><input id="contactCompany" name="company" type="text" placeholder="Your company" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035"></label><br/><br/>
-            <label for="contactComments">Comments (optional)<br/>
-              <textarea id="contactComments" name="comments" rows="4" placeholder="What would you like to discuss?" aria-label="Comments" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035;resize:vertical"></textarea>
+          <form class="card" onsubmit="event.preventDefault(); alert('Thanks — we will be in touch to schedule a call.');" style="padding:16px 18px;">
+            <label>Name<br/><input required type="text" placeholder="Your name" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035"></label><br/><br/>
+            <label>Email<br/><input required type="email" placeholder="you@company.com" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035"></label><br/><br/>
+            <label>Company (optional)<br/><input type="text" placeholder="Your company" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035"></label><br/><br/>
+            <label>Comments (optional)<br/>
+              <textarea rows="4" placeholder="What would you like to discuss?" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035;resize:vertical"></textarea>
             </label><br/>
-            <label style="display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--muted); margin-bottom:16px;">
-              <input type="checkbox" id="privacyConsent" name="privacyConsent" required aria-required="true" style="accent-color: var(--agave); margin-top:4px; flex-shrink:0;">
-              <span>I agree to be contacted to schedule a call and have read and agree to the <a href="privacy-policy.html" target="_blank" style="color:var(--agave); text-decoration:underline;">Privacy Policy</a>.</span>
-            </label>
-            <button class="cta" type="submit" id="submitButton" aria-label="Send request">Send Request</button>
+            <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);"><input type="checkbox" required style="accent-color: var(--agave);">I agree to be contacted to schedule a call.</label><br/>
+            <button class="cta" type="submit">Send Request</button>
           </form>
           <div class="card" style="padding:16px 18px;">
             <h3>What happens next</h3>
@@ -5460,16 +5384,11 @@
     </div>
   </main>
 
-  <footer role="contentinfo">
+  <footer>
     <div class="wrap">
       <div><strong>Hogshead Agave Spirits</strong> — Investor Overview</div>
-      <p class="disclaimer"><strong>Important Disclaimers:</strong> This website is for informational purposes only and is accessible to all visitors. This website does not constitute an offer to sell or a solicitation of an offer to buy any securities. No offer is made except by means of a confidential private placement memorandum. Any securities offered are available only to qualified accredited investors. Past performance does not guarantee future results. Investment involves risk of loss, including the possible loss of principal. The information on this website is not registered with the Securities and Exchange Commission (SEC) or any state securities commission. No regulatory agency has passed upon the merits of any offering or the accuracy or adequacy of the information on this website. Any projections, forecasts, or estimates shown are illustrative and based on assumptions that may not materialize. Outcomes depend on market conditions, execution, and other factors beyond our control. This website should not be used as the sole basis for investment decisions. Consult with a qualified financial advisor, attorney, or other professional before making any investment decisions.</p>
-      <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: center;">
-        <a href="privacy-policy.html" style="color: var(--agave); text-decoration: none; font-size: 0.9rem;">Privacy Policy</a>
-        <span style="color: var(--muted);">|</span>
-        <a href="terms-of-service.html" style="color: var(--agave); text-decoration: none; font-size: 0.9rem;">Terms of Service</a>
-      </div>
-      <div class="mini" style="margin-top: 16px;">© 2025 Hogshead Agave Spirits LLC. All rights reserved.</div>
+      <p class="disclaimer"><strong>Disclaimer:</strong> This page is for informational purposes only and does not constitute an offer to sell or a solicitation of an offer to buy any securities. Any projections are illustrative; outcomes depend on market conditions and execution.</p>
+      <div class="mini">© 2025 Hogshead Agave Spirits LLC. All rights reserved.</div>
     </div>
   </footer>
 
@@ -7164,8 +7083,8 @@
             scale = lerp(1.15, 0.3, tTitle);
             translateY = lerp(8, 0, Math.min(tTitle * 2, 1));
             opacity = lerp(1.00, 0.2, tTitle);
-          titleEl.style.transform = `translate3d(0, ${translateY}vh, 0) scale(${scale})`;
-          titleEl.style.opacity   = opacity;
+            titleEl.style.transform = `translate3d(0, ${translateY}vh, 0) scale(${scale})`;
+            titleEl.style.opacity   = opacity;
             titleEl.style.display = 'block';
             titleEl.style.visibility = 'visible';
           }
@@ -7218,7 +7137,7 @@
             titleEl.style.visibility = titleFadeOut > 0.01 ? 'visible' : 'hidden';
           } else {
             // Desktop: Hide title
-          titleEl.style.opacity = '0';
+            titleEl.style.opacity = '0';
           }
           if (journey && journeyOverlay && !journeyOverlay.classList.contains('active')) {
             journey.style.opacity = '0';
@@ -8305,154 +8224,6 @@
             touchStartY = touchY;
           });
         }
-
-    // Contact Form Submission Handler
-    (function() {
-      // Wait for DOM to be fully loaded
-      document.addEventListener('DOMContentLoaded', function() {
-        const contactForm = document.getElementById('contactForm');
-        const formMessage = document.getElementById('formMessage');
-        const submitButton = document.getElementById('submitButton');
-        
-        if (!contactForm || !formMessage || !submitButton) {
-          return;
-        }
-        
-        // CONFIGURATION: Form submission endpoint
-        // Formspree endpoint - configured and ready to use
-        const FORM_ENDPOINT = 'https://formspree.io/f/mgvrevjl';
-        
-        // Option 2: Use your own backend API endpoint
-        // const FORM_ENDPOINT = 'https://your-api-endpoint.com/api/contact';
-        
-        // Option 3: Use EmailJS or other service
-        // Configure accordingly
-        
-        function showMessage(message, isError) {
-          formMessage.textContent = message;
-          formMessage.style.display = 'block';
-          formMessage.style.backgroundColor = isError ? '#fee' : '#efe';
-          formMessage.style.color = isError ? '#c33' : '#3c3';
-          formMessage.style.border = `1px solid ${isError ? '#fcc' : '#cfc'}`;
-          
-          // Scroll to message
-          formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          
-          // Hide message after 5 seconds for errors, keep success visible
-          if (isError) {
-            setTimeout(() => {
-              formMessage.style.display = 'none';
-            }, 5000);
-          }
-        }
-      
-        function setLoading(loading) {
-          submitButton.disabled = loading;
-          submitButton.textContent = loading ? 'Sending...' : 'Send Request';
-          submitButton.style.opacity = loading ? '0.6' : '1';
-          submitButton.style.cursor = loading ? 'not-allowed' : 'pointer';
-        }
-        
-        contactForm.addEventListener('submit', async function(e) {
-          e.preventDefault();
-          
-          // Reset message
-          formMessage.style.display = 'none';
-          
-          // Validate form
-          if (!contactForm.checkValidity()) {
-            contactForm.reportValidity();
-            return;
-          }
-          
-          // Check privacy consent
-          const privacyConsent = document.getElementById('privacyConsent');
-          if (!privacyConsent.checked) {
-            showMessage('Please agree to the Privacy Policy to continue.', true);
-            privacyConsent.focus();
-            return;
-          }
-          
-          // Get form data
-          const formData = new FormData(contactForm);
-          const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            company: formData.get('company') || '',
-            comments: formData.get('comments') || '',
-            _subject: 'New Contact Form Submission - Hogshead Agave Spirits',
-            _replyto: formData.get('email')
-          };
-          
-          // Set loading state
-          setLoading(true);
-          
-          try {
-            // Check if using Formspree or custom endpoint
-            const isFormspree = FORM_ENDPOINT.includes('formspree.io');
-            
-            let response;
-            if (isFormspree) {
-              // Formspree expects form-urlencoded data
-              const formBody = new URLSearchParams(data).toString();
-              
-              response = await fetch(FORM_ENDPOINT, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded',
-                  'Accept': 'application/json'
-                },
-                body: formBody
-              });
-            } else {
-              // Custom endpoint expects JSON
-              response = await fetch(FORM_ENDPOINT, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
-              });
-            }
-            
-            const responseData = await response.json().catch(async (e) => {
-              // If JSON parse fails, try to get text
-              const text = await response.text().catch(() => '');
-              return { error: text || 'Unknown error', status: response.status };
-            });
-            
-            if (response.ok) {
-              // Success
-              showMessage('Thank you! We have received your request and will be in touch soon to schedule a call.', false);
-              contactForm.reset();
-              
-              // Reset privacy consent checkbox
-              privacyConsent.checked = false;
-            } else {
-              // Error from server
-              const errorMsg = responseData.error || responseData.message || `Server returned status ${response.status}`;
-              showMessage(`Sorry, there was an error: ${errorMsg}. Please try again later or contact us directly at contact@hhagavespirits.com.`, true);
-            }
-          } catch (error) {
-            // Network or other error
-            showMessage(`Sorry, there was an error sending your message. Please check your internet connection and try again, or contact us directly at contact@hhagavespirits.com.`, true);
-          } finally {
-            setLoading(false);
-          }
-        });
-      
-        // Handle keyboard navigation for form
-        contactForm.addEventListener('keydown', function(e) {
-          // Allow Enter to submit form (default behavior)
-          if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
-            // For text inputs, Enter will submit (default)
-            // For textarea, Enter creates new line (default)
-            return;
-          }
-        });
-      });
-    })();
   </script>
 
   <!-- Other Services Overlay -->
@@ -8474,7 +8245,7 @@
             Request Info
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </button>
-          <button type="button" class="cta-secondary" data-close-services aria-label="Close Other Services overlay">Close</button>
+          <button type="button" class="cta-secondary" data-close-services>Close</button>
         </div>
       </div>
       <div class="services-media" aria-hidden="true">
