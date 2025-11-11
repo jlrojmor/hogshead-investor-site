@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.hhagavespirits.com/sitemap.xml
+Sitemap: https://hhagavespirits.com/sitemap.xml
 
