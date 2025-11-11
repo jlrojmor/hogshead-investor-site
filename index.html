@@ -606,19 +606,63 @@
     }
     .hero-scroll-indicator{
       position: absolute;
-      bottom: 100px;
+      bottom: clamp(60px, 8vh, 100px);
       left: 50%;
       transform: translateX(-50%);
-      font-size: clamp(0.7rem, 1vw, 0.9rem);
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.85);
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       z-index: 2;
-      font-family: system-ui, -apple-system, sans-serif;
-      animation: fadeInOut 3s ease-in-out infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
     }
+    
+    .hero-scroll-indicator:hover {
+      transform: translateX(-50%) translateY(-5px);
+    }
+    
+    .hero-scroll-indicator-text {
+      font-size: clamp(0.7rem, 1vw, 0.9rem);
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.95);
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+      font-family: system-ui, -apple-system, sans-serif;
+      animation: tiltText 3s ease-in-out infinite;
+      white-space: nowrap;
+    }
+    
+    .hero-scroll-indicator-arrow {
+      width: 24px;
+      height: 24px;
+      color: rgba(255, 255, 255, 0.9);
+      animation: bounceArrow 2s ease-in-out infinite;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    }
+    
+    @keyframes tiltText {
+      0%, 100% {
+        transform: rotate(-2deg);
+      }
+      50% {
+        transform: rotate(2deg);
+      }
+    }
+    
+    @keyframes bounceArrow {
+      0%, 100% {
+        transform: translateY(0);
+        opacity: 0.9;
+      }
+      50% {
+        transform: translateY(8px);
+        opacity: 1;
+      }
+    }
+    
     @keyframes fadeInOut {
       0%, 100% {
         opacity: 0.4;
@@ -627,6 +671,23 @@
         opacity: 1;
       }
     }
+    
+    /* Mobile responsiveness for scroll indicator */
+    @media (max-width: 768px) {
+      .hero-scroll-indicator {
+        bottom: clamp(40px, 6vh, 80px);
+      }
+      
+      .hero-scroll-indicator-text {
+        font-size: clamp(0.65rem, 0.9vw, 0.85rem);
+      }
+      
+      .hero-scroll-indicator-arrow {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    
     .hero-card .eyebrow{
       font-size: clamp(0.6rem, 0.8vw, 0.75rem);  /* Even smaller */
       letter-spacing:.08em; text-transform:uppercase;
@@ -4693,7 +4754,12 @@
           </div>
         </div>
         
-        <div class="hero-scroll-indicator">SCROLL</div>
+        <a href="#footer" class="hero-scroll-indicator" aria-label="Scroll to footer with LinkedIn and contact information">
+          <span class="hero-scroll-indicator-text">Scroll to Connect</span>
+          <svg class="hero-scroll-indicator-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+          </svg>
+        </a>
       </header>
 
       <!-- HOW IT WORKS -->
@@ -5604,7 +5670,7 @@
     </div>
   </main>
 
-  <footer role="contentinfo">
+  <footer id="footer" role="contentinfo">
     <div class="wrap">
       <div><strong>Hogshead Agave Spirits</strong> — Investor Overview</div>
       <p class="disclaimer"><strong>Important Disclaimers:</strong> This website is for informational purposes only and is accessible to all visitors. This website does not constitute an offer to sell or a solicitation of an offer to buy any securities. No offer is made except by means of a confidential private placement memorandum. Any securities offered are available only to qualified accredited investors. Past performance does not guarantee future results. Investment involves risk of loss, including the possible loss of principal. The information on this website is not registered with the Securities and Exchange Commission (SEC) or any state securities commission. No regulatory agency has passed upon the merits of any offering or the accuracy or adequacy of the information on this website. Any projections, forecasts, or estimates shown are illustrative and based on assumptions that may not materialize. Outcomes depend on market conditions, execution, and other factors beyond our control. This website should not be used as the sole basis for investment decisions. Consult with a qualified financial advisor, attorney, or other professional before making any investment decisions.</p>
