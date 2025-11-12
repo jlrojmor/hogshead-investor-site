@@ -2671,6 +2671,37 @@
     footer{border-top:1px solid var(--line);background:#FAF8F4;padding:34px 0 56px;color:#39474c}
     .disclaimer{font-size:.86rem;color:#6f7f85;line-height:1.6}
     
+    /* Privacy Consent Checkbox - Ensure visibility in all browsers including Brave */
+    #privacyConsent {
+      width: 18px !important;
+      height: 18px !important;
+      min-width: 18px !important;
+      min-height: 18px !important;
+      margin-top: 4px !important;
+      flex-shrink: 0 !important;
+      cursor: pointer !important;
+      accent-color: var(--agave, #0E5B62) !important;
+      -webkit-appearance: checkbox !important;
+      -moz-appearance: checkbox !important;
+      appearance: checkbox !important;
+      border: 2px solid var(--line, #E9E3DA) !important;
+      border-radius: 4px !important;
+      background: #fff !important;
+      display: inline-block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    
+    #privacyConsent:checked {
+      background-color: var(--agave, #0E5B62) !important;
+      border-color: var(--agave, #0E5B62) !important;
+    }
+    
+    #privacyConsent:focus {
+      outline: 2px solid var(--agave, #0E5B62) !important;
+      outline-offset: 2px !important;
+    }
+    
     /* Social Media Links */
     .social-links {
       display: flex;
@@ -5712,7 +5743,7 @@
               <textarea id="contactComments" name="comments" rows="4" placeholder="What would you like to discuss?" aria-label="Comments" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035;resize:vertical"></textarea>
             </label><br/>
             <label style="display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--muted); margin-bottom:16px;">
-              <input type="checkbox" id="privacyConsent" name="privacyConsent" required aria-required="true" style="accent-color: var(--agave); margin-top:4px; flex-shrink:0;">
+              <input type="checkbox" id="privacyConsent" name="privacyConsent" required aria-required="true" style="width:18px;height:18px;min-width:18px;min-height:18px;margin-top:4px;flex-shrink:0;cursor:pointer;accent-color:var(--agave, #0E5B62);-webkit-appearance:checkbox;appearance:checkbox;border:2px solid var(--line, #E9E3DA);border-radius:4px;background:#fff;">
               <span>I agree to be contacted to schedule a call and have read and agree to the <a href="privacy-policy.html" target="_blank" style="color:var(--agave); text-decoration:underline;">Privacy Policy</a>.</span>
             </label>
             <button class="cta" type="submit" id="submitButton" aria-label="Send request">Send Request</button>
