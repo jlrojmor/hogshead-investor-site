@@ -2671,33 +2671,72 @@
     footer{border-top:1px solid var(--line);background:#FAF8F4;padding:34px 0 56px;color:#39474c}
     .disclaimer{font-size:.86rem;color:#6f7f85;line-height:1.6}
     
-    /* Privacy Consent Checkbox - Ensure visibility in all browsers including Brave */
+    /* Privacy Consent Checkbox - Custom styled for all browsers including Brave */
     #privacyConsent {
-      width: 18px !important;
-      height: 18px !important;
-      min-width: 18px !important;
-      min-height: 18px !important;
-      margin-top: 4px !important;
+      position: absolute !important;
+      opacity: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      cursor: pointer !important;
+      z-index: 1 !important;
+    }
+    
+    /* Custom checkbox label styling */
+    label[for="privacyConsent"] {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 20px !important;
+      height: 20px !important;
+      min-width: 20px !important;
+      min-height: 20px !important;
+      margin-top: 2px !important;
       flex-shrink: 0 !important;
       cursor: pointer !important;
-      accent-color: var(--agave, #0E5B62) !important;
-      -webkit-appearance: checkbox !important;
-      -moz-appearance: checkbox !important;
-      appearance: checkbox !important;
       border: 2px solid var(--line, #E9E3DA) !important;
       border-radius: 4px !important;
       background: #fff !important;
-      display: inline-block !important;
-      visibility: visible !important;
+      position: relative !important;
+      transition: all 0.2s ease !important;
+    }
+    
+    label[for="privacyConsent"]:hover {
+      border-color: var(--agave, #0E5B62) !important;
+    }
+    
+    #privacyConsent:checked + .checkbox-checkmark {
       opacity: 1 !important;
     }
     
-    #privacyConsent:checked {
+    #privacyConsent:checked ~ label,
+    #privacyConsent:checked + svg {
       background-color: var(--agave, #0E5B62) !important;
       border-color: var(--agave, #0E5B62) !important;
     }
     
-    #privacyConsent:focus {
+    /* When checkbox is checked, style the label */
+    #privacyConsent:checked + .checkbox-checkmark {
+      opacity: 1 !important;
+    }
+    
+    /* Alternative: Use adjacent sibling selector */
+    input:checked ~ .checkbox-checkmark {
+      opacity: 1 !important;
+    }
+    
+    label[for="privacyConsent"]:has(input:checked) {
+      background-color: var(--agave, #0E5B62) !important;
+      border-color: var(--agave, #0E5B62) !important;
+    }
+    
+    label[for="privacyConsent"]:has(input:checked) .checkbox-checkmark {
+      opacity: 1 !important;
+    }
+    
+    #privacyConsent:focus + .checkbox-checkmark,
+    #privacyConsent:focus ~ label {
       outline: 2px solid var(--agave, #0E5B62) !important;
       outline-offset: 2px !important;
     }
@@ -5742,10 +5781,15 @@
             <label for="contactComments">Comments (optional)<br/>
               <textarea id="contactComments" name="comments" rows="4" placeholder="What would you like to discuss?" aria-label="Comments" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#233035;resize:vertical"></textarea>
             </label><br/>
-            <label style="display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--muted); margin-bottom:16px;">
-              <input type="checkbox" id="privacyConsent" name="privacyConsent" required aria-required="true" style="width:18px;height:18px;min-width:18px;min-height:18px;margin-top:4px;flex-shrink:0;cursor:pointer;accent-color:var(--agave, #0E5B62);-webkit-appearance:checkbox;appearance:checkbox;border:2px solid var(--line, #E9E3DA);border-radius:4px;background:#fff;">
-              <span>I agree to be contacted to schedule a call and have read and agree to the <a href="privacy-policy.html" target="_blank" style="color:var(--agave); text-decoration:underline;">Privacy Policy</a>.</span>
-            </label>
+            <div style="display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--muted); margin-bottom:16px;">
+              <label for="privacyConsent" style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;min-width:20px;min-height:20px;margin-top:2px;flex-shrink:0;cursor:pointer;border:2px solid var(--line, #E9E3DA);border-radius:4px;background:#fff;position:relative;">
+                <input type="checkbox" id="privacyConsent" name="privacyConsent" required aria-required="true" style="position:absolute;opacity:0;width:100%;height:100%;margin:0;padding:0;cursor:pointer;z-index:1;">
+                <svg class="checkbox-checkmark" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;opacity:0;transition:opacity 0.2s ease;pointer-events:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
+                  <path d="M13.5 4L6 11.5L2.5 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </label>
+              <span style="flex:1;">I agree to be contacted to schedule a call and have read and agree to the <a href="privacy-policy.html" target="_blank" style="color:var(--agave); text-decoration:underline;">Privacy Policy</a>.</span>
+            </div>
             <button class="cta" type="submit" id="submitButton" aria-label="Send request">Send Request</button>
           </form>
           <div class="card" style="padding:16px 18px;">
@@ -6956,7 +7000,7 @@
               emphasis: {
                 focus: 'series',
                 symbolSize: 5
-              },
+              },  
               lineStyle: { 
                 width: 2.5, 
                 color: '#10B981',
@@ -8622,6 +8666,36 @@
           });
         }
 
+    // Privacy Consent Checkbox Visual State Handler
+    (function initPrivacyCheckbox() {
+      const privacyConsent = document.getElementById('privacyConsent');
+      const checkboxLabel = document.querySelector('label[for="privacyConsent"]');
+      const checkmark = document.querySelector('.checkbox-checkmark');
+      
+      if (!privacyConsent || !checkboxLabel || !checkmark) return;
+      
+      function updateCheckboxState() {
+        if (privacyConsent.checked) {
+          checkboxLabel.style.backgroundColor = 'var(--agave, #0E5B62)';
+          checkboxLabel.style.borderColor = 'var(--agave, #0E5B62)';
+          checkmark.style.opacity = '1';
+        } else {
+          checkboxLabel.style.backgroundColor = '#fff';
+          checkboxLabel.style.borderColor = 'var(--line, #E9E3DA)';
+          checkmark.style.opacity = '0';
+        }
+      }
+      
+      // Update on change
+      privacyConsent.addEventListener('change', updateCheckboxState);
+      
+      // Update on click (for better compatibility)
+      privacyConsent.addEventListener('click', updateCheckboxState);
+      
+      // Initial state
+      updateCheckboxState();
+    })();
+
     // Contact Form Submission Handler
     (function() {
       // Wait for DOM to be fully loaded
@@ -8683,10 +8757,24 @@
           
           // Check privacy consent
           const privacyConsent = document.getElementById('privacyConsent');
+          const checkboxLabel = document.querySelector('label[for="privacyConsent"]');
+          const checkmark = document.querySelector('.checkbox-checkmark');
+          
           if (!privacyConsent.checked) {
             showMessage('Please agree to the Privacy Policy to continue.', true);
             privacyConsent.focus();
             return;
+          }
+          
+          // Update visual state
+          if (privacyConsent.checked) {
+            if (checkboxLabel) {
+              checkboxLabel.style.backgroundColor = 'var(--agave, #0E5B62)';
+              checkboxLabel.style.borderColor = 'var(--agave, #0E5B62)';
+            }
+            if (checkmark) {
+              checkmark.style.opacity = '1';
+            }
           }
           
           // Get form data
