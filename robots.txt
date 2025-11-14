@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hhagavespirits.com/sitemap.xml
+Sitemap: https://www.hogshead-tequila.com/sitemap.xml
 
