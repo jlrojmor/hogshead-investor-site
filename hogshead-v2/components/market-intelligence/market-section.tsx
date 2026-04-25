@@ -1,15 +1,15 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { ArrowUpRight, BarChart3, CheckCircle2, Compass, Globe2, LineChart, MapPinned } from 'lucide-react';
+import { ArrowUpRight, BarChart3, CheckCircle2, Compass, Globe2, LineChart, MapPinned, PieChart } from 'lucide-react';
 import { marketGrowth, marketRegions, marketStats, premiumGrowth, sourceNote } from '@/data/market-data';
 import { Eyebrow, Reveal, SectionHeader, Shell } from '../shell';
 
 const globeNodes = [
-  { id: 'mx', label: 'Mexico', short: 'MX', x: 31, y: 59, region: 'Origin & custody' },
-  { id: 'us', label: 'United States', short: 'US', x: 34, y: 45, region: 'Primary demand' },
-  { id: 'na', label: 'North America', short: 'NA', x: 30, y: 33, region: 'Regional scale' },
-  { id: 'premium', label: 'Premium Segment', short: 'PR', x: 71, y: 42, region: 'Premiumization' },
+  { id: 'mx', label: 'Mexico', short: 'MX', x: 39, y: 57, region: 'Origin & custody' },
+  { id: 'us', label: 'United States', short: 'US', x: 42, y: 43, region: 'Primary demand' },
+  { id: 'na', label: 'North America', short: 'NA', x: 36, y: 31, region: 'Regional scale' },
+  { id: 'premium', label: 'Premium Segment', short: 'PR', x: 68, y: 42, region: 'Premiumization' },
 ];
 
 const briefing: Record<string, string> = {
@@ -18,6 +18,48 @@ const briefing: Record<string, string> = {
   na: 'Regional scale supports the cross-border commercial logic between production, aging, and U.S. demand.',
   premium: 'Premiumization is the upside layer where age, scarcity, story, and bottle presence translate into value.',
 };
+
+function MiniChart({ variant = 'bar' }: { variant?: 'bar' | 'line' | 'donut' }) {
+  if (variant === 'donut') {
+    return (
+      <div className="relative mx-auto h-20 w-20 rounded-full bg-[conic-gradient(#D88B42_0_34%,#7BC6C7_34%_74%,rgba(255,255,255,.16)_74%_100%)]">
+        <div className="absolute inset-5 rounded-full bg-[#071923]" />
+      </div>
+    );
+  }
+  if (variant === 'line') {
+    return (
+      <svg viewBox="0 0 160 70" className="h-20 w-full">
+        <path d="M8 58 C35 48 46 54 68 34 C88 18 108 27 126 16 C140 8 150 12 156 6" fill="none" stroke="#D88B42" strokeWidth="3" />
+        <path d="M8 64 H156" stroke="rgba(255,255,255,.12)" />
+        <path d="M8 42 H156" stroke="rgba(255,255,255,.08)" />
+        <path d="M8 20 H156" stroke="rgba(255,255,255,.08)" />
+      </svg>
+    );
+  }
+  return (
+    <div className="flex h-20 items-end gap-2">
+      {[0.35, 0.52, 0.42, 0.68, 0.88, 1].map((h, i) => (
+        <div key={i} className="flex-1 rounded-t-md bg-aqua/25">
+          <div className="rounded-t-md bg-gold" style={{ height: `${h * 80}px` }} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function BoardPanel({ title, value, icon: Icon, variant }: { title: string; value: string; icon: any; variant: 'bar' | 'line' | 'donut' }) {
+  return (
+    <div className="rounded-[18px] bg-white/[0.075] p-4 shadow-[inset_0_0_0_1px_rgba(255,255,255,.12)] backdrop-blur-xl">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <span className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/50">{title}</span>
+        <Icon className="h-4 w-4 text-aqua" />
+      </div>
+      <strong className="block text-[22px] leading-none text-white">{value}</strong>
+      <div className="mt-3"><MiniChart variant={variant} /></div>
+    </div>
+  );
+}
 
 function DesignedGrowthCard({ title, eyebrow, start, end, accent = 'teal' }: { title: string; eyebrow: string; start: number; end: number; accent?: 'teal' | 'gold' }) {
   const color = accent === 'gold' ? '#D88B42' : '#0B6F72';
@@ -63,8 +105,8 @@ export function MarketSection() {
         <div className="mt-12 grid gap-5 xl:grid-cols-[1.18fr_0.82fr]">
           <Reveal className="overflow-hidden rounded-[40px] bg-[#071923] text-white shadow-premium">
             <div className="relative p-7 lg:p-8">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_42%_48%,rgba(0,204,220,.18),transparent_36%),radial-gradient(circle_at_72%_48%,rgba(216,139,66,.16),transparent_28%),linear-gradient(180deg,#071923,#041418)]" />
-              <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,.25)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.25)_1px,transparent_1px)] [background-size:38px_38px]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_48%,rgba(0,204,220,.16),transparent_38%),radial-gradient(circle_at_72%_50%,rgba(216,139,66,.14),transparent_28%),linear-gradient(180deg,#071923,#041418)]" />
+              <div className="absolute inset-0 opacity-[0.09] [background-image:linear-gradient(rgba(255,255,255,.25)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.25)_1px,transparent_1px)] [background-size:38px_38px]" />
 
               <div className="relative z-10">
                 <div className="flex flex-wrap items-start justify-between gap-5">
@@ -79,87 +121,84 @@ export function MarketSection() {
                   </div>
                 </div>
 
-                <div className="mt-8 grid gap-5 lg:grid-cols-[1fr_300px]">
-                  <div className="relative min-h-[590px] overflow-hidden rounded-[34px] bg-[#061f29] shadow-[inset_0_0_0_1px_rgba(255,255,255,.10)]">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_48%,rgba(0,210,230,.16),transparent_38%),radial-gradient(circle_at_30%_60%,rgba(216,139,66,.18),transparent_24%)]" />
-                    <svg viewBox="0 0 980 650" className="absolute inset-0 h-full w-full" preserveAspectRatio="none">
-                      <defs>
-                        <radialGradient id="globeFill" cx="50%" cy="45%" r="55%">
-                          <stop offset="0" stopColor="rgba(123,198,199,.20)" />
-                          <stop offset="0.55" stopColor="rgba(12,94,105,.22)" />
-                          <stop offset="1" stopColor="rgba(255,255,255,.03)" />
-                        </radialGradient>
-                        <linearGradient id="marketLine" x1="0" x2="1">
-                          <stop offset="0" stopColor="rgba(216,139,66,0)" />
-                          <stop offset=".5" stopColor="rgba(216,139,66,1)" />
-                          <stop offset="1" stopColor="rgba(216,139,66,0)" />
-                        </linearGradient>
-                        <filter id="hotGlow"><feGaussianBlur stdDeviation="5" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-                      </defs>
-
-                      <circle cx="420" cy="330" r="235" fill="url(#globeFill)" stroke="rgba(255,255,255,.14)" strokeWidth="1.4" />
-                      <g stroke="rgba(255,255,255,.14)" fill="none">
-                        <ellipse cx="420" cy="330" rx="235" ry="82" />
-                        <ellipse cx="420" cy="330" rx="235" ry="150" />
-                        <ellipse cx="420" cy="330" rx="85" ry="235" />
-                        <ellipse cx="420" cy="330" rx="160" ry="235" />
-                        <path d="M185 330 H655" />
-                        <path d="M420 95 V565" />
-                      </g>
-                      <g fill="rgba(180,235,238,.22)" stroke="rgba(180,235,238,.18)" strokeWidth="1">
-                        <path d="M250 220 C286 170 354 166 398 202 C420 220 418 254 388 270 C342 294 282 282 250 220Z" />
-                        <path d="M335 312 C386 296 436 330 448 386 C462 446 412 486 364 458 C324 436 304 350 335 312Z" />
-                        <path d="M468 220 C532 170 620 186 650 238 C676 286 628 330 554 314 C502 302 462 270 468 220Z" />
-                        <path d="M586 346 C638 318 704 344 718 404 C732 462 672 494 626 454 C590 424 560 380 586 346Z" />
-                      </g>
-                      <path d="M300 382 C364 286, 444 250, 548 220" stroke="url(#marketLine)" strokeWidth="3" fill="none" filter="url(#hotGlow)" />
-                      <path d="M300 382 C420 390, 565 390, 695 340" stroke="url(#marketLine)" strokeWidth="3" fill="none" filter="url(#hotGlow)" />
-                      <path d="M300 382 C270 416, 240 456, 220 508" stroke="rgba(216,139,66,.75)" strokeWidth="2.5" fill="none" />
-                    </svg>
-
-                    {globeNodes.map((node) => (
-                      <button
-                        key={node.id}
-                        onClick={() => setActiveId(node.id)}
-                        className="absolute -translate-x-1/2 -translate-y-1/2"
-                        style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                        aria-label={node.label}
-                      >
-                        <span className={`grid h-12 w-12 place-items-center rounded-full text-[10px] font-black transition ${activeId === node.id ? 'bg-gold text-[#211104] shadow-[0_0_0_14px_rgba(216,139,66,.20),0_0_45px_rgba(216,139,66,.85)]' : 'bg-white/12 text-white ring-1 ring-white/18 backdrop-blur-xl hover:bg-white/20'}`}>{node.short}</span>
-                      </button>
-                    ))}
-
-                    <div className="absolute left-5 top-5 rounded-2xl bg-black/22 px-4 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/62 shadow-[inset_0_0_0_1px_rgba(255,255,255,.10)] backdrop-blur-xl">
-                      Mexico → demand markets
+                <div className="mt-8 rounded-[34px] bg-[#061f29] p-5 shadow-[inset_0_0_0_1px_rgba(255,255,255,.10)]">
+                  <div className="grid gap-4 lg:grid-cols-[190px_1fr_190px]">
+                    <div className="grid gap-4">
+                      <BoardPanel title="Revenue pool" value="$20.43B" icon={BarChart3} variant="bar" />
+                      <BoardPanel title="Growth path" value="$11.5B → $19.8B" icon={LineChart} variant="line" />
                     </div>
 
-                    <div className="absolute bottom-5 left-5 right-5 grid gap-4 rounded-[24px] bg-[#041b20]/88 p-5 shadow-[inset_0_0_0_1px_rgba(255,255,255,.10)] backdrop-blur-xl md:grid-cols-[1fr_180px]">
-                      <div>
-                        <div className="flex items-center gap-2 text-[12px] font-bold text-white/82"><MapPinned className="h-4 w-4 text-gold" /> {activeNode.region}</div>
-                        <h4 className="premium-serif mt-2 text-[28px] leading-none text-white">{activeNode.label}</h4>
-                        <p className="mt-3 max-w-xl text-[13px] font-semibold leading-6 text-white/64">{briefing[activeId]}</p>
+                    <div className="relative min-h-[520px] overflow-hidden rounded-[28px] bg-[#071923] shadow-[inset_0_0_0_1px_rgba(255,255,255,.10)]">
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(123,198,199,.18),transparent_36%),radial-gradient(circle_at_30%_62%,rgba(216,139,66,.18),transparent_24%)]" />
+                      <svg viewBox="0 0 760 560" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                          <radialGradient id="globeFill2" cx="50%" cy="45%" r="55%">
+                            <stop offset="0" stopColor="rgba(180,235,238,.30)" />
+                            <stop offset="0.55" stopColor="rgba(12,94,105,.22)" />
+                            <stop offset="1" stopColor="rgba(255,255,255,.035)" />
+                          </radialGradient>
+                          <linearGradient id="marketLine2" x1="0" x2="1">
+                            <stop offset="0" stopColor="rgba(216,139,66,0)" />
+                            <stop offset=".5" stopColor="rgba(216,139,66,1)" />
+                            <stop offset="1" stopColor="rgba(216,139,66,0)" />
+                          </linearGradient>
+                          <filter id="glow2"><feGaussianBlur stdDeviation="5" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+                        </defs>
+                        <circle cx="380" cy="282" r="214" fill="url(#globeFill2)" stroke="rgba(255,255,255,.16)" strokeWidth="1.3" />
+                        <g stroke="rgba(255,255,255,.16)" fill="none">
+                          <ellipse cx="380" cy="282" rx="214" ry="74" />
+                          <ellipse cx="380" cy="282" rx="214" ry="138" />
+                          <ellipse cx="380" cy="282" rx="76" ry="214" />
+                          <ellipse cx="380" cy="282" rx="146" ry="214" />
+                          <path d="M166 282 H594" />
+                          <path d="M380 68 V496" />
+                        </g>
+                        <g fill="rgba(185,238,241,.25)" stroke="rgba(185,238,241,.18)" strokeWidth="1">
+                          <path d="M226 184 C260 138 322 136 362 170 C384 188 380 222 354 238 C312 263 256 250 226 184Z" />
+                          <path d="M304 282 C350 270 398 300 410 352 C424 408 376 442 334 418 C298 398 276 315 304 282Z" />
+                          <path d="M422 184 C480 142 560 154 592 206 C620 250 574 288 508 278 C464 270 416 234 422 184Z" />
+                          <path d="M528 318 C575 292 638 318 650 370 C662 423 610 454 566 418 C534 392 506 350 528 318Z" />
+                        </g>
+                        <path d="M272 348 C330 260, 402 228, 498 202" stroke="url(#marketLine2)" strokeWidth="3" fill="none" filter="url(#glow2)" />
+                        <path d="M272 348 C382 356, 516 354, 636 312" stroke="url(#marketLine2)" strokeWidth="3" fill="none" filter="url(#glow2)" />
+                        <path d="M272 348 C242 386, 220 420, 202 466" stroke="rgba(216,139,66,.72)" strokeWidth="2.4" fill="none" />
+                      </svg>
+
+                      {globeNodes.map((node) => (
+                        <button
+                          key={node.id}
+                          onClick={() => setActiveId(node.id)}
+                          className="absolute -translate-x-1/2 -translate-y-1/2"
+                          style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                          aria-label={node.label}
+                        >
+                          <span className={`grid h-12 w-12 place-items-center rounded-full text-[10px] font-black transition ${activeId === node.id ? 'bg-gold text-[#211104] shadow-[0_0_0_14px_rgba(216,139,66,.20),0_0_45px_rgba(216,139,66,.85)]' : 'bg-white/12 text-white ring-1 ring-white/18 backdrop-blur-xl hover:bg-white/20'}`}>{node.short}</span>
+                        </button>
+                      ))}
+
+                      <div className="absolute left-5 top-5 rounded-2xl bg-black/22 px-4 py-3 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/62 shadow-[inset_0_0_0_1px_rgba(255,255,255,.10)] backdrop-blur-xl">
+                        Mexico → demand markets
                       </div>
-                      <div className="grid gap-2 rounded-2xl bg-white/8 p-4">
-                        <span className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-white/45">Market role</span>
-                        <strong className="text-[17px] leading-tight text-white">{activeNode.region}</strong>
+                    </div>
+
+                    <div className="grid gap-4">
+                      <BoardPanel title="Premium layer" value="$3.12B → $5.18B" icon={PieChart} variant="donut" />
+                      <div className="rounded-[18px] bg-white/[0.075] p-4 shadow-[inset_0_0_0_1px_rgba(255,255,255,.12)] backdrop-blur-xl">
+                        <span className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-aqua">Active market</span>
+                        <h4 className="premium-serif mt-2 text-[28px] leading-none text-white">{activeNode.label}</h4>
+                        <p className="mt-3 text-[12px] font-semibold leading-6 text-white/64">{briefing[activeId]}</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="grid gap-3">
-                    <div className="rounded-[24px] bg-white/10 p-5 shadow-[inset_0_0_0_1px_rgba(255,255,255,.10)] backdrop-blur-xl">
-                      <span className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-aqua">Active market</span>
-                      <h4 className="premium-serif mt-2 text-[30px] leading-none text-white">{activeNode.label}</h4>
-                      <p className="mt-3 text-[13px] font-semibold leading-6 text-white/64">{briefing[activeId]}</p>
+                  <div className="mt-4 grid gap-3 rounded-[24px] bg-white/[0.06] p-4 shadow-[inset_0_0_0_1px_rgba(255,255,255,.10)] md:grid-cols-[1fr_220px]">
+                    <div>
+                      <div className="flex items-center gap-2 text-[12px] font-bold text-white/82"><MapPinned className="h-4 w-4 text-gold" /> {activeNode.region}</div>
+                      <h4 className="premium-serif mt-2 text-[28px] leading-none text-white">{activeNode.label}</h4>
+                      <p className="mt-3 max-w-2xl text-[13px] font-semibold leading-6 text-white/64">{briefing[activeId]}</p>
                     </div>
-                    {active.bullets.map((bullet) => (
-                      <div key={bullet} className="rounded-2xl bg-white/10 p-4 text-[13px] font-bold leading-6 text-white/78 shadow-[inset_0_0_0_1px_rgba(255,255,255,.10)] backdrop-blur-xl">
-                        <CheckCircle2 className="mb-3 h-4 w-4 text-gold" />
-                        {bullet}
-                      </div>
-                    ))}
-                    <a href="#simulator" className="inline-flex items-center justify-between rounded-2xl bg-white px-4 py-4 text-[13px] font-extrabold text-deep">
-                      Connect to aging economics <ArrowUpRight className="h-4 w-4" />
+                    <a href="#simulator" className="inline-flex items-center justify-between self-end rounded-2xl bg-white px-4 py-4 text-[13px] font-extrabold text-deep">
+                      Connect to economics <ArrowUpRight className="h-4 w-4" />
                     </a>
                   </div>
                 </div>
