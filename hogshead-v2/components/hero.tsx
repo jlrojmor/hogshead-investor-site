@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Barrel, Gem, Layers3, Wine } from 'lucide-react';
+import { ArrowUpRight, Boxes, Gem, Layers3, Wine } from 'lucide-react';
 import { Eyebrow, Reveal, Shell } from './shell';
 
 const platformProof = [
-  { label: 'Own', text: 'Structured access to tequila inventory', icon: Barrel },
+  { label: 'Own', text: 'Structured access to tequila inventory', icon: Boxes },
   { label: 'Age', text: 'Time, custody, scarcity, and reporting', icon: Layers3 },
   { label: 'Release', text: 'Bulk exit, brand launch, or single barrel', icon: Wine },
 ];
