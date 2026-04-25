@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { ArrowUpRight, CheckCircle2, MapPinned } from 'lucide-react';
 import { marketGrowth, marketRegions, marketStats, premiumGrowth, sourceNote } from '@/data/market-data';
 import { Eyebrow, Reveal, SectionHeader, Shell } from '../shell';
 
@@ -20,38 +21,69 @@ export function MarketSection() {
           />
         </Reveal>
 
-        <div className="mt-10 grid gap-5 xl:grid-cols-[1.08fr_0.92fr]">
-          <Reveal className="rounded-[32px] bg-deep p-7 text-white shadow-premium">
-            <Eyebrow light>Interactive market map</Eyebrow>
-            <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <h3 className="premium-serif text-[36px] leading-none text-white">{active.headline}</h3>
-                <p className="mt-4 max-w-2xl text-[15px] leading-8 text-white/72">{active.description}</p>
-              </div>
-              <div className="rounded-2xl border border-white/15 bg-white/10 px-5 py-4 text-right backdrop-blur-xl">
-                <span className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/55">Selected market</span>
-                <strong className="mt-1 block text-[28px] text-white">{active.metric}</strong>
-              </div>
-            </div>
+        <div className="mt-10 grid gap-5 xl:grid-cols-[1.12fr_0.88fr]">
+          <Reveal className="overflow-hidden rounded-[34px] bg-deep text-white shadow-premium">
+            <div className="relative min-h-[650px] p-7">
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,62,72,.82),rgba(2,62,72,.96)),url('/images/Agave fields 2.png')] bg-cover bg-center opacity-95" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_48%,rgba(216,139,66,.22),transparent_22%),radial-gradient(circle_at_70%_45%,rgba(123,198,199,.18),transparent_30%)]" />
 
-            <div className="relative mt-7 min-h-[360px] overflow-hidden rounded-[26px] border border-white/15 bg-[radial-gradient(circle_at_50%_50%,rgba(123,198,199,.24),transparent_58%)]">
-              <div className="absolute inset-8 bg-[linear-gradient(90deg,transparent_24%,rgba(255,255,255,.06)_25%,transparent_26%,transparent_49%,rgba(255,255,255,.06)_50%,transparent_51%,transparent_74%,rgba(255,255,255,.06)_75%,transparent_76%),linear-gradient(0deg,transparent_24%,rgba(255,255,255,.06)_25%,transparent_26%,transparent_49%,rgba(255,255,255,.06)_50%,transparent_51%,transparent_74%,rgba(255,255,255,.06)_75%,transparent_76%)]" />
-              <div className="absolute left-[23%] top-[44%] h-[2px] w-[285px] origin-left rotate-[-14deg] bg-gradient-to-r from-transparent via-gold to-transparent opacity-75" />
-              <div className="absolute left-[24%] top-[52%] h-[2px] w-[435px] origin-left rotate-[8deg] bg-gradient-to-r from-transparent via-gold to-transparent opacity-75" />
-              {marketRegions.map((region) => (
-                <button key={region.id} onClick={() => setActiveId(region.id)} className="absolute flex items-center gap-3 text-left" style={{ left: region.x, top: region.y }}>
-                  <span className={`h-4 w-4 rounded-full ${active.id === region.id ? 'bg-gold shadow-[0_0_0_10px_rgba(216,139,66,.24),0_0_32px_rgba(216,139,66,.85)]' : 'bg-gold/80 shadow-[0_0_0_7px_rgba(216,139,66,.14)]'}`} />
-                  <span className="text-[11px] font-extrabold uppercase tracking-[0.1em] text-white">{region.short}</span>
-                </button>
-              ))}
-            </div>
-
-            <div className="mt-6 grid gap-3 md:grid-cols-3">
-              {active.bullets.map((bullet) => (
-                <div key={bullet} className="rounded-2xl border border-white/12 bg-white/8 p-4 text-[13px] font-bold leading-6 text-white/78">
-                  {bullet}
+              <div className="relative z-10">
+                <div className="flex flex-wrap items-start justify-between gap-5">
+                  <div>
+                    <Eyebrow light>Market command center</Eyebrow>
+                    <h3 className="premium-serif mt-3 text-[40px] leading-none text-white">{active.headline}</h3>
+                    <p className="mt-4 max-w-2xl text-[15px] leading-8 text-white/74">{active.description}</p>
+                  </div>
+                  <div className="rounded-3xl border border-white/15 bg-white/10 p-5 text-right backdrop-blur-xl">
+                    <span className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/55">Selected insight</span>
+                    <strong className="mt-1 block text-[32px] text-white">{active.metric}</strong>
+                  </div>
                 </div>
-              ))}
+
+                <div className="mt-8 grid gap-5 lg:grid-cols-[1fr_260px]">
+                  <div className="relative min-h-[390px] overflow-hidden rounded-[28px] border border-white/15 bg-[#042f37]/80 backdrop-blur-xl">
+                    <div className="absolute inset-8 rounded-[28px] border border-white/10" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_45%,rgba(216,139,66,.16),transparent_20%),radial-gradient(circle_at_62%_42%,rgba(123,198,199,.16),transparent_24%)]" />
+                    <svg viewBox="0 0 680 390" className="absolute inset-0 h-full w-full" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="route" x1="0" x2="1">
+                          <stop offset="0" stopColor="rgba(216,139,66,0)" />
+                          <stop offset="0.5" stopColor="rgba(216,139,66,.95)" />
+                          <stop offset="1" stopColor="rgba(216,139,66,0)" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M135 235 C235 170, 340 155, 470 118" stroke="url(#route)" strokeWidth="2" fill="none" />
+                      <path d="M135 235 C280 250, 410 278, 560 252" stroke="url(#route)" strokeWidth="2" fill="none" />
+                      <path d="M135 235 C110 250, 92 270, 70 298" stroke="rgba(216,139,66,.7)" strokeWidth="2" fill="none" />
+                      <path d="M135 235 C170 95, 230 70, 300 58" stroke="rgba(123,198,199,.35)" strokeWidth="1.5" fill="none" />
+                    </svg>
+                    {marketRegions.map((region) => (
+                      <button key={region.id} onClick={() => setActiveId(region.id)} className="absolute flex items-center gap-3 text-left" style={{ left: region.x, top: region.y }}>
+                        <span className={`grid h-9 w-9 place-items-center rounded-full border border-white/20 text-[10px] font-black ${active.id === region.id ? 'bg-gold text-[#211104] shadow-[0_0_0_10px_rgba(216,139,66,.24),0_0_32px_rgba(216,139,66,.85)]' : 'bg-white/10 text-white backdrop-blur-xl'}`}>
+                          {region.short.slice(0, 2)}
+                        </span>
+                        <span className="hidden text-[11px] font-extrabold uppercase tracking-[0.1em] text-white md:inline">{region.label}</span>
+                      </button>
+                    ))}
+                    <div className="absolute bottom-5 left-5 right-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/15 bg-black/15 p-4 backdrop-blur-xl">
+                      <div className="flex items-center gap-2 text-[12px] font-bold text-white/78"><MapPinned className="h-4 w-4 text-gold" /> Mexico origin routes into priority demand pools</div>
+                      <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/50">Click a market</div>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3">
+                    {active.bullets.map((bullet) => (
+                      <div key={bullet} className="rounded-2xl border border-white/12 bg-white/10 p-4 text-[13px] font-bold leading-6 text-white/78 backdrop-blur-xl">
+                        <CheckCircle2 className="mb-3 h-4 w-4 text-gold" />
+                        {bullet}
+                      </div>
+                    ))}
+                    <a href="#simulator" className="inline-flex items-center justify-between rounded-2xl bg-white px-4 py-4 text-[13px] font-extrabold text-deep">
+                      Connect to aging economics <ArrowUpRight className="h-4 w-4" />
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </Reveal>
 
