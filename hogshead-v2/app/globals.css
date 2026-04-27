@@ -74,14 +74,14 @@ section[id], footer[id] { scroll-margin-top: 118px; }
 .market-globe-section {
   position: relative;
   width: 100%;
-  padding: clamp(78px, 7.2vw, 116px) 0 0;
+  padding: clamp(86px, 8vw, 126px) 0 0;
   background:
     linear-gradient(180deg,
       #f5f0e7 0%,
-      #f4f0e7 21%,
-      #d9efed 38%,
-      #073a41 50%,
-      #050a12 63%,
+      #f3efe5 24%,
+      #e7f1ee 39%,
+      #214f54 53%,
+      #050a12 66%,
       #050a12 100%);
   overflow: hidden;
   isolation: isolate;
@@ -91,11 +91,11 @@ section[id], footer[id] { scroll-margin-top: 118px; }
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
-  height: min(620px, 58vw);
+  height: min(650px, 60vw);
   background:
-    radial-gradient(circle at 18% 22%, rgba(216, 139, 66, 0.18), transparent 30%),
-    radial-gradient(circle at 82% 18%, rgba(123, 198, 199, 0.26), transparent 34%),
-    linear-gradient(180deg, rgba(245, 240, 231, 0.92) 0%, rgba(223, 239, 235, 0.82) 44%, rgba(6, 58, 65, 0.88) 82%, rgba(5, 10, 18, 0.98) 100%);
+    radial-gradient(circle at 16% 18%, rgba(216, 139, 66, 0.16), transparent 30%),
+    radial-gradient(circle at 80% 12%, rgba(123, 198, 199, 0.20), transparent 36%),
+    linear-gradient(180deg, rgba(245, 240, 231, 0.96) 0%, rgba(235, 241, 236, 0.88) 42%, rgba(9, 70, 76, 0.58) 78%, rgba(5, 10, 18, 0.98) 100%);
   z-index: -2;
 }
 
@@ -105,62 +105,49 @@ section[id], footer[id] { scroll-margin-top: 118px; }
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, transparent 0 39%, rgba(8, 61, 67, 0.46) 48%, rgba(5, 10, 18, 0.98) 61%, rgba(2, 62, 72, 0.92) 100%),
-    radial-gradient(circle at 50% 43%, rgba(123, 198, 199, 0.14), transparent 34%);
+    linear-gradient(180deg, transparent 0 43%, rgba(8, 61, 67, 0.42) 51%, rgba(5, 10, 18, 0.98) 65%, rgba(2, 62, 72, 0.92) 100%),
+    radial-gradient(circle at 52% 45%, rgba(123, 198, 199, 0.12), transparent 35%);
   z-index: -1;
 }
 
 .market-globe-heading {
   position: relative;
-  width: min(1180px, calc(100% - 72px));
-  margin: 0 auto clamp(22px, 2.2vw, 34px);
-  min-height: clamp(260px, 24vw, 360px);
-  padding: clamp(42px, 5vw, 76px) clamp(42px, 5.5vw, 86px);
+  width: min(1160px, calc(100% - 72px));
+  margin: 0 auto clamp(30px, 3vw, 48px);
+  padding: 0 clamp(8px, 1.2vw, 18px);
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.7fr);
-  gap: clamp(34px, 6vw, 92px);
-  align-items: center;
-  border-radius: clamp(30px, 3vw, 48px);
-  background:
-    linear-gradient(135deg, rgba(245, 240, 231, 0.78), rgba(236, 246, 244, 0.46) 48%, rgba(12, 93, 101, 0.22)),
-    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.42), transparent 36%),
-    radial-gradient(circle at 90% 20%, rgba(123, 198, 199, 0.22), transparent 36%);
-  box-shadow:
-    0 38px 110px rgba(5, 10, 18, 0.11),
-    inset 0 1px 0 rgba(255, 255, 255, 0.56),
-    inset 0 -1px 0 rgba(0, 63, 70, 0.08);
-  backdrop-filter: blur(16px) saturate(118%);
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.78fr);
+  gap: clamp(42px, 7vw, 112px);
+  align-items: end;
   z-index: 1;
 }
 
 .market-globe-heading::before {
   content: '';
   position: absolute;
-  inset: 14px;
-  border-radius: calc(clamp(30px, 3vw, 48px) - 10px);
+  left: -4vw;
+  right: -4vw;
+  bottom: -44px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 63, 70, 0.22), rgba(216, 139, 66, 0.26), rgba(0, 63, 70, 0.20), transparent);
+  opacity: 0.9;
   pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(216, 139, 66, 0.18), transparent 27%, transparent 72%, rgba(123, 198, 199, 0.24)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.20), transparent 46%);
-  opacity: 0.62;
-  mask-image: linear-gradient(180deg, black, transparent 82%);
-  z-index: -1;
 }
 
 .market-globe-heading::after {
-  content: 'DATA ROOM';
+  content: 'MARKET COMMAND CENTER';
   position: absolute;
-  right: clamp(34px, 5vw, 74px);
-  bottom: clamp(22px, 2.4vw, 34px);
+  right: clamp(8px, 1.2vw, 18px);
+  bottom: -34px;
   font-size: 10px;
   letter-spacing: 0.34em;
   font-weight: 900;
-  color: rgba(0, 63, 70, 0.20);
+  color: rgba(0, 63, 70, 0.30);
 }
 
 .market-globe-kicker {
   grid-column: 1 / -1;
-  margin: 0 0 -28px;
+  margin: 0 0 -20px;
   font-size: 12px;
   line-height: 1;
   letter-spacing: 0.32em;
@@ -171,21 +158,23 @@ section[id], footer[id] { scroll-margin-top: 118px; }
 
 .market-globe-heading h2 {
   margin: 0;
-  max-width: 720px;
+  max-width: 760px;
   font-family: var(--font-serif, 'Cormorant Garamond', Georgia, serif);
-  font-size: clamp(52px, 6.2vw, 90px);
-  line-height: 0.9;
-  letter-spacing: -0.058em;
+  font-size: clamp(56px, 6.4vw, 96px);
+  line-height: 0.88;
+  letter-spacing: -0.06em;
   color: #003f46;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.28);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .market-globe-heading p:not(.market-globe-kicker) {
-  margin: 0;
+  margin: 0 0 8px;
   max-width: 520px;
-  font-size: clamp(15px, 1.12vw, 18px);
-  line-height: 1.78;
-  color: rgba(0, 63, 70, 0.78);
+  font-size: clamp(15px, 1.08vw, 18px);
+  line-height: 1.72;
+  color: rgba(0, 63, 70, 0.72);
+  padding: clamp(18px, 2vw, 28px) 0 0 clamp(20px, 2vw, 34px);
+  border-left: 1px solid rgba(0, 63, 70, 0.18);
 }
 
 .market-globe-frame-wrap {
@@ -216,7 +205,7 @@ section[id], footer[id] { scroll-margin-top: 118px; }
 
 .market-globe-frame-wrap::before {
   top: 0;
-  background: linear-gradient(180deg, rgba(3, 54, 60, 0.64), rgba(5, 10, 18, 0));
+  background: linear-gradient(180deg, rgba(3, 54, 60, 0.52), rgba(5, 10, 18, 0));
 }
 
 .market-globe-frame-wrap::after {
@@ -241,9 +230,9 @@ section[id], footer[id] { scroll-margin-top: 118px; }
   .market-globe-heading {
     width: min(100% - 34px, 680px);
     grid-template-columns: 1fr;
-    align-items: center;
-    min-height: auto;
-    padding: 34px 28px;
+    align-items: start;
+    padding: 0;
+    gap: 28px;
   }
 
   .market-globe-heading::after {
@@ -251,7 +240,12 @@ section[id], footer[id] { scroll-margin-top: 118px; }
   }
 
   .market-globe-kicker {
-    margin-bottom: -14px;
+    margin-bottom: -8px;
+  }
+
+  .market-globe-heading p:not(.market-globe-kicker) {
+    border-left: 0;
+    padding: 0;
   }
 
   .market-globe-frame-wrap {
