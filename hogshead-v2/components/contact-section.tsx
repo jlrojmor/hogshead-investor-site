@@ -2,7 +2,7 @@ import { ArrowUpRight, FileText, Linkedin, Mail, ShieldCheck, Sparkles } from 'l
 import { Eyebrow, Reveal, Shell } from './shell';
 
 const conversationTypes = ['Tequila investment exposure', 'Brand creation', 'Single-barrel release', 'Restaurant / retail program'];
-const linkedInUrl = 'https://www.linkedin.com/in/jlrojasmora';
+const linkedInUrl = 'https://www.linkedin.com/company/hogshead-tequila/';
 
 export function ContactSection() {
   return (
@@ -37,7 +37,7 @@ export function ContactSection() {
               </a>
               <a href={linkedInUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 rounded-full bg-white/10 px-5 py-3 text-[15px] font-extrabold text-white shadow-[inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-xl transition hover:bg-white hover:text-deep">
                 <Linkedin className="h-5 w-5 text-gold" />
-                LinkedIn profile
+                Hogshead Tequila LinkedIn
               </a>
             </div>
           </Reveal>
@@ -99,7 +99,7 @@ export function ContactSection() {
 
             <div className="flex flex-wrap items-center gap-3 text-[12px] font-extrabold text-white/68">
               <a href={linkedInUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-white/8 px-4 py-2 transition hover:bg-white hover:text-deep">
-                <Linkedin className="h-4 w-4 text-gold" /> LinkedIn
+                <Linkedin className="h-4 w-4 text-gold" /> Hogshead Tequila LinkedIn
               </a>
               <a href="/terms" className="inline-flex items-center gap-2 rounded-full bg-white/8 px-4 py-2 transition hover:bg-white hover:text-deep">
                 <FileText className="h-4 w-4 text-gold" /> Terms of Use
