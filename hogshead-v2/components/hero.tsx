@@ -49,13 +49,13 @@ export function Hero() {
         </Reveal>
 
         <Reveal delay={0.1} className="relative">
-          <div className="absolute -inset-10 rounded-[58px] bg-[radial-gradient(circle_at_50%_50%,rgba(216,139,66,.15),transparent_56%),radial-gradient(circle_at_82%_18%,rgba(123,198,199,.12),transparent_42%)] blur-2xl" />
-          <div className="relative overflow-hidden rounded-[44px] bg-[#041a20]/58 p-4 shadow-[0_48px_150px_rgba(0,0,0,.48),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-2xl">
-            <div className="relative overflow-hidden rounded-[36px] bg-[#06262d]/82 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.08),inset_0_-40px_90px_rgba(0,0,0,.22)]">
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,34,40,.34),rgba(2,34,40,.94)),url('/images/Barrel-aging-copy-5.jpeg')] bg-cover bg-center opacity-90" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_16%,rgba(216,139,66,.16),transparent_29%),linear-gradient(120deg,rgba(255,255,255,.10),transparent_32%)]" />
+          <div className="absolute -inset-12 rounded-[64px] bg-[radial-gradient(circle_at_48%_52%,rgba(216,139,66,.14),transparent_56%),radial-gradient(circle_at_78%_18%,rgba(123,198,199,.12),transparent_42%)] blur-3xl" />
+          <div className="relative overflow-hidden rounded-[42px] bg-[#041a20]/42 p-3 shadow-[0_52px_160px_rgba(0,0,0,.52),inset_0_1px_0_rgba(255,255,255,.06)] backdrop-blur-2xl">
+            <div className="relative overflow-hidden rounded-[34px] bg-[#06262d]/78 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.06),inset_0_-48px_96px_rgba(0,0,0,.26)]">
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,34,40,.22),rgba(2,34,40,.93)),url('/images/Barrel-aging-copy-5.jpeg')] bg-cover bg-center opacity-88" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_16%,rgba(216,139,66,.15),transparent_29%),linear-gradient(120deg,rgba(255,255,255,.08),transparent_32%)]" />
               <motion.div
-                className="absolute -left-1/3 top-0 h-full w-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)] opacity-50"
+                className="absolute -left-1/3 top-0 h-full w-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.11),transparent)] opacity-45"
                 animate={{ x: ['0%', '330%'] }}
                 transition={{ duration: 7, repeat: Infinity, repeatDelay: 4, ease: 'easeInOut' }}
               />
@@ -82,7 +82,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.25 + index * 0.12 }}
-                        className="group flex items-center gap-4 rounded-2xl bg-[#061f25]/72 p-4 shadow-[0_12px_34px_rgba(0,0,0,.18),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-[#06343d]/82"
+                        className="group flex items-center gap-4 rounded-2xl bg-black/30 p-4 shadow-[0_12px_34px_rgba(0,0,0,.18),inset_0_1px_0_rgba(255,255,255,.07)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-black/38"
                       >
                         <div className="grid h-11 w-11 place-items-center rounded-full bg-white text-deep shadow-[0_8px_20px_rgba(0,0,0,.16)]">
                           <Icon className="h-5 w-5" />
@@ -99,7 +99,7 @@ export function Hero() {
 
                 <div className="mt-6 grid grid-cols-3 gap-3">
                   {['1–21Y', '43–55%', 'TX / CA'].map((value, index) => (
-                    <div key={value} className="rounded-2xl bg-[#041b20]/74 p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl">
+                    <div key={value} className="rounded-2xl bg-black/30 p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.07)] backdrop-blur-xl">
                       <strong className="block text-[20px] font-extrabold text-white">{value}</strong>
                       <span className="mt-1 block text-[9px] font-extrabold uppercase tracking-[0.14em] text-white/60">{index === 0 ? 'Inventory' : index === 1 ? 'ABV range' : 'Initial focus'}</span>
                     </div>
