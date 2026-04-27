@@ -74,13 +74,14 @@ section[id], footer[id] { scroll-margin-top: 118px; }
 .market-globe-section {
   position: relative;
   width: 100%;
-  padding: clamp(86px, 8vw, 126px) 0 0;
+  padding: clamp(74px, 7vw, 112px) 0 0;
   background:
     linear-gradient(180deg,
       #f4efe4 0%,
-      #edf4ef 31%,
-      #143f43 52%,
-      #050a12 68%,
+      #eef4ef 24%,
+      #cce8e5 39%,
+      #06383f 51%,
+      #050a12 64%,
       #050a12 100%);
   overflow: hidden;
   isolation: isolate;
@@ -90,15 +91,15 @@ section[id], footer[id] { scroll-margin-top: 118px; }
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
-  height: min(620px, 62vw);
+  height: min(700px, 68vw);
   background:
-    linear-gradient(180deg, rgba(244, 239, 228, 0.72), rgba(9, 54, 59, 0.40) 62%, rgba(5, 10, 18, 0.96)),
-    radial-gradient(circle at 18% 22%, rgba(232, 168, 56, 0.14), transparent 34%),
-    radial-gradient(circle at 84% 16%, rgba(91, 202, 211, 0.22), transparent 38%),
+    linear-gradient(180deg, rgba(244, 239, 228, 0.64), rgba(123, 198, 199, 0.28) 42%, rgba(5, 10, 18, 0.95) 88%),
+    radial-gradient(circle at 18% 20%, rgba(232, 168, 56, 0.15), transparent 34%),
+    radial-gradient(circle at 84% 16%, rgba(91, 202, 211, 0.25), transparent 38%),
     url('/images/Agave_Mountain.png');
   background-size: cover;
-  background-position: center 42%;
-  opacity: 0.9;
+  background-position: center 44%;
+  opacity: 0.92;
   z-index: -2;
 }
 
@@ -108,34 +109,55 @@ section[id], footer[id] { scroll-margin-top: 118px; }
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(180deg, transparent 0 41%, rgba(5, 10, 18, 0.78) 49%, rgba(5, 10, 18, 0.98) 63%, rgba(2, 62, 72, 0.92) 100%),
-    radial-gradient(circle at 50% 45%, rgba(123, 198, 199, 0.16), transparent 34%);
+    linear-gradient(180deg, transparent 0 39%, rgba(8, 61, 67, 0.50) 47%, rgba(5, 10, 18, 0.98) 61%, rgba(2, 62, 72, 0.92) 100%),
+    radial-gradient(circle at 50% 44%, rgba(123, 198, 199, 0.16), transparent 34%);
   z-index: -1;
 }
 
 .market-globe-heading {
   position: relative;
-  width: min(1220px, calc(100% - 48px));
-  margin: 0 auto clamp(24px, 3vw, 38px);
+  width: min(1210px, calc(100% - 64px));
+  margin: 0 auto clamp(16px, 2vw, 26px);
+  padding: clamp(34px, 4vw, 58px) clamp(34px, 4.5vw, 70px);
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  gap: clamp(28px, 5vw, 76px);
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
+  gap: clamp(30px, 5vw, 86px);
   align-items: end;
+  border-radius: clamp(28px, 3vw, 46px);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.13) 54%, rgba(5, 59, 65, 0.18)),
+    radial-gradient(circle at 8% 15%, rgba(232, 168, 56, 0.12), transparent 30%),
+    radial-gradient(circle at 92% 12%, rgba(123, 198, 199, 0.22), transparent 38%);
+  box-shadow:
+    0 34px 96px rgba(5, 10, 18, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(14px) saturate(118%);
   z-index: 1;
 }
 
 .market-globe-heading::before {
   content: '';
   position: absolute;
-  inset: -34px -42px -38px;
-  border-radius: 42px;
+  inset: 12px;
+  border-radius: inherit;
+  pointer-events: none;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.08)),
-    radial-gradient(circle at 12% 20%, rgba(232, 168, 56, 0.12), transparent 30%),
-    radial-gradient(circle at 92% 18%, rgba(123, 198, 199, 0.16), transparent 32%);
-  box-shadow: 0 32px 90px rgba(5, 10, 18, 0.10);
-  backdrop-filter: blur(9px);
+    linear-gradient(90deg, rgba(216, 139, 66, 0.34), transparent 28%, transparent 72%, rgba(123, 198, 199, 0.28)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 42%);
+  opacity: 0.44;
+  mask-image: linear-gradient(180deg, black, transparent 78%);
   z-index: -1;
+}
+
+.market-globe-heading::after {
+  content: 'DATA ROOM';
+  position: absolute;
+  right: clamp(28px, 4vw, 60px);
+  bottom: clamp(18px, 2vw, 28px);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  font-weight: 900;
+  color: rgba(0, 63, 70, 0.28);
 }
 
 .market-globe-kicker {
@@ -151,21 +173,21 @@ section[id], footer[id] { scroll-margin-top: 118px; }
 
 .market-globe-heading h2 {
   margin: 0;
-  max-width: 780px;
+  max-width: 760px;
   font-family: var(--font-serif, 'Cormorant Garamond', Georgia, serif);
-  font-size: clamp(50px, 6.8vw, 94px);
-  line-height: 0.9;
+  font-size: clamp(50px, 6.3vw, 88px);
+  line-height: 0.91;
   letter-spacing: -0.055em;
   color: #003f46;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.22);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
 .market-globe-heading p:not(.market-globe-kicker) {
   margin: 0;
-  max-width: 560px;
-  font-size: clamp(16px, 1.25vw, 20px);
-  line-height: 1.75;
-  color: rgba(0, 63, 70, 0.76);
+  max-width: 520px;
+  font-size: clamp(15px, 1.12vw, 18px);
+  line-height: 1.72;
+  color: rgba(0, 63, 70, 0.78);
 }
 
 .market-globe-frame-wrap {
@@ -173,11 +195,11 @@ section[id], footer[id] { scroll-margin-top: 118px; }
   width: 100vw;
   margin-left: 50%;
   transform: translateX(-50%);
-  height: min(940px, 94vh);
-  min-height: 790px;
+  height: min(1040px, 104vh);
+  min-height: 910px;
   background: #050a12;
   box-shadow:
-    0 -32px 90px rgba(5, 10, 18, 0.26),
+    0 -32px 90px rgba(5, 10, 18, 0.28),
     0 54px 150px rgba(0, 42, 46, 0.42);
   overflow: hidden;
   z-index: 1;
@@ -189,20 +211,20 @@ section[id], footer[id] { scroll-margin-top: 118px; }
   position: absolute;
   left: 0;
   right: 0;
-  height: 72px;
+  height: 70px;
   pointer-events: none;
   z-index: 2;
 }
 
 .market-globe-frame-wrap::before {
   top: 0;
-  background: linear-gradient(180deg, rgba(3, 54, 60, 0.82), rgba(5, 10, 18, 0));
+  background: linear-gradient(180deg, rgba(3, 54, 60, 0.64), rgba(5, 10, 18, 0));
 }
 
 .market-globe-frame-wrap::after {
   bottom: 0;
-  height: 96px;
-  background: linear-gradient(180deg, rgba(5, 10, 18, 0), rgba(2, 62, 72, 0.96));
+  height: 86px;
+  background: linear-gradient(180deg, rgba(5, 10, 18, 0), rgba(2, 62, 72, 0.88));
 }
 
 .market-globe-frame {
@@ -219,17 +241,18 @@ section[id], footer[id] { scroll-margin-top: 118px; }
   }
 
   .market-globe-heading {
+    width: min(100% - 34px, 680px);
     grid-template-columns: 1fr;
     align-items: start;
+    padding: 30px 26px;
   }
 
-  .market-globe-heading::before {
-    inset: -24px -22px -26px;
-    border-radius: 30px;
+  .market-globe-heading::after {
+    display: none;
   }
 
   .market-globe-frame-wrap {
-    height: 840px;
-    min-height: 840px;
+    height: 900px;
+    min-height: 900px;
   }
 }
