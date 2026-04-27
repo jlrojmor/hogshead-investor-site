@@ -37,6 +37,18 @@ a:focus-visible,
 button:focus,
 button:focus-visible {
   outline: none !important;
+  box-shadow: none;
+}
+
+nav,
+nav *,
+nav *:focus,
+nav *:focus-visible,
+nav *:active {
+  outline: none !important;
+  --tw-ring-color: transparent !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
 }
 
 section[id], footer[id] { scroll-margin-top: 118px; }
