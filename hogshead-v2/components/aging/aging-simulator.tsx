@@ -96,7 +96,7 @@ export function AgingSimulator() {
               </h2>
             </div>
             <p className="max-w-xl text-[16px] leading-8 text-white/72">
-              Move the timeline and choose a scenario. The model translates aging time into liters remaining, category stage, and estimated exit value.
+              Adjust the aging month and scenario to see how remaining liters, category stage, and estimated exit value move over time.
             </p>
           </div>
         </Reveal>
