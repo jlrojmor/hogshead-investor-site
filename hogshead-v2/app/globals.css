@@ -16,7 +16,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 118px; }
 body {
   margin: 0;
   background: #f2ede3;
@@ -24,6 +24,8 @@ body {
   font-family: Manrope, Inter, system-ui, sans-serif;
   overflow-x: hidden;
 }
+
+section[id], footer[id] { scroll-margin-top: 118px; }
 
 ::selection { background: rgba(216, 139, 66, 0.28); }
 
