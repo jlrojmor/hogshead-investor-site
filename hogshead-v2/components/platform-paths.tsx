@@ -26,8 +26,9 @@ const paths = [
 
 export function PlatformPaths() {
   return (
-    <section id="models" className="py-24 scroll-mt-28">
-      <Shell>
+    <section id="models" className="relative overflow-hidden py-28 scroll-mt-28">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_12%,rgba(216,139,66,.10),transparent_30%),radial-gradient(circle_at_80%_62%,rgba(123,198,199,.14),transparent_32%)]" />
+      <Shell className="relative z-10">
         <Reveal>
           <SectionHeader
             eyebrow="Two business models"
@@ -35,36 +36,47 @@ export function PlatformPaths() {
             text="Hogshead Tequila routes two different buyers: capital and brand partners seeking structured aged tequila access, and product-led buyers seeking scarce single-barrel releases."
           />
         </Reveal>
-        <div className="mt-10 grid gap-5 lg:grid-cols-2">
+
+        <div className="mt-12 grid gap-7 lg:grid-cols-2">
           {paths.map((path, index) => {
             const Icon = path.icon;
             return (
               <Reveal key={path.title} delay={index * 0.06}>
-                <a href={path.href} className="group relative block min-h-[540px] overflow-hidden rounded-[38px] border border-deep/10 p-0 shadow-premium transition duration-500 hover:-translate-y-1 hover:shadow-[0_36px_110px_rgba(2,62,72,.20)]">
-                  <div className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105" style={{ backgroundImage: `linear-gradient(180deg, rgba(2,62,72,.03), rgba(2,62,72,.90)), url('${path.bg}')` }} />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_24%,rgba(216,139,66,.28),transparent_28%),linear-gradient(180deg,transparent,rgba(0,0,0,.22))]" />
-                  <div className="relative z-10 flex min-h-[540px] flex-col justify-between p-8 text-white">
+                <a
+                  href={path.href}
+                  className="group relative block min-h-[570px] overflow-hidden rounded-[42px] border border-deep/10 bg-deep shadow-premium transition duration-500 hover:-translate-y-1.5 hover:shadow-[0_46px_130px_rgba(2,62,72,.24)]"
+                >
+                  <div className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-[1.045]" style={{ backgroundImage: `url('${path.bg}')` }} />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,20,24,.08),rgba(2,62,72,.88)),radial-gradient(circle_at_78%_20%,rgba(216,139,66,.30),transparent_30%),linear-gradient(90deg,rgba(2,62,72,.64),rgba(2,62,72,.18))]" />
+                  <div className="absolute inset-x-6 bottom-6 top-6 rounded-[34px] opacity-0 ring-1 ring-white/18 transition duration-500 group-hover:opacity-100" />
+
+                  <div className="relative z-10 flex min-h-[570px] flex-col justify-between p-8 text-white md:p-9">
                     <div className="flex items-start justify-between gap-6">
-                      <span className="rounded-full border border-white/22 bg-white/14 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-white backdrop-blur-xl">{path.label}</span>
-                      <div className="grid h-12 w-12 place-items-center rounded-full bg-white/14 text-gold backdrop-blur-xl ring-1 ring-white/20">
+                      <span className="rounded-full border border-white/28 bg-black/18 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white backdrop-blur-xl">{path.label}</span>
+                      <div className="grid h-12 w-12 place-items-center rounded-full bg-white/16 text-gold backdrop-blur-xl ring-1 ring-white/22 transition group-hover:scale-105 group-hover:bg-gold group-hover:text-[#211104]">
                         <Icon className="h-6 w-6" />
                       </div>
                     </div>
-                    <div>
-                      <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-black/20 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-white/70 backdrop-blur-md">
+
+                    <div className="max-w-[620px]">
+                      <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-black/24 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-white/78 backdrop-blur-md">
                         {index === 0 ? <ShieldCheck className="h-4 w-4 text-gold" /> : <Building2 className="h-4 w-4 text-gold" />}
                         {path.audience}
                       </span>
-                      <h3 className="premium-serif max-w-md text-[42px] leading-none text-white drop-shadow-[0_8px_22px_rgba(0,0,0,.30)]">{path.title}</h3>
-                      <p className="mt-5 max-w-xl text-[16px] font-semibold leading-8 text-white/80">{path.text}</p>
-                      <div className="mt-6 grid gap-2 md:grid-cols-3">
+                      <h3 className="premium-serif max-w-md text-[44px] leading-[0.94] text-white drop-shadow-[0_10px_26px_rgba(0,0,0,.34)] md:text-[52px]">{path.title}</h3>
+                      <p className="mt-5 max-w-xl text-[16px] font-semibold leading-8 text-white/82">{path.text}</p>
+
+                      <div className="mt-7 grid gap-3 md:grid-cols-3">
                         {path.bullets.map((bullet) => (
-                          <span key={bullet} className="rounded-2xl bg-white/12 px-4 py-3 text-[12px] font-extrabold leading-5 text-white/86 shadow-[inset_0_0_0_1px_rgba(255,255,255,.13)] backdrop-blur-xl">
+                          <span key={bullet} className="rounded-[18px] border border-white/13 bg-white/11 px-4 py-3 text-[12px] font-extrabold leading-5 text-white/88 shadow-[inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-xl transition group-hover:bg-white/15">
                             {bullet}
                           </span>
                         ))}
                       </div>
-                      <div className="mt-7 flex items-center gap-2 text-[14px] font-extrabold text-white">Explore <ArrowUpRight className="h-4 w-4" /></div>
+
+                      <div className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-[13px] font-black text-deep shadow-[0_16px_36px_rgba(0,0,0,.20)] transition group-hover:bg-gold group-hover:text-[#211104]">
+                        Explore <ArrowUpRight className="h-4 w-4" />
+                      </div>
                     </div>
                   </div>
                 </a>
