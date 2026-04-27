@@ -76,7 +76,7 @@ export function AgingJourney() {
               </h2>
             </div>
             <p className="max-w-xl text-[16px] leading-8 text-[#60787d]">
-              The aging story should feel alive: liquid color, category threshold, scarcity, and commercial optionality move together.
+              Aging moves tequila from fresh liquid into scarce commercial inventory — category by category, month by month, barrel by barrel.
             </p>
           </div>
         </Reveal>
