@@ -25,6 +25,20 @@ body {
   overflow-x: hidden;
 }
 
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none !important;
+}
+
+a:focus,
+a:focus-visible,
+button:focus,
+button:focus-visible {
+  outline: none !important;
+}
+
 section[id], footer[id] { scroll-margin-top: 118px; }
 
 ::selection { background: rgba(216, 139, 66, 0.28); }
