@@ -25,8 +25,14 @@ export function Nav() {
   return (
     <nav className="fixed left-0 right-0 top-4 z-50 pointer-events-none">
       <Shell>
-        <div className={`pointer-events-auto mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full px-3 py-2 backdrop-blur-2xl transition-all duration-300 ${scrolled ? 'bg-[#021a20]/94 shadow-[0_22px_80px_rgba(0,0,0,.34),inset_0_1px_0_rgba(255,255,255,.10)]' : 'bg-[#021a20]/88 shadow-[0_22px_90px_rgba(0,0,0,.40),inset_0_1px_0_rgba(255,255,255,.10)]'}`}>
-          <a href="#top" className="group flex min-w-[218px] items-center gap-3 rounded-full py-1 pr-3 text-[12px] font-black uppercase tracking-[0.12em] text-white">
+        <div
+          className={`pointer-events-auto mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full px-3 py-2 backdrop-blur-2xl transition-all duration-300 ${
+            scrolled
+              ? 'bg-[#041e24]/96 shadow-[0_22px_78px_rgba(2,18,22,.36),inset_0_1px_0_rgba(255,255,255,.10)]'
+              : 'bg-[#041e24]/90 shadow-[0_22px_90px_rgba(2,18,22,.42),inset_0_1px_0_rgba(255,255,255,.10)]'
+          }`}
+        >
+          <a href="#top" className="group flex min-w-[236px] items-center gap-3 rounded-full py-1 pr-3 text-[12px] font-black uppercase tracking-[0.12em] text-white">
             <span className="grid h-12 w-12 place-items-center rounded-full bg-white shadow-[0_10px_28px_rgba(0,0,0,.30)]">
               <span className="grid h-10 w-10 place-items-center rounded-full bg-[#f8f2e7]">
                 <img src="/images/Logo_for_Website.png" alt="Hogshead Tequila" className="h-8 w-8 object-contain" />
@@ -37,7 +43,7 @@ export function Nav() {
             </span>
           </a>
 
-          <div className="hidden items-center gap-1 rounded-full bg-white/[0.13] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,.12),0_10px_28px_rgba(0,0,0,.16)] lg:flex">
+          <div className="hidden items-center gap-1 rounded-full bg-white/[0.11] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,.12),0_10px_28px_rgba(0,0,0,.16)] lg:flex">
             {navItems.map(([label, href]) => (
               <a
                 key={label}
@@ -46,7 +52,7 @@ export function Nav() {
               >
                 <span className="absolute inset-0 translate-y-full rounded-full bg-white transition duration-300 group-hover:translate-y-0" />
                 <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-gold opacity-0 transition group-hover:opacity-100" />
-                <span className="relative z-10 drop-shadow-[0_1px_8px_rgba(0,0,0,.45)] group-hover:drop-shadow-none">{label}</span>
+                <span className="relative z-10 drop-shadow-[0_1px_8px_rgba(0,0,0,.65)] group-hover:drop-shadow-none">{label}</span>
               </a>
             ))}
           </div>
