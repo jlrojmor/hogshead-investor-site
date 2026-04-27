@@ -48,9 +48,9 @@ export function Hero() {
             Hogshead Tequila is the operating layer for premium tequila ownership, aging strategy, brand creation, and scarce single-barrel releases.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#models" className="rounded-full bg-gold px-6 py-3 text-[14px] font-extrabold text-[#211104] shadow-[0_20px_50px_rgba(216,139,66,.25)] transition hover:-translate-y-0.5">Explore Platform</a>
-            <a href="#simulator" className="rounded-full bg-white px-6 py-3 text-[14px] font-extrabold text-deep shadow-[0_15px_38px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5">Run Aging Model</a>
-            <a href="#market" className="rounded-full bg-[#06343d]/72 px-6 py-3 text-[14px] font-extrabold text-white shadow-soft ring-1 ring-white/22 backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-[#074650]">Market Logic</a>
+            <a href="#models" className="rounded-full bg-gold px-6 py-3 text-[14px] font-extrabold text-[#211104] no-underline shadow-[0_20px_50px_rgba(216,139,66,.25)] transition hover:-translate-y-0.5 focus:outline-none">Explore Platform</a>
+            <a href="#simulator" className="rounded-full bg-white px-6 py-3 text-[14px] font-extrabold text-deep no-underline shadow-[0_15px_38px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 focus:outline-none">Run Aging Model</a>
+            <a href="#market" className="rounded-full bg-[#06343d]/72 px-6 py-3 text-[14px] font-extrabold text-white no-underline shadow-soft backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-[#074650] focus:outline-none">Market Logic</a>
           </div>
         </Reveal>
 
