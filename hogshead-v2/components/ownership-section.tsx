@@ -1,4 +1,4 @@
-import { ArrowUpRight, BadgeCheck, Barrel, Check, FileText, RefreshCw, ShieldCheck, Timer, TrendingUp } from 'lucide-react';
+import { ArrowUpRight, BadgeCheck, Boxes, Check, FileText, RefreshCw, ShieldCheck, Timer, TrendingUp } from 'lucide-react';
 import { Eyebrow, Reveal, Shell } from './shell';
 
 const engineSteps = [
@@ -12,7 +12,7 @@ const engineSteps = [
     number: '02',
     title: 'Place into barrels',
     text: 'Hogshead Tequila coordinates professional aging under controlled custody, inventory tracking, and asset administration.',
-    icon: Barrel,
+    icon: Boxes,
   },
   {
     number: '03',
@@ -73,7 +73,7 @@ export function OwnershipSection() {
               </div>
 
               <div className="mt-10 grid gap-4 md:grid-cols-2">
-                {engineSteps.map((step, index) => {
+                {engineSteps.map((step) => {
                   const Icon = step.icon;
                   return (
                     <div key={step.title} className="group relative overflow-hidden rounded-[28px] border border-white/14 bg-white/[0.095] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white/[0.13]">
@@ -153,7 +153,7 @@ export function OwnershipSection() {
             <span className="text-[13px] font-extrabold text-deep">Entry occurs before aging value is fully created.</span>
           </div>
           <div className="flex items-center gap-4 rounded-2xl bg-deep/[0.05] p-4">
-            <Barrel className="h-6 w-6 text-gold" />
+            <Boxes className="h-6 w-6 text-gold" />
             <span className="text-[13px] font-extrabold text-deep">Barrel aging creates category and scarcity pressure.</span>
           </div>
           <div className="flex items-center gap-4 rounded-2xl bg-deep/[0.05] p-4">
