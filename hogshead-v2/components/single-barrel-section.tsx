@@ -23,7 +23,7 @@ const buyers = [
 
 export function SingleBarrelSection() {
   return (
-    <section id="single-barrel" className="relative overflow-hidden bg-gradient-to-b from-[#edf6f4] to-sand py-28">
+    <section id="single-barrel" className="relative overflow-hidden bg-gradient-to-b from-[#edf6f4] to-sand py-28 scroll-mt-28">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(123,198,199,.22),transparent_24%),radial-gradient(circle_at_78%_52%,rgba(216,139,66,.12),transparent_28%)]" />
       <Shell className="relative z-10">
         <Reveal>
@@ -117,7 +117,7 @@ export function SingleBarrelSection() {
 
         <Reveal className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-[26px] border border-deep/10 bg-white/72 p-5 shadow-soft backdrop-blur-xl">
           <p className="max-w-2xl text-[14px] font-semibold leading-7 text-[#60787d]">
-            Hogshead Tequila starts with Texas and California focus, then expands by channel and compliance readiness.
+            Hogshead Tequila qualifies each release by buyer type, channel, compliance pathway, and available aged inventory.
           </p>
           <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-deep px-5 py-3 text-[13px] font-extrabold text-white transition hover:bg-gold hover:text-[#211104]">
             Request release list <ArrowUpRight className="h-4 w-4" />
