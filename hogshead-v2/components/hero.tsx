@@ -10,6 +10,12 @@ const platformProof = [
   { label: 'Release', text: 'Bulk exit, brand launch, or single-barrel program', icon: Wine },
 ];
 
+const proofStats = [
+  { value: '1–21Y', label: 'Inventory' },
+  { value: '43–55%', label: 'ABV range' },
+  { value: 'U.S.', label: 'Commercial path' },
+];
+
 export function Hero() {
   return (
     <section id="top" className="relative min-h-screen overflow-hidden bg-[#061f25] pt-28 text-white">
@@ -98,10 +104,10 @@ export function Hero() {
                 </div>
 
                 <div className="mt-6 grid grid-cols-3 gap-3">
-                  {['1–21Y', '43–55%', 'TX / CA'].map((value, index) => (
-                    <div key={value} className="rounded-2xl bg-black/30 p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.07)] backdrop-blur-xl">
-                      <strong className="block text-[20px] font-extrabold text-white">{value}</strong>
-                      <span className="mt-1 block text-[9px] font-extrabold uppercase tracking-[0.14em] text-white/60">{index === 0 ? 'Inventory' : index === 1 ? 'ABV range' : 'Initial focus'}</span>
+                  {proofStats.map((stat) => (
+                    <div key={stat.value} className="rounded-2xl bg-black/30 p-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.07)] backdrop-blur-xl">
+                      <strong className="block text-[20px] font-extrabold text-white">{stat.value}</strong>
+                      <span className="mt-1 block text-[9px] font-extrabold uppercase tracking-[0.14em] text-white/60">{stat.label}</span>
                     </div>
                   ))}
                 </div>
