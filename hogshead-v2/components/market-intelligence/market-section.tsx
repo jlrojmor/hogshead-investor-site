@@ -25,10 +25,39 @@ export function MarketSection() {
       return `<div class=\"hogshead-live-ticker-track\">${itemMarkup}${itemMarkup}</div>`;
     };
 
+    const patchUnitedStatesPanel = (doc: Document) => {
+      const panelTitle = doc.getElementById("panelTitle");
+      const panelMetric = doc.getElementById("panelMetric");
+      const insights = doc.getElementById("panelInsights");
+
+      if (!panelTitle || !panelMetric || !insights) return;
+      if (panelTitle.textContent?.trim() !== "United States") return;
+
+      panelMetric.textContent = "~$22B | Largest tequila market by far | Historic CAGR 17% | Forecast CAGR 6.3%";
+
+      if (insights.querySelector('[data-hogshead-us-leadership="true"]')) return;
+
+      const leadershipInsight = doc.createElement("li");
+      leadershipInsight.dataset.hogsheadUsLeadership = "true";
+      leadershipInsight.textContent = "The United States is the dominant global demand center for tequila by a wide margin, making it the clearest commercial exit market for aged inventory.";
+      insights.insertBefore(leadershipInsight, insights.firstChild);
+    };
+
     const upgradeTicker = () => {
       const frame = document.getElementById("hti-market-globe-frame") as HTMLIFrameElement | null;
       const doc = frame?.contentDocument || frame?.contentWindow?.document;
       if (!doc?.body) return;
+
+      patchUnitedStatesPanel(doc);
+
+      if (doc.body.dataset.hogsheadUsPanelObserver !== "true") {
+        const panel = doc.getElementById("panel");
+        if (panel) {
+          const observer = new MutationObserver(() => patchUnitedStatesPanel(doc));
+          observer.observe(panel, { childList: true, subtree: true, characterData: true, attributes: true });
+          doc.body.dataset.hogsheadUsPanelObserver = "true";
+        }
+      }
 
       const ticker = doc.querySelector(".ticker") as HTMLElement | null;
       const tickerTrack = ticker?.querySelector(".ticker-track") as HTMLElement | null;
