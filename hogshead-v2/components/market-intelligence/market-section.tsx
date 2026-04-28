@@ -28,11 +28,18 @@ export function MarketSection() {
     const upgradeTicker = () => {
       const frame = document.getElementById("hti-market-globe-frame") as HTMLIFrameElement | null;
       const doc = frame?.contentDocument || frame?.contentWindow?.document;
-      if (!doc?.body || doc.body.dataset.hogsheadTickerFixed === "true") return;
+      if (!doc?.body) return;
 
-      doc.body.dataset.hogsheadTickerFixed = "true";
+      const ticker = doc.querySelector(".ticker") as HTMLElement | null;
+      const tickerTrack = ticker?.querySelector(".ticker-track") as HTMLElement | null;
+
+      // Critical: do not mark as upgraded until the iframe ticker actually exists.
+      // The globe file can finish loading after the parent page effect has already fired.
+      if (!ticker || !tickerTrack) return;
+      if (doc.body.dataset.hogsheadTickerFixed === "true") return;
 
       const style = doc.createElement("style");
+      style.setAttribute("data-hogshead-ticker-style", "true");
       style.textContent = `
         .ticker {
           position: fixed !important;
@@ -40,21 +47,21 @@ export function MarketSection() {
           right: 22px !important;
           bottom: 18px !important;
           z-index: 70 !important;
-          min-height: 62px !important;
+          min-height: 66px !important;
           display: block !important;
           overflow: hidden !important;
           border-radius: 999px !important;
-          border: 1px solid rgba(232,168,56,.58) !important;
+          border: 1px solid rgba(232,168,56,.72) !important;
           background:
-            linear-gradient(90deg, rgba(2,7,12,.99), rgba(3,30,39,.98) 48%, rgba(2,7,12,.99)),
-            radial-gradient(circle at 16% 50%, rgba(232,168,56,.30), transparent 30%) !important;
+            linear-gradient(90deg, rgba(2,7,12,.99), rgba(3,34,42,.98) 46%, rgba(2,7,12,.99)),
+            radial-gradient(circle at 16% 50%, rgba(232,168,56,.34), transparent 34%) !important;
           box-shadow:
-            0 26px 100px rgba(0,0,0,.72),
-            0 0 54px rgba(232,168,56,.16),
-            0 -10px 46px rgba(118,212,214,.10),
-            inset 0 1px 0 rgba(255,255,255,.16),
-            inset 0 0 0 1px rgba(255,255,255,.07) !important;
-          backdrop-filter: blur(28px) saturate(165%) !important;
+            0 30px 110px rgba(0,0,0,.74),
+            0 0 70px rgba(232,168,56,.20),
+            0 -10px 46px rgba(118,212,214,.14),
+            inset 0 1px 0 rgba(255,255,255,.18),
+            inset 0 0 0 1px rgba(255,255,255,.08) !important;
+          backdrop-filter: blur(30px) saturate(175%) !important;
         }
 
         .ticker::before {
@@ -64,8 +71,8 @@ export function MarketSection() {
           z-index: 1 !important;
           pointer-events: none !important;
           background:
-            linear-gradient(90deg, rgba(232,168,56,.08), transparent 18%, transparent 82%, rgba(118,212,214,.08)),
-            repeating-linear-gradient(90deg, rgba(255,255,255,.028), rgba(255,255,255,.028) 1px, transparent 1px, transparent 18px) !important;
+            linear-gradient(90deg, rgba(232,168,56,.12), transparent 18%, transparent 82%, rgba(118,212,214,.10)),
+            repeating-linear-gradient(90deg, rgba(255,255,255,.035), rgba(255,255,255,.035) 1px, transparent 1px, transparent 18px) !important;
         }
 
         .ticker::after {
@@ -74,10 +81,10 @@ export function MarketSection() {
           top: 0 !important;
           bottom: 0 !important;
           left: 0 !important;
-          width: 360px !important;
+          width: 380px !important;
           z-index: 4 !important;
           pointer-events: none !important;
-          background: linear-gradient(90deg, rgba(2,7,12,1) 0%, rgba(2,11,16,1) 58%, rgba(3,27,35,.78) 78%, rgba(3,27,35,0) 100%) !important;
+          background: linear-gradient(90deg, rgba(2,7,12,1) 0%, rgba(2,11,16,1) 58%, rgba(3,27,35,.82) 78%, rgba(3,27,35,0) 100%) !important;
         }
 
         .ticker-label {
@@ -90,33 +97,33 @@ export function MarketSection() {
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-          min-width: 230px !important;
-          padding: 0 24px !important;
+          min-width: 245px !important;
+          padding: 0 26px !important;
           border-radius: 999px !important;
           color: #F7C66B !important;
           font-size: 11px !important;
           font-weight: 950 !important;
           letter-spacing: .24em !important;
           text-transform: uppercase !important;
-          border: 1px solid rgba(232,168,56,.42) !important;
+          border: 1px solid rgba(232,168,56,.50) !important;
           background:
-            linear-gradient(135deg, rgba(232,168,56,.22), rgba(232,168,56,.08) 48%, rgba(255,255,255,.05)),
-            rgba(5,10,18,.78) !important;
+            linear-gradient(135deg, rgba(232,168,56,.26), rgba(232,168,56,.10) 48%, rgba(255,255,255,.06)),
+            rgba(5,10,18,.84) !important;
           white-space: nowrap !important;
-          text-shadow: 0 0 24px rgba(232,168,56,.42) !important;
-          box-shadow: 0 0 30px rgba(232,168,56,.14), inset 0 1px 0 rgba(255,255,255,.14) !important;
+          text-shadow: 0 0 24px rgba(232,168,56,.46) !important;
+          box-shadow: 0 0 34px rgba(232,168,56,.18), inset 0 1px 0 rgba(255,255,255,.16) !important;
         }
 
         .ticker-track {
           position: absolute !important;
-          inset: 0 0 0 0 !important;
+          inset: 0 !important;
           z-index: 2 !important;
           height: 100% !important;
           overflow: hidden !important;
           display: flex !important;
           align-items: center !important;
           min-width: 0 !important;
-          padding-left: 360px !important;
+          padding-left: 390px !important;
           padding-right: 34px !important;
           mask-image: linear-gradient(90deg, transparent 0, black 76px, black calc(100% - 42px), transparent 100%) !important;
           -webkit-mask-image: linear-gradient(90deg, transparent 0, black 76px, black calc(100% - 42px), transparent 100%) !important;
@@ -128,10 +135,10 @@ export function MarketSection() {
         .hogshead-live-ticker-track {
           display: flex !important;
           width: max-content !important;
-          gap: 54px !important;
+          gap: 58px !important;
           align-items: center !important;
           white-space: nowrap !important;
-          animation: hogsheadTickerMarquee 104s linear infinite !important;
+          animation: hogsheadTickerMarquee 112s linear infinite !important;
           will-change: transform !important;
         }
 
@@ -171,7 +178,7 @@ export function MarketSection() {
             right: 10px !important;
             bottom: 10px !important;
             border-radius: 24px !important;
-            min-height: 52px !important;
+            min-height: 54px !important;
           }
           .ticker::after { display: none !important; }
           .ticker-label { display: none !important; }
@@ -180,37 +187,30 @@ export function MarketSection() {
             padding-right: 18px !important;
           }
           .hogshead-live-ticker-track {
-            animation-duration: 86s !important;
+            animation-duration: 94s !important;
           }
         }
       `;
 
       doc.head.appendChild(style);
-
-      const ticker = doc.querySelector(".ticker") as HTMLElement | null;
-      if (!ticker) return;
+      doc.body.dataset.hogsheadTickerFixed = "true";
 
       const label = ticker.querySelector(".ticker-label") as HTMLElement | null;
       if (label) label.textContent = "Live Market Signals";
 
-      let track = ticker.querySelector(".ticker-track") as HTMLElement | null;
-      if (!track) {
-        track = doc.createElement("div");
-        track.className = "ticker-track";
-        ticker.appendChild(track);
-      }
-
-      track.innerHTML = buildTickerHTML();
+      tickerTrack.innerHTML = buildTickerHTML();
     };
 
     const frame = document.getElementById("hti-market-globe-frame") as HTMLIFrameElement | null;
     frame?.addEventListener("load", upgradeTicker);
 
-    const timers = [300, 900, 1800, 3000].map((delay) => window.setTimeout(upgradeTicker, delay));
+    const interval = window.setInterval(upgradeTicker, 500);
+    const stopRetry = window.setTimeout(() => window.clearInterval(interval), 12000);
 
     return () => {
       frame?.removeEventListener("load", upgradeTicker);
-      timers.forEach(window.clearTimeout);
+      window.clearInterval(interval);
+      window.clearTimeout(stopRetry);
     };
   }, []);
 
