@@ -60,7 +60,7 @@ export default function PrivacyPage() {
             <div className="mt-8 rounded-[26px] bg-deep p-6 text-white">
               <h2 className="premium-serif text-[30px] leading-none">Contact</h2>
               <p className="mt-4 text-[15px] font-semibold leading-8 text-white/72">
-                Privacy questions can be directed to contact@hogshead-tequila.com.
+                Privacy questions can be directed to contact@tequila-hogshead.com.
               </p>
             </div>
           </div>
