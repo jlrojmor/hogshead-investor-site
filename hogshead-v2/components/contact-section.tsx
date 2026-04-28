@@ -1,10 +1,54 @@
-import { ArrowUpRight, FileText, Linkedin, Mail, ShieldCheck, Sparkles } from 'lucide-react';
+'use client';
+
+import { FormEvent, useState } from 'react';
+import { ArrowUpRight, FileText, Linkedin, ShieldCheck, Sparkles, ArrowUp } from 'lucide-react';
 import { Eyebrow, Reveal, Shell } from './shell';
 
 const conversationTypes = ['Tequila investment exposure', 'Brand creation', 'Single-barrel release', 'Restaurant / retail program'];
-const linkedInUrl = 'https://www.linkedin.com/company/hogshead-tequila/';
+const linkedInUrl = 'https://www.linkedin.com/company/hogshead-tequila-investments/';
+const contactEmail = 'contact@tequila-hogshead.com';
+
+type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
 
 export function ContactSection() {
+  const [submitState, setSubmitState] = useState<SubmitState>('idle');
+  const [feedback, setFeedback] = useState('');
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSubmitState('submitting');
+    setFeedback('');
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch('/api/request-info', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result?.error || 'The request could not be sent.');
+      }
+
+      setSubmitState('success');
+      setFeedback('Request sent. We will follow up through the email you provided.');
+      form.reset();
+    } catch (error) {
+      setSubmitState('error');
+      setFeedback(
+        error instanceof Error
+          ? error.message
+          : `The request could not be sent. Please email ${contactEmail} directly.`,
+      );
+    }
+  }
+
   return (
     <section id="contact" className="relative overflow-hidden bg-[#041f25] py-28 text-white scroll-mt-28">
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,31,37,.97),rgba(4,31,37,.88)),url('/images/Barrel-aging-copy-5.jpeg')] bg-cover bg-center opacity-90" />
@@ -29,17 +73,6 @@ export function ContactSection() {
                 </div>
               ))}
             </div>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a href="mailto:contact@hogshead-tequila.com" className="inline-flex items-center gap-3 rounded-full bg-white/10 px-5 py-3 text-[15px] font-extrabold text-white shadow-[inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-xl transition hover:bg-white hover:text-deep">
-                <Mail className="h-5 w-5 text-gold" />
-                contact@hogshead-tequila.com
-              </a>
-              <a href={linkedInUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 rounded-full bg-white/10 px-5 py-3 text-[15px] font-extrabold text-white shadow-[inset_0_1px_0_rgba(255,255,255,.10)] backdrop-blur-xl transition hover:bg-white hover:text-deep">
-                <Linkedin className="h-5 w-5 text-gold" />
-                Hogshead Tequila LinkedIn
-              </a>
-            </div>
           </Reveal>
 
           <Reveal className="relative overflow-hidden rounded-[38px] bg-white/[0.11] p-4 shadow-[0_34px_120px_rgba(0,0,0,.32),inset_0_1px_0_rgba(255,255,255,.12)] backdrop-blur-2xl">
@@ -57,14 +90,14 @@ export function ContactSection() {
                 </div>
               </div>
 
-              <form action="mailto:contact@hogshead-tequila.com" method="post" encType="text/plain" className="grid gap-3">
+              <form onSubmit={handleSubmit} className="grid gap-3">
                 <div className="grid gap-3 md:grid-cols-2">
                   <input name="name" type="text" placeholder="Name" className="rounded-2xl bg-white px-4 py-4 text-ink outline-none shadow-[inset_0_0_0_1px_rgba(2,62,72,.08)] ring-gold/30 transition placeholder:text-[#819094] focus:ring-4" required />
                   <input name="email" type="email" placeholder="Email" className="rounded-2xl bg-white px-4 py-4 text-ink outline-none shadow-[inset_0_0_0_1px_rgba(2,62,72,.08)] ring-gold/30 transition placeholder:text-[#819094] focus:ring-4" required />
                 </div>
                 <input name="company" type="text" placeholder="Company / group" className="rounded-2xl bg-white px-4 py-4 text-ink outline-none shadow-[inset_0_0_0_1px_rgba(2,62,72,.08)] ring-gold/30 transition placeholder:text-[#819094] focus:ring-4" />
-                <select name="interest" className="rounded-2xl bg-white px-4 py-4 text-ink outline-none shadow-[inset_0_0_0_1px_rgba(2,62,72,.08)] ring-gold/30 transition focus:ring-4" required>
-                  <option value="">I am interested in...</option>
+                <select name="interest" className="rounded-2xl bg-white px-4 py-4 text-ink outline-none shadow-[inset_0_0_0_1px_rgba(2,62,72,.08)] ring-gold/30 transition focus:ring-4" required defaultValue="">
+                  <option value="" disabled>I am interested in...</option>
                   <option>Investment / aging platform</option>
                   <option>Build or add a tequila brand</option>
                   <option>Single Barrel Program</option>
@@ -72,10 +105,25 @@ export function ContactSection() {
                   <option>Private buyer / collector</option>
                 </select>
                 <textarea name="message" placeholder="Tell us what you are looking for" className="min-h-[140px] rounded-2xl bg-white px-4 py-4 text-ink outline-none shadow-[inset_0_0_0_1px_rgba(2,62,72,.08)] ring-gold/30 transition placeholder:text-[#819094] focus:ring-4" />
-                <button className="group mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 text-[14px] font-black text-[#211104] shadow-[0_18px_40px_rgba(216,139,66,.24)] transition hover:-translate-y-0.5 hover:shadow-[0_26px_56px_rgba(216,139,66,.30)]" type="submit">
-                  Send Request <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <button
+                  className="group mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 text-[14px] font-black text-[#211104] shadow-[0_18px_40px_rgba(216,139,66,.24)] transition hover:-translate-y-0.5 hover:shadow-[0_26px_56px_rgba(216,139,66,.30)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                  type="submit"
+                  disabled={submitState === 'submitting'}
+                >
+                  {submitState === 'submitting' ? 'Sending...' : 'Send Request'} <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
               </form>
+
+              {feedback && (
+                <div className={`mt-4 rounded-2xl p-4 text-[13px] font-bold leading-6 ${submitState === 'success' ? 'bg-teal/10 text-deep' : 'bg-red-50 text-red-700'}`}>
+                  {feedback}
+                  {submitState === 'error' && (
+                    <span>
+                      {' '}You can also email <a className="underline" href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+                    </span>
+                  )}
+                </div>
+              )}
 
               <div className="mt-5 flex items-start gap-3 rounded-2xl bg-deep/[0.06] p-4 text-[#60787d]">
                 <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-teal" />
@@ -106,6 +154,9 @@ export function ContactSection() {
               </a>
               <a href="/privacy" className="inline-flex items-center gap-2 rounded-full bg-white/8 px-4 py-2 transition hover:bg-white hover:text-deep">
                 <ShieldCheck className="h-4 w-4 text-gold" /> Privacy Policy
+              </a>
+              <a href="#top" className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-2 text-[#211104] transition hover:-translate-y-0.5">
+                <ArrowUp className="h-4 w-4" /> Back to top
               </a>
             </div>
           </div>
