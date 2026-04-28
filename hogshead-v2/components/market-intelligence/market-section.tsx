@@ -33,7 +33,8 @@ export function MarketSection() {
       if (!panelTitle || !panelMetric || !insights) return;
       if (panelTitle.textContent?.trim() !== "United States") return;
 
-      panelMetric.textContent = "~$22B | Largest tequila market by far | Historic CAGR 17% | Forecast CAGR 6.3%";
+      const targetMetric = "~$22B | Largest tequila market by far | Historic CAGR 17% | Forecast CAGR 6.3%";
+      if (panelMetric.textContent !== targetMetric) panelMetric.textContent = targetMetric;
 
       if (insights.querySelector('[data-hogshead-us-leadership="true"]')) return;
 
@@ -48,16 +49,8 @@ export function MarketSection() {
       const doc = frame?.contentDocument || frame?.contentWindow?.document;
       if (!doc?.body) return;
 
+      // One-way patch only. No MutationObserver: avoids iframe update loops/freezing.
       patchUnitedStatesPanel(doc);
-
-      if (doc.body.dataset.hogsheadUsPanelObserver !== "true") {
-        const panel = doc.getElementById("panel");
-        if (panel) {
-          const observer = new MutationObserver(() => patchUnitedStatesPanel(doc));
-          observer.observe(panel, { childList: true, subtree: true, characterData: true, attributes: true });
-          doc.body.dataset.hogsheadUsPanelObserver = "true";
-        }
-      }
 
       const ticker = doc.querySelector(".ticker") as HTMLElement | null;
       const tickerTrack = ticker?.querySelector(".ticker-track") as HTMLElement | null;
