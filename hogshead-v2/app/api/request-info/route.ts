@@ -27,42 +27,67 @@ function escapeHtml(value: string) {
     .replace(/'/g, '&#039;');
 }
 
-export async function POST(request: Request) {
-  let payload: RequestPayload;
+async function sendWithFormSubmit({
+  name,
+  email,
+  company,
+  interest,
+  message,
+  submittedAt,
+}: {
+  name: string;
+  email: string;
+  company: string;
+  interest: string;
+  message: string;
+  submittedAt: string;
+}) {
+  const response = await fetch(`https://formsubmit.co/ajax/${destinationEmail}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      _subject: `New Hogshead Tequila request — ${interest}`,
+      _template: 'table',
+      _captcha: 'false',
+      _replyto: email,
+      name,
+      email,
+      company: company || 'Not provided',
+      interest,
+      message: message || 'Not provided',
+      submittedAt,
+      source: 'Hogshead Tequila V2 website',
+    }),
+  });
 
-  try {
-    payload = await request.json();
-  } catch {
-    return NextResponse.json({ error: 'Invalid request payload.' }, { status: 400 });
+  if (!response.ok) {
+    const detail = await response.text().catch(() => '');
+    throw new Error(detail || 'FormSubmit rejected the request.');
   }
 
-  const name = clean(payload.name);
-  const email = clean(payload.email);
-  const company = clean(payload.company);
-  const interest = clean(payload.interest);
-  const message = clean(payload.message);
+  return response.json().catch(() => ({ ok: true }));
+}
 
-  if (!name || !email || !interest) {
-    return NextResponse.json({ error: 'Please complete name, email, and interest before sending.' }, { status: 400 });
-  }
-
-  if (!isValidEmail(email)) {
-    return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 });
-  }
-
-  const apiKey = process.env.RESEND_API_KEY;
-
-  if (!apiKey) {
-    return NextResponse.json(
-      {
-        error: `Email delivery is not configured yet. Please email ${destinationEmail} directly.`,
-        missingConfiguration: true,
-      },
-      { status: 503 },
-    );
-  }
-
-  const submittedAt = new Date().toISOString();
+async function sendWithResend({
+  name,
+  email,
+  company,
+  interest,
+  message,
+  submittedAt,
+  apiKey,
+}: {
+  name: string;
+  email: string;
+  company: string;
+  interest: string;
+  message: string;
+  submittedAt: string;
+  apiKey: string;
+}) {
   const subject = `New Hogshead Tequila request — ${interest}`;
   const html = `
     <div style="font-family: Arial, sans-serif; line-height: 1.55; color: #10272d;">
@@ -109,11 +134,53 @@ export async function POST(request: Request) {
 
   if (!response.ok) {
     const detail = await response.text().catch(() => '');
+    throw new Error(detail || 'Resend rejected the request.');
+  }
+
+  return response.json().catch(() => ({ ok: true }));
+}
+
+export async function POST(request: Request) {
+  let payload: RequestPayload;
+
+  try {
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid request payload.' }, { status: 400 });
+  }
+
+  const name = clean(payload.name);
+  const email = clean(payload.email);
+  const company = clean(payload.company);
+  const interest = clean(payload.interest);
+  const message = clean(payload.message);
+
+  if (!name || !email || !interest) {
+    return NextResponse.json({ error: 'Please complete name, email, and interest before sending.' }, { status: 400 });
+  }
+
+  if (!isValidEmail(email)) {
+    return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 });
+  }
+
+  const submittedAt = new Date().toISOString();
+  const apiKey = process.env.RESEND_API_KEY;
+
+  try {
+    if (apiKey) {
+      await sendWithResend({ name, email, company, interest, message, submittedAt, apiKey });
+      return NextResponse.json({ ok: true, provider: 'resend' });
+    }
+
+    await sendWithFormSubmit({ name, email, company, interest, message, submittedAt });
+    return NextResponse.json({ ok: true, provider: 'formsubmit' });
+  } catch (error) {
     return NextResponse.json(
-      { error: `Email service rejected the request. Please email ${destinationEmail} directly.`, detail },
+      {
+        error: `The request could not be sent automatically. Please email ${destinationEmail} directly.`,
+        detail: error instanceof Error ? error.message : 'Unknown email delivery error.',
+      },
       { status: 502 },
     );
   }
-
-  return NextResponse.json({ ok: true });
 }
