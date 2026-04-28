@@ -39,23 +39,33 @@ export function MarketSection() {
           left: 22px !important;
           right: 22px !important;
           bottom: 18px !important;
-          z-index: 60 !important;
-          min-height: 58px !important;
-          display: grid !important;
-          grid-template-columns: 245px minmax(0, 1fr) !important;
-          align-items: center !important;
+          z-index: 70 !important;
+          min-height: 62px !important;
+          display: block !important;
           overflow: hidden !important;
           border-radius: 999px !important;
-          border: 1px solid rgba(232,168,56,.46) !important;
+          border: 1px solid rgba(232,168,56,.58) !important;
           background:
-            linear-gradient(90deg, rgba(4,9,16,.98), rgba(6,39,49,.96) 48%, rgba(4,9,16,.98)),
-            radial-gradient(circle at 14% 50%, rgba(232,168,56,.24), transparent 31%) !important;
+            linear-gradient(90deg, rgba(2,7,12,.99), rgba(3,30,39,.98) 48%, rgba(2,7,12,.99)),
+            radial-gradient(circle at 16% 50%, rgba(232,168,56,.30), transparent 30%) !important;
           box-shadow:
-            0 24px 92px rgba(0,0,0,.62),
-            0 0 42px rgba(232,168,56,.10),
-            inset 0 1px 0 rgba(255,255,255,.14),
-            inset 0 0 0 1px rgba(255,255,255,.06) !important;
-          backdrop-filter: blur(26px) saturate(155%) !important;
+            0 26px 100px rgba(0,0,0,.72),
+            0 0 54px rgba(232,168,56,.16),
+            0 -10px 46px rgba(118,212,214,.10),
+            inset 0 1px 0 rgba(255,255,255,.16),
+            inset 0 0 0 1px rgba(255,255,255,.07) !important;
+          backdrop-filter: blur(28px) saturate(165%) !important;
+        }
+
+        .ticker::before {
+          content: '' !important;
+          position: absolute !important;
+          inset: 0 !important;
+          z-index: 1 !important;
+          pointer-events: none !important;
+          background:
+            linear-gradient(90deg, rgba(232,168,56,.08), transparent 18%, transparent 82%, rgba(118,212,214,.08)),
+            repeating-linear-gradient(90deg, rgba(255,255,255,.028), rgba(255,255,255,.028) 1px, transparent 1px, transparent 18px) !important;
         }
 
         .ticker::after {
@@ -63,45 +73,53 @@ export function MarketSection() {
           position: absolute !important;
           top: 0 !important;
           bottom: 0 !important;
-          left: 245px !important;
-          width: 72px !important;
+          left: 0 !important;
+          width: 360px !important;
           z-index: 4 !important;
           pointer-events: none !important;
-          background: linear-gradient(90deg, rgba(4,11,18,1), rgba(4,24,32,.86) 55%, rgba(4,24,32,0)) !important;
+          background: linear-gradient(90deg, rgba(2,7,12,1) 0%, rgba(2,11,16,1) 58%, rgba(3,27,35,.78) 78%, rgba(3,27,35,0) 100%) !important;
         }
 
         .ticker-label {
-          position: relative !important;
-          z-index: 5 !important;
-          height: 100% !important;
+          position: absolute !important;
+          left: 10px !important;
+          top: 9px !important;
+          bottom: 9px !important;
+          z-index: 8 !important;
+          height: auto !important;
           display: flex !important;
           align-items: center !important;
-          padding: 0 26px !important;
-          color: #F2B84D !important;
+          justify-content: center !important;
+          min-width: 230px !important;
+          padding: 0 24px !important;
+          border-radius: 999px !important;
+          color: #F7C66B !important;
           font-size: 11px !important;
           font-weight: 950 !important;
           letter-spacing: .24em !important;
           text-transform: uppercase !important;
-          border-right: 1px solid rgba(232,168,56,.32) !important;
+          border: 1px solid rgba(232,168,56,.42) !important;
           background:
-            linear-gradient(90deg, rgba(232,168,56,.16), rgba(232,168,56,.05) 58%, rgba(232,168,56,0)),
-            rgba(5,10,18,.50) !important;
+            linear-gradient(135deg, rgba(232,168,56,.22), rgba(232,168,56,.08) 48%, rgba(255,255,255,.05)),
+            rgba(5,10,18,.78) !important;
           white-space: nowrap !important;
-          text-shadow: 0 0 22px rgba(232,168,56,.30) !important;
+          text-shadow: 0 0 24px rgba(232,168,56,.42) !important;
+          box-shadow: 0 0 30px rgba(232,168,56,.14), inset 0 1px 0 rgba(255,255,255,.14) !important;
         }
 
         .ticker-track {
-          position: relative !important;
+          position: absolute !important;
+          inset: 0 0 0 0 !important;
           z-index: 2 !important;
           height: 100% !important;
           overflow: hidden !important;
           display: flex !important;
           align-items: center !important;
           min-width: 0 !important;
-          padding-left: 34px !important;
-          padding-right: 28px !important;
-          mask-image: linear-gradient(90deg, transparent 0, black 42px, black calc(100% - 36px), transparent 100%) !important;
-          -webkit-mask-image: linear-gradient(90deg, transparent 0, black 42px, black calc(100% - 36px), transparent 100%) !important;
+          padding-left: 360px !important;
+          padding-right: 34px !important;
+          mask-image: linear-gradient(90deg, transparent 0, black 76px, black calc(100% - 42px), transparent 100%) !important;
+          -webkit-mask-image: linear-gradient(90deg, transparent 0, black 76px, black calc(100% - 42px), transparent 100%) !important;
         }
 
         .ticker-status { display: none !important; }
@@ -110,10 +128,10 @@ export function MarketSection() {
         .hogshead-live-ticker-track {
           display: flex !important;
           width: max-content !important;
-          gap: 48px !important;
+          gap: 54px !important;
           align-items: center !important;
           white-space: nowrap !important;
-          animation: hogsheadTickerMarquee 82s linear infinite !important;
+          animation: hogsheadTickerMarquee 104s linear infinite !important;
           will-change: transform !important;
         }
 
@@ -125,11 +143,11 @@ export function MarketSection() {
           display: inline-flex !important;
           align-items: center !important;
           gap: 12px !important;
-          color: rgba(255,255,255,.96) !important;
+          color: rgba(255,255,255,.98) !important;
           font-size: 13.5px !important;
           font-weight: 850 !important;
           letter-spacing: .01em !important;
-          text-shadow: 0 8px 24px rgba(0,0,0,.50) !important;
+          text-shadow: 0 8px 24px rgba(0,0,0,.55) !important;
         }
 
         .hogshead-live-ticker-item::before {
@@ -138,7 +156,7 @@ export function MarketSection() {
           height: 7px !important;
           border-radius: 999px !important;
           background: #E8A838 !important;
-          box-shadow: 0 0 18px rgba(232,168,56,.82), 0 0 36px rgba(232,168,56,.32) !important;
+          box-shadow: 0 0 18px rgba(232,168,56,.90), 0 0 38px rgba(232,168,56,.36) !important;
           flex: 0 0 auto !important;
         }
 
@@ -152,9 +170,8 @@ export function MarketSection() {
             left: 10px !important;
             right: 10px !important;
             bottom: 10px !important;
-            grid-template-columns: 1fr !important;
             border-radius: 24px !important;
-            min-height: 50px !important;
+            min-height: 52px !important;
           }
           .ticker::after { display: none !important; }
           .ticker-label { display: none !important; }
@@ -163,7 +180,7 @@ export function MarketSection() {
             padding-right: 18px !important;
           }
           .hogshead-live-ticker-track {
-            animation-duration: 76s !important;
+            animation-duration: 86s !important;
           }
         }
       `;
