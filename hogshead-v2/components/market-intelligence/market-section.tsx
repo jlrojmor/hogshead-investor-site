@@ -2,13 +2,14 @@ export function MarketSection() {
   return (
     <section id="market" className="market-globe-section">
       <div className="market-globe-heading">
-        <p className="market-globe-kicker">Market Intelligence</p>
+        <div className="market-globe-title-block">
+          <p className="market-globe-kicker">Market Intelligence</p>
+          <h2>Tequila is global. The economics are concentrated.</h2>
+        </div>
 
-        <h2>Tequila is global. The economics are concentrated.</h2>
-
-        <p>
-          A cinematic market atlas for origin, demand, premiumization, regional scale,
-          and the commercial logic behind aged tequila inventory.
+        <p className="market-globe-lede">
+          A cinematic market atlas connecting origin, demand, premiumization,
+          regional scale, and the commercial logic behind aged tequila inventory.
         </p>
       </div>
 
