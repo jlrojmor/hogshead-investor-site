@@ -36,49 +36,72 @@ export function MarketSection() {
       style.textContent = `
         .ticker {
           position: fixed !important;
-          left: 24px !important;
-          right: 24px !important;
+          left: 22px !important;
+          right: 22px !important;
           bottom: 18px !important;
           z-index: 60 !important;
-          min-height: 52px !important;
+          min-height: 58px !important;
           display: grid !important;
-          grid-template-columns: 205px minmax(0, 1fr) !important;
+          grid-template-columns: 245px minmax(0, 1fr) !important;
           align-items: center !important;
           overflow: hidden !important;
           border-radius: 999px !important;
-          border: 1px solid rgba(232,168,56,.34) !important;
+          border: 1px solid rgba(232,168,56,.46) !important;
           background:
-            linear-gradient(90deg, rgba(5,10,18,.96), rgba(7,35,46,.94) 50%, rgba(5,10,18,.96)),
-            radial-gradient(circle at 16% 50%, rgba(232,168,56,.18), transparent 30%) !important;
+            linear-gradient(90deg, rgba(4,9,16,.98), rgba(6,39,49,.96) 48%, rgba(4,9,16,.98)),
+            radial-gradient(circle at 14% 50%, rgba(232,168,56,.24), transparent 31%) !important;
           box-shadow:
-            0 20px 80px rgba(0,0,0,.50),
-            inset 0 1px 0 rgba(255,255,255,.10),
-            inset 0 0 0 1px rgba(255,255,255,.05) !important;
-          backdrop-filter: blur(24px) saturate(145%) !important;
+            0 24px 92px rgba(0,0,0,.62),
+            0 0 42px rgba(232,168,56,.10),
+            inset 0 1px 0 rgba(255,255,255,.14),
+            inset 0 0 0 1px rgba(255,255,255,.06) !important;
+          backdrop-filter: blur(26px) saturate(155%) !important;
+        }
+
+        .ticker::after {
+          content: '' !important;
+          position: absolute !important;
+          top: 0 !important;
+          bottom: 0 !important;
+          left: 245px !important;
+          width: 72px !important;
+          z-index: 4 !important;
+          pointer-events: none !important;
+          background: linear-gradient(90deg, rgba(4,11,18,1), rgba(4,24,32,.86) 55%, rgba(4,24,32,0)) !important;
         }
 
         .ticker-label {
+          position: relative !important;
+          z-index: 5 !important;
           height: 100% !important;
           display: flex !important;
           align-items: center !important;
-          padding: 0 24px !important;
-          color: #E8A838 !important;
+          padding: 0 26px !important;
+          color: #F2B84D !important;
           font-size: 11px !important;
-          font-weight: 900 !important;
-          letter-spacing: .22em !important;
+          font-weight: 950 !important;
+          letter-spacing: .24em !important;
           text-transform: uppercase !important;
-          border-right: 1px solid rgba(232,168,56,.24) !important;
-          background: linear-gradient(90deg, rgba(232,168,56,.11), rgba(232,168,56,0)) !important;
+          border-right: 1px solid rgba(232,168,56,.32) !important;
+          background:
+            linear-gradient(90deg, rgba(232,168,56,.16), rgba(232,168,56,.05) 58%, rgba(232,168,56,0)),
+            rgba(5,10,18,.50) !important;
           white-space: nowrap !important;
+          text-shadow: 0 0 22px rgba(232,168,56,.30) !important;
         }
 
         .ticker-track {
           position: relative !important;
+          z-index: 2 !important;
           height: 100% !important;
           overflow: hidden !important;
           display: flex !important;
           align-items: center !important;
           min-width: 0 !important;
+          padding-left: 34px !important;
+          padding-right: 28px !important;
+          mask-image: linear-gradient(90deg, transparent 0, black 42px, black calc(100% - 36px), transparent 100%) !important;
+          -webkit-mask-image: linear-gradient(90deg, transparent 0, black 42px, black calc(100% - 36px), transparent 100%) !important;
         }
 
         .ticker-status { display: none !important; }
@@ -87,10 +110,10 @@ export function MarketSection() {
         .hogshead-live-ticker-track {
           display: flex !important;
           width: max-content !important;
-          gap: 38px !important;
+          gap: 48px !important;
           align-items: center !important;
           white-space: nowrap !important;
-          animation: hogsheadTickerMarquee 46s linear infinite !important;
+          animation: hogsheadTickerMarquee 82s linear infinite !important;
           will-change: transform !important;
         }
 
@@ -101,12 +124,12 @@ export function MarketSection() {
         .hogshead-live-ticker-item {
           display: inline-flex !important;
           align-items: center !important;
-          gap: 10px !important;
-          color: rgba(255,255,255,.94) !important;
-          font-size: 13px !important;
-          font-weight: 800 !important;
+          gap: 12px !important;
+          color: rgba(255,255,255,.96) !important;
+          font-size: 13.5px !important;
+          font-weight: 850 !important;
           letter-spacing: .01em !important;
-          text-shadow: 0 8px 22px rgba(0,0,0,.42) !important;
+          text-shadow: 0 8px 24px rgba(0,0,0,.50) !important;
         }
 
         .hogshead-live-ticker-item::before {
@@ -115,7 +138,7 @@ export function MarketSection() {
           height: 7px !important;
           border-radius: 999px !important;
           background: #E8A838 !important;
-          box-shadow: 0 0 18px rgba(232,168,56,.76) !important;
+          box-shadow: 0 0 18px rgba(232,168,56,.82), 0 0 36px rgba(232,168,56,.32) !important;
           flex: 0 0 auto !important;
         }
 
@@ -131,9 +154,17 @@ export function MarketSection() {
             bottom: 10px !important;
             grid-template-columns: 1fr !important;
             border-radius: 24px !important;
-            min-height: 48px !important;
+            min-height: 50px !important;
           }
+          .ticker::after { display: none !important; }
           .ticker-label { display: none !important; }
+          .ticker-track {
+            padding-left: 18px !important;
+            padding-right: 18px !important;
+          }
+          .hogshead-live-ticker-track {
+            animation-duration: 76s !important;
+          }
         }
       `;
 
