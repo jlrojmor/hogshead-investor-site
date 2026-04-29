@@ -24,10 +24,18 @@ export function ContactSection() {
     const payload = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch('/api/request-info', {
+      const response = await fetch(`https://formsubmit.co/ajax/${contactEmail}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          ...payload,
+          _subject: 'New Hogshead Tequila request',
+          _template: 'table',
+          _captcha: 'false',
+        }),
       });
 
       const result = await response.json().catch(() => ({}));
