@@ -7,7 +7,7 @@ import { Eyebrow, Reveal, Shell } from '../shell';
 
 const stages = [
   {
-    name: 'Blanco',
+    name: 'Joven',
     months: '0–2 months',
     color: '#E7F4EF',
     text: 'Clean agave base before meaningful barrel influence.',
