@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://www.hogshead-tequila.com/sitemap.xml
-
