@@ -2,7 +2,7 @@ import { ArrowUpRight, BadgeCheck, Building2, Gift, Store, Users } from 'lucide-
 import { Eyebrow, Reveal, SectionHeader, Shell } from './shell';
 
 const cards = [
-  ['Aging range', '1–21Y', 'Añejo, Extra Añejo, Ultra Añejo, and long-aged expressions.'],
+  ['Aging range', '1–21 Years', 'Añejo, Extra Añejo, Ultra Añejo, and long-aged expressions.'],
   ['ABV profiles', '43–55%', 'Mid proof, high proof, and cask-strength style options.'],
   ['Bottle format', '750ml', 'Premium glass, Hogshead Tequila label system, and client logo placement options.'],
 ];

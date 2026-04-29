@@ -11,7 +11,7 @@ const platformProof = [
 ];
 
 const proofStats = [
-  { value: '1–21Y', label: 'Inventory' },
+  { value: '1–21 Years', label: 'Inventory' },
   { value: '43–55%', label: 'ABV range' },
   { value: 'U.S.', label: 'Commercial path' },
 ];
